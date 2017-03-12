@@ -1,0 +1,67 @@
+ID   FK669046; SV 1; linear; mRNA; EST; INV; 851 BP.
+XX
+AC   FK669046;
+XX
+DT   04-JUL-2008 (Rel. 96, Created)
+DT   04-FEB-2009 (Rel. 99, Last updated, Version 2)
+XX
+DE   634 cowpea buchid larval midgut cDNA library Callosobruchus maculatus cDNA
+DE   clone GBA similar to Glucosylceramidase, mRNA sequence.
+XX
+KW   EST.
+XX
+OS   Callosobruchus maculatus (cowpea weevil)
+OC   Eukaryota; Metazoa; Arthropoda; Hexapoda; Insecta; Pterygota; Neoptera;
+OC   Endopterygota; Coleoptera; Polyphaga; Cucujiformia; Chrysomeloidea;
+OC   Chrysomelidae; Bruchinae; Bruchini; Callosobruchus.
+XX
+RN   [1]
+RP   1-851
+RA   Chi Y.H., Salzman R.A., Balfe S., Ahn J.E., Sun W., Moon J., Yun D.J.,
+RA   Lee S.Y., Higgins T.J.V., Pittendrigh B., Murdock L.L., Zhu-Salzman K.;
+RT   "Cowpea bruchid midgut transcriptome response to a soybean cystatin - costs
+RT   and benefits of counter-defence";
+RL   Insect Mol. Biol. 18(1):97-110(2009).
+XX
+DR   UNILIB; 49274; 23400.
+XX
+CC   Contact: Zhu-Salzman, K
+CC   Department of Entomology
+CC   Texas A&M University
+CC   College Station, TX 77843-2475, USA
+CC   Tel: 979 458 3357
+CC   Fax: 979 862 4790
+CC   Email: ksalzman@tamu.edu
+CC   Insert Length: 851   Std Error: 0.00.
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..851
+FT                   /organism="Callosobruchus maculatus"
+FT                   /lab_host="E.coli"
+FT                   /mol_type="mRNA"
+FT                   /dev_stage="laval"
+FT                   /clone_lib="cowpea buchid larval midgut cDNA library"
+FT                   /clone="GBA"
+FT                   /tissue_type="midgut"
+FT                   /note="Vector: pBluescript SK(+)"
+FT                   /db_xref="taxon:64391"
+FT                   /db_xref="UNILIB:49274"
+XX
+SQ   Sequence 851 BP; 252 A; 168 C; 202 G; 229 T; 0 other;
+     gagtttgcaa aatgcagtgc ctgaagtatg ttgtactatt tacagttttc agcaagacac        60
+     ttgcagaagg atgcctgagt agagactatg gaaacggtgg tacagtctgc gtttgtaacg       120
+     cagaccactg cgataccata gaaccagtga cttcagttga aaaatcatct tatgtgatct       180
+     acacgaccaa taaggcaggg ctcagattga acaagaaaac cgacaagttt gctactgcaa       240
+     aagatgagta cgagaatcaa ataactgttg gtgaaaaagt gtatcaagaa atacttggtt       300
+     ttggtggtgc cttcactgac tctactggca tcaacatttt gtctttgaac gagtctgttc       360
+     aagagaagct tctaagatcc tatttttccg ataatggaat agagtacaac ttatgtcgag       420
+     tacctatagg cggtactgat ttttcgactc gcgggtacag ctatcatgat gacgttgaag       480
+     atgcgagttt gtccaacttt aagttgcaag aggaagatca caaatacaag attccactca       540
+     tcaagcgagc tgcagcttac cagaatggtc tgcagctttt cggttcagct tggtcggcac       600
+     caaaatggat gaaagtgcac gatttacctg cggtccattc gggtatttgg aagaaaaagt       660
+     actatcaagc ctgggctgac tatcacgtca aattcttgga tgcctatggc aaggaaaata       720
+     tcaccttcct ggggtatgac tacttgaaat gagccattca ctgggcttct ccggtgccgg       780
+     taccttgctg ttggatggaa ctgctcaaag aaacagcgcg ttatggggat tttgcgcgaa       840
+     aaaaaacact c                                                            851
+//

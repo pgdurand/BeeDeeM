@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- ============================================================= -->
+<project name="BeeDeeM" default="help" basedir=".">
+
+	<property name="lbasedir" value="${basedir}" />
+
+	<property name="compile.optimize" value="on" />
+	<property name="compile.debug" value="off" />
+	<property name="compile.deprecation" value="off" />
+
+	<property file="${basedir}/src/bzh/plealog/dbmirror/main/version.properties" />
+
+	<property name="src" value="${lbasedir}/src" />
+	<property name="jar" value="${lbasedir}/jar" />
+	<property name="conf" value="${lbasedir}/conf" />
+	<property name="lib" value="${lbasedir}/lib" />
+	<property name="external" value="${lbasedir}/external" />
+	<property name="scripts" value="${lbasedir}/scripts" />
+	<property name="doc" value="${lbasedir}/doc" />
+
+	<property name="distrib" value="${lbasedir}/distrib" />
+
+	<property name="Dsrc" value="${distrib}/src" />
+	<property name="Dbin" value="${distrib}/bin" />
+	<property name="Dconf" value="${distrib}/conf" />
+	<property name="Dlib" value="${distrib}/lib" />
+	<property name="Ddoc" value="${distrib}/doc" />
+	<property name="Dscripts" value="${distrib}/scripts" />
+	<property name="Dexternal" value="${distrib}/external" />
+
+	<property name="appname" value="${prg.name}-${prg.version}" />
+	<property name="appjar" value="${appname}.jar" />
+	<property name="apptar" value="${appname}.tar" />
+	<property name="kbapisappname" value="${prg.name}-${prg.version}-api" />
+	<property name="kbapijar" value="${kbapisappname}.jar" />
+
+	<property name="rootpkg" value="bzh.plealog.dbmirror.main" />
+	<property name="KLMirrorClass" value="${rootpkg}.CmdLineInstaller" />
+	<property name="KLUIMirrorClass" value="${rootpkg}.UiInstaller" />
+	<property name="KLQueryMirrorClass" value="${rootpkg}.CmdLineQuery" />
+	<property name="KLMirrorAnnot" value="${rootpkg}.Annotate" />
+
+	<path id="class.path">
+		<pathelement path="${classpath}" />
+		<fileset dir="${jar}">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement location="${lib}" />
+	</path>
+
+	<path id="distribClass.path">
+		<fileset dir="${distrib}/bin">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement location="${distrib}/lib" />
+	</path>
+
+	<!-- ============================================================= -->
+	<target name="help">
+		<echo>This is the Ant's project file to manage BeeDeeM.</echo>
+		<echo />
+		<echo>Available targets are:</echo>
+    <echo>    makejar: compile and package beedem</echo>
+    <echo>    makedistrib: prepare the release zip file</echo>
+		<echo />
+	</target>
+	<target name="prepare">
+		<!-- Prepare the distrib directory tree -->
+		<delete dir="${distrib}" />
+		<mkdir dir="${Dsrc}" />
+		<mkdir dir="${Dbin}" />
+		<mkdir dir="${Dconf}" />
+		<mkdir dir="${Dlib}" />
+		<mkdir dir="${Dscripts}" />
+		<mkdir dir="${Ddoc}" />
+		<mkdir dir="${Dexternal}" />
+	</target>
+	<target name="makejar" depends="prepare">
+		<!-- Copy all necessary jar files (third party librairies) -->
+		<copy todir="${Dbin}">
+			<fileset dir="${jar}" />
+		</copy>
+		<!-- Copy Configuration files -->
+		<copy todir="${Dconf}">
+			<fileset dir="${conf}">
+				<exclude name="dbms.config" />
+				<exclude name="dbms_test.config" />
+			</fileset>
+		</copy>
+		<!-- Copy files that are external binaries (Blast among others) -->
+		<copy todir="${Dexternal}">
+			<fileset dir="${external}" />
+		</copy>
+		<!-- Copy Java source code files -->
+		<copy todir="${Dsrc}">
+			<fileset dir="${src}">
+				<exclude name="test/**" />
+			</fileset>
+		</copy>
+		<!-- Compile source code ready for distribution-->
+		<javac srcdir="${Dsrc}" 
+	           destdir="${Dlib}" 
+	           classpathref="distribClass.path" 
+	           debug="${compile.debug}" 
+	           optimize="${compile.optimize}" 
+	           deprecation="${compile.deprecation}">
+		</javac>
+		<copy todir="${Dlib}">
+			<fileset dir="${src}">
+				<include name="**/*.png" />
+				<include name="**/*.dsc" />
+				<include name="**/*.config" />
+				<include name="**/*.properties" />
+				<include name="**/*.gif" />
+			</fileset>
+		</copy>
+		<!-- Make the Jar for the full application -->
+		<jar destfile="${Dbin}/${appjar}">
+			<fileset dir="${Dlib}" />
+			<manifest>
+				<attribute name="Built-By" value="Plealog Team" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- ============================================================= -->
+	<target name="makedistrib" depends="makejar">
+		<!-- Copy the DBMS scripts for Mac, Linux and Windows -->
+		<copy file="${scripts}/install.sh" todir="${Dscripts}">
+			<filterset>
+				<filter token="APP_MAIN_CLASS" value="${KLMirrorClass}" />
+			</filterset>
+		</copy>
+		<copy file="${scripts}/UiInstall.sh" todir="${Dscripts}">
+			<filterset>
+				<filter token="APP_MAIN_CLASS" value="${KLUIMirrorClass}" />
+			</filterset>
+		</copy>
+		<copy file="${scripts}/query.sh" todir="${Dscripts}">
+			<filterset>
+				<filter token="APP_MAIN_CLASS" value="${KLQueryMirrorClass}" />
+			</filterset>
+		</copy>
+		<copy file="${scripts}/annotate.sh" todir="${Dscripts}">
+			<filterset>
+				<filter token="APP_MAIN_CLASS" value="${KLMirrorAnnot}" />
+			</filterset>
+		</copy>
+		<copy file="${scripts}/install.bat" todir="${Dscripts}">
+			<filterset>
+				<filter token="APP_MAIN_CLASS" value="${KLMirrorClass}" />
+			</filterset>
+		</copy>
+		<copy file="${scripts}/UiInstall.bat" todir="${Dscripts}">
+			<filterset>
+				<filter token="APP_MAIN_CLASS" value="${KLUIMirrorClass}" />
+			</filterset>
+		</copy>
+		<copy file="${scripts}/query.bat" todir="${Dscripts}">
+			<filterset>
+				<filter token="APP_MAIN_CLASS" value="${KLQueryMirrorClass}" />
+			</filterset>
+		</copy>
+		<copy file="${scripts}/annotate.bat" todir="${Dscripts}">
+			<filterset>
+				<filter token="APP_MAIN_CLASS" value="${KLMirrorAnnot}" />
+			</filterset>
+		</copy>
+
+		<!-- Copy the DBMS main config file -->
+		<copy file="${scripts}/dbms.config" todir="${Dscripts}" />
+		<!-- Copy license files-->
+		<copy file="${lbasedir}/LICENSE.txt" todir="${distrib}/license" />
+		<copy file="${lbasedir}/NOTICE.txt" todir="${distrib}/license" />
+		
+		<!-- remove useless data -->
+		<delete dir="${Dlib}" />
+		<delete dir="${Dsrc}" />
+		<tar tarfile="${distrib}/${apptar}" basedir="${distrib}" />
+		<gzip zipfile="${distrib}/${apptar}.gz" src="${distrib}/${apptar}" />
+		<delete file="${distrib}/${apptar}" />
+		<delete dir="${Dbin}" />
+		<delete dir="${Dconf}" />
+		<delete dir="${Dexternal}" />
+		<delete dir="${Ddoc}" />
+		<delete dir="${Dscripts}" />
+		<delete dir="${distrib}/license" />
+		
+		<!-- Copy the DBMS Ant installer files -->
+		<copy file="${scripts}/config-std.properties" tofile="${distrib}/config.properties" />
+		<copy file="${scripts}/envDBMS" todir="${distrib}" />
+		<copy file="${scripts}/install-std.txt" tofile="${distrib}/INSTALL.txt" />
+		<copy file="${scripts}/deploy-std.xml" tofile="${distrib}/deploy.xml">
+			<filterset>
+				<filter token="KDBMS_TBALL" value="${apptar}.gz" />
+				<filter token="KDBMS_TAR" value="${apptar}" />
+			</filterset>
+		</copy>
+		<!-- in case Ant will not be available on the target system,
+         we provide it. -->
+		<mkdir dir="${distrib}/ant" />
+		<copy file="${scripts}/ant-1.9.4.zip" todir="${distrib}/ant" />
+		<!-- Package the whole stuff in a zip (natively readable on 
+		     all OS, including Windows)
+		 -->
+		<zip destfile="${distrib}/${prg.name}-${prg.version}-distrib.zip" basedir="${distrib}" />
+
+	</target>
+</project>

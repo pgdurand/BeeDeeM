@@ -1,0 +1,38 @@
+<INSDSeq>
+  <INSDSeq_locus>$seqinfo.getSeqInfo().getId()</INSDSeq_locus>
+  <INSDSeq_moltype>$seqinfo.getSeqInfo().getMoltype()</INSDSeq_moltype>
+  <INSDSeq_topology>$seqinfo.getSeqInfo().getTopology()</INSDSeq_topology>
+  <INSDSeq_division>$seqinfo.getSeqInfo().getDivision()</INSDSeq_division>
+  <INSDSeq_update-date>$seqinfo.getSeqInfo().getUpdateDate()</INSDSeq_update-date>
+  <INSDSeq_create-date>$seqinfo.getSeqInfo().getCreationDate()</INSDSeq_create-date>
+  #if ($seqinfo.getSeqInfo().getDescription())
+  <INSDSeq_definition>$seqinfo.getSeqInfo().getDescription()</INSDSeq_definition>
+  #end
+  <INSDSeq_organism>$seqinfo.getSeqInfo().getOrganism()</INSDSeq_organism>
+  <INSDSeq_taxonomy>$seqinfo.getSeqInfo().getTaxonomy()</INSDSeq_taxonomy>
+  <INSDSeq_feature-table>
+#foreach( $feature in $seqinfo.getFeatTable().getFeatures() )
+    <INSDFeature>
+      <INSDFeature_key>$xFomatter.cleanup($feature.getKey(),false)</INSDFeature_key>
+      #if ($feature.getFeatureLocation())
+      <INSDFeature_location>$xFomatter.cleanup($feature.getFeatureLocation().toString(),false)</INSDFeature_location>
+      #else
+      <INSDFeature_location>$xFomatter.cleanup($feature.getLoc(),false)</INSDFeature_location>
+      #end
+      <INSDFeature_quals>
+#foreach( $qualifier in $feature.getQualifiers() )
+        #if ($qualifier.getName().equals("Location")==false)
+        <INSDQualifier>
+          <INSDQualifier_name>$xFomatter.cleanup($qualifier.getName(),false)</INSDQualifier_name>
+          <INSDQualifier_value>$xFomatter.cleanup($qualifier.getValue(),false)</INSDQualifier_value>
+        </INSDQualifier>
+        #end
+#end
+      </INSDFeature_quals>
+    </INSDFeature>
+#end
+  </INSDSeq_feature-table>
+  #if ($seqinfo.getSequence())
+  <INSDSeq_sequence>$seqinfo.getSequence()</INSDSeq_sequence>
+  #end
+</INSDSeq>

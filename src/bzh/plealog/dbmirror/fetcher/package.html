@@ -1,0 +1,29 @@
+<HTML>
+    <BODY>
+<p>This package contains the code to enable FTP transactions with providers of sequence databanks.
+</p>
+<p>
+Actually, this is really the entry point of KDMS where the entire processing of a databank starts.
+</p>
+<p>
+Class KFTPLoaderSystem is the starting point of the KDMS processor. This class reads a Global Descriptor file (represented by a KFTPLoaderDescriptor class) which in turn loads the various (at least one) Databank Descriptors (each represented by a DBServerConfig class). Given that list of DBServerConfig classes, KFTPLoaderSystem prepare:
+</p>
+<p>
+  1. a KFTPLoaderEngine instance to process files from FTP servers; this object uses a KFTPLoader instance to achieve its work.
+</p>
+<p>
+  2. a KLocalLoaderEngine instance to process files from local directories; this object uses a KLocalLoader instance to achieve its work.
+</p>
+<p>
+Each XXXLoaderEngine is associated with a LoaderMonitor (it is an interface having a single concrete implementation: DefaultLoaderMonitor). This LoaderMonitor is responsible of understanding the processing rules defined within a databank descriptor and applying those rules on the various files to process. Each processing task is then associated to a concrete implementation of a KLTask. In other words, the LoaderMonitor is responsible to feed the KLTaskEngine with the entire sets of KLTask enabling the processing of a databank.
+</p>
+<p>
+
+The whole process also relies on classes from packages bzh.plealog.dbmirror.indexer, bzh.plealog.dbmirror.reader and bzh.plealog.dbmirror.lucenedico that mostly contain classes capable of handling sequence files (Fasta, Genbank, etc.) and biological classification files (GO, Enzyme, taxonomy, etc.).
+</p>
+<p>
+-- 
+author: Patrick Durand
+</p>
+    </BODY>
+</HTML>

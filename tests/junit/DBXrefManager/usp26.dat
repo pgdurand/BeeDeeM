@@ -1,0 +1,145 @@
+LOCUS       NM_031388               3729 bp    mRNA    linear   ROD 05-SEP-2008
+DEFINITION  Mus musculus ubiquitin specific peptidase 26 (Usp26), mRNA.
+ACCESSION   NM_031388 XM_001474763
+VERSION     NM_031388.1  GI:13878220
+KEYWORDS    .
+SOURCE      Mus musculus (house mouse)
+  ORGANISM  Mus musculus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Glires; Rodentia;
+            Sciurognathi; Muroidea; Muridae; Murinae; Mus.
+REFERENCE   1  (bases 1 to 3729)
+  AUTHORS   Wang,P.J., McCarrey,J.R., Yang,F. and Page,D.C.
+  TITLE     An abundance of X-linked genes expressed in spermatogonia
+  JOURNAL   Nat. Genet. 27 (4), 422-426 (2001)
+   PUBMED   11279525
+COMMENT     PROVISIONAL REFSEQ: This record has not yet been subject to final
+            NCBI review. The reference sequence was derived from AF285570.1.
+            On Sep 5, 2008 this sequence version replaced gi:149271539.
+FEATURES             Location/Qualifiers
+     source          1..3729
+                     /organism="Mus musculus"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:10090"
+                     /chromosome="X"
+     gene            1..3729
+                     /gene="Usp26"
+                     /synonym="MGC159157"
+                     /note="ubiquitin specific peptidase 26"
+                     /db_xref="GeneID:83563"
+                     /db_xref="MGI:1933247"
+     exon            1..31
+                     /gene="Usp26"
+                     /inference="alignment:Splign"
+                     /number=1
+     exon            32..77
+                     /gene="Usp26"
+                     /inference="alignment:Splign"
+                     /number=2
+     exon            78..133
+                     /gene="Usp26"
+                     /inference="alignment:Splign"
+                     /number=3
+     exon            134..214
+                     /gene="Usp26"
+                     /inference="alignment:Splign"
+                     /number=4
+     exon            215..3729
+                     /gene="Usp26"
+                     /inference="alignment:Splign"
+                     /number=5
+     CDS             292..2799
+                     /gene="Usp26"
+                     /note="ubiquitin specific protease 26"
+                     /codon_start=1
+                     /product="ubiquitin specific peptidase 26"
+                     /protein_id="NP_113565.1"
+                     /db_xref="GI:13878221"
+                     /db_xref="CCDS:CCDS30122.1"
+                     /db_xref="GeneID:83563"
+                     /db_xref="MGI:1933247"
+                     /translation="MEPILINAQVQMWSAKAGMSKSRNALIETCVGKREVKLILYFST
+                     GKIKTLQLHDNIKSVVLQTYGEDQNYLHLTFKNNDFLFVEKLTTTDARRLKRFLDKTS
+                     QGSIRPARSDERCGEPSTSAQELNGSGSSCETNSECFESPKESEMCMFRELSLLPSSS
+                     TFLHNVGLLENQFIKRKRFFSDLAKNEKQSNLKDSIRDFEANLVVCISNEKGKERNVR
+                     EVDISKPGFGFPFETNYPEDSGVDVRDLNDLITKLFSPVLLETHCIENGLEWHEYMKT
+                     YLLYPEKLWQGLPNVGNTCYINVVLQSLCSIPLFINDLFNQGFPWIKAPKDDFNMLLM
+                     QLLVLKDIYNARFRQKLLIGITKALPIFGEIFAVDRQNDAHEFLSLCLVQLKETFQRV
+                     TMMWQSENDSGDFYLLKDIFADYATINKMPVCPVTNNFEFELLSSIFCKACGLTLFKG
+                     EPSRYLSINIPQGGKDMSIQSTLDLFFSAEELEHRCEKCLYNKSVSFHRFGRLPRVII
+                     VHLKRYHFNESWVMKKDERPILVSKYLRLSCHCSKSTKPPPPLRPGEHVKNLDLLKPL
+                     EVLGSEILKLPFNSVRTSRSKGFETINITSNRESEAQSGKRVSEVLSGKVQQENSGKG
+                     DTAHIVGSELTKETEKLKKHEEEHRPSDLDSGSIREAQKYQQAEKCNEGRSDKQISLE
+                     ALTQSRPKPISQEQTENLGKTTLSHTQDSSQSSQSSSDSSKSSRCSDDLDKKAKPTRK
+                     VDPTKFNKKEDNVYRLVNIINHIGNSPNGGHYINDAFDFKRQSWFTYSDLHVTRTQED
+                     FVYRGRSSTGYVFFYMHNDIFEELLAKETQSTSTSKG"
+     STS             2297..2502
+                     /gene="Usp26"
+                     /standard_name="G65224"
+                     /db_xref="UniSTS:225894"
+ORIGIN      
+        1 gcaagagtca agagagtgtt ggtgtgttca ggccagagtc tctgttctat acagcagcaa
+       61 atcctaggac ttgattgctc tccattcact gtttctacct gtgctgagtg cctgtcctaa
+      121 gattctgata gaggttgttt tcccttggca tatacacaca ctgctgagtt gggaagctgc
+      181 ttcatttgca tttagcatcc agtgccagtc tctggtaaac ttgggaaaca aatagaaact
+      241 ccgagattgt taatcagtat acgtgagttt acttgcaaag aaaaaagaag tatggagccc
+      301 atattgataa atgctcaagt ccagatgtgg agtgcaaagg caggaatgtc caagtcaaga
+      361 aatgcactca ttgaaacatg tgtaggaaaa cgagaagtta aacttattct ctatttcagc
+      421 actggaaaga ttaagacttt gcaactacac gataatatta aaagtgtggt ccttcaaacc
+      481 tatggcgaag accagaatta cctacatttg acttttaaaa ataatgattt cttgtttgtt
+      541 gagaaactca ccaccacaga tgccagaaga ctgaagagat ttctagacaa aacctctcaa
+      601 ggtagtattc ggccagccag aagtgatgag agatgtggtg agcctagcac aagtgcacag
+      661 gagttgaatg gctctggaag ttcatgtgaa acaaatagtg agtgctttga atcacccaaa
+      721 gaaagtgaaa tgtgcatgtt tcgtgagttg tctttgcttc catcctcatc aacctttctt
+      781 cacaatgtag gattattaga aaaccaattc ataaagagga aaagattttt ctctgattta
+      841 gcaaaaaatg aaaaacagag caacctgaag gacagtatca gggactttga ggcaaattta
+      901 gtggtgtgta tctctaatga aaagggaaaa gaaaggaatg taagagaagt agacatcagt
+      961 aagccagggt ttggatttcc atttgagacc aactatcctg aagatagtgg tgtggatgtt
+     1021 cgtgatctta atgatctcat tacaaaatta ttttctccag ttctgttgga aacacactgt
+     1081 attgagaacg gcctagagtg gcatgaatat atgaagacat acttgcttta cccagagaaa
+     1141 ttgtggcaag gcctgcctaa tgtgggaaac acctgctata taaatgttgt attacagtct
+     1201 ctatgctcaa taccactgtt tattaatgat ttattcaacc agggtttccc atggattaaa
+     1261 gctcccaaag atgattttaa catgctcttg atgcaactgc ttgttttgaa agatatttac
+     1321 aacgcaagat ttagacagaa gttacttata ggtattacaa aagccctccc catatttgga
+     1381 gagatatttg ctgttgacag gcagaatgat gctcatgagt ttttaagtct ctgtttagtt
+     1441 cagttgaagg agactttcca aagagtaacc atgatgtggc agtctgaaaa tgattcgggg
+     1501 gatttttact tacttaaaga catttttgct gattatgcta ctatcaacaa aatgcccgtt
+     1561 tgtcctgtta ccaataattt tgaatttgag ttgctaagct ccattttttg taaagcttgt
+     1621 ggcctgactc tttttaaggg agaaccaagt agataccttt ctatcaacat tccccaagga
+     1681 gggaaagaca tgtccatcca gtccacttta gatcttttct ttagtgcaga ggagcttgag
+     1741 cataggtgtg aaaagtgttt gtacaacaaa tctgtttcat ttcacaggtt tggccggcta
+     1801 cccagggtaa ttattgttca tctgaaacgc tatcacttta atgagtcatg ggtaatgaag
+     1861 aaggatgagc ggcccatcct tgtttccaaa tacttaaggc tgtcttgtca ctgtagcaaa
+     1921 agcacaaaac cgcccccacc ccttcgccca ggtgaacatg ttaagaatct tgacttatta
+     1981 aaaccccttg aagtgttggg ttccgaaata ctcaaattgc cttttaattc agtgaggacc
+     2041 tctagatcca agggtttcga aactataaac atcacatcaa acagggagtc agaagcacaa
+     2101 agtgggaaaa gagtctctga agtgttgagt ggaaaagtgc agcaggaaaa ttcagggaaa
+     2161 ggtgacacag cacatatagt tgggtcagaa cttacaaagg agactgagaa actcaagaaa
+     2221 catgaggaag agcatagacc cagtgattta gattctggta gtatcaggga ggcccaaaag
+     2281 taccaacagg ctgagaaatg taacgaaggg agaagtgata agcagatttc cctagaggca
+     2341 cttactcaaa gccgtccaaa accaatctcc caggaacaga cagaaaacct tgggaaaact
+     2401 acactgtcac atacccagga tagtagtcag agttcacaga gctcatcaga ttccagtaag
+     2461 agctcccgat gcagtgatga tctcgataag aaggcaaagc ctacacgcaa ggtggatcca
+     2521 acaaagttta ataaaaaaga agataatgtt tacaggcttg ttaatattat caaccatatt
+     2581 gggaacagtc ccaatggagg ccactacatc aatgatgcct ttgacttcaa gaggcagagt
+     2641 tggttcactt atagtgatct acatgtaaca agaacccaag aggactttgt atataggggt
+     2701 cggagttcta ctgggtatgt cttcttttac atgcataatg atatatttga agagctcttg
+     2761 gcaaaggaaa ctcagtctac cagcacatcc aagggttagt aagaggagtg tatgcttcac
+     2821 agtacatgtc tatccaaatg cctcacttat ctaaattgga tagagaagga cagataatta
+     2881 gcccaggacc aacagctcaa cgaacattta tagagaaacg tttgttccaa ccctgaccac
+     2941 atcagtctta taattacagc tcatgctaat gagtgttctc ttatacaagt ttggaactgt
+     3001 aacttttgta tagtattttg tcataaattt tattattgac agtaaggttt ttcagtattt
+     3061 tggtggaagt tatataatcc aaagttgcct ttataccgat taaaatgact tattttgctt
+     3121 ccagtaaaag gtatgttttc tctcatttct gctttctttc ttgcatggca gcataataag
+     3181 ttctaatgaa aaagctttta tatatcagaa ggaaaaccac acatgcccag acacagcaca
+     3241 gttcagacga gtctatccag cgctgttacc ccagcctgcc gctctcttgc tctttctaca
+     3301 tttggaatgg ttcggtgtca tcctcccctc ctggctttct cacagtggat gccaattaat
+     3361 ggtgatgctt aagtgaagag agaagagaac attttatggc tgcacatgtt ggaaaaaata
+     3421 caaaaatggg gagagggctg catttagctt ttgttgattt ttaggagttt tcattaacac
+     3481 tgaacaatgt tcttactgtt ctctgattta ggccttggtt ttataaactg ttttcaaaat
+     3541 agtttgattt tgttaagtct gttttccagt gtctgtcttt agttgtcttg tctttaatgg
+     3601 ggttattttc ttattaggaa aaaaacaatt tccacttcta gaataaacgt tgaaggagct
+     3661 ctgcatgtgc tcgggaccta ctgtgtgctc ctttctccag aattctctgt ttgggatggt
+     3721 tgacaccgt
+//
+

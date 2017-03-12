@@ -1,0 +1,246 @@
+ID   KKCC1_RAT               Reviewed;         505 AA.
+AC   P97756; Q64572; Q794E3;
+DT   07-DEC-2004, integrated into UniProtKB/Swiss-Prot.
+DT   01-MAY-1997, sequence version 1.
+DT   19-MAR-2014, entry version 105.
+DE   RecName: Full=Calcium/calmodulin-dependent protein kinase kinase 1;
+DE            Short=CaM-KK 1;
+DE            Short=CaM-kinase kinase 1;
+DE            Short=CaMKK 1;
+DE            EC=2.7.11.17;
+DE   AltName: Full=CaM-kinase IV kinase;
+DE   AltName: Full=Calcium/calmodulin-dependent protein kinase kinase alpha;
+DE            Short=CaM-KK alpha;
+DE            Short=CaM-kinase kinase alpha;
+DE            Short=CaMKK alpha;
+GN   Name=Camkk1;
+OS   Rattus norvegicus (Rat).
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+OC   Mammalia; Eutheria; Euarchontoglires; Glires; Rodentia; Sciurognathi;
+OC   Muroidea; Muridae; Murinae; Rattus.
+OX   NCBI_TaxID=10116;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE [MRNA], PROTEIN SEQUENCE OF 214-230 AND 291-310,
+RP   FUNCTION, ENZYME REGULATION, INTERACTION WITH CALMODULIN, AND TISSUE
+RP   SPECIFICITY.
+RC   TISSUE=Brain;
+RX   PubMed=7642608; DOI=10.1074/jbc.270.33.19320;
+RA   Tokumitsu H., Enslen H., Soderling T.R.;
+RT   "Characterization of a Ca2+/calmodulin-dependent protein kinase
+RT   cascade. Molecular cloning and expression of calcium/calmodulin-
+RT   dependent protein kinase kinase.";
+RL   J. Biol. Chem. 270:19320-19324(1995).
+RN   [2]
+RP   NUCLEOTIDE SEQUENCE [MRNA].
+RC   TISSUE=Brain;
+RX   PubMed=8827455;
+RA   Okuno S., Kitani T., Fujisawa H.;
+RT   "Evidence for the existence of Ca2+/calmodulin-dependent protein
+RT   kinase IV kinase isoforms in rat brain.";
+RL   J. Biochem. 119:1176-1181(1996).
+RN   [3]
+RP   PROTEIN SEQUENCE OF 4-13; 20-38; 50-60; 137-148; 196-210; 275-288;
+RP   291-311; 333-340; 351-360; 365-382; 389-397; 405-408; 440-444; 458-468
+RP   AND 473-478, FUNCTION IN PHOSPHORYLATION OF CAMK1 AND CAMK4, AND
+RP   AUTOPHOSPHORYLATION.
+RX   PubMed=8631893; DOI=10.1074/jbc.271.18.10806;
+RA   Edelman A.M., Mitchelhill K.I., Selbert M.A., Anderson K.A.,
+RA   Hook S.S., Stapleton D., Goldstein E.G., Means A.R., Kemp B.E.;
+RT   "Multiple Ca(2+)-calmodulin-dependent protein kinase kinases from rat
+RT   brain. Purification, regulation by Ca(2+)-calmodulin, and partial
+RT   amino acid sequence.";
+RL   J. Biol. Chem. 271:10806-10810(1996).
+RN   [4]
+RP   SUBCELLULAR LOCATION.
+RX   PubMed=8929978; DOI=10.1016/0304-3940(96)12317-X;
+RA   Nakamura Y., Okuno S., Kitani T., Otake K., Sato F., Fujisawa H.;
+RT   "Distribution of Ca2+/calmodulin-dependent protein kinase kinase alpha
+RT   in the rat central nervous system: an immunohistochemical study.";
+RL   Neurosci. Lett. 204:61-64(1996).
+RN   [5]
+RP   CHARACTERIZATION.
+RX   PubMed=9335539; DOI=10.1021/bi971348i;
+RA   Tokumitsu H., Wayman G.A., Muramatsu M.-A., Soderling T.R.;
+RT   "Calcium/calmodulin-dependent protein kinase kinase: identification of
+RT   regulatory domains.";
+RL   Biochemistry 36:12823-12827(1997).
+RN   [6]
+RP   PHOSPHORYLATION AT THR-108 AND SER-458, MUTAGENESIS OF THR-108 AND
+RP   SER-458, AND PHOSPHORYLATION BY PRCAKA.
+RX   PubMed=9195898; DOI=10.1074/jbc.272.26.16073;
+RA   Wayman G.A., Tokumitsu H., Soderling T.R.;
+RT   "Inhibitory cross-talk by cAMP kinase on the calmodulin-dependent
+RT   protein kinase cascade.";
+RL   J. Biol. Chem. 272:16073-16076(1997).
+RN   [7]
+RP   FUNCTION IN PHOSPHORYLATION OF AKT1.
+RX   PubMed=9859994; DOI=10.1038/25147;
+RA   Yano S., Tokumitsu H., Soderling T.R.;
+RT   "Calcium promotes cell survival through CaM-K kinase activation of the
+RT   protein-kinase-B pathway.";
+RL   Nature 396:584-587(1998).
+RN   [8]
+RP   PHOSPHORYLATION AT SER-74 AND THR-108, MUTAGENESIS OF SER-74 AND
+RP   THR-108, PHOSPHORYLATION BY PRCAKA, AND TISSUE SPECIFICITY.
+RX   PubMed=10187789; DOI=10.1074/jbc.274.15.10086;
+RA   Matsushita M., Nairn A.C.;
+RT   "Inhibition of the Ca2+/calmodulin-dependent protein kinase I cascade
+RT   by cAMP-dependent protein kinase.";
+RL   J. Biol. Chem. 274:10086-10093(1999).
+RN   [9]
+RP   MUTAGENESIS OF ARG-172 AND ARG-177, DOMAIN RP, AND INTERACTION WITH
+RP   CAMK4.
+RX   PubMed=10336483; DOI=10.1074/jbc.274.22.15803;
+RA   Tokumitsu H., Takahashi N., Eto K., Yano S., Soderling T.R.,
+RA   Muramatsu M.-A.;
+RT   "Substrate recognition by Ca2+/Calmodulin-dependent protein kinase
+RT   kinase. Role of the arg-pro-rich insert domain.";
+RL   J. Biol. Chem. 274:15803-15810(1999).
+RN   [10]
+RP   SUBCELLULAR LOCATION.
+RX   PubMed=10651863; DOI=10.1046/j.1460-9568.2000.00883.x;
+RA   Sakagami H., Umemiya M., Saito S., Kondo H.;
+RT   "Distinct immunohistochemical localization of two isoforms of
+RT   Ca2+/calmodulin-dependent protein kinase kinases in the adult rat
+RT   brain.";
+RL   Eur. J. Neurosci. 12:89-99(2000).
+RN   [11]
+RP   STRUCTURE BY NMR OF 438-463 IN COMPLEX WITH CA(2+)/CALMODULIN, AND
+RP   MUTAGENESIS OF PHE-459 AND PHE-463.
+RX   PubMed=10467092; DOI=10.1038/12271;
+RA   Osawa M., Tokumitsu H., Swindells M.B., Kurihara H., Orita M.,
+RA   Shibanuma T., Furuya T., Ikura M.;
+RT   "A novel target recognition revealed by calmodulin in complex with
+RT   Ca2+-calmodulin-dependent kinase kinase.";
+RL   Nat. Struct. Biol. 6:819-824(1999).
+CC   -!- FUNCTION: Calcium/calmodulin-dependent protein kinase that belongs
+CC       to a proposed calcium-triggered signaling cascade involved in a
+CC       number of cellular processes. Phosphorylates CAMK1, CAMK1D, CAMK1G
+CC       and CAMK4. Involved in regulating cell apoptosis. Promotes cell
+CC       survival by phosphorylating AKT1/PKB that inhibits pro-apoptotic
+CC       BAD/Bcl2-antagonist of cell death.
+CC   -!- CATALYTIC ACTIVITY: ATP + a protein = ADP + a phosphoprotein.
+CC   -!- ENZYME REGULATION: Activated by Ca(2+)/calmodulin. Binding of
+CC       calmodulin may relieve intrasteric autoinhibition. Partially
+CC       inhibited upon phosphorylation by PRCAKA/PKA. May be regulated
+CC       through phosphorylation by CAMK1 and CAMK4.
+CC   -!- SUBUNIT: Interacts with CAMK4 and calmodulin.
+CC   -!- SUBCELLULAR LOCATION: Cytoplasm. Nucleus.
+CC   -!- TISSUE SPECIFICITY: Mostly expressed in the brain with higher
+CC       levels in cortex and hippocampus. Lower expression levels were
+CC       detected in striatum, nucleus accumbens and cerebellum (at protein
+CC       level). Abundant in forebrain, weaker in cerebellum and also
+CC       detected in thymus and spleen.
+CC   -!- DOMAIN: The autoinhibitory domain overlaps with the calmodulin
+CC       binding region and may be involved in intrasteric autoinhibition.
+CC   -!- DOMAIN: The RP domain (arginine/proline-rich) is involved in the
+CC       recognition of CAMKI and CAMK4 as substrates.
+CC   -!- PTM: Appears to be autophosphorylated. Phosphorylated at multiple
+CC       sites by PRCAKA/PKA. Phosphorylation of Ser-458 is blocked upon
+CC       binding to Ca(2+)/calmodulin. May be phosphorylated by CAMK1 and
+CC       CAMK4.
+CC   -!- SIMILARITY: Belongs to the protein kinase superfamily. Ser/Thr
+CC       protein kinase family.
+CC   -!- SIMILARITY: Contains 1 protein kinase domain.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; L42810; AAC42070.1; -; mRNA.
+DR   EMBL; AB023658; BAA75246.1; -; mRNA.
+DR   EMBL; S83194; AAB46910.1; -; mRNA.
+DR   PIR; A57156; A57156.
+DR   RefSeq; NP_113850.1; NM_031662.1.
+DR   UniGene; Rn.4851; -.
+DR   PDB; 1CKK; NMR; -; B=438-463.
+DR   PDBsum; 1CKK; -.
+DR   ProteinModelPortal; P97756; -.
+DR   SMR; P97756; 438-463.
+DR   IntAct; P97756; 4.
+DR   MINT; MINT-1203156; -.
+DR   PhosphoSite; P97756; -.
+DR   PaxDb; P97756; -.
+DR   PRIDE; P97756; -.
+DR   GeneID; 60341; -.
+DR   KEGG; rno:60341; -.
+DR   CTD; 84254; -.
+DR   RGD; 62023; Camkk1.
+DR   eggNOG; COG0515; -.
+DR   HOGENOM; HOG000007846; -.
+DR   HOVERGEN; HBG052262; -.
+DR   InParanoid; P97756; -.
+DR   KO; K07359; -.
+DR   EvolutionaryTrace; P97756; -.
+DR   NextBio; 611998; -.
+DR   PRO; PR:P97756; -.
+DR   Genevestigator; P97756; -.
+DR   GO; GO:0005737; C:cytoplasm; IEA:UniProtKB-SubCell.
+DR   GO; GO:0005634; C:nucleus; IEA:UniProtKB-SubCell.
+DR   GO; GO:0005524; F:ATP binding; IEA:UniProtKB-KW.
+DR   GO; GO:0005516; F:calmodulin binding; IDA:RGD.
+DR   GO; GO:0004683; F:calmodulin-dependent protein kinase activity; IDA:RGD.
+DR   GO; GO:0032147; P:activation of protein kinase activity; IDA:RGD.
+DR   InterPro; IPR020636; Ca/CaM-dep_Ca-dep_prot_Kinase.
+DR   InterPro; IPR011009; Kinase-like_dom.
+DR   InterPro; IPR000719; Prot_kinase_dom.
+DR   InterPro; IPR017441; Protein_kinase_ATP_BS.
+DR   InterPro; IPR002290; Ser/Thr_dual-sp_kinase_dom.
+DR   InterPro; IPR008271; Ser/Thr_kinase_AS.
+DR   PANTHER; PTHR24347; PTHR24347; 1.
+DR   Pfam; PF00069; Pkinase; 1.
+DR   SMART; SM00220; S_TKc; 1.
+DR   SUPFAM; SSF56112; SSF56112; 2.
+DR   PROSITE; PS00107; PROTEIN_KINASE_ATP; 1.
+DR   PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+DR   PROSITE; PS00108; PROTEIN_KINASE_ST; 1.
+PE   1: Evidence at protein level;
+KW   3D-structure; ATP-binding; Calmodulin-binding; Complete proteome;
+KW   Cytoplasm; Direct protein sequencing; Kinase; Nucleotide-binding;
+KW   Nucleus; Phosphoprotein; Reference proteome;
+KW   Serine/threonine-protein kinase; Transferase.
+FT   CHAIN         1    505       Calcium/calmodulin-dependent protein
+FT                                kinase kinase 1.
+FT                                /FTId=PRO_0000086143.
+FT   DOMAIN      128    409       Protein kinase.
+FT   NP_BIND     134    142       ATP (By similarity).
+FT   REGION      167    189       RP domain.
+FT   REGION      435    440       Autoinhibitory domain.
+FT   REGION      438    463       Calmodulin-binding.
+FT   ACT_SITE    275    275       Proton acceptor (By similarity).
+FT   BINDING     157    157       ATP (By similarity).
+FT   MOD_RES      74     74       Phosphoserine.
+FT   MOD_RES     108    108       Phosphothreonine.
+FT   MOD_RES     458    458       Phosphoserine.
+FT   MOD_RES     492    492       Phosphoserine (By similarity).
+FT   MUTAGEN      74     74       S->A: Decrease in phosphorylation by PKA.
+FT   MUTAGEN     108    108       T->A: Decrease in phosphorylation and
+FT                                partial inhibition by PKA. Almost loss of
+FT                                inhibition by PKA; when associated with
+FT                                A-458.
+FT   MUTAGEN     172    172       R->E: Loss of substrate recognition and
+FT                                interaction with CAMK4.
+FT   MUTAGEN     177    177       R->E: Loss of substrate recognition and
+FT                                interaction with CAMK4.
+FT   MUTAGEN     458    458       S->A: Decrease in phosphorylation and
+FT                                partial inhibition by PKA. Almost loss of
+FT                                inhibition by PKA; when associated with
+FT                                A-108.
+FT   MUTAGEN     459    459       F->D: Loss of binding to
+FT                                Ca(2+)/calmodulin.
+FT   MUTAGEN     463    463       F->D: Loss of binding to
+FT                                Ca(2+)/calmodulin.
+FT   CONFLICT     45     45       P -> S (in Ref. 1; AAC42070).
+FT   CONFLICT     81     81       G -> E (in Ref. 1; AAC42070).
+FT   HELIX       444    453
+FT   STRAND      455    457
+SQ   SEQUENCE   505 AA;  55908 MW;  6B268780AC9B67E1 CRC64;
+     MERSPAVCCQ DPRAELVERV AAISVAHLEE AEEGPEPASN GVDPPPRARA ASVIPGSASR
+     PTPVRPSLSA RKFSLQERPA GSCLEAQVGP YSTGPASHMS PRAWRRPTIE SHHVAISDTE
+     DCVQLNQYKL QSEIGKGAYG VVRLAYNERE DRHYAMKVLS KKKLLKQYGF PRRPPPRGSQ
+     APQGGPAKQL LPLERVYQEI AILKKLDHVN VVKLIEVLDD PAEDNLYLVF DLLRKGPVME
+     VPCDKPFPEE QARLYLRDII LGLEYLHCQK IVHRDIKPSN LLLGDDGHVK IADFGVSNQF
+     EGNDAQLSST AGTPAFMAPE AISDTGQSFS GKALDVWATG VTLYCFVYGK CPFIDEYILA
+     LHRKIKNEAV VFPEEPEVSE ELKDLILKML DKNPETRIGV SDIKLHPWVT KHGEEPLPSE
+     EEHCSVVEVT EEEVKNSVKL IPSWTTVILV KSMLRKRSFG NPFEPQARRE ERSMSAPGNL
+     LLKEGCGEGG KSPELPGVQE DEAAS
+//

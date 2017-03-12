@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C/DTD HTML 4.0//EN">
+<html>
+<head>
+  <title>Search Results</title>
+  <STYLE type="text/css">
+        html, body{
+        font-family: Verdana, Arial, sans-serif;
+        }
+        
+        h1 {
+        font-size: 12pt;
+        color: #006666;
+        padding: 4px;
+        background: #eef5f5;
+        border: 1px solid #bfbfbf;
+        margin: 5px 0px 10px 0px;
+        font-weight: bold;
+        }
+        
+        h4 {
+        font-size: 10px;
+        color: #006666;
+        padding: 4px;
+        background: #eef5f5;
+        border: 1px solid #bfbfbf;
+        margin: 5px 0px 10px 0px;
+        }
+        
+        #footer{
+        position: fixed;
+        left: 4px;
+        right: 4px;
+        bottom: 4px;
+        z-index: 20;
+        color: #006666;
+        background: #eef5f5;
+        padding: 4px;
+        border: 1px solid #bfbfbf;
+        font-size: 10px;
+        }
+  </STYLE>
+</head>
+<body>
+
+<BODY BGCOLOR="#FFFFFF" LINK="#0000FF" VLINK="#660099" ALINK="#660099">

@@ -1,0 +1,2 @@
+- MaJ descripteurs avec dépendances ; temporairement virer pfam (marche plus ?)
+- MaJ doc: formatdb->makeblastdb 

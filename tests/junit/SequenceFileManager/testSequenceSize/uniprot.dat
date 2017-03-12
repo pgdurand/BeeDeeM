@@ -1,0 +1,1759 @@
+ID   KKCC1_RAT               Reviewed;         505 AA.
+AC   P97756; Q64572; Q794E3;
+DT   07-DEC-2004, integrated into UniProtKB/Swiss-Prot.
+DT   01-MAY-1997, sequence version 1.
+DT   19-MAR-2014, entry version 105.
+DE   RecName: Full=Calcium/calmodulin-dependent protein kinase kinase 1;
+DE            Short=CaM-KK 1;
+DE            Short=CaM-kinase kinase 1;
+DE            Short=CaMKK 1;
+DE            EC=2.7.11.17;
+DE   AltName: Full=CaM-kinase IV kinase;
+DE   AltName: Full=Calcium/calmodulin-dependent protein kinase kinase alpha;
+DE            Short=CaM-KK alpha;
+DE            Short=CaM-kinase kinase alpha;
+DE            Short=CaMKK alpha;
+GN   Name=Camkk1;
+OS   Rattus norvegicus (Rat).
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+OC   Mammalia; Eutheria; Euarchontoglires; Glires; Rodentia; Sciurognathi;
+OC   Muroidea; Muridae; Murinae; Rattus.
+OX   NCBI_TaxID=10116;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE [MRNA], PROTEIN SEQUENCE OF 214-230 AND 291-310,
+RP   FUNCTION, ENZYME REGULATION, INTERACTION WITH CALMODULIN, AND TISSUE
+RP   SPECIFICITY.
+RC   TISSUE=Brain;
+RX   PubMed=7642608; DOI=10.1074/jbc.270.33.19320;
+RA   Tokumitsu H., Enslen H., Soderling T.R.;
+RT   "Characterization of a Ca2+/calmodulin-dependent protein kinase
+RT   cascade. Molecular cloning and expression of calcium/calmodulin-
+RT   dependent protein kinase kinase.";
+RL   J. Biol. Chem. 270:19320-19324(1995).
+RN   [2]
+RP   NUCLEOTIDE SEQUENCE [MRNA].
+RC   TISSUE=Brain;
+RX   PubMed=8827455;
+RA   Okuno S., Kitani T., Fujisawa H.;
+RT   "Evidence for the existence of Ca2+/calmodulin-dependent protein
+RT   kinase IV kinase isoforms in rat brain.";
+RL   J. Biochem. 119:1176-1181(1996).
+RN   [3]
+RP   PROTEIN SEQUENCE OF 4-13; 20-38; 50-60; 137-148; 196-210; 275-288;
+RP   291-311; 333-340; 351-360; 365-382; 389-397; 405-408; 440-444; 458-468
+RP   AND 473-478, FUNCTION IN PHOSPHORYLATION OF CAMK1 AND CAMK4, AND
+RP   AUTOPHOSPHORYLATION.
+RX   PubMed=8631893; DOI=10.1074/jbc.271.18.10806;
+RA   Edelman A.M., Mitchelhill K.I., Selbert M.A., Anderson K.A.,
+RA   Hook S.S., Stapleton D., Goldstein E.G., Means A.R., Kemp B.E.;
+RT   "Multiple Ca(2+)-calmodulin-dependent protein kinase kinases from rat
+RT   brain. Purification, regulation by Ca(2+)-calmodulin, and partial
+RT   amino acid sequence.";
+RL   J. Biol. Chem. 271:10806-10810(1996).
+RN   [4]
+RP   SUBCELLULAR LOCATION.
+RX   PubMed=8929978; DOI=10.1016/0304-3940(96)12317-X;
+RA   Nakamura Y., Okuno S., Kitani T., Otake K., Sato F., Fujisawa H.;
+RT   "Distribution of Ca2+/calmodulin-dependent protein kinase kinase alpha
+RT   in the rat central nervous system: an immunohistochemical study.";
+RL   Neurosci. Lett. 204:61-64(1996).
+RN   [5]
+RP   CHARACTERIZATION.
+RX   PubMed=9335539; DOI=10.1021/bi971348i;
+RA   Tokumitsu H., Wayman G.A., Muramatsu M.-A., Soderling T.R.;
+RT   "Calcium/calmodulin-dependent protein kinase kinase: identification of
+RT   regulatory domains.";
+RL   Biochemistry 36:12823-12827(1997).
+RN   [6]
+RP   PHOSPHORYLATION AT THR-108 AND SER-458, MUTAGENESIS OF THR-108 AND
+RP   SER-458, AND PHOSPHORYLATION BY PRCAKA.
+RX   PubMed=9195898; DOI=10.1074/jbc.272.26.16073;
+RA   Wayman G.A., Tokumitsu H., Soderling T.R.;
+RT   "Inhibitory cross-talk by cAMP kinase on the calmodulin-dependent
+RT   protein kinase cascade.";
+RL   J. Biol. Chem. 272:16073-16076(1997).
+RN   [7]
+RP   FUNCTION IN PHOSPHORYLATION OF AKT1.
+RX   PubMed=9859994; DOI=10.1038/25147;
+RA   Yano S., Tokumitsu H., Soderling T.R.;
+RT   "Calcium promotes cell survival through CaM-K kinase activation of the
+RT   protein-kinase-B pathway.";
+RL   Nature 396:584-587(1998).
+RN   [8]
+RP   PHOSPHORYLATION AT SER-74 AND THR-108, MUTAGENESIS OF SER-74 AND
+RP   THR-108, PHOSPHORYLATION BY PRCAKA, AND TISSUE SPECIFICITY.
+RX   PubMed=10187789; DOI=10.1074/jbc.274.15.10086;
+RA   Matsushita M., Nairn A.C.;
+RT   "Inhibition of the Ca2+/calmodulin-dependent protein kinase I cascade
+RT   by cAMP-dependent protein kinase.";
+RL   J. Biol. Chem. 274:10086-10093(1999).
+RN   [9]
+RP   MUTAGENESIS OF ARG-172 AND ARG-177, DOMAIN RP, AND INTERACTION WITH
+RP   CAMK4.
+RX   PubMed=10336483; DOI=10.1074/jbc.274.22.15803;
+RA   Tokumitsu H., Takahashi N., Eto K., Yano S., Soderling T.R.,
+RA   Muramatsu M.-A.;
+RT   "Substrate recognition by Ca2+/Calmodulin-dependent protein kinase
+RT   kinase. Role of the arg-pro-rich insert domain.";
+RL   J. Biol. Chem. 274:15803-15810(1999).
+RN   [10]
+RP   SUBCELLULAR LOCATION.
+RX   PubMed=10651863; DOI=10.1046/j.1460-9568.2000.00883.x;
+RA   Sakagami H., Umemiya M., Saito S., Kondo H.;
+RT   "Distinct immunohistochemical localization of two isoforms of
+RT   Ca2+/calmodulin-dependent protein kinase kinases in the adult rat
+RT   brain.";
+RL   Eur. J. Neurosci. 12:89-99(2000).
+RN   [11]
+RP   STRUCTURE BY NMR OF 438-463 IN COMPLEX WITH CA(2+)/CALMODULIN, AND
+RP   MUTAGENESIS OF PHE-459 AND PHE-463.
+RX   PubMed=10467092; DOI=10.1038/12271;
+RA   Osawa M., Tokumitsu H., Swindells M.B., Kurihara H., Orita M.,
+RA   Shibanuma T., Furuya T., Ikura M.;
+RT   "A novel target recognition revealed by calmodulin in complex with
+RT   Ca2+-calmodulin-dependent kinase kinase.";
+RL   Nat. Struct. Biol. 6:819-824(1999).
+CC   -!- FUNCTION: Calcium/calmodulin-dependent protein kinase that belongs
+CC       to a proposed calcium-triggered signaling cascade involved in a
+CC       number of cellular processes. Phosphorylates CAMK1, CAMK1D, CAMK1G
+CC       and CAMK4. Involved in regulating cell apoptosis. Promotes cell
+CC       survival by phosphorylating AKT1/PKB that inhibits pro-apoptotic
+CC       BAD/Bcl2-antagonist of cell death.
+CC   -!- CATALYTIC ACTIVITY: ATP + a protein = ADP + a phosphoprotein.
+CC   -!- ENZYME REGULATION: Activated by Ca(2+)/calmodulin. Binding of
+CC       calmodulin may relieve intrasteric autoinhibition. Partially
+CC       inhibited upon phosphorylation by PRCAKA/PKA. May be regulated
+CC       through phosphorylation by CAMK1 and CAMK4.
+CC   -!- SUBUNIT: Interacts with CAMK4 and calmodulin.
+CC   -!- SUBCELLULAR LOCATION: Cytoplasm. Nucleus.
+CC   -!- TISSUE SPECIFICITY: Mostly expressed in the brain with higher
+CC       levels in cortex and hippocampus. Lower expression levels were
+CC       detected in striatum, nucleus accumbens and cerebellum (at protein
+CC       level). Abundant in forebrain, weaker in cerebellum and also
+CC       detected in thymus and spleen.
+CC   -!- DOMAIN: The autoinhibitory domain overlaps with the calmodulin
+CC       binding region and may be involved in intrasteric autoinhibition.
+CC   -!- DOMAIN: The RP domain (arginine/proline-rich) is involved in the
+CC       recognition of CAMKI and CAMK4 as substrates.
+CC   -!- PTM: Appears to be autophosphorylated. Phosphorylated at multiple
+CC       sites by PRCAKA/PKA. Phosphorylation of Ser-458 is blocked upon
+CC       binding to Ca(2+)/calmodulin. May be phosphorylated by CAMK1 and
+CC       CAMK4.
+CC   -!- SIMILARITY: Belongs to the protein kinase superfamily. Ser/Thr
+CC       protein kinase family.
+CC   -!- SIMILARITY: Contains 1 protein kinase domain.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; L42810; AAC42070.1; -; mRNA.
+DR   EMBL; AB023658; BAA75246.1; -; mRNA.
+DR   EMBL; S83194; AAB46910.1; -; mRNA.
+DR   PIR; A57156; A57156.
+DR   RefSeq; NP_113850.1; NM_031662.1.
+DR   UniGene; Rn.4851; -.
+DR   PDB; 1CKK; NMR; -; B=438-463.
+DR   PDBsum; 1CKK; -.
+DR   ProteinModelPortal; P97756; -.
+DR   SMR; P97756; 438-463.
+DR   IntAct; P97756; 4.
+DR   MINT; MINT-1203156; -.
+DR   PhosphoSite; P97756; -.
+DR   PaxDb; P97756; -.
+DR   PRIDE; P97756; -.
+DR   GeneID; 60341; -.
+DR   KEGG; rno:60341; -.
+DR   CTD; 84254; -.
+DR   RGD; 62023; Camkk1.
+DR   eggNOG; COG0515; -.
+DR   HOGENOM; HOG000007846; -.
+DR   HOVERGEN; HBG052262; -.
+DR   InParanoid; P97756; -.
+DR   KO; K07359; -.
+DR   EvolutionaryTrace; P97756; -.
+DR   NextBio; 611998; -.
+DR   PRO; PR:P97756; -.
+DR   Genevestigator; P97756; -.
+DR   GO; GO:0005737; C:cytoplasm; IEA:UniProtKB-SubCell.
+DR   GO; GO:0005634; C:nucleus; IEA:UniProtKB-SubCell.
+DR   GO; GO:0005524; F:ATP binding; IEA:UniProtKB-KW.
+DR   GO; GO:0005516; F:calmodulin binding; IDA:RGD.
+DR   GO; GO:0004683; F:calmodulin-dependent protein kinase activity; IDA:RGD.
+DR   GO; GO:0032147; P:activation of protein kinase activity; IDA:RGD.
+DR   InterPro; IPR020636; Ca/CaM-dep_Ca-dep_prot_Kinase.
+DR   InterPro; IPR011009; Kinase-like_dom.
+DR   InterPro; IPR000719; Prot_kinase_dom.
+DR   InterPro; IPR017441; Protein_kinase_ATP_BS.
+DR   InterPro; IPR002290; Ser/Thr_dual-sp_kinase_dom.
+DR   InterPro; IPR008271; Ser/Thr_kinase_AS.
+DR   PANTHER; PTHR24347; PTHR24347; 1.
+DR   Pfam; PF00069; Pkinase; 1.
+DR   SMART; SM00220; S_TKc; 1.
+DR   SUPFAM; SSF56112; SSF56112; 2.
+DR   PROSITE; PS00107; PROTEIN_KINASE_ATP; 1.
+DR   PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+DR   PROSITE; PS00108; PROTEIN_KINASE_ST; 1.
+PE   1: Evidence at protein level;
+KW   3D-structure; ATP-binding; Calmodulin-binding; Complete proteome;
+KW   Cytoplasm; Direct protein sequencing; Kinase; Nucleotide-binding;
+KW   Nucleus; Phosphoprotein; Reference proteome;
+KW   Serine/threonine-protein kinase; Transferase.
+FT   CHAIN         1    505       Calcium/calmodulin-dependent protein
+FT                                kinase kinase 1.
+FT                                /FTId=PRO_0000086143.
+FT   DOMAIN      128    409       Protein kinase.
+FT   NP_BIND     134    142       ATP (By similarity).
+FT   REGION      167    189       RP domain.
+FT   REGION      435    440       Autoinhibitory domain.
+FT   REGION      438    463       Calmodulin-binding.
+FT   ACT_SITE    275    275       Proton acceptor (By similarity).
+FT   BINDING     157    157       ATP (By similarity).
+FT   MOD_RES      74     74       Phosphoserine.
+FT   MOD_RES     108    108       Phosphothreonine.
+FT   MOD_RES     458    458       Phosphoserine.
+FT   MOD_RES     492    492       Phosphoserine (By similarity).
+FT   MUTAGEN      74     74       S->A: Decrease in phosphorylation by PKA.
+FT   MUTAGEN     108    108       T->A: Decrease in phosphorylation and
+FT                                partial inhibition by PKA. Almost loss of
+FT                                inhibition by PKA; when associated with
+FT                                A-458.
+FT   MUTAGEN     172    172       R->E: Loss of substrate recognition and
+FT                                interaction with CAMK4.
+FT   MUTAGEN     177    177       R->E: Loss of substrate recognition and
+FT                                interaction with CAMK4.
+FT   MUTAGEN     458    458       S->A: Decrease in phosphorylation and
+FT                                partial inhibition by PKA. Almost loss of
+FT                                inhibition by PKA; when associated with
+FT                                A-108.
+FT   MUTAGEN     459    459       F->D: Loss of binding to
+FT                                Ca(2+)/calmodulin.
+FT   MUTAGEN     463    463       F->D: Loss of binding to
+FT                                Ca(2+)/calmodulin.
+FT   CONFLICT     45     45       P -> S (in Ref. 1; AAC42070).
+FT   CONFLICT     81     81       G -> E (in Ref. 1; AAC42070).
+FT   HELIX       444    453
+FT   STRAND      455    457
+SQ   SEQUENCE   505 AA;  55908 MW;  6B268780AC9B67E1 CRC64;
+     MERSPAVCCQ DPRAELVERV AAISVAHLEE AEEGPEPASN GVDPPPRARA ASVIPGSASR
+     PTPVRPSLSA RKFSLQERPA GSCLEAQVGP YSTGPASHMS PRAWRRPTIE SHHVAISDTE
+     DCVQLNQYKL QSEIGKGAYG VVRLAYNERE DRHYAMKVLS KKKLLKQYGF PRRPPPRGSQ
+     APQGGPAKQL LPLERVYQEI AILKKLDHVN VVKLIEVLDD PAEDNLYLVF DLLRKGPVME
+     VPCDKPFPEE QARLYLRDII LGLEYLHCQK IVHRDIKPSN LLLGDDGHVK IADFGVSNQF
+     EGNDAQLSST AGTPAFMAPE AISDTGQSFS GKALDVWATG VTLYCFVYGK CPFIDEYILA
+     LHRKIKNEAV VFPEEPEVSE ELKDLILKML DKNPETRIGV SDIKLHPWVT KHGEEPLPSE
+     EEHCSVVEVT EEEVKNSVKL IPSWTTVILV KSMLRKRSFG NPFEPQARRE ERSMSAPGNL
+     LLKEGCGEGG KSPELPGVQE DEAAS
+//
+ID   M4K2_HUMAN              Reviewed;         820 AA.
+AC   Q12851;
+DT   28-FEB-2003, integrated into UniProtKB/Swiss-Prot.
+DT   25-NOV-2008, sequence version 2.
+DT   19-MAR-2014, entry version 134.
+DE   RecName: Full=Mitogen-activated protein kinase kinase kinase kinase 2;
+DE            EC=2.7.11.1;
+DE   AltName: Full=B lymphocyte serine/threonine-protein kinase;
+DE   AltName: Full=Germinal center kinase;
+DE            Short=GC kinase;
+DE   AltName: Full=MAPK/ERK kinase kinase kinase 2;
+DE            Short=MEK kinase kinase 2;
+DE            Short=MEKKK 2;
+DE   AltName: Full=Rab8-interacting protein;
+GN   Name=MAP4K2; Synonyms=GCK, RAB8IP;
+OS   Homo sapiens (Human).
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+OC   Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+OC   Catarrhini; Hominidae; Homo.
+OX   NCBI_TaxID=9606;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA].
+RX   PubMed=16554811; DOI=10.1038/nature04632;
+RA   Taylor T.D., Noguchi H., Totoki Y., Toyoda A., Kuroki Y., Dewar K.,
+RA   Lloyd C., Itoh T., Takeda T., Kim D.-W., She X., Barlow K.F.,
+RA   Bloom T., Bruford E., Chang J.L., Cuomo C.A., Eichler E.,
+RA   FitzGerald M.G., Jaffe D.B., LaButti K., Nicol R., Park H.-S.,
+RA   Seaman C., Sougnez C., Yang X., Zimmer A.R., Zody M.C., Birren B.W.,
+RA   Nusbaum C., Fujiyama A., Hattori M., Rogers J., Lander E.S.,
+RA   Sakaki Y.;
+RT   "Human chromosome 11 DNA sequence and analysis including novel gene
+RT   identification.";
+RL   Nature 440:497-500(2006).
+RN   [2]
+RP   NUCLEOTIDE SEQUENCE [MRNA] OF 2-820, FUNCTION, DOMAIN, AND TISSUE
+RP   SPECIFICITY.
+RC   TISSUE=Tonsil;
+RX   PubMed=7515885;
+RA   Katz P., Whalen G., Kehrl J.H.;
+RT   "Differential expression of a novel protein kinase in human B
+RT   lymphocytes. Preferential localization in the germinal center.";
+RL   J. Biol. Chem. 269:16802-16809(1994).
+RN   [3]
+RP   FUNCTION, AND ENZYME REGULATION.
+RX   PubMed=7477268; DOI=10.1038/377750a0;
+RA   Pombo C.M., Kehrl J.H., Sanchez I., Katz P., Avruch J., Zon L.I.,
+RA   Woodgett J.R., Force T., Kyriakis J.M.;
+RT   "Activation of the SAPK pathway by the human STE20 homologue germinal
+RT   centre kinase.";
+RL   Nature 377:750-754(1995).
+RN   [4]
+RP   FUNCTION, AUTOPHOSPHORYLATION, AND INTERACTION WITH MAP3K1/MEKK1 AND
+RP   TRAF2.
+RX   PubMed=9712898; DOI=10.1074/jbc.273.35.22681;
+RA   Yuasa T., Ohno S., Kehrl J.H., Kyriakis J.M.;
+RT   "Tumor necrosis factor signaling to stress-activated protein kinase
+RT   (SAPK)/Jun NH2-terminal kinase (JNK) and p38. Germinal center kinase
+RT   couples TRAF2 to mitogen-activated protein kinase/ERK kinase kinase 1
+RT   and SAPK while receptor interacting protein associates with a mitogen-
+RT   activated protein kinase kinase kinase upstream of MKK6 and p38.";
+RL   J. Biol. Chem. 273:22681-22692(1998).
+RN   [5]
+RP   FUNCTION, AND INTERACTION WITH TRAF2 AND MAP3K1.
+RX   PubMed=11784851; DOI=10.1128/MCB.22.3.737-749.2002;
+RA   Chadee D.N., Yuasa T., Kyriakis J.M.;
+RT   "Direct activation of mitogen-activated protein kinase kinase kinase
+RT   MEKK1 by the Ste20p homologue GCK and the adapter protein TRAF2.";
+RL   Mol. Cell. Biol. 22:737-749(2002).
+RN   [6]
+RP   ENZYME REGULATION, FUNCTION, UBIQUITINATION, AND INTERACTION WITH
+RP   TRAF6.
+RX   PubMed=15456887; DOI=10.1128/MCB.24.20.9165-9175.2004;
+RA   Zhong J., Kyriakis J.M.;
+RT   "Germinal center kinase is required for optimal Jun N-terminal kinase
+RT   activation by Toll-like receptor agonists and is regulated by the
+RT   ubiquitin proteasome system and agonist-induced, TRAF6-dependent
+RT   stabilization.";
+RL   Mol. Cell. Biol. 24:9165-9175(2004).
+RN   [7]
+RP   FUNCTION, AND INTERACTION WITH MAP3K11/MLK3.
+RX   PubMed=17584736; DOI=10.1074/jbc.M703422200;
+RA   Zhong J., Kyriakis J.M.;
+RT   "Dissection of a signaling pathway by which pathogen-associated
+RT   molecular patterns recruit the JNK and p38 MAPKs and trigger cytokine
+RT   release.";
+RL   J. Biol. Chem. 282:24246-24254(2007).
+RN   [8]
+RP   REVIEW ON FUNCTION.
+RX   PubMed=10026130; DOI=10.1074/jbc.274.9.5259;
+RA   Kyriakis J.M.;
+RT   "Signaling by the germinal center kinase family of protein kinases.";
+RL   J. Biol. Chem. 274:5259-5262(1999).
+RN   [9]
+RP   REVIEW ON FUNCTION.
+RX   PubMed=11316611; DOI=10.1016/S0962-8924(01)01980-8;
+RA   Dan I., Watanabe N.M., Kusumi A.;
+RT   "The Ste20 group kinases as regulators of MAP kinase cascades.";
+RL   Trends Cell Biol. 11:220-230(2001).
+RN   [10]
+RP   PHOSPHORYLATION [LARGE SCALE ANALYSIS] AT SER-394, AND IDENTIFICATION
+RP   BY MASS SPECTROMETRY [LARGE SCALE ANALYSIS].
+RC   TISSUE=Cervix carcinoma;
+RX   PubMed=18669648; DOI=10.1073/pnas.0805139105;
+RA   Dephoure N., Zhou C., Villen J., Beausoleil S.A., Bakalarski C.E.,
+RA   Elledge S.J., Gygi S.P.;
+RT   "A quantitative atlas of mitotic phosphorylation.";
+RL   Proc. Natl. Acad. Sci. U.S.A. 105:10762-10767(2008).
+RN   [11]
+RP   PHOSPHORYLATION [LARGE SCALE ANALYSIS] AT SER-394, AND IDENTIFICATION
+RP   BY MASS SPECTROMETRY [LARGE SCALE ANALYSIS].
+RX   PubMed=19369195; DOI=10.1074/mcp.M800588-MCP200;
+RA   Oppermann F.S., Gnad F., Olsen J.V., Hornberger R., Greff Z., Keri G.,
+RA   Mann M., Daub H.;
+RT   "Large-scale proteomics analysis of the human kinome.";
+RL   Mol. Cell. Proteomics 8:1751-1764(2009).
+RN   [12]
+RP   PHOSPHORYLATION [LARGE SCALE ANALYSIS] AT SER-394, AND IDENTIFICATION
+RP   BY MASS SPECTROMETRY [LARGE SCALE ANALYSIS].
+RC   TISSUE=Leukemic T-cell;
+RX   PubMed=19690332; DOI=10.1126/scisignal.2000007;
+RA   Mayya V., Lundgren D.H., Hwang S.-I., Rezaul K., Wu L., Eng J.K.,
+RA   Rodionov V., Han D.K.;
+RT   "Quantitative phosphoproteomic analysis of T cell receptor signaling
+RT   reveals system-wide modulation of protein-protein interactions.";
+RL   Sci. Signal. 2:RA46-RA46(2009).
+CC   -!- FUNCTION: Serine/threonine-protein kinase which acts as an
+CC       essential component of the MAP kinase signal transduction pathway.
+CC       Acts as a MAPK kinase kinase kinase (MAP4K) and is an upstream
+CC       activator of the stress-activated protein kinase/c-Jun N-terminal
+CC       kinase (SAP/JNK) signaling pathway and to a lesser extend of the
+CC       p38 MAPKs signaling pathway. Required for the efficient activation
+CC       of JNKs by TRAF6-dependent stimuli, including pathogen-associated
+CC       molecular patterns (PAMPs) such as polyinosine-polycytidine
+CC       (poly(IC)), lipopolysaccharides (LPS), lipid A, peptidoglycan
+CC       (PGN), or bacterial flagellin. To a lesser degree, IL-1 and
+CC       engagement of CD40 also stimulate MAP4K2-mediated JNKs activation.
+CC       The requirement for MAP4K2/GCK is most pronounced for LPS
+CC       signaling, and extends to LPS stimulation of c-Jun phosphorylation
+CC       and induction of IL-8. Enhances MAP3K1 oligomerization, which may
+CC       relieve N-terminal mediated MAP3K1 autoinhibition and lead to
+CC       activation following autophosphorylation. Mediates also the
+CC       SAP/JNK signaling pathway and the p38 MAPKs signaling pathway
+CC       through activation of the MAP3Ks MAP3K10/MLK2 and MAP3K11/MLK3.
+CC       May play a role in the regulation of vesicle targeting or fusion.
+CC       regulation of vesicle targeting or fusion.
+CC   -!- CATALYTIC ACTIVITY: ATP + a protein = ADP + a phosphoprotein.
+CC   -!- COFACTOR: Magnesium.
+CC   -!- ENZYME REGULATION: The tumor necrosis factor (TNF), as well as
+CC       endotoxins and proinflammatory stimuli such as polyinosine-
+CC       polycytidine (poly(IC)), lipopolysaccharides (LPS), peptidoglycan
+CC       (PGN), flagellin, or lipid A activate MAP4K2 by promoting its
+CC       autophosphorylation.
+CC   -!- SUBUNIT: Interacts with TRAF2, TRAF6, MAP3K1/MEKK1 and
+CC       MAP3K11/MLK3. Interacts with RAB8A (By similarity).
+CC   -!- INTERACTION:
+CC       Q13233:MAP3K1; NbExp=2; IntAct=EBI-49783, EBI-49776;
+CC   -!- SUBCELLULAR LOCATION: Cytoplasm (By similarity). Basolateral cell
+CC       membrane; Peripheral membrane protein (By similarity). Golgi
+CC       apparatus membrane; Peripheral membrane protein (By similarity).
+CC   -!- TISSUE SPECIFICITY: Highly expressed in germinal center but not
+CC       mantle zone B-cells. Also expressed in lung, brain and placenta
+CC       and at lower levels in other tissues examined.
+CC   -!- DOMAIN: The PEST domains are Pro-, Glu-, Ser-, and Thr-rich
+CC       domains. Proteins with PEST domains are frequently targets of
+CC       degradation by the ubiquitin proteasome.
+CC   -!- PTM: Polyubiquitinated through 'Lys-48'-polyubiquitin chains,
+CC       allowing proteasomal turnover. Ubiquitination requires the kinase
+CC       activity of MAP4K2/GCK.
+CC   -!- PTM: Autophosphorylated in response to tumor necrosis factor
+CC       (TNF), endotoxins or proinflammatory stimuli. Autophosphorylation
+CC       leads to activation.
+CC   -!- SIMILARITY: Belongs to the protein kinase superfamily. STE Ser/Thr
+CC       protein kinase family. STE20 subfamily.
+CC   -!- SIMILARITY: Contains 1 CNH domain.
+CC   -!- SIMILARITY: Contains 1 protein kinase domain.
+CC   -!- SEQUENCE CAUTION:
+CC       Sequence=AAA20968.1; Type=Miscellaneous discrepancy; Note=Contaminating sequence. Sequence of unknown origin in the N-terminal part;
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; AP001462; -; NOT_ANNOTATED_CDS; Genomic_DNA.
+DR   EMBL; U07349; AAA20968.1; ALT_SEQ; mRNA.
+DR   PIR; A53714; A53714.
+DR   RefSeq; NP_004570.2; NM_004579.3.
+DR   UniGene; Hs.534341; -.
+DR   ProteinModelPortal; Q12851; -.
+DR   SMR; Q12851; 10-389.
+DR   BioGrid; 111809; 16.
+DR   IntAct; Q12851; 11.
+DR   MINT; MINT-8247528; -.
+DR   STRING; 9606.ENSP00000294066; -.
+DR   BindingDB; Q12851; -.
+DR   ChEMBL; CHEMBL5330; -.
+DR   GuidetoPHARMACOLOGY; 2086; -.
+DR   PhosphoSite; Q12851; -.
+DR   DMDM; 215274019; -.
+DR   PaxDb; Q12851; -.
+DR   PRIDE; Q12851; -.
+DR   DNASU; 5871; -.
+DR   Ensembl; ENST00000294066; ENSP00000294066; ENSG00000168067.
+DR   GeneID; 5871; -.
+DR   KEGG; hsa:5871; -.
+DR   UCSC; uc001obh.3; human.
+DR   CTD; 5871; -.
+DR   GeneCards; GC11M064556; -.
+DR   H-InvDB; HIX0026186; -.
+DR   HGNC; HGNC:6864; MAP4K2.
+DR   HPA; HPA007330; -.
+DR   MIM; 603166; gene.
+DR   neXtProt; NX_Q12851; -.
+DR   PharmGKB; PA30610; -.
+DR   eggNOG; COG0515; -.
+DR   HOGENOM; HOG000230824; -.
+DR   HOVERGEN; HBG036702; -.
+DR   InParanoid; Q12851; -.
+DR   KO; K04414; -.
+DR   OMA; EIYHATG; -.
+DR   PhylomeDB; Q12851; -.
+DR   TreeFam; TF105121; -.
+DR   SignaLink; Q12851; -.
+DR   GeneWiki; MAP4K2; -.
+DR   GenomeRNAi; 5871; -.
+DR   NextBio; 22804; -.
+DR   PRO; PR:Q12851; -.
+DR   ArrayExpress; Q12851; -.
+DR   Bgee; Q12851; -.
+DR   CleanEx; HS_GCK; -.
+DR   CleanEx; HS_MAP4K2; -.
+DR   Genevestigator; Q12851; -.
+DR   GO; GO:0016323; C:basolateral plasma membrane; IEA:UniProtKB-SubCell.
+DR   GO; GO:0000139; C:Golgi membrane; TAS:ProtInc.
+DR   GO; GO:0005524; F:ATP binding; IDA:UniProtKB.
+DR   GO; GO:0008349; F:MAP kinase kinase kinase kinase activity; IBA:RefGenome.
+DR   GO; GO:0005083; F:small GTPase regulator activity; IEA:InterPro.
+DR   GO; GO:0007257; P:activation of JUN kinase activity; IDA:UniProtKB.
+DR   GO; GO:0006955; P:immune response; TAS:ProtInc.
+DR   GO; GO:0045087; P:innate immune response; IEA:UniProtKB-KW.
+DR   GO; GO:0046330; P:positive regulation of JNK cascade; IDA:UniProtKB.
+DR   GO; GO:0006903; P:vesicle targeting; IEA:Ensembl.
+DR   InterPro; IPR001180; Citron.
+DR   InterPro; IPR011009; Kinase-like_dom.
+DR   InterPro; IPR021160; MAPKKKK.
+DR   InterPro; IPR000719; Prot_kinase_dom.
+DR   InterPro; IPR017441; Protein_kinase_ATP_BS.
+DR   InterPro; IPR002290; Ser/Thr_dual-sp_kinase_dom.
+DR   Pfam; PF00780; CNH; 1.
+DR   Pfam; PF00069; Pkinase; 1.
+DR   PIRSF; PIRSF038172; MAPKKKK; 1.
+DR   SMART; SM00036; CNH; 1.
+DR   SMART; SM00220; S_TKc; 1.
+DR   SUPFAM; SSF56112; SSF56112; 1.
+DR   PROSITE; PS50219; CNH; 1.
+DR   PROSITE; PS00107; PROTEIN_KINASE_ATP; 1.
+DR   PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+PE   1: Evidence at protein level;
+KW   ATP-binding; Cell membrane; Complete proteome; Cytoplasm;
+KW   Golgi apparatus; Immunity; Innate immunity; Kinase; Membrane;
+KW   Nucleotide-binding; Phosphoprotein; Reference proteome;
+KW   Serine/threonine-protein kinase; Stress response; Transferase;
+KW   Ubl conjugation.
+FT   CHAIN         1    820       Mitogen-activated protein kinase kinase
+FT                                kinase kinase 2.
+FT                                /FTId=PRO_0000086275.
+FT   DOMAIN       16    273       Protein kinase.
+FT   DOMAIN      482    793       CNH.
+FT   NP_BIND      22     30       ATP (By similarity).
+FT   REGION      294    314       PEST1.
+FT   REGION      344    360       PEST2.
+FT   REGION      405    448       PEST3.
+FT   ACT_SITE    136    136       Proton acceptor (By similarity).
+FT   BINDING      45     45       ATP (By similarity).
+FT   MOD_RES     394    394       Phosphoserine.
+FT   CONFLICT    120    120       A -> R (in Ref. 2; AAA20968).
+SQ   SEQUENCE   820 AA;  91556 MW;  A59C1E99BFFAEF41 CRC64;
+     MALLRDVSLQ DPRDRFELLQ RVGAGTYGDV YKARDTVTSE LAAVKIVKLD PGDDISSLQQ
+     EITILRECRH PNVVAYIGSY LRNDRLWICM EFCGGGSLQE IYHATGPLEE RQIAYVCREA
+     LKGLHHLHSQ GKIHRDIKGA NLLLTLQGDV KLADFGVSGE LTASVAKRRS FIGTPYWMAP
+     EVAAVERKGG YNELCDVWAL GITAIELGEL QPPLFHLHPM RALMLMSKSS FQPPKLRDKT
+     RWTQNFHHFL KLALTKNPKK RPTAEKLLQH PFTTQQLPRA LLTQLLDKAS DPHLGTPSPE
+     DCELETYDMF PDTIHSRGQH GPAERTPSEI QFHQVKFGAP RRKETDPLNE PWEEEWTLLG
+     KEELSGSLLQ SVQEALEERS LTIRSASEFQ ELDSPDDTMG TIKRAPFLGP LPTDPPAEEP
+     LSSPPGTLPP PPSGPNSSPL LPTAWATMKQ REDPERSSCH GLPPTPKVHM GACFSKVFNG
+     CPLRIHAAVT WIHPVTRDQF LVVGAEEGIY TLNLHELHED TLEKLISHRC SWLYCVNNVL
+     LSLSGKSTHI WAHDLPGLFE QRRLQQQVPL SIPTNRLTQR IIPRRFALST KIPDTKGCLQ
+     CRVVRNPYTG ATFLLAALPT SLLLLQWYEP LQKFLLLKNF SSPLPSPAGM LEPLVLDGKE
+     LPQVCVGAEG PEGPGCRVLF HVLPLEAGLT PDILIPPEGI PGSAQQVIQV DRDTILVSFE
+     RCVRIVNMQG EPTATLAPEL TFDFPIETVV CLQDSVLAFW SHGMQGRSLD TNEVTQEITD
+     ETRIFRVLGA HRDIILESIP TDNPEAHSNL YILTGHQSTY
+//
+ID   MP2K4_MOUSE             Reviewed;         397 AA.
+AC   P47809;
+DT   01-FEB-1996, integrated into UniProtKB/Swiss-Prot.
+DT   01-NOV-1997, sequence version 2.
+DT   19-MAR-2014, entry version 118.
+DE   RecName: Full=Dual specificity mitogen-activated protein kinase kinase 4;
+DE            Short=MAP kinase kinase 4;
+DE            Short=MAPKK 4;
+DE            EC=2.7.12.2;
+DE   AltName: Full=C-JUN N-terminal kinase kinase 1;
+DE            Short=JNK kinase 1;
+DE            Short=JNKK 1;
+DE   AltName: Full=JNK-activating kinase 1;
+DE   AltName: Full=MAPK/ERK kinase 4;
+DE            Short=MEK 4;
+DE   AltName: Full=SAPK/ERK kinase 1;
+DE            Short=SEK1;
+GN   Name=Map2k4; Synonyms=Jnkk1, Mek4, Mkk4, Prkmk4, Sek1, Serk1, Skk1;
+OS   Mus musculus (Mouse).
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+OC   Mammalia; Eutheria; Euarchontoglires; Glires; Rodentia; Sciurognathi;
+OC   Muroidea; Muridae; Murinae; Mus; Mus.
+OX   NCBI_TaxID=10090;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE [MRNA], FUNCTION, AND MUTAGENESIS OF LYS-129.
+RC   TISSUE=Embryo;
+RX   PubMed=7997269; DOI=10.1038/372794a0;
+RA   Sanchez I., Hughes R.T., Mayer B.J., Yee K., Woodgett J.R., Avruch J.,
+RA   Kyriakis J.M., Zon L.I.;
+RT   "Role of SAPK/ERK kinase-1 in the stress-activated pathway regulating
+RT   transcription factor c-Jun.";
+RL   Nature 372:794-798(1994).
+RN   [2]
+RP   SEQUENCE REVISION.
+RA   Zon L.I.;
+RL   Submitted (DEC-1996) to the EMBL/GenBank/DDBJ databases.
+RN   [3]
+RP   FUNCTION.
+RX   PubMed=9620683; DOI=10.1016/S1074-7613(00)80567-1;
+RA   Swat W., Fujikawa K., Ganiatsas S., Yang D., Xavier R.J., Harris N.L.,
+RA   Davidson L., Ferrini R., Davis R.J., Labow M.A., Flavell R.A.,
+RA   Zon L.I., Alt F.W.;
+RT   "SEK1/MKK4 is required for maintenance of a normal peripheral lymphoid
+RT   compartment but not for lymphocyte development.";
+RL   Immunity 8:625-634(1998).
+RN   [4]
+RP   ENZYME REGULATION, SUBCELLULAR LOCATION, AND FUNCTION OF THE MKK/JNK
+RP   PATHWAY.
+RX   PubMed=9891090;
+RA   Tournier C., Whitmarsh A.J., Cavanagh J., Barrett T., Davis R.J.;
+RT   "The MKK7 gene encodes a group of c-Jun NH2-terminal kinase kinases.";
+RL   Mol. Cell. Biol. 19:1569-1581(1999).
+RN   [5]
+RP   TISSUE SPECIFICITY.
+RX   PubMed=10095085; DOI=10.1016/S0169-328X(99)00035-2;
+RA   Lee J.K., Hwang W.S., Lee Y.D., Han P.L.;
+RT   "Dynamic expression of SEK1 suggests multiple roles of the gene during
+RT   embryogenesis and in adult brain of mice.";
+RL   Brain Res. Mol. Brain Res. 66:133-140(1999).
+RN   [6]
+RP   FUNCTION.
+RX   PubMed=11390361; DOI=10.1101/gad.888501;
+RA   Tournier C., Dong C., Turner T.K., Jones S.N., Flavell R.A.,
+RA   Davis R.J.;
+RT   "MKK7 is an essential component of the JNK signal transduction pathway
+RT   activated by proinflammatory cytokines.";
+RL   Genes Dev. 15:1419-1426(2001).
+RN   [7]
+RP   PHOSPHORYLATION, AND INTERACTION WITH MAP3K1/MEKK1.
+RX   PubMed=12401521; DOI=10.1016/S0898-6568(02)00056-6;
+RA   Tu Z., Mooney S.M., Lee F.S.;
+RT   "A subdomain of MEKK1 that is critical for binding to MKK4.";
+RL   Cell. Signal. 15:65-77(2003).
+RN   [8]
+RP   FUNCTION.
+RX   PubMed=12624093; DOI=10.1074/jbc.M213182200;
+RA   Kishimoto H., Nakagawa K., Watanabe T., Kitagawa D., Momose H.,
+RA   Seo J., Nishitai G., Shimizu N., Ohata S., Tanemura S., Asaka S.,
+RA   Goto T., Fukushi H., Yoshida H., Suzuki A., Sasaki T., Wada T.,
+RA   Penninger J.M., Nishina H., Katada T.;
+RT   "Different properties of SEK1 and MKK7 in dual phosphorylation of
+RT   stress-induced activated protein kinase SAPK/JNK in embryonic stem
+RT   cells.";
+RL   J. Biol. Chem. 278:16595-16601(2003).
+RN   [9]
+RP   DISRUPTION PHENOTYPE.
+RX   PubMed=17875933; DOI=10.1128/MCB.00226-07;
+RA   Wang X., Nadarajah B., Robinson A.C., McColl B.W., Jin J.W.,
+RA   Dajas-Bailador F., Boot-Handford R.P., Tournier C.;
+RT   "Targeted deletion of the mitogen-activated protein kinase kinase 4
+RT   gene in the nervous system causes severe brain developmental defects
+RT   and premature death.";
+RL   Mol. Cell. Biol. 27:7935-7946(2007).
+RN   [10]
+RP   DISRUPTION PHENOTYPE.
+RX   PubMed=19265040; DOI=10.1161/CIRCRESAHA.108.188292;
+RA   Liu W., Zi M., Jin J., Prehar S., Oceandy D., Kimura T.E., Lei M.,
+RA   Neyses L., Weston A.H., Cartwright E.J., Wang X.;
+RT   "Cardiac-specific deletion of mkk4 reveals its role in pathological
+RT   hypertrophic remodeling but not in physiological cardiac growth.";
+RL   Circ. Res. 104:905-914(2009).
+RN   [11]
+RP   REVIEW ON ENZYME REGULATION.
+RX   PubMed=17496909; DOI=10.1038/sj.onc.1210392;
+RA   Raman M., Chen W., Cobb M.H.;
+RT   "Differential regulation and properties of MAPKs.";
+RL   Oncogene 26:3100-3112(2007).
+RN   [12]
+RP   REVIEW ON FUNCTION.
+RX   PubMed=20801953; DOI=10.1093/jb/mvq098;
+RA   Asaoka Y., Nishina H.;
+RT   "Diverse physiological functions of MKK4 and MKK7 during early
+RT   embryogenesis.";
+RL   J. Biochem. 148:393-401(2010).
+RN   [13]
+RP   REVIEW ON REGULATION, AND REVIEW ON FUNCTION.
+RX   PubMed=21333379; DOI=10.1016/j.ejcb.2010.11.008;
+RA   Haeusgen W., Herdegen T., Waetzig V.;
+RT   "The bottleneck of JNK signaling: molecular and functional
+RT   characteristics of MKK4 and MKK7.";
+RL   Eur. J. Cell Biol. 90:536-544(2011).
+RN   [14]
+RP   INTERACTION WITH SPAG9.
+RX   PubMed=12391307; DOI=10.1073/pnas.232310199;
+RA   Lee C.M., Onesime D., Reddy C.D., Dhanasekaran N., Reddy E.P.;
+RT   "JLP: a scaffolding protein that tethers JNK/p38MAPK signaling modules
+RT   and transcription factors.";
+RL   Proc. Natl. Acad. Sci. U.S.A. 99:14189-14194(2002).
+CC   -!- FUNCTION: Dual specificity protein kinase which acts as an
+CC       essential component of the MAP kinase signal transduction pathway.
+CC       Essential component of the stress-activated protein kinase/c-Jun
+CC       N-terminal kinase (SAP/JNK) signaling pathway. With MAP2K7/MKK7,
+CC       is the one of the only known kinase to directly activate the
+CC       stress-activated protein kinase/c-Jun N-terminal kinases
+CC       MAPK8/JNK1, MAPK9/JNK2 and MAPK10/JNK3. MAP2K4/MKK4 and
+CC       MAP2K7/MKK7 both activate the JNKs by phosphorylation, but they
+CC       differ in their preference for the phosphorylation site in the
+CC       Thr-Pro-Tyr motif. MAP2K4 shows preference for phosphorylation of
+CC       the Tyr residue and MAP2K7/MKK7 for the Thr residue. The
+CC       phosphorylation of the Thr residue by MAP2K7/MKK7 seems to be the
+CC       prerequisite for JNK activation at least in response to
+CC       proinflammatory cytokines, while other stimuli activate both
+CC       MAP2K4/MKK4 and MAP2K7/MKK7 which synergistically phosphorylate
+CC       JNKs. MAP2K4 is required for maintaining peripheral lymphoid
+CC       homeostasis. The MKK/JNK signaling pathway is also involved in
+CC       mitochondrial death signaling pathway, including the release
+CC       cytochrome c, leading to apoptosis. Whereas MAP2K7/MKK7
+CC       exclusively activates JNKs, MAP2K4/MKK4 additionally activates the
+CC       p38 MAPKs MAPK11, MAPK12, MAPK13 and MAPK14.
+CC   -!- CATALYTIC ACTIVITY: ATP + a protein = ADP + a phosphoprotein.
+CC   -!- ENZYME REGULATION: Activated in response to a variety of cellular
+CC       stresses, including UV and gamma-irradiation, heat shock,
+CC       hyperosmolarity, T-cell receptor stimulation, peroxide and
+CC       inflammatory cytokines. Also activated by developmental cues.
+CC       MAP2K4/MKK4 is activated by the majority of MKKKs, such as
+CC       MAP3K5/ASK1, MAP3K1/MEKK1, MAP3K7/TAK1, MAP3K10/MLK2,
+CC       MAP3K11/MLK3, MAP3K12/DLK and MAP3K13/LZK.
+CC   -!- SUBUNIT: Interacts with SPAG9. Interacts (via its D domain) with
+CC       its substrates MAPK8/JNK1, MAPK9/JNK2, MAPK10/JNK3, MAPK11 and
+CC       MAPK14 (By similarity). Interacts (via its DVD domain) with MAP3Ks
+CC       activators like MAP3K1/MEKK1 and MAP3K11/MLK3. Interacts with
+CC       ARRB1, ARRB2 and MAPK8IP3/JIP3 (By similarity).
+CC   -!- SUBCELLULAR LOCATION: Cytoplasm. Nucleus.
+CC   -!- TISSUE SPECIFICITY: Strong expression is detected in most of the
+CC       central nervous system and in liver and thymus during early stages
+CC       of development. While expression in nervous system increases over
+CC       time, expression in fetal liver and thymus gradually decreases as
+CC       embryogenesis proceeds. High level of expression in the central
+CC       nervous system persists throughout postnatal development and
+CC       remained at a stable level in adult brain.
+CC   -!- DOMAIN: The DVD domain (residues 362-385) contains a conserved
+CC       docking site and is found in the mammalian MAP kinase kinases
+CC       (MAP2Ks). The DVD sites bind to their specific upstream MAP kinase
+CC       kinase kinases (MAP3Ks) and are essential for activation (By
+CC       similarity).
+CC   -!- DOMAIN: The D domain (residues 35-50) contains a conserved docking
+CC       site and is required for the binding to MAPk substrates.
+CC   -!- PTM: Activated by phosphorylation on Ser-255 and Thr-259 by MAP
+CC       kinase kinase kinases (MAP3Ks) (By similarity).
+CC   -!- DISRUPTION PHENOTYPE: Causes irregular alignment of Purkinje cells
+CC       in the cerebellum and delayed radial migration in the cortex
+CC       during brain development. The cardiac-specific deletion prevents
+CC       pathological cardiac hypertrophy.
+CC   -!- SIMILARITY: Belongs to the protein kinase superfamily. STE Ser/Thr
+CC       protein kinase family. MAP kinase kinase subfamily.
+CC   -!- SIMILARITY: Contains 1 protein kinase domain.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; U18310; AAB81554.1; -; mRNA.
+DR   PIR; S52423; S52423.
+DR   RefSeq; NP_033183.1; NM_009157.4.
+DR   UniGene; Mm.412922; -.
+DR   ProteinModelPortal; P47809; -.
+DR   SMR; P47809; 93-386.
+DR   BioGrid; 204952; 7.
+DR   DIP; DIP-869N; -.
+DR   IntAct; P47809; 2.
+DR   MINT; MINT-4102306; -.
+DR   STRING; 10090.ENSMUSP00000041282; -.
+DR   BindingDB; P47809; -.
+DR   ChEMBL; CHEMBL2201; -.
+DR   PhosphoSite; P47809; -.
+DR   PaxDb; P47809; -.
+DR   PRIDE; P47809; -.
+DR   DNASU; 26398; -.
+DR   Ensembl; ENSMUST00000046963; ENSMUSP00000041282; ENSMUSG00000033352.
+DR   GeneID; 26398; -.
+DR   KEGG; mmu:26398; -.
+DR   UCSC; uc007jlb.1; mouse.
+DR   CTD; 6416; -.
+DR   MGI; MGI:1346869; Map2k4.
+DR   eggNOG; COG0515; -.
+DR   HOGENOM; HOG000234206; -.
+DR   HOVERGEN; HBG108518; -.
+DR   InParanoid; P47809; -.
+DR   KO; K04430; -.
+DR   OMA; VMKSNDC; -.
+DR   OrthoDB; EOG7J9VPW; -.
+DR   TreeFam; TF350701; -.
+DR   BRENDA; 2.7.12.2; 3474.
+DR   Reactome; REACT_98458; Immune System.
+DR   NextBio; 304351; -.
+DR   PRO; PR:P47809; -.
+DR   ArrayExpress; P47809; -.
+DR   Bgee; P47809; -.
+DR   CleanEx; MM_MAP2K4; -.
+DR   Genevestigator; P47809; -.
+DR   GO; GO:0005829; C:cytosol; TAS:Reactome.
+DR   GO; GO:0032839; C:dendrite cytoplasm; IEA:Ensembl.
+DR   GO; GO:0005634; C:nucleus; IEA:UniProtKB-SubCell.
+DR   GO; GO:0043204; C:perikaryon; IEA:Ensembl.
+DR   GO; GO:0005524; F:ATP binding; IEA:UniProtKB-KW.
+DR   GO; GO:0008545; F:JUN kinase kinase activity; IEA:Ensembl.
+DR   GO; GO:0004674; F:protein serine/threonine kinase activity; IEA:UniProtKB-KW.
+DR   GO; GO:0004713; F:protein tyrosine kinase activity; IEA:UniProtKB-KW.
+DR   GO; GO:0007257; P:activation of JUN kinase activity; ISO:MGI.
+DR   GO; GO:0006915; P:apoptotic process; IEA:UniProtKB-KW.
+DR   GO; GO:0071260; P:cellular response to mechanical stimulus; IEA:Ensembl.
+DR   GO; GO:0072709; P:cellular response to sorbitol; IEA:Ensembl.
+DR   GO; GO:0018108; P:peptidyl-tyrosine phosphorylation; IEA:GOC.
+DR   GO; GO:0045740; P:positive regulation of DNA replication; IEA:Ensembl.
+DR   GO; GO:0043525; P:positive regulation of neuron apoptotic process; IEA:Ensembl.
+DR   InterPro; IPR011009; Kinase-like_dom.
+DR   InterPro; IPR000719; Prot_kinase_dom.
+DR   InterPro; IPR017441; Protein_kinase_ATP_BS.
+DR   InterPro; IPR002290; Ser/Thr_dual-sp_kinase_dom.
+DR   InterPro; IPR008271; Ser/Thr_kinase_AS.
+DR   Pfam; PF00069; Pkinase; 1.
+DR   SMART; SM00220; S_TKc; 1.
+DR   SUPFAM; SSF56112; SSF56112; 1.
+DR   PROSITE; PS00107; PROTEIN_KINASE_ATP; 1.
+DR   PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+DR   PROSITE; PS00108; PROTEIN_KINASE_ST; 1.
+PE   1: Evidence at protein level;
+KW   Acetylation; Apoptosis; ATP-binding; Complete proteome; Cytoplasm;
+KW   Kinase; Nucleotide-binding; Nucleus; Phosphoprotein;
+KW   Reference proteome; Serine/threonine-protein kinase; Stress response;
+KW   Transferase; Tyrosine-protein kinase.
+FT   INIT_MET      1      1       Removed (By similarity).
+FT   CHAIN         2    397       Dual specificity mitogen-activated
+FT                                protein kinase kinase 4.
+FT                                /FTId=PRO_0000086382.
+FT   DOMAIN      100    366       Protein kinase.
+FT   NP_BIND     106    114       ATP (By similarity).
+FT   REGION       35     50       D domain (By similarity).
+FT   REGION      362    385       DVD domain (By similarity).
+FT   COMPBIAS      5     17       Gly/Ser-rich.
+FT   ACT_SITE    227    227       Proton acceptor (By similarity).
+FT   BINDING     129    129       ATP.
+FT   MOD_RES       2      2       N-acetylalanine (By similarity).
+FT   MOD_RES      88     88       Phosphoserine (By similarity).
+FT   MOD_RES     255    255       Phosphoserine; by MAP3K (By similarity).
+FT   MOD_RES     259    259       Phosphothreonine; by MAP3K (By
+FT                                similarity).
+FT   MUTAGEN     129    129       K->R: Loss of ATP-binding.
+SQ   SEQUENCE   397 AA;  44114 MW;  B99C6688184E5B3D CRC64;
+     MAAPSPSGGG GSGGGGGTPG PIGPPASGHP AVSSMQGKRK ALKLNFANPP VKSTARFTLN
+     PNTTGVQNPH IERLRTHSIE SSGKLKISPE QHWDFTAEDL KDLGEIGRGA YGSVNKMVHK
+     PSGQIMAVKR IRSTVDEKEQ KQLLMDLDVV MRSSDCPYIV QFYGALFREG DCWICMELMS
+     TSFDKFYKYV YSVLDDVIPE EILGKITLAT VKALNHLKEN LKIIHRDIKP SNILLDRSGN
+     IKLCDFGISG QLVDSIAKTR DAGCRPYMAP ERIDPSASRQ GYDVRSDVWS LGITLYELAT
+     GRFPYPKWNS VFDQLTQVVK GDPPQLSNSE EREFSPSFIN FVNLCLTKDE SKRPKYKELL
+     KHPFILMYEE RTVEVACYVC KILDQMPATP SSPMYVD
+//
+ID   MP2K7_HUMAN             Reviewed;         419 AA.
+AC   O14733; B2R9S5; D6W659; O14648; O14816; O60452; O60453; Q1PG43;
+AC   Q8IY10;
+DT   30-MAY-2000, integrated into UniProtKB/Swiss-Prot.
+DT   30-MAY-2000, sequence version 2.
+DT   19-MAR-2014, entry version 139.
+DE   RecName: Full=Dual specificity mitogen-activated protein kinase kinase 7;
+DE            Short=MAP kinase kinase 7;
+DE            Short=MAPKK 7;
+DE            EC=2.7.12.2;
+DE   AltName: Full=JNK-activating kinase 2;
+DE   AltName: Full=MAPK/ERK kinase 7;
+DE            Short=MEK 7;
+DE   AltName: Full=Stress-activated protein kinase kinase 4;
+DE            Short=SAPK kinase 4;
+DE            Short=SAPKK-4;
+DE            Short=SAPKK4;
+DE   AltName: Full=c-Jun N-terminal kinase kinase 2;
+DE            Short=JNK kinase 2;
+DE            Short=JNKK 2;
+GN   Name=MAP2K7; Synonyms=JNKK2, MEK7, MKK7, PRKMK7, SKK4;
+OS   Homo sapiens (Human).
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+OC   Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+OC   Catarrhini; Hominidae; Homo.
+OX   NCBI_TaxID=9606;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE [MRNA] (ISOFORM 1), FUNCTION, AND TISSUE
+RP   SPECIFICITY.
+RC   TISSUE=Heart, and Skeletal muscle;
+RX   PubMed=9372971;
+RA   Wu Z., Wu J., Jacinto E., Karin M.;
+RT   "Molecular cloning and characterization of human JNKK2, a novel jun
+RT   NH2-terminal kinase-specific kinase.";
+RL   Mol. Cell. Biol. 17:7407-7416(1997).
+RN   [2]
+RP   NUCLEOTIDE SEQUENCE [MRNA] (ISOFORM 1), FUNCTION, AND ENZYME
+RP   REGULATION.
+RX   PubMed=9312068; DOI=10.1074/jbc.272.40.24751;
+RA   Lu X., Nemoto S., Lin A.;
+RT   "Identification of c-Jun NH2-terminal protein kinase (JNK)-activating
+RT   kinase 2 as an activator of JNK but not p38.";
+RL   J. Biol. Chem. 272:24751-24754(1997).
+RN   [3]
+RP   NUCLEOTIDE SEQUENCE [MRNA] (ISOFORMS 1 AND 2), FUNCTION, TISSUE
+RP   SPECIFICITY, AND VARIANT PHE-259.
+RC   TISSUE=Fetal kidney;
+RX   PubMed=9535930; DOI=10.1074/jbc.273.15.9344;
+RA   Foltz I.N., Gerl R.E., Wieler J.S., Luckach M., Salmon R.A.,
+RA   Schrader J.W.;
+RT   "Human mitogen-activated protein kinase kinase 7 (MKK7) is a highly
+RT   conserved c-Jun N-terminal kinase/stress-activated protein kinase
+RT   (JNK/SAPK) activated by environmental stresses and physiological
+RT   stimuli.";
+RL   J. Biol. Chem. 273:9344-9351(1998).
+RN   [4]
+RP   NUCLEOTIDE SEQUENCE [MRNA] (ISOFORM 3), ENZYME REGULATION, AND TISSUE
+RP   SPECIFICITY.
+RX   PubMed=16442502; DOI=10.1016/j.bbrc.2005.12.223;
+RA   Michael L., Swantek J., Robinson M.J.;
+RT   "Cloning and expression of human mitogen-activated protein kinase
+RT   kinase 7gamma1.";
+RL   Biochem. Biophys. Res. Commun. 341:679-683(2006).
+RN   [5]
+RP   NUCLEOTIDE SEQUENCE [MRNA] (ISOFORM 1), AND FUNCTION IN
+RP   PHOSPHORYLATION OF MAPK8/JNK1 AND MAPK9/JNK2.
+RA   Yang J., New L., Yong J., Han J., Su B.;
+RT   "Molecular cloning of human JNKK2 reveals a novel kinase module for c-
+RT   Jun N-terminal kinase activation.";
+RL   Submitted (SEP-1997) to the EMBL/GenBank/DDBJ databases.
+RN   [6]
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE MRNA] (ISOFORM 1).
+RC   TISSUE=Brain;
+RX   PubMed=14702039; DOI=10.1038/ng1285;
+RA   Ota T., Suzuki Y., Nishikawa T., Otsuki T., Sugiyama T., Irie R.,
+RA   Wakamatsu A., Hayashi K., Sato H., Nagai K., Kimura K., Makita H.,
+RA   Sekine M., Obayashi M., Nishi T., Shibahara T., Tanaka T., Ishii S.,
+RA   Yamamoto J., Saito K., Kawai Y., Isono Y., Nakamura Y., Nagahari K.,
+RA   Murakami K., Yasuda T., Iwayanagi T., Wagatsuma M., Shiratori A.,
+RA   Sudo H., Hosoiri T., Kaku Y., Kodaira H., Kondo H., Sugawara M.,
+RA   Takahashi M., Kanda K., Yokoi T., Furuya T., Kikkawa E., Omura Y.,
+RA   Abe K., Kamihara K., Katsuta N., Sato K., Tanikawa M., Yamazaki M.,
+RA   Ninomiya K., Ishibashi T., Yamashita H., Murakawa K., Fujimori K.,
+RA   Tanai H., Kimata M., Watanabe M., Hiraoka S., Chiba Y., Ishida S.,
+RA   Ono Y., Takiguchi S., Watanabe S., Yosida M., Hotuta T., Kusano J.,
+RA   Kanehori K., Takahashi-Fujii A., Hara H., Tanase T.-O., Nomura Y.,
+RA   Togiya S., Komai F., Hara R., Takeuchi K., Arita M., Imose N.,
+RA   Musashino K., Yuuki H., Oshima A., Sasaki N., Aotsuka S.,
+RA   Yoshikawa Y., Matsunawa H., Ichihara T., Shiohata N., Sano S.,
+RA   Moriya S., Momiyama H., Satoh N., Takami S., Terashima Y., Suzuki O.,
+RA   Nakagawa S., Senoh A., Mizoguchi H., Goto Y., Shimizu F., Wakebe H.,
+RA   Hishigaki H., Watanabe T., Sugiyama A., Takemoto M., Kawakami B.,
+RA   Yamazaki M., Watanabe K., Kumagai A., Itakura S., Fukuzumi Y.,
+RA   Fujimori Y., Komiyama M., Tashiro H., Tanigami A., Fujiwara T.,
+RA   Ono T., Yamada K., Fujii Y., Ozaki K., Hirao M., Ohmori Y.,
+RA   Kawabata A., Hikiji T., Kobatake N., Inagaki H., Ikema Y., Okamoto S.,
+RA   Okitani R., Kawakami T., Noguchi S., Itoh T., Shigeta K., Senba T.,
+RA   Matsumura K., Nakajima Y., Mizuno T., Morinaga M., Sasaki M.,
+RA   Togashi T., Oyama M., Hata H., Watanabe M., Komatsu T.,
+RA   Mizushima-Sugano J., Satoh T., Shirai Y., Takahashi Y., Nakagawa K.,
+RA   Okumura K., Nagase T., Nomura N., Kikuchi H., Masuho Y., Yamashita R.,
+RA   Nakai K., Yada T., Nakamura Y., Ohara O., Isogai T., Sugano S.;
+RT   "Complete sequencing and characterization of 21,243 full-length human
+RT   cDNAs.";
+RL   Nat. Genet. 36:40-45(2004).
+RN   [7]
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA].
+RA   Mural R.J., Istrail S., Sutton G.G., Florea L., Halpern A.L.,
+RA   Mobarry C.M., Lippert R., Walenz B., Shatkay H., Dew I., Miller J.R.,
+RA   Flanigan M.J., Edwards N.J., Bolanos R., Fasulo D., Halldorsson B.V.,
+RA   Hannenhalli S., Turner R., Yooseph S., Lu F., Nusskern D.R.,
+RA   Shue B.C., Zheng X.H., Zhong F., Delcher A.L., Huson D.H.,
+RA   Kravitz S.A., Mouchard L., Reinert K., Remington K.A., Clark A.G.,
+RA   Waterman M.S., Eichler E.E., Adams M.D., Hunkapiller M.W., Myers E.W.,
+RA   Venter J.C.;
+RL   Submitted (SEP-2005) to the EMBL/GenBank/DDBJ databases.
+RN   [8]
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE MRNA] (ISOFORM 4).
+RC   TISSUE=Testis;
+RX   PubMed=15489334; DOI=10.1101/gr.2596504;
+RG   The MGC Project Team;
+RT   "The status, quality, and expansion of the NIH full-length cDNA
+RT   project: the Mammalian Gene Collection (MGC).";
+RL   Genome Res. 14:2121-2127(2004).
+RN   [9]
+RP   NUCLEOTIDE SEQUENCE [MRNA] OF 1-260 (ISOFORMS 1/4).
+RX   PubMed=9207092; DOI=10.1073/pnas.94.14.7337;
+RA   Tournier C., Whitmarsh A.J., Cavanagh J., Barrett T., Davis R.J.;
+RT   "Mitogen-activated protein kinase kinase 7 is an activator of the c-
+RT   Jun NH2-terminal kinase.";
+RL   Proc. Natl. Acad. Sci. U.S.A. 94:7337-7342(1997).
+RN   [10]
+RP   INTERACTION WITH MAPK8IP1/JIP1 AND MAPK8IP2/JIP2.
+RX   PubMed=10490659;
+RA   Yasuda J., Whitmarsh A.J., Cavanagh J., Sharma M., Davis R.J.;
+RT   "The JIP group of mitogen-activated protein kinase scaffold
+RT   proteins.";
+RL   Mol. Cell. Biol. 19:7245-7254(1999).
+RN   [11]
+RP   CLEAVAGE BY ANTHRAX LETHAL FACTOR.
+RX   PubMed=11104681; DOI=10.1042/0264-6021:3520739;
+RA   Vitale G., Bernardi L., Napolitani G., Mock M., Montecucco C.;
+RT   "Susceptibility of mitogen-activated protein kinase kinase family
+RT   members to proteolysis by anthrax lethal factor.";
+RL   Biochem. J. 352:739-745(2000).
+RN   [12]
+RP   INTERACTION WITH MAPK8IP3/JIP3.
+RX   PubMed=12189133; DOI=10.1074/jbc.M202004200;
+RA   Matsuura H., Nishitoh H., Takeda K., Matsuzawa A., Amagasa T., Ito M.,
+RA   Yoshioka K., Ichijo H.;
+RT   "Phosphorylation-dependent scaffolding role of JSAP1/JIP3 in the ASK1-
+RT   JNK signaling pathway. A new mode of regulation of the MAP kinase
+RT   cascade.";
+RL   J. Biol. Chem. 277:40703-40709(2002).
+RN   [13]
+RP   DOMAIN.
+RX   PubMed=15866172; DOI=10.1016/j.molcel.2005.04.001;
+RA   Takekawa M., Tatebayashi K., Saito H.;
+RT   "Conserved docking site is essential for activation of mammalian MAP
+RT   kinase kinases by specific MAP kinase kinase kinases.";
+RL   Mol. Cell 18:295-306(2005).
+RN   [14]
+RP   INTERACTION WITH VRK2.
+RX   PubMed=18286207; DOI=10.1371/journal.pone.0001660;
+RA   Blanco S., Sanz-Garcia M., Santos C.R., Lazo P.A.;
+RT   "Modulation of interleukin-1 transcriptional response by the
+RT   interaction between VRK2 and the JIP1 scaffold protein.";
+RL   PLoS ONE 3:E1660-E1660(2008).
+RN   [15]
+RP   REVIEW ON ENZYME REGULATION.
+RX   PubMed=17496909; DOI=10.1038/sj.onc.1210392;
+RA   Raman M., Chen W., Cobb M.H.;
+RT   "Differential regulation and properties of MAPKs.";
+RL   Oncogene 26:3100-3112(2007).
+RN   [16]
+RP   ACETYLATION [LARGE SCALE ANALYSIS] AT ALA-2, IDENTIFICATION BY MASS
+RP   SPECTROMETRY [LARGE SCALE ANALYSIS], AND CLEAVAGE OF INITIATOR
+RP   METHIONINE [LARGE SCALE ANALYSIS].
+RX   PubMed=19413330; DOI=10.1021/ac9004309;
+RA   Gauci S., Helbig A.O., Slijper M., Krijgsveld J., Heck A.J.,
+RA   Mohammed S.;
+RT   "Lys-N and trypsin cover complementary parts of the phosphoproteome in
+RT   a refined SCX-based approach.";
+RL   Anal. Chem. 81:4493-4501(2009).
+RN   [17]
+RP   REVIEW ON FUNCTION.
+RX   PubMed=20801953; DOI=10.1093/jb/mvq098;
+RA   Asaoka Y., Nishina H.;
+RT   "Diverse physiological functions of MKK4 and MKK7 during early
+RT   embryogenesis.";
+RL   J. Biochem. 148:393-401(2010).
+RN   [18]
+RP   INTERACTION WITH RASSF7.
+RX   PubMed=21278800; DOI=10.1038/cdd.2010.137;
+RA   Takahashi S., Ebihara A., Kajiho H., Kontani K., Nishina H.,
+RA   Katada T.;
+RT   "RASSF7 negatively regulates pro-apoptotic JNK signaling by inhibiting
+RT   the activity of phosphorylated-MKK7.";
+RL   Cell Death Differ. 18:645-655(2011).
+RN   [19]
+RP   REVIEW ON REGULATION, AND REVIEW ON FUNCTION.
+RX   PubMed=21333379; DOI=10.1016/j.ejcb.2010.11.008;
+RA   Haeusgen W., Herdegen T., Waetzig V.;
+RT   "The bottleneck of JNK signaling: molecular and functional
+RT   characteristics of MKK4 and MKK7.";
+RL   Eur. J. Cell Biol. 90:536-544(2011).
+RN   [20]
+RP   ACETYLATION [LARGE SCALE ANALYSIS] AT ALA-2, AND IDENTIFICATION BY
+RP   MASS SPECTROMETRY [LARGE SCALE ANALYSIS].
+RX   PubMed=22814378; DOI=10.1073/pnas.1210303109;
+RA   Van Damme P., Lasa M., Polevoda B., Gazquez C., Elosegui-Artola A.,
+RA   Kim D.S., De Juan-Pardo E., Demeyer K., Hole K., Larrea E.,
+RA   Timmerman E., Prieto J., Arnesen T., Sherman F., Gevaert K.,
+RA   Aldabe R.;
+RT   "N-terminal acetylome analyses and functional insights of the N-
+RT   terminal acetyltransferase NatB.";
+RL   Proc. Natl. Acad. Sci. U.S.A. 109:12449-12454(2012).
+RN   [21]
+RP   X-RAY CRYSTALLOGRAPHY (2.45 ANGSTROMS) OF 101-405.
+RG   RIKEN structural genomics initiative (RSGI);
+RT   "Crystal structure of human mitogen-activated protein kinase kinase 7
+RT   activated mutant (s287d, t291d).";
+RL   Submitted (FEB-2009) to the PDB data bank.
+RN   [22]
+RP   VARIANTS [LARGE SCALE ANALYSIS] SER-118; CYS-138; CYS-162; HIS-162 AND
+RP   THR-195.
+RX   PubMed=17344846; DOI=10.1038/nature05610;
+RA   Greenman C., Stephens P., Smith R., Dalgliesh G.L., Hunter C.,
+RA   Bignell G., Davies H., Teague J., Butler A., Stevens C., Edkins S.,
+RA   O'Meara S., Vastrik I., Schmidt E.E., Avis T., Barthorpe S.,
+RA   Bhamra G., Buck G., Choudhury B., Clements J., Cole J., Dicks E.,
+RA   Forbes S., Gray K., Halliday K., Harrison R., Hills K., Hinton J.,
+RA   Jenkinson A., Jones D., Menzies A., Mironenko T., Perry J., Raine K.,
+RA   Richardson D., Shepherd R., Small A., Tofts C., Varian J., Webb T.,
+RA   West S., Widaa S., Yates A., Cahill D.P., Louis D.N., Goldstraw P.,
+RA   Nicholson A.G., Brasseur F., Looijenga L., Weber B.L., Chiew Y.-E.,
+RA   DeFazio A., Greaves M.F., Green A.R., Campbell P., Birney E.,
+RA   Easton D.F., Chenevix-Trench G., Tan M.-H., Khoo S.K., Teh B.T.,
+RA   Yuen S.T., Leung S.Y., Wooster R., Futreal P.A., Stratton M.R.;
+RT   "Patterns of somatic mutation in human cancer genomes.";
+RL   Nature 446:153-158(2007).
+CC   -!- FUNCTION: Dual specificity protein kinase which acts as an
+CC       essential component of the MAP kinase signal transduction pathway.
+CC       Essential component of the stress-activated protein kinase/c-Jun
+CC       N-terminal kinase (SAP/JNK) signaling pathway. With MAP2K4/MKK4,
+CC       is the one of the only known kinase to directly activate the
+CC       stress-activated protein kinase/c-Jun N-terminal kinases
+CC       MAPK8/JNK1, MAPK9/JNK2 and MAPK10/JNK3. MAP2K4/MKK4 and
+CC       MAP2K7/MKK7 both activate the JNKs by phosphorylation, but they
+CC       differ in their preference for the phosphorylation site in the
+CC       Thr-Pro-Tyr motif. MAP2K4/MKK4 shows preference for
+CC       phosphorylation of the Tyr residue and MAP2K7/MKK7 for the Thr
+CC       residue. The monophosphorylation of JNKs on the Thr residue is
+CC       sufficient to increase JNK activity indicating that MAP2K7/MKK7 is
+CC       important to trigger JNK activity, while the additional
+CC       phosphorylation of the Tyr residue by MAP2K4/MKK4 ensures optimal
+CC       JNK activation. Has a specific role in JNK signal transduction
+CC       pathway activated by proinflammatory cytokines. The MKK/JNK
+CC       signaling pathway is also involved in mitochondrial death
+CC       signaling pathway, including the release cytochrome c, leading to
+CC       apoptosis.
+CC   -!- CATALYTIC ACTIVITY: ATP + a protein = ADP + a phosphoprotein.
+CC   -!- COFACTOR: Magnesium.
+CC   -!- ENZYME REGULATION: Activated by phosphorylation by specific MAP
+CC       kinase kinase kinases such as MAP3K1/MEKK1, MAP3K3/MEKK3,
+CC       MAP3K11/MLK3 and MAP3K12/DLK.
+CC   -!- SUBUNIT: Interacts with isoform 1 of VRK2. Interacts (via its D
+CC       domain) with its substrates MAPK8/JNK1, MAPK9/JNK2 and MAPK10/JNK3
+CC       (By similarity). Interacts (via its DVD domain) with MAP3Ks
+CC       activators like MAP3K5/ASK1 and MAP3K1/MEKK1 (By similarity).
+CC       Interacts with MAPK8IP1/JIP1, MAPK8IP2/JIP2 and MAPK8IP3/JIP3
+CC       scaffold proteins. Interacts with RASSF7, the interaction promotes
+CC       phosphorylation.
+CC   -!- INTERACTION:
+CC       O15519-1:CFLAR; NbExp=2; IntAct=EBI-492605, EBI-4567563;
+CC       Q5S007:LRRK2; NbExp=3; IntAct=EBI-492605, EBI-5323863;
+CC       O43318:MAP3K7; NbExp=2; IntAct=EBI-492605, EBI-358684;
+CC       P45983:MAPK8; NbExp=3; IntAct=EBI-492627, EBI-286483;
+CC       Q9UQF2:MAPK8IP1; NbExp=5; IntAct=EBI-492605, EBI-78404;
+CC   -!- SUBCELLULAR LOCATION: Nucleus. Cytoplasm (By similarity).
+CC   -!- ALTERNATIVE PRODUCTS:
+CC       Event=Alternative splicing; Named isoforms=4;
+CC       Name=1; Synonyms=A;
+CC         IsoId=O14733-1; Sequence=Displayed;
+CC       Name=2; Synonyms=B;
+CC         IsoId=O14733-2; Sequence=VSP_004883;
+CC         Note=May be due to intron retention;
+CC       Name=3; Synonyms=gamma1;
+CC         IsoId=O14733-3; Sequence=VSP_022309;
+CC       Name=4;
+CC         IsoId=O14733-4; Sequence=VSP_022310;
+CC         Note=No experimental confirmation available;
+CC   -!- TISSUE SPECIFICITY: Ubiquitous; with highest level of expression
+CC       in skeletal muscle. Isoform 3 is found at low levels in placenta,
+CC       fetal liver, and skeletal muscle.
+CC   -!- DOMAIN: The DVD domain (residues 377-400) contains a conserved
+CC       docking site and is found in the mammalian MAP kinase kinases
+CC       (MAP2Ks). The DVD sites bind to their specific upstream MAP kinase
+CC       kinase kinases (MAP3Ks) and are essential for activation.
+CC   -!- DOMAIN: The D domain (residues 37-57) contains a conserved docking
+CC       site and is required for the binding to MAPK substrates.
+CC   -!- PTM: Activated by phosphorylation on Ser-271 and Thr-275 by MAP
+CC       kinase kinase kinases (MAP3Ks) (By similarity).
+CC   -!- SIMILARITY: Belongs to the protein kinase superfamily. STE Ser/Thr
+CC       protein kinase family. MAP kinase kinase subfamily.
+CC   -!- SIMILARITY: Contains 1 protein kinase domain.
+CC   -!- SEQUENCE CAUTION:
+CC       Sequence=AAB97813.1; Type=Erroneous termination; Positions=420; Note=Translated as stop;
+CC       Sequence=AAB97813.1; Type=Frameshift; Positions=402, 410;
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; AF014401; AAB88048.1; -; mRNA.
+DR   EMBL; AF006689; AAB97813.1; ALT_SEQ; mRNA.
+DR   EMBL; AF013588; AAC16272.1; -; mRNA.
+DR   EMBL; AF013589; AAC16273.1; -; mRNA.
+DR   EMBL; DQ445915; ABE03013.1; -; mRNA.
+DR   EMBL; AF022805; AAC26142.1; -; mRNA.
+DR   EMBL; AK313899; BAG36622.1; -; mRNA.
+DR   EMBL; CH471139; EAW68964.1; -; Genomic_DNA.
+DR   EMBL; CH471139; EAW68968.1; -; Genomic_DNA.
+DR   EMBL; BC038295; AAH38295.1; -; mRNA.
+DR   EMBL; AF003199; AAB63374.1; -; mRNA.
+DR   RefSeq; NP_660186.1; NM_145185.2.
+DR   RefSeq; XP_005272546.1; XM_005272489.1.
+DR   RefSeq; XP_005272547.1; XM_005272490.1.
+DR   UniGene; Hs.531754; -.
+DR   PDB; 2DYL; X-ray; 2.45 A; A=101-405.
+DR   PDBsum; 2DYL; -.
+DR   ProteinModelPortal; O14733; -.
+DR   SMR; O14733; 53-402.
+DR   BioGrid; 111595; 34.
+DR   IntAct; O14733; 18.
+DR   MINT; MINT-1378223; -.
+DR   STRING; 9606.ENSP00000381066; -.
+DR   BindingDB; O14733; -.
+DR   ChEMBL; CHEMBL3530; -.
+DR   DrugBank; DB00773; Etoposide.
+DR   GuidetoPHARMACOLOGY; 2068; -.
+DR   PhosphoSite; O14733; -.
+DR   PaxDb; O14733; -.
+DR   PRIDE; O14733; -.
+DR   DNASU; 5609; -.
+DR   Ensembl; ENST00000397979; ENSP00000381066; ENSG00000076984. [O14733-1]
+DR   Ensembl; ENST00000397981; ENSP00000381068; ENSG00000076984. [O14733-4]
+DR   Ensembl; ENST00000397983; ENSP00000381070; ENSG00000076984. [O14733-3]
+DR   GeneID; 5609; -.
+DR   KEGG; hsa:5609; -.
+DR   UCSC; uc002mit.3; human. [O14733-1]
+DR   UCSC; uc002miv.2; human. [O14733-4]
+DR   CTD; 5609; -.
+DR   GeneCards; GC19P007968; -.
+DR   HGNC; HGNC:6847; MAP2K7.
+DR   HPA; CAB004262; -.
+DR   HPA; HPA001633; -.
+DR   MIM; 603014; gene.
+DR   neXtProt; NX_O14733; -.
+DR   PharmGKB; PA284; -.
+DR   eggNOG; COG0515; -.
+DR   HOVERGEN; HBG108518; -.
+DR   KO; K04431; -.
+DR   OrthoDB; EOG7J9VPW; -.
+DR   TreeFam; TF350701; -.
+DR   BRENDA; 2.7.12.2; 2681.
+DR   Reactome; REACT_120956; Cellular responses to stress.
+DR   Reactome; REACT_6782; TRAF6 Mediated Induction of proinflammatory cytokines.
+DR   Reactome; REACT_6900; Immune System.
+DR   SignaLink; O14733; -.
+DR   EvolutionaryTrace; O14733; -.
+DR   GeneWiki; MAP2K7; -.
+DR   GenomeRNAi; 5609; -.
+DR   NextBio; 21802; -.
+DR   PMAP-CutDB; O14733; -.
+DR   PRO; PR:O14733; -.
+DR   ArrayExpress; O14733; -.
+DR   Bgee; O14733; -.
+DR   CleanEx; HS_MAP2K7; -.
+DR   Genevestigator; O14733; -.
+DR   GO; GO:0005829; C:cytosol; TAS:Reactome.
+DR   GO; GO:0005634; C:nucleus; ISS:UniProtKB.
+DR   GO; GO:0005524; F:ATP binding; IEA:UniProtKB-KW.
+DR   GO; GO:0008545; F:JUN kinase kinase activity; IEA:Ensembl.
+DR   GO; GO:0000287; F:magnesium ion binding; IDA:UniProtKB.
+DR   GO; GO:0004708; F:MAP kinase kinase activity; IDA:UniProtKB.
+DR   GO; GO:0019903; F:protein phosphatase binding; ISS:BHF-UCL.
+DR   GO; GO:0004674; F:protein serine/threonine kinase activity; IEA:UniProtKB-KW.
+DR   GO; GO:0004713; F:protein tyrosine kinase activity; IEA:UniProtKB-KW.
+DR   GO; GO:0007257; P:activation of JUN kinase activity; ISS:BHF-UCL.
+DR   GO; GO:0006915; P:apoptotic process; IEA:UniProtKB-KW.
+DR   GO; GO:0072709; P:cellular response to sorbitol; IEA:Ensembl.
+DR   GO; GO:0038095; P:Fc-epsilon receptor signaling pathway; TAS:Reactome.
+DR   GO; GO:0045087; P:innate immune response; TAS:Reactome.
+DR   GO; GO:0002755; P:MyD88-dependent toll-like receptor signaling pathway; TAS:Reactome.
+DR   GO; GO:0018108; P:peptidyl-tyrosine phosphorylation; IEA:GOC.
+DR   GO; GO:0043525; P:positive regulation of neuron apoptotic process; IEA:Ensembl.
+DR   GO; GO:0034166; P:toll-like receptor 10 signaling pathway; TAS:Reactome.
+DR   GO; GO:0034134; P:toll-like receptor 2 signaling pathway; TAS:Reactome.
+DR   GO; GO:0034138; P:toll-like receptor 3 signaling pathway; TAS:Reactome.
+DR   GO; GO:0034142; P:toll-like receptor 4 signaling pathway; TAS:Reactome.
+DR   GO; GO:0034146; P:toll-like receptor 5 signaling pathway; TAS:Reactome.
+DR   GO; GO:0034162; P:toll-like receptor 9 signaling pathway; TAS:Reactome.
+DR   GO; GO:0038123; P:toll-like receptor TLR1:TLR2 signaling pathway; TAS:Reactome.
+DR   GO; GO:0038124; P:toll-like receptor TLR6:TLR2 signaling pathway; TAS:Reactome.
+DR   GO; GO:0035666; P:TRIF-dependent toll-like receptor signaling pathway; TAS:Reactome.
+DR   InterPro; IPR011009; Kinase-like_dom.
+DR   InterPro; IPR000719; Prot_kinase_dom.
+DR   InterPro; IPR002290; Ser/Thr_dual-sp_kinase_dom.
+DR   InterPro; IPR008271; Ser/Thr_kinase_AS.
+DR   Pfam; PF00069; Pkinase; 1.
+DR   SMART; SM00220; S_TKc; 1.
+DR   SUPFAM; SSF56112; SSF56112; 1.
+DR   PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+DR   PROSITE; PS00108; PROTEIN_KINASE_ST; 1.
+PE   1: Evidence at protein level;
+KW   3D-structure; Acetylation; Alternative splicing; Apoptosis;
+KW   ATP-binding; Coiled coil; Complete proteome; Cytoplasm; Kinase;
+KW   Magnesium; Metal-binding; Nucleotide-binding; Nucleus; Phosphoprotein;
+KW   Polymorphism; Reference proteome; Serine/threonine-protein kinase;
+KW   Stress response; Transferase; Tyrosine-protein kinase.
+FT   INIT_MET      1      1       Removed.
+FT   CHAIN         2    419       Dual specificity mitogen-activated
+FT                                protein kinase kinase 7.
+FT                                /FTId=PRO_0000086388.
+FT   DOMAIN      120    380       Protein kinase.
+FT   NP_BIND     126    134       ATP (By similarity).
+FT   REGION       37     57       D domain (By similarity).
+FT   REGION      377    400       DVD domain.
+FT   COILED        2     30       Potential.
+FT   ACT_SITE    243    243       Proton acceptor (By similarity).
+FT   BINDING     149    149       ATP (By similarity).
+FT   SITE         44     45       Cleavage; by anthrax lethal factor.
+FT   SITE         76     77       Cleavage; by anthrax lethal factor.
+FT   MOD_RES       2      2       N-acetylalanine.
+FT   MOD_RES     271    271       Phosphoserine; by MAP3K (By similarity).
+FT   MOD_RES     275    275       Phosphothreonine; by MAP3K (By
+FT                                similarity).
+FT   VAR_SEQ      42     42       T -> IIVITLSPAPAPSQRAA (in isoform 3).
+FT                                /FTId=VSP_022309.
+FT   VAR_SEQ     111    111       Q -> QVPPSLWRGEGGGPARLDPSWERQWGAGGGGRAPGT
+FT                                LQPSLSSQ (in isoform 2).
+FT                                /FTId=VSP_004883.
+FT   VAR_SEQ     312    312       L -> LPCPSPSQ (in isoform 4).
+FT                                /FTId=VSP_022310.
+FT   VARIANT     118    118       N -> S (in dbSNP:rs56316660).
+FT                                /FTId=VAR_040825.
+FT   VARIANT     138    138       R -> C (in dbSNP:rs56106612).
+FT                                /FTId=VAR_040826.
+FT   VARIANT     162    162       R -> C (in a colorectal adenocarcinoma
+FT                                sample; somatic mutation).
+FT                                /FTId=VAR_040827.
+FT   VARIANT     162    162       R -> H (in a colorectal adenocarcinoma
+FT                                sample; somatic mutation).
+FT                                /FTId=VAR_040828.
+FT   VARIANT     195    195       A -> T (in dbSNP:rs55800262).
+FT                                /FTId=VAR_040829.
+FT   VARIANT     259    259       L -> F (in dbSNP:rs1053566).
+FT                                /FTId=VAR_029890.
+FT   CONFLICT     94     94       Q -> H (in Ref. 2; AAB97813).
+FT   CONFLICT    106    106       L -> P (in Ref. 4; ABE03013).
+FT   CONFLICT    133    133       Q -> P (in Ref. 2; AAB97813).
+FT   CONFLICT    142    142       T -> N (in Ref. 1; AAB88048).
+FT   CONFLICT    407    407       S -> N (in Ref. 2; AAB97813).
+FT   CONFLICT    415    415       L -> LG (in Ref. 2; AAB97813).
+FT   STRAND      105    114
+FT   HELIX       117    119
+FT   STRAND      120    125
+FT   STRAND      134    139
+FT   TURN        140    142
+FT   STRAND      145    152
+FT   HELIX       157    172
+FT   TURN        173    175
+FT   STRAND      182    187
+FT   STRAND      189    196
+FT   STRAND      200    202
+FT   HELIX       203    210
+FT   HELIX       216    237
+FT   HELIX       246    248
+FT   STRAND      249    251
+FT   STRAND      257    259
+FT   HELIX       286    289
+FT   HELIX       302    317
+FT   TURN        321    324
+FT   HELIX       328    337
+FT   STRAND      345    347
+FT   HELIX       351    360
+FT   TURN        365    367
+FT   HELIX       371    374
+FT   HELIX       378    385
+FT   HELIX       390    399
+SQ   SEQUENCE   419 AA;  47485 MW;  F1B22E050F54299A CRC64;
+     MAASSLEQKL SRLEAKLKQE NREARRRIDL NLDISPQRPR PTLQLPLAND GGSRSPSSES
+     SPQHPTPPAR PRHMLGLPST LFTPRSMESI EIDQKLQEIM KQTGYLTIGG QRYQAEINDL
+     ENLGEMGSGT CGQVWKMRFR KTGHVIAVKQ MRRSGNKEEN KRILMDLDVV LKSHDCPYIV
+     QCFGTFITNT DVFIAMELMG TCAEKLKKRM QGPIPERILG KMTVAIVKAL YYLKEKHGVI
+     HRDVKPSNIL LDERGQIKLC DFGISGRLVD SKAKTRSAGC AAYMAPERID PPDPTKPDYD
+     IRADVWSLGI SLVELATGQF PYKNCKTDFE VLTKVLQEEP PLLPGHMGFS GDFQSFVKDC
+     LTKDHRKRPK YNKLLEHSFI KRYETLEVDV ASWFKDVMAK TESPRTSGVL SQPHLPFFR
+//
+ID   Q967X2_CIOIN            Unreviewed;       215 AA.
+AC   Q967X2;
+DT   01-DEC-2001, integrated into UniProtKB/TrEMBL.
+DT   01-DEC-2001, sequence version 1.
+DT   19-FEB-2014, entry version 62.
+DE   SubName: Full=Casein kinase II b;
+DE   SubName: Full=Protein kinase Ck2-beta;
+DE   SubName: Full=Uncharacterized protein;
+GN   Name=CK2B; Synonyms=Ci-casein kinase II b, ck2b;
+OS   Ciona intestinalis (Transparent sea squirt) (Ascidia intestinalis).
+OC   Eukaryota; Metazoa; Chordata; Tunicata; Ascidiacea; Enterogona;
+OC   Phlebobranchia; Cionidae; Ciona.
+OX   NCBI_TaxID=7719;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA].
+RX   PubMed=12481130; DOI=10.1126/science.1080049;
+RA   Dehal P., Satou Y., Campbell R.K., Chapman J., Degnan B.,
+RA   De Tomaso A., Davidson B., Di Gregorio A., Gelpke M., Goodstein D.M.,
+RA   Harafuji N., Hastings K.E., Ho I., Hotta K., Huang W., Kawashima T.,
+RA   Lemaire P., Martinez D., Meinertzhagen I.A., Necula S., Nonaka M.,
+RA   Putnam N., Rash S., Saiga H., Satake M., Terry A., Yamada L.,
+RA   Wang H.G., Awazu S., Azumi K., Boore J., Branno M., Chin-Bow S.,
+RA   DeSantis R., Doyle S., Francino P., Keys D.N., Haga S., Hayashi H.,
+RA   Hino K., Imai K.S., Inaba K., Kano S., Kobayashi K., Kobayashi M.,
+RA   Lee B.I., Makabe K.W., Manohar C., Matassi G., Medina M.,
+RA   Mochizuki Y., Mount S., Morishita T., Miura S., Nakayama A.,
+RA   Nishizaka S., Nomoto H., Ohta F., Oishi K., Rigoutsos I., Sano M.,
+RA   Sasaki A., Sasakura Y., Shoguchi E., Shin-i T., Spagnuolo A.,
+RA   Stainier D., Suzuki M.M., Tassy O., Takatori N., Tokuoka M., Yagi K.,
+RA   Yoshizaki F., Wada S., Zhang C., Hyatt P.D., Larimer F., Detter C.,
+RA   Doggett N., Glavina T., Hawkins T., Richardson P., Lucas S.,
+RA   Kohara Y., Levine M., Satoh N., Rokhsar D.S.;
+RT   "The draft genome of Ciona intestinalis: insights into chordate and
+RT   vertebrate origins.";
+RL   Science 298:2157-2167(2002).
+RN   [2]
+RP   NUCLEOTIDE SEQUENCE.
+RX   PubMed=12736827; DOI=10.1007/s00427-003-0330-z;
+RA   Satou Y., Satoh N.;
+RT   "Genomewide surveys of developmentally relevant genes in Ciona
+RT   intestinalis.";
+RL   Dev. Genes Evol. 213:211-212(2003).
+RN   [3]
+RP   NUCLEOTIDE SEQUENCE.
+RX   PubMed=15269171; DOI=10.1242/dev.01270;
+RA   Imai K.S., Hino K., Yagi K., Satoh N., Satou Y.;
+RT   "Gene expression profiles of transcription factors and signaling
+RT   molecules in the ascidian embryo: towards a comprehensive
+RT   understanding of gene networks.";
+RL   Development 131:4047-4058(2004).
+RN   [4]
+RP   NUCLEOTIDE SEQUENCE.
+RX   PubMed=15159401; DOI=10.1074/jbc.M401085200;
+RA   Russo G.L., Tosto M., Mupo A., Castellano I., Cuomo A., Tosti E.;
+RT   "Biochemical and functional characterization of protein kinase CK2 in
+RT   ascidian Ciona intestinalis oocytes at fertilization. Cloning and
+RT   sequence analysis of cDNA for alpha and beta subunits.";
+RL   J. Biol. Chem. 279:33012-33023(2004).
+RN   [5]
+RP   NUCLEOTIDE SEQUENCE.
+RA   Satou Y.;
+RT   "Expressed genes in Ciona intestinalis.";
+RL   Submitted (APR-2005) to the EMBL/GenBank/DDBJ databases.
+RN   [6]
+RP   IDENTIFICATION.
+RG   Ensembl;
+RL   Submitted (FEB-2012) to UniProtKB.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; EAAA01000113; -; NOT_ANNOTATED_CDS; Genomic_DNA.
+DR   EMBL; AF360544; AAK50003.1; -; mRNA.
+DR   EMBL; AB210337; BAE06342.1; -; mRNA.
+DR   RefSeq; NP_001027591.1; NM_001032419.1.
+DR   UniGene; Cin.23263; -.
+DR   ProteinModelPortal; Q967X2; -.
+DR   SMR; Q967X2; 2-204.
+DR   STRING; 7719.ENSCINP00000025110; -.
+DR   Ensembl; ENSCINT00000008085; ENSCINP00000008085; ENSCING00000003902.
+DR   GeneID; 445589; -.
+DR   KEGG; cin:445589; -.
+DR   CTD; 30428; -.
+DR   eggNOG; COG5041; -.
+DR   GeneTree; ENSGT00390000003781; -.
+DR   HOGENOM; HOG000039270; -.
+DR   HOVERGEN; HBG051131; -.
+DR   KO; K03115; -.
+DR   OMA; TNQFVPR; -.
+DR   OrthoDB; EOG7GTT4V; -.
+DR   TreeFam; TF314462; -.
+DR   GO; GO:0005956; C:protein kinase CK2 complex; IEA:InterPro.
+DR   GO; GO:0016301; F:kinase activity; IEA:UniProtKB-KW.
+DR   GO; GO:0019887; F:protein kinase regulator activity; IEA:InterPro.
+DR   GO; GO:0045859; P:regulation of protein kinase activity; IEA:GOC.
+DR   Gene3D; 1.10.1820.10; -; 1.
+DR   Gene3D; 2.20.25.20; -; 1.
+DR   InterPro; IPR016149; Casein_kin_II_reg-sub_a-hlx.
+DR   InterPro; IPR016150; Casein_kin_II_reg-sub_b-sht.
+DR   InterPro; IPR000704; Casein_kinase_II_reg-sub.
+DR   PANTHER; PTHR11740; PTHR11740; 1.
+DR   Pfam; PF01214; CK_II_beta; 1.
+DR   PRINTS; PR00472; CASNKINASEII.
+DR   SMART; SM01085; CK_II_beta; 1.
+DR   SUPFAM; SSF57798; SSF57798; 1.
+PE   2: Evidence at transcript level;
+KW   Complete proteome; Kinase; Reference proteome; Transferase.
+SQ   SEQUENCE   215 AA;  24938 MW;  62A43DCB6C6CEF3F CRC64;
+     MSSSEEVSWI SWFCGLRGNE FFCEVDEDYI QDKFNLTGLG EQVPHYRQAL DMILDLEPDD
+     DLEDNTNQSD LIEQAAEMLY GLIHARYTLT NRGIAQMLEK YQQGDFGHCS RVYCENQPML
+     PIGLSDVPGE AMVKLYCPKC QDVYTPKSSR HHHTDGAYFG TGFPHMLFMV HPEYRPKRPT
+     NQFVSRLFGF KIHPMAYQLQ YQASQKLKNP SKLRH
+//
+ID   A7RQU9_NEMVE            Unreviewed;       376 AA.
+AC   A7RQU9;
+DT   02-OCT-2007, integrated into UniProtKB/TrEMBL.
+DT   02-OCT-2007, sequence version 1.
+DT   19-MAR-2014, entry version 43.
+DE   SubName: Full=Cytoplasmic creatine kinase protein;
+DE   SubName: Full=Predicted protein;
+GN   Name=cytoplasmic creatine kinase; ORFNames=v1g234345;
+OS   Nematostella vectensis (Starlet sea anemone).
+OC   Eukaryota; Metazoa; Cnidaria; Anthozoa; Hexacorallia; Actiniaria;
+OC   Edwardsiidae; Nematostella.
+OX   NCBI_TaxID=45351;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA].
+RC   STRAIN=CH2 X CH6;
+RX   PubMed=17615350; DOI=10.1126/science.1139158;
+RA   Putnam N.H., Srivastava M., Hellsten U., Dirks B., Chapman J.,
+RA   Salamov A., Terry A., Shapiro H., Lindquist E., Kapitonov V.V.,
+RA   Jurka J., Genikhovich G., Grigoriev I.V., Lucas S.M., Steele R.E.,
+RA   Finnerty J.R., Technau U., Martindale M.Q., Rokhsar D.S.;
+RT   "Sea anemone genome reveals ancestral eumetazoan gene repertoire and
+RT   genomic organization.";
+RL   Science 317:86-94(2007).
+RN   [2]
+RP   NUCLEOTIDE SEQUENCE.
+RX   PubMed=22305986; DOI=10.1016/j.gene.2012.01.036;
+RA   Uda K., Ellington W.R., Suzuki T.;
+RT   "A diverse array of creatine kinase and arginine kinase isoform genes
+RT   is present in the starlet sea anemone Nematostella vectensis, a
+RT   cnidarian model system for studying developmental evolution.";
+RL   Gene 497:214-227(2012).
+CC   -!- SIMILARITY: Belongs to the ATP:guanido phosphotransferase family.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; AB665525; BAL73226.1; -; mRNA.
+DR   EMBL; DS469529; EDO46231.1; -; Genomic_DNA.
+DR   RefSeq; XP_001638294.1; XM_001638244.1.
+DR   UniGene; Nve.5206; -.
+DR   ProteinModelPortal; A7RQU9; -.
+DR   SMR; A7RQU9; 10-375.
+DR   STRING; 45351.JGI234345; -.
+DR   EnsemblMetazoa; NEMVEDRAFT_v1g234345-RA; NEMVEDRAFT_v1g234345-PA; NEMVEDRAFT_v1g234345.
+DR   GeneID; 5518278; -.
+DR   KEGG; nve:NEMVE_v1g234345; -.
+DR   eggNOG; COG3869; -.
+DR   HOGENOM; HOG000232165; -.
+DR   KO; K00933; -.
+DR   OMA; RGHEFMW; -.
+DR   OrthoDB; EOG7XM2XW; -.
+DR   GO; GO:0005524; F:ATP binding; IEA:UniProtKB-KW.
+DR   GO; GO:0016301; F:kinase activity; IEA:UniProtKB-KW.
+DR   Gene3D; 1.10.135.10; -; 1.
+DR   Gene3D; 3.30.590.10; -; 1.
+DR   InterPro; IPR022415; ATP-guanido_PTrfase_AS.
+DR   InterPro; IPR022414; ATP-guanido_PTrfase_cat.
+DR   InterPro; IPR022413; ATP-guanido_PTrfase_N.
+DR   InterPro; IPR014746; Gln_synth/guanido_kin_cat_dom.
+DR   Pfam; PF00217; ATP-gua_Ptrans; 1.
+DR   Pfam; PF02807; ATP-gua_PtransN; 1.
+DR   SUPFAM; SSF48034; SSF48034; 1.
+DR   PROSITE; PS00112; PHOSPHAGEN_KINASE; 1.
+DR   PROSITE; PS51510; PHOSPHAGEN_KINASE_C; 1.
+DR   PROSITE; PS51509; PHOSPHAGEN_KINASE_N; 1.
+PE   2: Evidence at transcript level;
+KW   ATP-binding; Complete proteome; Kinase; Nucleotide-binding;
+KW   Reference proteome; Transferase.
+SQ   SEQUENCE   376 AA;  42117 MW;  D5933E6281037882 CRC64;
+     MTSVKSAYKQ FSADDDFPDL SQHNNYMAKV LTKEIYRSLR DKSTKNGFTL DDIIQTGVDN
+     PGHPFIMTVG CVAGDEESYD VFAELLDPVI ELRHGGYKKT DKHKTDLNPD NLKGGALDPK
+     YVLSSRVRTG RSIRGFCLPP HCSRAERRSV EKISVDALAK LDGEFKGKYY PLNKMTDEEQ
+     EQLINDHFLF DKPVSPLLTC AGMARDWPDA RGIWHNENKN FLVWVNEEDH TRVISMEKGG
+     DMRAVFTRFC NGLNKVESLI KEAGYEFMWN EHLGYVLTCP SNLGTGLRAG VHLKIPLLSQ
+     DEKRLDAILA KLKLQKRGTG GVDTASVGGV YDISNADRIG FSEVELVQGM VDGVGLLIEM
+     EKRLEEGKAI DDLIPK
+//
+ID   Q9NA00_9CRUS            Unreviewed;       494 AA.
+AC   Q9NA00;
+DT   01-OCT-2000, integrated into UniProtKB/TrEMBL.
+DT   01-OCT-2000, sequence version 1.
+DT   19-MAR-2014, entry version 63.
+DE   SubName: Full=Wee1-like CDK tyrosine kinase;
+DE   Flags: Fragment;
+GN   Name=wee1-like CDK tyrosine kinase;
+OS   Daphnia magna.
+OC   Eukaryota; Metazoa; Ecdysozoa; Arthropoda; Crustacea; Branchiopoda;
+OC   Diplostraca; Cladocera; Anomopoda; Daphniidae; Daphnia.
+OX   NCBI_TaxID=35525;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE.
+RA   Richards J.R., Cryer J., Kille P.;
+RT   "Isolation of genes from Daphnia magna.";
+RL   Submitted (JUL-2000) to the EMBL/GenBank/DDBJ databases.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; AJ292557; CAB99477.1; -; mRNA.
+DR   ProteinModelPortal; Q9NA00; -.
+DR   GO; GO:0005634; C:nucleus; IEA:InterPro.
+DR   GO; GO:0005524; F:ATP binding; IEA:UniProtKB-KW.
+DR   GO; GO:0000287; F:magnesium ion binding; IEA:InterPro.
+DR   GO; GO:0004715; F:non-membrane spanning protein tyrosine kinase activity; IEA:InterPro.
+DR   GO; GO:0004674; F:protein serine/threonine kinase activity; IEA:UniProtKB-KW.
+DR   GO; GO:0007067; P:mitosis; IEA:InterPro.
+DR   GO; GO:0018108; P:peptidyl-tyrosine phosphorylation; IEA:GOC.
+DR   InterPro; IPR011009; Kinase-like_dom.
+DR   InterPro; IPR000719; Prot_kinase_dom.
+DR   InterPro; IPR017441; Protein_kinase_ATP_BS.
+DR   InterPro; IPR008271; Ser/Thr_kinase_AS.
+DR   InterPro; IPR017164; Wee1-like_protein_kinase.
+DR   Pfam; PF00069; Pkinase; 1.
+DR   PIRSF; PIRSF037281; Wee1-like_protein_kinase; 1.
+DR   SUPFAM; SSF56112; SSF56112; 1.
+DR   PROSITE; PS00107; PROTEIN_KINASE_ATP; 1.
+DR   PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+DR   PROSITE; PS00108; PROTEIN_KINASE_ST; 1.
+PE   2: Evidence at transcript level;
+KW   ATP-binding; Kinase; Nucleotide-binding;
+KW   Serine/threonine-protein kinase; Transferase.
+FT   NP_BIND     218    226       ATP (By similarity).
+FT   ACT_SITE    339    339       Proton acceptor (By similarity).
+FT   BINDING     241    241       ATP (By similarity).
+FT   NON_TER     494    494
+SQ   SEQUENCE   494 AA;  55301 MW;  BC10BC034E593178 CRC64;
+     MDRDIEMEEN HCRIAQRLEF PLSDEEDLHE ASTGNNRTSS NSSSDRLDSS GSDEGLGMTI
+     RITSPRKPRF IRSRAREPMS PPYSGVRALR LFDSPATPKT LLENSSAIMT PVLATPAPRN
+     RMRTLFTMSS TKSSDKKDNM NTPPAANVNP FTPTGMLLTS KKRTRSKRSL NGSLVNSFDE
+     EVHEATDESD EEMPPKRIAL HQTSVPRYHK EFHEICLIGK GEFGSVHKCL NRLDGCTYAV
+     KKSLMPVAGS PNERSALNEV WAHAVLGQHP HAVRYYSAWA ENGHMIIQNE FCNSGTLEEL
+     IRTNQLNNVT VNEPQLKSTL LQIAEGLHYI HSKQLAHMDI KPGNIFICRE NSDDCSVHHD
+     SDDGFDELDD DYGSVTYKIG DLGHVTSVVQ PIVEEGDCRY LPVEILRENY EHLTKADIFS
+     LGLTIYEMAG GGQLPKNGDE WHAIRQGRLP YNGRYSIELH NLLELMIHPD PTLRPSTQVL
+     TQHPVLGPNG AKSK
+//
+ID   Q91356_COTCO            Unreviewed;       367 AA.
+AC   Q91356;
+DT   01-NOV-1996, integrated into UniProtKB/TrEMBL.
+DT   01-NOV-1996, sequence version 1.
+DT   19-FEB-2014, entry version 76.
+DE   SubName: Full=Endothelial kinase Quek2;
+DE   Flags: Fragment;
+GN   Name=endothelial kinase Quek2;
+OS   Coturnix coturnix (Common quail) (Tetrao coturnix).
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+OC   Testudines + Archosauria group; Archosauria; Dinosauria; Saurischia;
+OC   Theropoda; Coelurosauria; Aves; Neognathae; Galliformes; Phasianidae;
+OC   Perdicinae; Coturnix.
+OX   NCBI_TaxID=9091;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE.
+RX   PubMed=8396413; DOI=10.1016/0925-4773(93)90096-G;
+RA   Eichmann A., Marcelle C., Breant C., Le Douarin N.M.;
+RT   "Two molecules related to the VEGF receptor are expressed in early
+RT   endothelial cells during avian embryonic development.";
+RL   Mech. Dev. 42:33-48(1993).
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; S65207; AAB28128.1; -; mRNA.
+DR   PIR; B56598; B56598.
+DR   ProteinModelPortal; Q91356; -.
+DR   HOVERGEN; HBG080796; -.
+DR   GO; GO:0005887; C:integral component of plasma membrane; IEA:InterPro.
+DR   GO; GO:0005524; F:ATP binding; IEA:InterPro.
+DR   GO; GO:0005021; F:vascular endothelial growth factor-activated receptor activity; IEA:InterPro.
+DR   GO; GO:0018108; P:peptidyl-tyrosine phosphorylation; IEA:GOC.
+DR   GO; GO:0048010; P:vascular endothelial growth factor receptor signaling pathway; IEA:InterPro.
+DR   GO; GO:0038084; P:vascular endothelial growth factor signaling pathway; IEA:GOC.
+DR   InterPro; IPR011009; Kinase-like_dom.
+DR   InterPro; IPR000719; Prot_kinase_dom.
+DR   InterPro; IPR001245; Ser-Thr/Tyr_kinase_cat_dom.
+DR   InterPro; IPR008266; Tyr_kinase_AS.
+DR   InterPro; IPR009137; VEGFR3_rcpt.
+DR   PANTHER; PTHR24416:SF49; PTHR24416:SF49; 1.
+DR   Pfam; PF07714; Pkinase_Tyr; 1.
+DR   PRINTS; PR00109; TYRKINASE.
+DR   SUPFAM; SSF56112; SSF56112; 1.
+DR   PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+DR   PROSITE; PS00109; PROTEIN_KINASE_TYR; 1.
+PE   2: Evidence at transcript level;
+KW   Kinase; Transferase.
+FT   NON_TER     367    367
+SQ   SEQUENCE   367 AA;  41793 MW;  04442B35940027A0 CRC64;
+     WMDLWQSPLT MEDLICYSFQ VARGMEFLAS RKCIHRDLAA RNILLSENNV VKICDFGLAR
+     DIYKDPDYVR KGSARLPLKW MAPESIFDKV YTTQSDVWSL GVLLWEIFSL GASPYPGVQI
+     NEEFCQRFKD GTRMRAPEYT TAEIYRIMLS CWHGDPKERP TFSDLVEILG NLLQENVQQE
+     GKDYIPLNDS HSSEDDGFSQ VPSSAQQNSD EEDFDMRIRC HSLAARYYNC VSFPGCLTGG
+     NQIRCSSRIK TFEEFPMTHT MYKAHPDNQT DSGMVLASEE FERIENRHRK EGGFSSKGPN
+     RTAELSAEQS DLRGRCRPSY GSQVGGQTFY NSEYGELSEH SEDRSCTPPA EGASPPALHA
+     SFFSEQY
+//
+ID   Q9PU23_TRASC            Unreviewed;       216 AA.
+AC   Q9PU23;
+DT   01-MAY-2000, integrated into UniProtKB/TrEMBL.
+DT   01-MAY-2000, sequence version 1.
+DT   16-OCT-2013, entry version 60.
+DE   RecName: Full=Pyruvate kinase;
+DE            EC=2.7.1.40;
+DE   Flags: Fragment;
+GN   Name=pyruvate kinase;
+OS   Trachemys scripta elegans.
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+OC   Testudines + Archosauria group; Testudines; Cryptodira; Testudinoidea;
+OC   Emydidae; Trachemys.
+OX   NCBI_TaxID=31138;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE.
+RC   TISSUE=Liver;
+RX   PubMed=10555283;
+RA   Hughes S., Zelus D., Mouchiroud D.;
+RT   "Warm-blooded isochore structure in Nile crocodile and turtle.";
+RL   Mol. Biol. Evol. 16:1521-1527(1999).
+RN   [2]
+RP   NUCLEOTIDE SEQUENCE.
+RC   TISSUE=Liver;
+RA   Hughes S.N.;
+RL   Submitted (JUN-1999) to the EMBL/GenBank/DDBJ databases.
+CC   -!- CATALYTIC ACTIVITY: ATP + pyruvate = ADP + phosphoenolpyruvate.
+CC   -!- PATHWAY: Carbohydrate degradation; glycolysis; pyruvate from D-
+CC       glyceraldehyde 3-phosphate: step 5/5.
+CC   -!- SIMILARITY: Belongs to the pyruvate kinase family.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; AJ243136; CAB61266.1; -; mRNA.
+DR   ProteinModelPortal; Q9PU23; -.
+DR   HOVERGEN; HBG000941; -.
+DR   UniPathway; UPA00109; UER00188.
+DR   GO; GO:0000287; F:magnesium ion binding; IEA:InterPro.
+DR   GO; GO:0030955; F:potassium ion binding; IEA:InterPro.
+DR   GO; GO:0004743; F:pyruvate kinase activity; IEA:UniProtKB-EC.
+DR   GO; GO:0006096; P:glycolysis; IEA:UniProtKB-UniPathway.
+DR   Gene3D; 2.40.33.10; -; 1.
+DR   Gene3D; 3.20.20.60; -; 1.
+DR   InterPro; IPR001697; Pyr_Knase.
+DR   InterPro; IPR015813; Pyrv/PenolPyrv_Kinase-like_dom.
+DR   InterPro; IPR011037; Pyrv_Knase-like_insert_dom.
+DR   InterPro; IPR015793; Pyrv_Knase_brl.
+DR   InterPro; IPR015806; Pyrv_Knase_insert_dom.
+DR   PANTHER; PTHR11817; PTHR11817; 1.
+DR   Pfam; PF00224; PK; 1.
+DR   PRINTS; PR01050; PYRUVTKNASE.
+DR   SUPFAM; SSF50800; SSF50800; 1.
+DR   SUPFAM; SSF51621; SSF51621; 1.
+DR   TIGRFAMs; TIGR01064; pyruv_kin; 1.
+PE   2: Evidence at transcript level;
+KW   Glycolysis; Kinase; Magnesium; Pyruvate; Transferase.
+FT   NON_TER       1      1
+FT   NON_TER     216    216
+SQ   SEQUENCE   216 AA;  23513 MW;  7E8F42877545B562 CRC64;
+     KGSGTAEVEL KKGATLKVTL DNAFMEKCDE NVLWLDYKNL PNVVDVGSKI YIDDGLISLQ
+     VKGKGADYVL TEVENGGMLG SKKGVNLPGA AVDLPAVSEK DIQDLKFGVE QDVDMVFASF
+     IRKAADVHAV RQVLGEKGKX IKIISEIENH EGVRRFDEVL EASDGIMVAR GDLGIEIPAE
+     KVFLAQKMMI GRCNRAGKPI ICATQMLESM IKKPRP
+//
+ID   Q90WS6_9SAUR            Unreviewed;       215 AA.
+AC   Q90WS6;
+DT   01-DEC-2001, integrated into UniProtKB/TrEMBL.
+DT   01-DEC-2001, sequence version 1.
+DT   16-OCT-2013, entry version 58.
+DE   RecName: Full=Pyruvate kinase;
+DE            EC=2.7.1.40;
+DE   Flags: Fragment;
+GN   Name=pyruvate kinase;
+OS   Elaphe sp.
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+OC   Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+OC   Toxicofera; Serpentes; Colubroidea; Colubridae; Colubrinae; Elaphe.
+OX   NCBI_TaxID=114965;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE.
+RC   TISSUE=Liver;
+RA   Hughes S.N.;
+RL   Submitted (FEB-2000) to the EMBL/GenBank/DDBJ databases.
+RN   [2]
+RP   NUCLEOTIDE SEQUENCE.
+RC   TISSUE=Liver;
+RA   Hughes S., Laurin M., Gouy M., Mouchiroud D.;
+RT   "The phylogenetic position of turtles among sauropsidae remains
+RT   contentious with new nuclear data.";
+RL   Submitted (SEP-2001) to the EMBL/GenBank/DDBJ databases.
+CC   -!- CATALYTIC ACTIVITY: ATP + pyruvate = ADP + phosphoenolpyruvate.
+CC   -!- PATHWAY: Carbohydrate degradation; glycolysis; pyruvate from D-
+CC       glyceraldehyde 3-phosphate: step 5/5.
+CC   -!- SIMILARITY: Belongs to the pyruvate kinase family.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; AJ286864; CAC69539.1; -; mRNA.
+DR   ProteinModelPortal; Q90WS6; -.
+DR   HOVERGEN; HBG000941; -.
+DR   UniPathway; UPA00109; UER00188.
+DR   GO; GO:0000287; F:magnesium ion binding; IEA:InterPro.
+DR   GO; GO:0030955; F:potassium ion binding; IEA:InterPro.
+DR   GO; GO:0004743; F:pyruvate kinase activity; IEA:UniProtKB-EC.
+DR   GO; GO:0006096; P:glycolysis; IEA:UniProtKB-UniPathway.
+DR   Gene3D; 2.40.33.10; -; 1.
+DR   Gene3D; 3.20.20.60; -; 1.
+DR   InterPro; IPR001697; Pyr_Knase.
+DR   InterPro; IPR015813; Pyrv/PenolPyrv_Kinase-like_dom.
+DR   InterPro; IPR011037; Pyrv_Knase-like_insert_dom.
+DR   InterPro; IPR018209; Pyrv_Knase_AS.
+DR   InterPro; IPR015793; Pyrv_Knase_brl.
+DR   InterPro; IPR015806; Pyrv_Knase_insert_dom.
+DR   PANTHER; PTHR11817; PTHR11817; 1.
+DR   Pfam; PF00224; PK; 1.
+DR   PRINTS; PR01050; PYRUVTKNASE.
+DR   SUPFAM; SSF50800; SSF50800; 1.
+DR   SUPFAM; SSF51621; SSF51621; 1.
+DR   PROSITE; PS00110; PYRUVATE_KINASE; 1.
+PE   2: Evidence at transcript level;
+KW   Glycolysis; Kinase; Magnesium; Pyruvate; Transferase.
+FT   NON_TER       1      1
+FT   NON_TER     215    215
+SQ   SEQUENCE   215 AA;  23520 MW;  50FED93ADFDA0C15 CRC64;
+     KGSGTAEVEL KKGATLKVTL DNAYMEKCDE HVLWVDYKNI IKVVEIGSKI YVDDGLISLK
+     VKEKGADFIM TEIENGGLLG SKKGVNLPGA AVDLPAVPEK DIQDLKFGVE QDVDMVLASF
+     IRKAADVHAV RKVLGEKGKN IKIISKIENH EGVRRFDEIM EASDGIMVAR GDLGIEIPAE
+     KVFLAQKMMI GRCNRAGKPI ICATQMLESM IKKPP
+//

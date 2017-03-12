@@ -1,0 +1,184 @@
+ID   A0A024DUQ2_BACTK        Unreviewed;       149 AA.
+AC   A0A024DUQ2;
+DT   09-JUL-2014, integrated into UniProtKB/TrEMBL.
+DT   09-JUL-2014, sequence version 1.
+DT   04-MAR-2015, entry version 8.
+DE   SubName: Full=MutT/nudix family protein {ECO:0000313|EMBL:AHZ52867.1};
+DE   SubName: Full=Phosphohydrolase (MutT/nudix family protein) {ECO:0000313|EMBL:AIM30334.1};
+GN   ORFNames=DF16_orf01919 {ECO:0000313|EMBL:AIM30334.1}, YBT1520_21360
+GN   {ECO:0000313|EMBL:AHZ52867.1};
+OS   Bacillus thuringiensis serovar kurstaki str. YBT-1520.
+OC   Bacteria; Firmicutes; Bacilli; Bacillales; Bacillaceae; Bacillus;
+OC   Bacillus cereus group.
+OX   NCBI_TaxID=570416 {ECO:0000313|EMBL:AHZ52867.1, ECO:0000313|Proteomes:UP000025242};
+RN   [1] {ECO:0000313|EMBL:AHZ52867.1}
+RP   NUCLEOTIDE SEQUENCE.
+RC   STRAIN=YBT-1520 {ECO:0000313|EMBL:AHZ52867.1};
+RA   Zhu L., Sun M.;
+RT   "Complete genome sequencing of Bacillus thuringiensis subsp. kurstaki
+RT   type strain YBT-1520.";
+RL   Submitted (MAR-2013) to the EMBL/GenBank/DDBJ databases.
+RN   [2] {ECO:0000313|EMBL:AIM30334.1}
+RP   NUCLEOTIDE SEQUENCE.
+RC   STRAIN=YBT-1520 {ECO:0000313|EMBL:AIM30334.1};
+RA   Chen B., Fu Y., Zhang S., Li X., Qiang H., Li M., Zheng H., Sun M.,
+RA   Yu Z., He J.;
+RT   "The Complete Genome Sequence of Bacillus thuringiensis subsp.
+RT   kurstaki Strain YBT-1520.";
+RL   Submitted (APR-2014) to the EMBL/GenBank/DDBJ databases.
+CC   -!- SIMILARITY: Belongs to the Nudix hydrolase family.
+CC       {ECO:0000256|RuleBase:RU003476}.
+CC   -!- SIMILARITY: Contains nudix hydrolase domain.
+CC       {ECO:0000256|SAAS:SAAS00167500}.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; CP004858; AHZ52867.1; -; Genomic_DNA.
+DR   EMBL; CP007607; AIM30334.1; -; Genomic_DNA.
+DR   ProteinModelPortal; A0A024DUQ2; -.
+DR   EnsemblBacteria; AHZ52867; AHZ52867; YBT1520_21360.
+DR   Proteomes; UP000025242; Chromosome.
+DR   Proteomes; UP000029029; Chromosome.
+DR   GO; GO:0016787; F:hydrolase activity; IEA:UniProtKB-KW.
+DR   Gene3D; 3.90.79.10; -; 1.
+DR   InterPro; IPR020476; Nudix_hydrolase.
+DR   InterPro; IPR020084; NUDIX_hydrolase_CS.
+DR   InterPro; IPR000086; NUDIX_hydrolase_dom.
+DR   InterPro; IPR015797; NUDIX_hydrolase_dom-like.
+DR   Pfam; PF00293; NUDIX; 1.
+DR   PRINTS; PR00502; NUDIXFAMILY.
+DR   SUPFAM; SSF55811; SSF55811; 1.
+DR   PROSITE; PS51462; NUDIX; 1.
+DR   PROSITE; PS00893; NUDIX_BOX; 1.
+PE   3: Inferred from homology;
+KW   Complete proteome {ECO:0000313|Proteomes:UP000025242,
+KW   ECO:0000313|Proteomes:UP000029029};
+KW   Hydrolase {ECO:0000256|RuleBase:RU003476,
+KW   ECO:0000256|SAAS:SAAS00167526}.
+SQ   SEQUENCE   149 AA;  17064 MW;  B72F4B6E24CA5F51 CRC64;
+     MGYIEELRKV VGTRPLILVG SAIIILNDKQ EVLLQYRSDT YDWGVPGGAM ELGETTEETA
+     RRELFEETGL TAKIMQFLGV LSGKEVYFRY PNGDEIFNVI HLYQAHHVSG ELKLDHEGLK
+     LQYFPVDKLP KLNETTEKIL QKFLYALTE
+//
+ID   A0R747_MYCS2            Unreviewed;       259 AA.
+AC   A0R747;
+DT   09-JAN-2007, integrated into UniProtKB/TrEMBL.
+DT   09-JAN-2007, sequence version 1.
+DT   04-MAR-2015, entry version 64.
+DE   SubName: Full=Enoyl-CoA hydratase {ECO:0000313|EMBL:AFP43021.1};
+DE            EC=4.2.1.17 {ECO:0000313|EMBL:AFP43021.1};
+DE   SubName: Full=Probable enoyl-CoA hydratase {ECO:0000313|EMBL:ABK73095.1};
+DE            EC=4.2.1.17 {ECO:0000313|EMBL:ABK73095.1};
+GN   Name=echA8 {ECO:0000313|EMBL:AFP43021.1};
+GN   OrderedLocusNames=MSMEG_6777 {ECO:0000313|EMBL:ABK73095.1}, MSMEI_6595
+GN   {ECO:0000313|EMBL:AFP43021.1};
+GN   ORFNames=LJ00_33485 {ECO:0000313|EMBL:AIU11742.1};
+OS   Mycobacterium smegmatis (strain ATCC 700084 / mc(2)155).
+OC   Bacteria; Actinobacteria; Actinobacteridae; Actinomycetales;
+OC   Corynebacterineae; Mycobacteriaceae; Mycobacterium.
+OX   NCBI_TaxID=246196 {ECO:0000313|EMBL:ABK73095.1, ECO:0000313|Proteomes:UP000000757};
+RN   [1] {ECO:0000313|EMBL:AFP43021.1}
+RP   NUCLEOTIDE SEQUENCE.
+RC   STRAIN=MC2 155 {ECO:0000313|EMBL:AFP43021.1};
+RX   PubMed=16381882; DOI=10.1093/nar/gkj060;
+RA   Perrodou E., Deshayes C., Muller J., Schaeffer C., Van Dorsselaer A.,
+RA   Ripp R., Poch O., Reyrat J.M., Lecompte O.;
+RT   "ICDS database: interrupted CoDing sequences in prokaryotic genomes.";
+RL   Nucleic Acids Res. 34:D338-D343(2006).
+RN   [2] {ECO:0000313|EMBL:ABK73095.1, ECO:0000313|Proteomes:UP000000757}
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA].
+RC   STRAIN=ATCC 700084 / mc(2)155 {ECO:0000313|Proteomes:UP000000757}, and
+RC   MC2 155 {ECO:0000313|EMBL:ABK73095.1};
+RA   Fleischmann R.D., Dodson R.J., Haft D.H., Merkel J.S., Nelson W.C.,
+RA   Fraser C.M.;
+RL   Submitted (OCT-2006) to the EMBL/GenBank/DDBJ databases.
+RN   [3] {ECO:0000313|EMBL:AFP43021.1, ECO:0000313|Proteomes:UP000006158}
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA].
+RC   STRAIN=ATCC 700084 / mc(2)155 {ECO:0000313|Proteomes:UP000006158}, and
+RC   MC2 155 {ECO:0000313|EMBL:AFP43021.1};
+RX   PubMed=17295914; DOI=10.1186/gb-2007-8-2-r20;
+RA   Deshayes C., Perrodou E., Gallien S., Euphrasie D., Schaeffer C.,
+RA   Van-Dorsselaer A., Poch O., Lecompte O., Reyrat J.-M.;
+RT   "Interrupted coding sequences in Mycobacterium smegmatis: authentic
+RT   mutations or sequencing errors?";
+RL   Genome Biol. 8:R20.1-R20.9(2007).
+RN   [4] {ECO:0000313|EMBL:AFP43021.1, ECO:0000313|Proteomes:UP000006158}
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA].
+RC   STRAIN=ATCC 700084 / mc(2)155, and MC2 155;
+RX   PubMed=18955433; DOI=10.1101/gr.081901.108;
+RA   Gallien S., Perrodou E., Carapito C., Deshayes C., Reyrat J.-M.,
+RA   Van Dorsselaer A., Poch O., Schaeffer C., Lecompte O.;
+RT   "Ortho-proteogenomics: multiple proteomes investigation through
+RT   orthology and a new MS-based protocol.";
+RL   Genome Res. 19:128-135(2009).
+RN   [5] {ECO:0000213|PDB:3MOY}
+RP   X-RAY CRYSTALLOGRAPHY (1.50 ANGSTROMS).
+RG   Seattle Structural Genomics Center for Infectious Disease (SSGCID);
+RA   Edwards T.E., Abendroth J., Arakaki T.;
+RT   "Crystal structure of probable enoyl-CoA hydratase from Mycobacterium
+RT   smegmatis.";
+RL   Submitted (APR-2010) to the PDB data bank.
+RN   [6] {ECO:0000313|EMBL:AIU11742.1}
+RP   NUCLEOTIDE SEQUENCE.
+RC   STRAIN=MC2 155 {ECO:0000313|EMBL:AIU11742.1};
+RA   Mohan A., Padiadpu J., Baloni P., Chandra N.;
+RT   "Complete Genome Sequence of Mycobacterium smegmatis Laboratory
+RT   Strains (INHwt) and Isoniazid Resistant (INHR1/R2) Mutant Strains.";
+RL   Submitted (SEP-2014) to the EMBL/GenBank/DDBJ databases.
+CC   -!- SIMILARITY: Belongs to the enoyl-CoA hydratase/isomerase family.
+CC       {ECO:0000256|RuleBase:RU003707}.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; CP000480; ABK73095.1; -; Genomic_DNA.
+DR   EMBL; CP001663; AFP43021.1; -; Genomic_DNA.
+DR   EMBL; CP009494; AIU11742.1; -; Genomic_DNA.
+DR   RefSeq; WP_011731530.1; NC_018289.1.
+DR   RefSeq; YP_006571316.1; NC_018289.1.
+DR   RefSeq; YP_890985.1; NC_008596.1.
+DR   PDB; 3MOY; X-ray; 1.50 A; A=1-259.
+DR   PDBsum; 3MOY; -.
+DR   STRING; 246196.MSMEG_6777; -.
+DR   EnsemblBacteria; ABK73095; ABK73095; MSMEG_6777.
+DR   EnsemblBacteria; AFP43021; AFP43021; MSMEI_6595.
+DR   GeneID; 4537586; -.
+DR   KEGG; msm:MSMEG_6777; -.
+DR   PATRIC; 18085770; VBIMycSme59918_6597.
+DR   eggNOG; COG1024; -.
+DR   HOGENOM; HOG000027939; -.
+DR   OMA; MAYENIR; -.
+DR   OrthoDB; EOG6M9F0M; -.
+DR   BioCyc; MSME246196:GJ4Y-6776-MONOMER; -.
+DR   EvolutionaryTrace; A0R747; -.
+DR   Proteomes; UP000000757; Chromosome.
+DR   Proteomes; UP000006158; Chromosome.
+DR   GO; GO:0004300; F:enoyl-CoA hydratase activity; IEA:UniProtKB-EC.
+DR   Gene3D; 1.10.12.10; -; 1.
+DR   Gene3D; 3.90.226.10; -; 1.
+DR   InterPro; IPR029045; ClpP/crotonase-like_dom.
+DR   InterPro; IPR014748; Crontonase_C.
+DR   InterPro; IPR001753; Crotonase_core_superfam.
+DR   InterPro; IPR018376; Enoyl-CoA_hyd/isom_CS.
+DR   Pfam; PF00378; ECH; 1.
+DR   SUPFAM; SSF52096; SSF52096; 1.
+DR   PROSITE; PS00166; ENOYL_COA_HYDRATASE; 1.
+PE   1: Evidence at protein level;
+KW   3D-structure {ECO:0000213|PDB:3MOY};
+KW   Complete proteome {ECO:0000313|Proteomes:UP000000757,
+KW   ECO:0000313|Proteomes:UP000006158};
+KW   Lyase {ECO:0000313|EMBL:ABK73095.1};
+KW   Reference proteome {ECO:0000313|Proteomes:UP000000757}.
+FT   METAL        75     75       Sodium; via carbonyl oxygen.
+FT                                {ECO:0000213|PDB:3MOY}.
+FT   METAL       236    236       Sodium; via carbonyl oxygen.
+FT                                {ECO:0000213|PDB:3MOY}.
+FT   METAL       241    241       Sodium. {ECO:0000213|PDB:3MOY}.
+SQ   SEQUENCE   259 AA;  27737 MW;  104B6ADDAC7AADCC CRC64;
+     MTTYTTIATS RPVAGVGLIR LDRPDALNAL NQTLEAEVLD AARDFDADLE IGAIVVTGSE
+     RAFAAGADIA EMVTLTPHQA RERNLLSGWD SLTQVRKPIV AAVAGYALGG GCELAMLCDL
+     VIAADTARFG QPEITLGILP GLGGTQRLTR AVGKAKAMDL CLTGRSLTAE EAERVGLVSR
+     IVPAADLLDE ALAVAQRIAR MSRPAGRAVK DAINEAFERP LSAGMRYERD AFYAMFDTHD
+     QTEGMTAFLE KRTPEFTDR
+//

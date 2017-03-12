@@ -1,0 +1,102 @@
+ID   Q38UI4_LACSS            Unreviewed;       217 AA.
+AC   Q38UI4;
+DT   22-NOV-2005, integrated into UniProtKB/TrEMBL.
+DT   22-NOV-2005, sequence version 1.
+DT   19-FEB-2014, entry version 67.
+DE   SubName: Full=Aquaporine Z;
+GN   Name=aqpZ; OrderedLocusNames=LCA_1844;
+OS   Lactobacillus sakei subsp. sakei (strain 23K).
+OC   Bacteria; Firmicutes; Bacilli; Lactobacillales; Lactobacillaceae;
+OC   Lactobacillus.
+OX   NCBI_TaxID=314315;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA].
+RC   STRAIN=23K;
+RX   PubMed=16273110; DOI=10.1038/nbt1160;
+RA   Chaillou S., Champomier-Verges M.-C., Cornet M., Crutz-Le Coq A.-M.,
+RA   Dudez A.-M., Martin V., Beaufils S., Darbon-Rongere E., Bossy R.,
+RA   Loux V., Zagorec M.;
+RT   "The complete genome sequence of the meat-borne lactic acid bacterium
+RT   Lactobacillus sakei 23K.";
+RL   Nat. Biotechnol. 23:1527-1533(2005).
+CC   -!- SIMILARITY: Belongs to the MIP/aquaporin family.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; CR936503; CAI56151.1; -; Genomic_DNA.
+DR   RefSeq; YP_396456.1; NC_007576.1.
+DR   ProteinModelPortal; Q38UI4; -.
+DR   STRING; 314315.LSA1844; -.
+DR   EnsemblBacteria; CAI56151; CAI56151; LCA_1844.
+DR   GeneID; 3778347; -.
+DR   KEGG; lsa:LSA1844; -.
+DR   PATRIC; 22276534; VBILacSak116432_1803.
+DR   eggNOG; COG0580; -.
+DR   HOGENOM; HOG000288286; -.
+DR   KO; K06188; -.
+DR   OMA; MPIIGGI; -.
+DR   OrthoDB; EOG6GFGN7; -.
+DR   ProtClustDB; CLSK582023; -.
+DR   GO; GO:0016021; C:integral component of membrane; IEA:UniProtKB-KW.
+DR   GO; GO:0005215; F:transporter activity; IEA:InterPro.
+DR   Gene3D; 1.20.1080.10; -; 1.
+DR   InterPro; IPR023271; Aquaporin-like.
+DR   InterPro; IPR000425; MIP.
+DR   InterPro; IPR022357; MIP_CS.
+DR   PANTHER; PTHR19139; PTHR19139; 1.
+DR   Pfam; PF00230; MIP; 1.
+DR   PRINTS; PR00783; MINTRINSICP.
+DR   SUPFAM; SSF81338; SSF81338; 1.
+DR   TIGRFAMs; TIGR00861; MIP; 1.
+DR   PROSITE; PS00221; MIP; 1.
+PE   3: Inferred from homology;
+KW   Complete proteome; Membrane; Transmembrane; Transport.
+SQ   SEQUENCE   217 AA;  22602 MW;  3D3D96CDA630DD8F CRC64;
+     MRRYAAEFIG TFMLVFLGTG AVVIAKADTL TIGLAFGLTV TVMAYAFGGV SGGHFNPAVS
+     IAMMINKRLE AKDGVFYIVA QFLGAIVASG LLSVLINALD LSRTGFGQTD FPKIGAGVAF
+     LVEVIVTFSF ILVILMTTSD RFGNSQMAPL AIGITLSLLI IVALNLTGGS LNPARSFGPA
+     IFAGGSALAH YWVYLAAPIV GAILAAFTGR LLGSEER
+//
+ID   Q94EV1_APIGR            Unreviewed;        90 AA.
+AC   Q94EV1;
+DT   01-DEC-2001, integrated into UniProtKB/TrEMBL.
+DT   01-DEC-2001, sequence version 1.
+DT   19-FEB-2014, entry version 51.
+DE   SubName: Full=Aquaporine PIP3-like protein;
+DE   Flags: Fragment;
+OS   Apium graveolens (Celery).
+OC   Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+OC   Spermatophyta; Magnoliophyta; eudicotyledons; Gunneridae;
+OC   Pentapetalae; asterids; campanulids; Apiales; Apiaceae; Apioideae;
+OC   apioid superclade; Apieae; Apium.
+OX   NCBI_TaxID=4045;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE.
+RA   Maingourd C., Lemoine R.;
+RT   "Modification of gene expression during salt stress in celery.";
+RL   Submitted (JUN-2001) to the EMBL/GenBank/DDBJ databases.
+CC   -!- SIMILARITY: Belongs to the MIP/aquaporin family.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; AF393807; AAK83979.1; -; mRNA.
+DR   ProteinModelPortal; Q94EV1; -.
+DR   GO; GO:0016021; C:integral component of membrane; IEA:UniProtKB-KW.
+DR   GO; GO:0005215; F:transporter activity; IEA:InterPro.
+DR   Gene3D; 1.20.1080.10; -; 1.
+DR   InterPro; IPR023271; Aquaporin-like.
+DR   InterPro; IPR000425; MIP.
+DR   PANTHER; PTHR19139; PTHR19139; 1.
+DR   Pfam; PF00230; MIP; 1.
+DR   PRINTS; PR00783; MINTRINSICP.
+DR   SUPFAM; SSF81338; SSF81338; 1.
+PE   2: Evidence at transcript level;
+KW   Membrane; Transmembrane; Transport.
+FT   NON_TER       1      1
+FT   NON_TER      90     90
+SQ   SEQUENCE   90 AA;  9516 MW;  5398EACB21CB5462 CRC64;
+     YVEPPPAAFI GIDELGKWSF YRALIAEFIA TLLFLYITVL TVIGYKSQSA TDPCGGVGIL
+     GIAWAFGGMI FVLVYCTAGI SGGHINPAVT
+//

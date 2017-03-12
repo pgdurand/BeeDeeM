@@ -1,0 +1,451 @@
+ID   DQ575404; SV 1; linear; transcribed RNA; STD; HUM; 31 BP.
+XX
+AC   DQ575404;
+XX
+DT   13-JUN-2006 (Rel. 88, Created)
+DT   16-DEC-2008 (Rel. 98, Last updated, Version 6)
+XX
+DE   Homo sapiens piRNA piR-43516, complete sequence.
+XX
+KW   .
+XX
+OS   Homo sapiens (human)
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Euarchontoglires; Primates; Haplorrhini; Catarrhini; Hominidae;
+OC   Homo.
+XX
+RN   [1]
+RP   1-31
+RX   DOI; 10.1038/nature04917.
+RX   PUBMED; 16751776.
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   "A germline-specific class of small RNAs binds mammalian Piwi proteins";
+RL   Nature 442(7099):199-202(2006).
+XX
+RN   [2]
+RP   1-31
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   ;
+RL   Submitted (12-MAY-2006) to the INSDC.
+RL   Cold Spring Harbor Laboratory, 1 Bungtown Road, Cold Spring Harbor, NY
+RL   11724, USA
+XX
+DR   H-InvDB; HIT000441935_03.4.
+DR   H-InvDB; HIT000441935_04.4.
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..31
+FT                   /organism="Homo sapiens"
+FT                   /mol_type="transcribed RNA"
+FT                   /db_xref="taxon:9606"
+FT   misc_RNA        1..31
+FT                   /product="piRNA piR-43516"
+XX
+SQ   Sequence 31 BP; 5 A; 10 C; 6 G; 10 T; 0 other;
+     tccccattct aagggacctc tgattgcctg t                                       31
+//
+ID   DQ575405; SV 1; linear; transcribed RNA; STD; HUM; 32 BP.
+XX
+AC   DQ575405;
+XX
+DT   13-JUN-2006 (Rel. 88, Created)
+DT   16-DEC-2008 (Rel. 98, Last updated, Version 6)
+XX
+DE   Homo sapiens piRNA piR-43517, complete sequence.
+XX
+KW   .
+XX
+OS   Homo sapiens (human)
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Euarchontoglires; Primates; Haplorrhini; Catarrhini; Hominidae;
+OC   Homo.
+XX
+RN   [1]
+RP   1-32
+RX   DOI; 10.1038/nature04917.
+RX   PUBMED; 16751776.
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   "A germline-specific class of small RNAs binds mammalian Piwi proteins";
+RL   Nature 442(7099):199-202(2006).
+XX
+RN   [2]
+RP   1-32
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   ;
+RL   Submitted (12-MAY-2006) to the INSDC.
+RL   Cold Spring Harbor Laboratory, 1 Bungtown Road, Cold Spring Harbor, NY
+RL   11724, USA
+XX
+DR   H-InvDB; HIT000441936.5.
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..32
+FT                   /organism="Homo sapiens"
+FT                   /mol_type="transcribed RNA"
+FT                   /db_xref="taxon:9606"
+FT   misc_RNA        1..32
+FT                   /product="piRNA piR-43517"
+XX
+SQ   Sequence 32 BP; 11 A; 11 C; 7 G; 3 T; 0 other;
+     tcccccaaaa ccagagaagc ctaagggcat gc                                      32
+//
+ID   DQ575406; SV 1; linear; transcribed RNA; STD; HUM; 30 BP.
+XX
+AC   DQ575406;
+XX
+DT   13-JUN-2006 (Rel. 88, Created)
+DT   16-DEC-2008 (Rel. 98, Last updated, Version 6)
+XX
+DE   Homo sapiens piRNA piR-43518, complete sequence.
+XX
+KW   .
+XX
+OS   Homo sapiens (human)
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Euarchontoglires; Primates; Haplorrhini; Catarrhini; Hominidae;
+OC   Homo.
+XX
+RN   [1]
+RP   1-30
+RX   DOI; 10.1038/nature04917.
+RX   PUBMED; 16751776.
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   "A germline-specific class of small RNAs binds mammalian Piwi proteins";
+RL   Nature 442(7099):199-202(2006).
+XX
+RN   [2]
+RP   1-30
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   ;
+RL   Submitted (12-MAY-2006) to the INSDC.
+RL   Cold Spring Harbor Laboratory, 1 Bungtown Road, Cold Spring Harbor, NY
+RL   11724, USA
+XX
+DR   H-InvDB; HIT000441937.5.
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..30
+FT                   /organism="Homo sapiens"
+FT                   /mol_type="transcribed RNA"
+FT                   /db_xref="taxon:9606"
+FT   misc_RNA        1..30
+FT                   /product="piRNA piR-43518"
+XX
+SQ   Sequence 30 BP; 9 A; 11 C; 5 G; 5 T; 0 other;
+     tcccccaaga acagggatca cattctcagc                                         30
+//
+ID   DQ575407; SV 1; linear; transcribed RNA; STD; HUM; 29 BP.
+XX
+AC   DQ575407;
+XX
+DT   13-JUN-2006 (Rel. 88, Created)
+DT   16-DEC-2008 (Rel. 98, Last updated, Version 6)
+XX
+DE   Homo sapiens piRNA piR-43519, complete sequence.
+XX
+KW   .
+XX
+OS   Homo sapiens (human)
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Euarchontoglires; Primates; Haplorrhini; Catarrhini; Hominidae;
+OC   Homo.
+XX
+RN   [1]
+RP   1-29
+RX   DOI; 10.1038/nature04917.
+RX   PUBMED; 16751776.
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   "A germline-specific class of small RNAs binds mammalian Piwi proteins";
+RL   Nature 442(7099):199-202(2006).
+XX
+RN   [2]
+RP   1-29
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   ;
+RL   Submitted (12-MAY-2006) to the INSDC.
+RL   Cold Spring Harbor Laboratory, 1 Bungtown Road, Cold Spring Harbor, NY
+RL   11724, USA
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..29
+FT                   /organism="Homo sapiens"
+FT                   /mol_type="transcribed RNA"
+FT                   /db_xref="taxon:9606"
+FT   misc_RNA        1..29
+FT                   /product="piRNA piR-43519"
+XX
+SQ   Sequence 29 BP; 7 A; 11 C; 8 G; 3 T; 0 other;
+     tcccccaaga gtgagtgcag caaggcccc                                          29
+//
+ID   DQ575408; SV 1; linear; transcribed RNA; STD; HUM; 29 BP.
+XX
+AC   DQ575408;
+XX
+DT   13-JUN-2006 (Rel. 88, Created)
+DT   16-DEC-2008 (Rel. 98, Last updated, Version 6)
+XX
+DE   Homo sapiens piRNA piR-43520, complete sequence.
+XX
+KW   .
+XX
+OS   Homo sapiens (human)
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Euarchontoglires; Primates; Haplorrhini; Catarrhini; Hominidae;
+OC   Homo.
+XX
+RN   [1]
+RP   1-29
+RX   DOI; 10.1038/nature04917.
+RX   PUBMED; 16751776.
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   "A germline-specific class of small RNAs binds mammalian Piwi proteins";
+RL   Nature 442(7099):199-202(2006).
+XX
+RN   [2]
+RP   1-29
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   ;
+RL   Submitted (12-MAY-2006) to the INSDC.
+RL   Cold Spring Harbor Laboratory, 1 Bungtown Road, Cold Spring Harbor, NY
+RL   11724, USA
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..29
+FT                   /organism="Homo sapiens"
+FT                   /mol_type="transcribed RNA"
+FT                   /db_xref="taxon:9606"
+FT   misc_RNA        1..29
+FT                   /product="piRNA piR-43520"
+XX
+SQ   Sequence 29 BP; 7 A; 10 C; 7 G; 5 T; 0 other;
+     tcccccaaga tgtggagcca tcagctgca                                          29
+//
+ID   DQ575409; SV 1; linear; transcribed RNA; STD; HUM; 29 BP.
+XX
+AC   DQ575409;
+XX
+DT   13-JUN-2006 (Rel. 88, Created)
+DT   16-DEC-2008 (Rel. 98, Last updated, Version 6)
+XX
+DE   Homo sapiens piRNA piR-43521, complete sequence.
+XX
+KW   .
+XX
+OS   Homo sapiens (human)
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Euarchontoglires; Primates; Haplorrhini; Catarrhini; Hominidae;
+OC   Homo.
+XX
+RN   [1]
+RP   1-29
+RX   DOI; 10.1038/nature04917.
+RX   PUBMED; 16751776.
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   "A germline-specific class of small RNAs binds mammalian Piwi proteins";
+RL   Nature 442(7099):199-202(2006).
+XX
+RN   [2]
+RP   1-29
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   ;
+RL   Submitted (12-MAY-2006) to the INSDC.
+RL   Cold Spring Harbor Laboratory, 1 Bungtown Road, Cold Spring Harbor, NY
+RL   11724, USA
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..29
+FT                   /organism="Homo sapiens"
+FT                   /mol_type="transcribed RNA"
+FT                   /db_xref="taxon:9606"
+FT   misc_RNA        1..29
+FT                   /product="piRNA piR-43521"
+XX
+SQ   Sequence 29 BP; 8 A; 7 C; 9 G; 5 T; 0 other;
+     tcccccaagg ttggaaagtg catgcagga                                          29
+//
+ID   DQ575410; SV 1; linear; transcribed RNA; STD; HUM; 29 BP.
+XX
+AC   DQ575410;
+XX
+DT   13-JUN-2006 (Rel. 88, Created)
+DT   16-DEC-2008 (Rel. 98, Last updated, Version 6)
+XX
+DE   Homo sapiens piRNA piR-43522, complete sequence.
+XX
+KW   .
+XX
+OS   Homo sapiens (human)
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Euarchontoglires; Primates; Haplorrhini; Catarrhini; Hominidae;
+OC   Homo.
+XX
+RN   [1]
+RP   1-29
+RX   DOI; 10.1038/nature04917.
+RX   PUBMED; 16751776.
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   "A germline-specific class of small RNAs binds mammalian Piwi proteins";
+RL   Nature 442(7099):199-202(2006).
+XX
+RN   [2]
+RP   1-29
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   ;
+RL   Submitted (12-MAY-2006) to the INSDC.
+RL   Cold Spring Harbor Laboratory, 1 Bungtown Road, Cold Spring Harbor, NY
+RL   11724, USA
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..29
+FT                   /organism="Homo sapiens"
+FT                   /mol_type="transcribed RNA"
+FT                   /db_xref="taxon:9606"
+FT   misc_RNA        1..29
+FT                   /product="piRNA piR-43522"
+XX
+SQ   Sequence 29 BP; 5 A; 11 C; 8 G; 5 T; 0 other;
+     tcccccacgt caggacaggc ttgaggcct                                          29
+//
+ID   DQ575411; SV 1; linear; transcribed RNA; STD; HUM; 30 BP.
+XX
+AC   DQ575411;
+XX
+DT   13-JUN-2006 (Rel. 88, Created)
+DT   16-DEC-2008 (Rel. 98, Last updated, Version 6)
+XX
+DE   Homo sapiens piRNA piR-43523, complete sequence.
+XX
+KW   .
+XX
+OS   Homo sapiens (human)
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Euarchontoglires; Primates; Haplorrhini; Catarrhini; Hominidae;
+OC   Homo.
+XX
+RN   [1]
+RP   1-30
+RX   DOI; 10.1038/nature04917.
+RX   PUBMED; 16751776.
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   "A germline-specific class of small RNAs binds mammalian Piwi proteins";
+RL   Nature 442(7099):199-202(2006).
+XX
+RN   [2]
+RP   1-30
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   ;
+RL   Submitted (12-MAY-2006) to the INSDC.
+RL   Cold Spring Harbor Laboratory, 1 Bungtown Road, Cold Spring Harbor, NY
+RL   11724, USA
+XX
+DR   H-InvDB; HIT000441942.5.
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..30
+FT                   /organism="Homo sapiens"
+FT                   /mol_type="transcribed RNA"
+FT                   /db_xref="taxon:9606"
+FT   misc_RNA        1..30
+FT                   /product="piRNA piR-43523"
+XX
+SQ   Sequence 30 BP; 3 A; 13 C; 6 G; 8 T; 0 other;
+     tcccccagcc atgtcagctg tgtctgctcc                                         30
+//
+ID   DQ575412; SV 1; linear; transcribed RNA; STD; HUM; 32 BP.
+XX
+AC   DQ575412;
+XX
+DT   13-JUN-2006 (Rel. 88, Created)
+DT   16-DEC-2008 (Rel. 98, Last updated, Version 6)
+XX
+DE   Homo sapiens piRNA piR-43524, complete sequence.
+XX
+KW   .
+XX
+OS   Homo sapiens (human)
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Euarchontoglires; Primates; Haplorrhini; Catarrhini; Hominidae;
+OC   Homo.
+XX
+RN   [1]
+RP   1-32
+RX   DOI; 10.1038/nature04917.
+RX   PUBMED; 16751776.
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   "A germline-specific class of small RNAs binds mammalian Piwi proteins";
+RL   Nature 442(7099):199-202(2006).
+XX
+RN   [2]
+RP   1-32
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   ;
+RL   Submitted (12-MAY-2006) to the INSDC.
+RL   Cold Spring Harbor Laboratory, 1 Bungtown Road, Cold Spring Harbor, NY
+RL   11724, USA
+XX
+DR   H-InvDB; HIT000441943.5.
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..32
+FT                   /organism="Homo sapiens"
+FT                   /mol_type="transcribed RNA"
+FT                   /db_xref="taxon:9606"
+FT   misc_RNA        1..32
+FT                   /product="piRNA piR-43524"
+XX
+SQ   Sequence 32 BP; 2 A; 14 C; 7 G; 9 T; 0 other;
+     tcccccagcg tggtggctgc ttctatctcc cc                                      32
+//
+ID   DQ575413; SV 1; linear; transcribed RNA; STD; HUM; 29 BP.
+XX
+AC   DQ575413;
+XX
+DT   13-JUN-2006 (Rel. 88, Created)
+DT   16-DEC-2008 (Rel. 98, Last updated, Version 6)
+XX
+DE   Homo sapiens piRNA piR-43525, complete sequence.
+XX
+KW   .
+XX
+OS   Homo sapiens (human)
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Euarchontoglires; Primates; Haplorrhini; Catarrhini; Hominidae;
+OC   Homo.
+XX
+RN   [1]
+RP   1-29
+RX   DOI; 10.1038/nature04917.
+RX   PUBMED; 16751776.
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   "A germline-specific class of small RNAs binds mammalian Piwi proteins";
+RL   Nature 442(7099):199-202(2006).
+XX
+RN   [2]
+RP   1-29
+RA   Girard A., Sachidanandam R., Hannon G.J., Carmell M.A.;
+RT   ;
+RL   Submitted (12-MAY-2006) to the INSDC.
+RL   Cold Spring Harbor Laboratory, 1 Bungtown Road, Cold Spring Harbor, NY
+RL   11724, USA
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..29
+FT                   /organism="Homo sapiens"
+FT                   /mol_type="transcribed RNA"
+FT                   /db_xref="taxon:9606"
+FT   misc_RNA        1..29
+FT                   /product="piRNA piR-43525"
+XX
+SQ   Sequence 29 BP; 8 A; 8 C; 7 G; 6 T; 0 other;
+     tccccccgtg attatgagag ctgcagaaa                                          29
+//

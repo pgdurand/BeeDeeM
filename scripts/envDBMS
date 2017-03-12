@@ -1,0 +1,19 @@
+
+#  Provide here the path to the home directory of an
+#  Oracle JRE release 1.7 or above
+#
+JAVA_HOME=/usr/local/jre1.7  [update as needed]
+
+export JAVA_HOME
+
+#  Provide here the path to the home directory of a Ant
+#  1.6.5 or above. By default, DBMS installer will use its
+#  own Ant.
+#
+ANT_HOME=$PWD/ant
+export ANT_HOME
+
+PATH=$JAVA_HOME/bin:$ANT_HOME/bin:$PATH
+
+export PATH
+

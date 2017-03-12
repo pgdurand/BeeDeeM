@@ -1,0 +1,237 @@
+
+LOCUS       NM_001080826            4726 bp    mRNA    linear   PRI 19-MAR-2014
+DEFINITION  Homo sapiens homolog of rat pragma of Rnd2 (SGK223), mRNA.
+ACCESSION   NM_001080826 XM_291277 XM_937796
+VERSION     NM_001080826.2  GI:595582407
+KEYWORDS    RefSeq.
+SOURCE      Homo sapiens (human)
+  ORGANISM  Homo sapiens
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+            Catarrhini; Hominidae; Homo.
+REFERENCE   1  (bases 1 to 4726)
+  AUTHORS   Safari F, Murata-Kamiya N, Saito Y and Hatakeyama M.
+  TITLE     Mammalian Pragmin regulates Src family kinases via the
+            Glu-Pro-Ile-Tyr-Ala (EPIYA) motif that is exploited by bacterial
+            effectors
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 108 (36), 14938-14943 (2011)
+   PUBMED   21873224
+  REMARK    GeneRIF: Pragmin as a mammalian EPIYA effector and suggests that
+            bacterial EPIYA effectors target Pragmin to subvert SFKs for
+            successful infection.
+REFERENCE   2  (bases 1 to 4726)
+  AUTHORS   Tanaka H, Katoh H and Negishi M.
+  TITLE     Pragmin, a novel effector of Rnd2 GTPase, stimulates RhoA activity
+  JOURNAL   J. Biol. Chem. 281 (15), 10355-10364 (2006)
+   PUBMED   16481321
+  REMARK    GeneRIF: Rnd2 regulates neurite outgrowth by functioning as the
+            RhoA activator through Pragmin, in contrast to Rnd1 and Rnd3
+            inhibiting RhoA signaling
+REFERENCE   3  (bases 1 to 4726)
+  AUTHORS   Zhang Y, Wolf-Yadlin A, Ross PL, Pappin DJ, Rush J, Lauffenburger
+            DA and White FM.
+  TITLE     Time-resolved mass spectrometry of tyrosine phosphorylation sites
+            in the epidermal growth factor receptor signaling network reveals
+            dynamic modules
+  JOURNAL   Mol. Cell Proteomics 4 (9), 1240-1250 (2005)
+   PUBMED   15951569
+REFERENCE   4  (bases 1 to 4726)
+  AUTHORS   Manning G, Whyte DB, Martinez R, Hunter T and Sudarsanam S.
+  TITLE     The protein kinase complement of the human genome
+  JOURNAL   Science 298 (5600), 1912-1934 (2002)
+   PUBMED   12471243
+  REMARK    GeneRIF: Also known as SgK223, a member of the NKF3 subfamily of
+            eukaryotic protein kinases.
+            Review article
+COMMENT     REVIEWED REFSEQ: This record has been curated by NCBI staff. The
+            reference sequence was derived from BX420505.2, AK122582.1,
+            AC103957.8, AC068353.34, ABBA01026926.1 and AL833872.1.
+            On Mar 19, 2014 this sequence version replaced gi:157909821.
+            
+            Summary: This gene encodes an enzyme that belongs to the tyrosine
+            protein kinase family. A similar protein in rat binds to Rho family
+            GTPase 2 (Rnd2) and regulates neurite outgrowth via activation of
+            Ras homolog gene family, member A (RhoA). [provided by RefSeq, Mar
+            2014].
+            
+            Sequence Note: This RefSeq record was created from transcript and
+            genomic sequence data to make the sequence consistent with the
+            reference genome assembly. The genomic coordinates used for the
+            transcript record were based on transcript alignments.
+            
+            ##Evidence-Data-START##
+            Transcript exon combination :: AK122582.1 [ECO:0000332]
+            RNAseq introns              :: single sample supports all introns
+                                           ERS025081, ERS025082 [ECO:0000348]
+            ##Evidence-Data-END##
+            COMPLETENESS: complete on the 3' end.
+PRIMARY     REFSEQ_SPAN         PRIMARY_IDENTIFIER PRIMARY_SPAN        COMP
+            1-155               BX420505.2         175-329
+            156-1297            AK122582.1         1-1142
+            1298-1935           AC103957.8         112249-112886
+            1936-3423           AK122582.1         1781-3268
+            3424-3585           AC068353.34        57099-57260         c
+            3586-3600           ABBA01026926.1     23264-23278
+            3601-4391           AC068353.34        56299-57089         c
+            4392-4718           AK122582.1         4238-4564
+            4719-4726           AL833872.1         2175-2182
+FEATURES             Location/Qualifiers
+     source          1..4726
+                     /organism="Homo sapiens"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:9606"
+                     /chromosome="8"
+                     /map="8p23.1"
+     gene            1..4726
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+                     /note="homolog of rat pragma of Rnd2"
+                     /db_xref="GeneID:157285"
+     misc_feature    13..15
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+                     /note="upstream in-frame stop codon"
+     CDS             88..4308
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+                     /EC_number="2.7.10.2"
+                     /note="sugen kinase 223"
+                     /codon_start=1
+                     /product="tyrosine-protein kinase SgK223"
+                     /protein_id="NP_001074295.2"
+                     /db_xref="GI:595582408"
+                     /db_xref="CCDS:CCDS43706.1"
+                     /db_xref="GeneID:157285"
+                     /translation="MHQTLCLNPESLKMSACSDFVEHIWKPGSCKNCFCLRSDHQLVA
+                     GPPQPRAGSLPPPPRLPPRPENCRLEDEGVNSSPYSKPTIAVKPTMMSSEASDVWTEA
+                     NLSAEVSQVIWRRAPGKLPLPKQEDAPVVYLGSFRGVQKPAGPSTSPDGNSRCPPAYT
+                     MVGLHNLEPRGERNIAFHPVSFPEEKAVHKEKPSFPYQDRPSTQESFRQKLAAFAGTT
+                     SGCHQGPGPLRESLPSEDDSDQRCSPSGDSEGGEYCSILDCCPGSPVAKAASQTAGSR
+                     GRHGGRDCSPTCWEQGKCSGPAEQEKRGPSFPKECCSQGPTAHPSCLGPKKLSLTSEA
+                     AISSDGLSCGSGSGSGSGASSPFVPHLESDYCSLMKEPAPEKQQDPGCPGVTPSRCLG
+                     LTGEPQPPAHPREATQPEPIYAESTKRKKAAPVPSKSQAKIEHAAAAQGQGQVCTGNA
+                     WAQKAASGWGRDSPDPTPQVSATITVMAAHPEEDHRTIYLSSPDSAVGVQWPRGPVSQ
+                     NSEVGEEETSAGQGLSSRESHAHSASESKPKERPAIPPKLSKSSPVGSPVSPSAGGPP
+                     VSPLADLSDGSSGGSSIGPQPPSQGPADPAPSCRTNGVAISDPSRCPQPAASSASEQR
+                     RPRFQAGTWSRQCRIEEEEEVEQELLSHSWGRETKNGPTDHSNSTTWHRLHPTDGSSG
+                     QNSKVGTGMSKSASFAFEFPKDRSGIETFSPPPPPPKSRHLLKMNKSSSDLEKVSQGS
+                     AESLSPSFRGVHVSFTTGSTDSLASDSRTCSDGGPSSELAHSPTNSGKKLFAPVPFPS
+                     GSTEDVSPSGPQQPPPLPQKKIVSRAASSPDGFFWTQGSPKPGTASPKLNLSHSETNV
+                     HDESHFSYSLSPGNRHHPVFSSSDPLEKAFKGSGHWLPAAGLAGNRGGCGSPGLQCKG
+                     APSASSSQLSVSSQASTGSTQLQLHGLLSNISSKEGTYAKLGGLYTQSLARLVAKCED
+                     LFMGGQKKELHFNENNWSLFKLTCNKPCCDSGDAIYYCATCSEDPGSTYAVKICKAPE
+                     PKTVSYCSPSVPVHFNIQQDCGHFVASVPSSMLSSPDAPKDPVPALPTHPPAQEQDCV
+                     VVITREVPHQTASDFVRDSAASHQAEPEAYERRVCFLLLQLCNGLEHLKEHGIIHRDL
+                     CLENLLLVHCTLQAGPGPAPAPAPAPAPAAAAPPCSSAAPPAGGTLSPAAGPASPEGP
+                     REKQLPRLIISNFLKAKQKPGGTPNLQQKKSQARLAPEIVSASQYRKFDEFQTGILIY
+                     ELLHQPNPFEVRAQLRERDYRQEDLPPLPALSLYSPGLQQLAHLLLEADPIKRIRIGE
+                     AKRVLQCLLWGPRRELVQQPGTSEEALCGTLHNWIDMKRALMMMKFAEKAVDRRRGVE
+                     LEDWLCCQYLASAEPGALLQSLKLLQLL"
+     misc_feature    2173..2175
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="Phosphoserine; propagated from UniProtKB/Swiss-Prot
+                     (Q86YV5.3); phosphorylation site"
+     misc_feature    2320..2322
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="Phosphoserine; propagated from UniProtKB/Swiss-Prot
+                     (Q86YV5.3); phosphorylation site"
+     misc_feature    2563..2565
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="Phosphoserine; propagated from UniProtKB/Swiss-Prot
+                     (Q86YV5.3); phosphorylation site"
+     polyA_signal    4699..4704
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+     polyA_site      4726
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+ORIGIN      
+        1 gaagccgctc tgtgacccac ctctgaatcc cacaaaactg caccagagag ccgggcgcaa
+       61 gatgaaccag caccctgtcg gctcaagatg caccagaccc tctgcctgaa ccccgagagc
+      121 ctgaaaatgt ctgcgtgcag tgactttgtg gagcacatct ggaaacccgg gtcctgcaag
+      181 aactgcttct gcctgcggag cgaccaccag ctggtggccg gccctcccca gcccagagcg
+      241 ggcagcctgc cccctccacc gcgcctgcct cccaggcctg agaactgccg cctggaagat
+      301 gaaggtgtga acagctcacc ttactccaag cccacaattg ccgtgaagcc caccatgatg
+      361 agctccgagg cctctgatgt gtggacagag gccaacctga gtgccgaagt ctcgcaggtc
+      421 atctggagac gagcccctgg caagctcccc ctcccgaagc aggaggatgc ccccgtcgtc
+      481 tacctgggca gcttccgagg tgtacagaag cctgctggtc cctctacctc ccctgatggc
+      541 aattctcgct gtcccccagc ttacaccatg gtcggcctgc acaaccttga gccccgcggc
+      601 gagaggaaca ttgccttcca cccggtgagc ttcccggagg agaaggctgt gcacaaagaa
+      661 aaaccctcat ttccttacca agaccggccc tccacccagg agagcttccg ccagaaactg
+      721 gctgcctttg ctgggaccac atctggctgt caccagggcc ctgggcccct gcgggaatcc
+      781 ctgccctcgg aggatgacag tgatcaaagg tgctcgccct ccggggacag cgagggtgga
+      841 gagtactgct ccatcctgga ctgctgccct gggagccctg ttgccaaggc tgcctcccag
+      901 actgcaggtt cccggggcag gcatggtggc agggactgct cacccacgtg ctgggagcag
+      961 gggaagtgtt ccgggcccgc agagcaggag aagcggggcc cgagcttccc caaggagtgc
+     1021 tgtagccagg gccccactgc ccacccatcc tgcctgggcc ccaagaaact gtccctcacc
+     1081 tcggaggctg ccatttcttc cgacggcctc tcttgtggca gcggcagcgg cagcggcagc
+     1141 ggcgccagta gccccttcgt cccccacctc gagagtgatt actgctccct catgaaggaa
+     1201 cctgccccag agaagcagca ggaccctggc tgcccagggg tgacccctag cagatgcctt
+     1261 gggctgacgg gggagcccca gcccccggcc cacccccggg aggctacaca gcctgaaccc
+     1321 atctatgctg agagcaccaa gaggaagaag gcagctccgg tgccttccaa gtcacaggcc
+     1381 aagatagaac atgcagctgc tgcccagggc caaggccagg tatgcacagg taatgcctgg
+     1441 gcccagaaag cagcatctgg ctggggccgg gacagcccag acccaactcc ccaggtgtca
+     1501 gccaccatca cagtcatggc ggcccacccg gaagaggacc atcggacgat ctacctgagc
+     1561 agccctgact ctgcagtggg ggtgcagtgg ccacgagggc ctgtgagcca gaactccgag
+     1621 gtaggtgaag aggagacttc ggctgggcag gggctgagct ccagggaaag ccatgctcac
+     1681 agtgccagcg agagcaagcc caaggagagg cccgccattc cccccaagtt gtccaagagt
+     1741 agccctgtag ggtccccggt gtcaccgtct gctggagggc ccccagtgtc accgctggct
+     1801 gaccttagtg atgggagctc tggcggcagc agcattgggc cccagcctcc atcccaaggt
+     1861 cctgctgacc ccgctccttc ctgccggacc aacggtgtcg ctatcagtga cccatccagg
+     1921 tgtccccagc ctgccgcctc gtcagcctcg gaacagaggc ggcccaggtt ccaggcaggc
+     1981 acctggagtc gtcagtgccg gatagaggaa gaagaggagg tggagcagga attgctgagt
+     2041 cacagctggg gaagagagac caaaaatggc cccacggacc attcaaactc cacgacctgg
+     2101 caccgtctcc accccacaga tggctcctct gggcagaaca gcaaagttgg gaccgggatg
+     2161 agcaaatccg cctcttttgc ctttgagttc cccaaggaca gaagtgggat tgagacattc
+     2221 tcacctcctc ctccgcctcc aaagtcgcgg caccttctaa aaatgaacaa gagcagctct
+     2281 gatttggaaa aagtgagcca gggctctgca gaaagcctca gcccatcctt caggggtgtc
+     2341 cacgtcagct tcaccaccgg ctccacggac agcctggcct cagactctag gacctgcagc
+     2401 gatggaggtc cctcgtctga gctggctcac tcgcccacca acagcgggaa gaagctcttt
+     2461 gctcccgttc cgtttccttc aggctccact gaggacgtgt cccccagtgg cccccagcag
+     2521 ccccctccac tcccccagaa aaagatagtg agccgggcag cctcttcacc ggatggcttc
+     2581 ttctggaccc aaggctcccc caagcccgga acagcaagcc ccaagctgaa cctaagccac
+     2641 tcggaaacca acgtccacga cgaatctcac tttagctatt cgttgagccc cgggaaccgc
+     2701 caccatcctg tcttctcctc ttccgatcct ctggagaaag ctttcaaagg cagtggccac
+     2761 tggcttccgg cagcagggct ggcgggcaac agaggcggct gcgggagccc tggcctccag
+     2821 tgcaaagggg ccccctccgc ctcatcctcc cagctgagcg tgtccagtca agcctccacc
+     2881 gggagcaccc agcttcagct gcacggtctc ctgagcaaca tcagcagcaa ggagggcacc
+     2941 tatgccaagc tggggggact ctacacccag tccctggccc gccttgtagc caaatgtgag
+     3001 gacctcttca tgggcggcca gaaaaaggag ctccacttca atgagaataa ctggtcgctc
+     3061 ttcaagctga cttgtaacaa gccctgctgt gactcggggg atgccattta ttactgtgcc
+     3121 acctgctctg aggaccccgg cagcacctat gctgtgaaaa tctgcaaagc ccctgagccc
+     3181 aaaacagtct cctactgcag cccgtccgtg cccgtgcact ttaacatcca gcaggactgc
+     3241 ggccacttcg tcgcctcggt gccgtccagc atgctcagct cccccgacgc gcccaaggac
+     3301 cctgtgcctg ccctgcccac acacccccct gcccaggagc aggactgcgt ggtggtcatc
+     3361 acccgagagg tgccacatca gaccgcctcc gacttcgtgc gggactcggc ggccagccac
+     3421 caggcggagc ccgaggcgta cgagcggcgc gtgtgcttcc tgcttctgca actctgcaac
+     3481 gggctggagc acctgaagga gcacgggatc atccaccggg acctgtgcct ggagaacctg
+     3541 ctgctggtgc actgcaccct ccaggccggc cccgggcccg cccccgcccc cgccccggct
+     3601 cccgcccccg ccgccgccgc gcctccctgc tcctctgccg ccccgcctgc tggtggcact
+     3661 ctcagccccg cagccggccc cgcctccccg gaagggcccc gggagaagca gctgccccgg
+     3721 ctcatcatca gcaacttttt gaaggccaag cagaagccgg gcggcacccc aaacctgcag
+     3781 cagaagaaga gccaggcccg gctggccccc gagatcgtgt ctgcttccca gtaccgcaag
+     3841 ttcgatgagt tccagacagg catcctcatc tacgagctgc tgcaccaacc caacccgttc
+     3901 gaggtgcgcg cccagctgcg ggagagagac taccggcagg aggacctgcc gccgctgccc
+     3961 gcgctgtccc tctactcacc cggcctgcag cagctggcac atctgctact ggaggccgac
+     4021 cccatcaagc gtatccgcat cggcgaggcc aagcgcgtgc tgcagtgcct gctgtggggg
+     4081 cctcggcgcg agctggtgca gcagccgggc acctcggagg aggcgctgtg cggcacgctg
+     4141 cacaactgga tcgacatgaa gcgggccctg atgatgatga agtttgcgga gaaggcggtg
+     4201 gatcgcaggc ggggcgtgga gctggaggac tggctttgct gccagtacct ggcgtctgcg
+     4261 gagcccgggg ccctcttaca gtcgctgaag ctcctgcagc ttctgtgagc caagccccag
+     4321 cctgcaccgt cgctgcccct tccctgccta accctttcct gtctcgcctt ggaagcaccc
+     4381 atgtctccct gggaaatggt acagatgact gggatacctg gatgtaaaat atataaatat
+     4441 atatatagaa aatacatata ccatatataa atatgaaaga ctaaggatgc tgttgcccgt
+     4501 ccacactcgt ctcctctctg cactaagtcc tccctgtttt cttctgtaat tatacacatt
+     4561 tccagttcca tgcaacgtcc tgaggacagt tctgtgaact gaatgcagcc tggacactgg
+     4621 cctcaatacc ttgtttagga tttcttcacc cttttgtcaa attgttattt aaagaaaaaa
+     4681 aaaaaagaag aaaattccat taaaattttt tttggttgag tcatga
+//

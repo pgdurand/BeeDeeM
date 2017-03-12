@@ -1,0 +1,4 @@
+<H1>$dbname entry $seqid</H1>
+<PRE>
+$data
+</PRE>

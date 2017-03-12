@@ -1,0 +1,60 @@
+ID   B2R6X2_HUMAN            Unreviewed;       651 AA.
+AC   B2R6X2;
+DT   01-JUL-2008, integrated into UniProtKB/TrEMBL.
+DT   01-JUL-2008, sequence version 1.
+DT   10-FEB-2009, entry version 5.
+DE   SubName: Full=cDNA, FLJ93161, highly similar to Homo sapiens glucuronidase, beta (GUSB), mRNA;
+OS   Homo sapiens (Human).
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+OC   Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+OC   Catarrhini; Hominidae; Homo.
+OX   NCBI_TaxID=9606;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE.
+RC   TISSUE=Spleen;
+RA   Wakamatsu A., Yamamoto J., Kimura K., Kaida T., Tsuchiya K., Iida Y.,
+RA   Takayama Y., Murakawa K., Kanehori K., Andoh T., Kagawa N., Sato R.,
+RA   Kawamura Y., Tanaka S., Kisu Y., Sugano S., Goshima N., Nomura N.,
+RA   Isogai T.;
+RT   "NEDO functional analysis of protein and research application
+RT   project.";
+RL   Submitted (JAN-2008) to the EMBL/GenBank/DDBJ databases.
+CC   -----------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see http://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution-NoDerivs License
+CC   -----------------------------------------------------------------------
+DR   EMBL; AK312752; BAG35619.1; -; mRNA.
+DR   UniGene; Hs.255230; -.
+DR   IPI; IPI00027745; -.
+DR   Ensembl; ENSG00000169919; Homo sapiens.
+DR   GO; GO:0043169; F:cation binding; IEA:InterPro.
+DR   GO; GO:0004553; F:hydrolase activity, hydrolyzing O-glycosyl ...; IEA:InterPro.
+DR   GO; GO:0005975; P:carbohydrate metabolic process; IEA:InterPro.
+DR   InterPro; IPR006101; Glyco_hydro_2.
+DR   InterPro; IPR013812; Glyco_hydro_2/20_Ig-like.
+DR   InterPro; IPR006104; Glyco_hydro_2_carb-bd.
+DR   InterPro; IPR006102; Glyco_hydro_2_Ig-like.
+DR   InterPro; IPR006103; Glyco_hydro_2_TIM.
+DR   InterPro; IPR013781; Glyco_hydro_sub_cat.
+DR   Gene3D; G3DSA:2.60.40.320; Glyco_hydro_2/20_Ig-like; 1.
+DR   Gene3D; G3DSA:3.20.20.80; Glyco_hydro_cat; 1.
+DR   Pfam; PF00703; Glyco_hydro_2; 1.
+DR   Pfam; PF02836; Glyco_hydro_2_C; 1.
+DR   Pfam; PF02837; Glyco_hydro_2_N; 1.
+DR   PRINTS; PR00132; GLHYDRLASE2.
+DR   PROSITE; PS00719; GLYCOSYL_HYDROL_F2_1; 1.
+DR   PROSITE; PS00608; GLYCOSYL_HYDROL_F2_2; 1.
+PE   2: Evidence at transcript level;
+SQ   SEQUENCE   651 AA;  74706 MW;  2759150B7EA5A78C CRC64;
+     MARGSAVAWA ALGPLLWGCA LGLQGGMLYP QESPSRECKE LDGLWSFRAD FSDNRRRGFE
+     EQWYRRPLWE SGPTVDMPVP SSFNDISQDW RLRHFVGWVW YEREVILPER WTQDLRTRVV
+     LRIGSAHSYA IVWVNGVDTL EHEGGYLPFE ADISNLVQVG PLPSRLRITI AINNTLTPTT
+     LPPGTIQYLT DTSKYPKGYF VQNTYFDFFN YAGLQRSVLL YTTPTTYIDD ITVTTSVEQD
+     SGLVNYQISV KGSNLFKLEV RLLDAENKVV ANGTGTQGQL KVPGVSLWWP YLMHERPAYL
+     YSLEVQLTAQ TSLGPVSDFY TLPVGIRTVA VTKSQFLING KPFYFHGVNK HEDADIRGKG
+     FDWPLLVKDF NLLRWLGANA FRTSHYPYAE EVMQMCDRYG IVVIDECPGV GLALPQFFNN
+     VSLHHHMQVM EEVVRRDKNH PAVVMWSVAN EPASHLESAG YYLKMVIAHT KSLDPSRSVT
+     FVSNSNYAAD KGAPYVDVIC LNSYYSWYHD YGHLELIQLQ LATQFENWYK KYQKPIIQSE
+     YGAETIAGFH QDPPLMFTEE YQKSLLEQYH LGLDQKRRKY VVGELIWNFA DFMTEQSPTR
+     VLGNKKGIFT RQRQPKSAAF LLRERYWKIA NETRYPHSVA KSQCLENSPF T
+//

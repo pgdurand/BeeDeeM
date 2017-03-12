@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project name="KL_AntManager" default="help" basedir=".">
+    <target name="help" >
+        <echo>Do not use diretcly from command-line!</echo>
+    </target>
+    
+    <!--
+     - Set a HTTP/FTP proxy. Leaving fiels to emtpy disables proxy usage. If
+     - you use a proxy requiring authentication, adds the two attributes 
+     - proxyuser and proxypassword.
+     -->
+    <target name="setproxy" >
+        <setproxy proxyhost="${host}" proxyport="${port}"/>
+    </target>
+
+    <!--
+     - Gunzip a file
+     -->
+    <target name="gunzipper" >
+        <gunzip src="${src}" dest="${dest}"/>
+    </target>
+
+    <!--
+     - Unzip a file
+     -->
+    <target name="unzipper" >
+        <unzip src="${src}" dest="${dest}"/>
+    </target>
+
+    <!--
+     - Untar a file
+     -->
+    <target name="untarrer" >
+        <untar src="${src}" dest="${dest}"/>
+    </target>
+	
+	<!--
+	- Untar a file
+	-->
+	<target name="untarrertgz" >
+		<untar src="${src}" dest="${dest}" compression="gzip"/>
+	</target>
+
+    <!--
+     - Delete all files contained in a directory
+     -->
+    <target name="delfiles" >
+        <delete includeemptydirs="true">
+            <fileset dir="${dir}" includes="${ffilter}"/>
+        </delete>
+    </target>
+    
+    <!--
+     - Delete a directory
+     -->
+    <target name="deldir" >
+        <delete includeemptydirs="true">
+            <fileset dir="${dir}" />
+        </delete>
+    </target>
+
+    <!--
+     - Rename a single file
+     -->
+    <target name="movefile" >
+        <move file="${src}" tofile="${dest}"/>
+    </target>
+
+    <!--
+     - Rename a single directory
+     -->
+    <target name="movedir" >
+			<move todir="${dest}">
+				<fileset dir="${src}"/>
+			</move>
+    </target>
+
+	<!--
+     - Zip a directory
+     -->
+    <target name="zipdir" >
+        <zip destfile="${dest}" basedir="${src}" />
+    </target>
+	
+	<!--
+	- Tar and gzip a directory
+	-->
+	<target name="targzdir" >
+		<tar destfile="${dest}" basedir="${src}" compression="gzip"
+			excludes="*.txt, *.log, *.fas, *.sh"
+			includes="*.zml, *.res, i, rt, results.ldx/**"/>
+	</target>
+    
+</project>

@@ -1,0 +1,1068 @@
+
+LOCUS       NM_001080826            4726 bp    mRNA    linear   PRI 19-MAR-2014
+DEFINITION  Homo sapiens homolog of rat pragma of Rnd2 (SGK223), mRNA.
+ACCESSION   NM_001080826 XM_291277 XM_937796
+VERSION     NM_001080826.2  GI:595582407
+KEYWORDS    RefSeq.
+SOURCE      Homo sapiens (human)
+  ORGANISM  Homo sapiens
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Primates; Haplorrhini;
+            Catarrhini; Hominidae; Homo.
+REFERENCE   1  (bases 1 to 4726)
+  AUTHORS   Safari F, Murata-Kamiya N, Saito Y and Hatakeyama M.
+  TITLE     Mammalian Pragmin regulates Src family kinases via the
+            Glu-Pro-Ile-Tyr-Ala (EPIYA) motif that is exploited by bacterial
+            effectors
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 108 (36), 14938-14943 (2011)
+   PUBMED   21873224
+  REMARK    GeneRIF: Pragmin as a mammalian EPIYA effector and suggests that
+            bacterial EPIYA effectors target Pragmin to subvert SFKs for
+            successful infection.
+REFERENCE   2  (bases 1 to 4726)
+  AUTHORS   Tanaka H, Katoh H and Negishi M.
+  TITLE     Pragmin, a novel effector of Rnd2 GTPase, stimulates RhoA activity
+  JOURNAL   J. Biol. Chem. 281 (15), 10355-10364 (2006)
+   PUBMED   16481321
+  REMARK    GeneRIF: Rnd2 regulates neurite outgrowth by functioning as the
+            RhoA activator through Pragmin, in contrast to Rnd1 and Rnd3
+            inhibiting RhoA signaling
+REFERENCE   3  (bases 1 to 4726)
+  AUTHORS   Zhang Y, Wolf-Yadlin A, Ross PL, Pappin DJ, Rush J, Lauffenburger
+            DA and White FM.
+  TITLE     Time-resolved mass spectrometry of tyrosine phosphorylation sites
+            in the epidermal growth factor receptor signaling network reveals
+            dynamic modules
+  JOURNAL   Mol. Cell Proteomics 4 (9), 1240-1250 (2005)
+   PUBMED   15951569
+REFERENCE   4  (bases 1 to 4726)
+  AUTHORS   Manning G, Whyte DB, Martinez R, Hunter T and Sudarsanam S.
+  TITLE     The protein kinase complement of the human genome
+  JOURNAL   Science 298 (5600), 1912-1934 (2002)
+   PUBMED   12471243
+  REMARK    GeneRIF: Also known as SgK223, a member of the NKF3 subfamily of
+            eukaryotic protein kinases.
+            Review article
+COMMENT     REVIEWED REFSEQ: This record has been curated by NCBI staff. The
+            reference sequence was derived from BX420505.2, AK122582.1,
+            AC103957.8, AC068353.34, ABBA01026926.1 and AL833872.1.
+            On Mar 19, 2014 this sequence version replaced gi:157909821.
+            
+            Summary: This gene encodes an enzyme that belongs to the tyrosine
+            protein kinase family. A similar protein in rat binds to Rho family
+            GTPase 2 (Rnd2) and regulates neurite outgrowth via activation of
+            Ras homolog gene family, member A (RhoA). [provided by RefSeq, Mar
+            2014].
+            
+            Sequence Note: This RefSeq record was created from transcript and
+            genomic sequence data to make the sequence consistent with the
+            reference genome assembly. The genomic coordinates used for the
+            transcript record were based on transcript alignments.
+            
+            ##Evidence-Data-START##
+            Transcript exon combination :: AK122582.1 [ECO:0000332]
+            RNAseq introns              :: single sample supports all introns
+                                           ERS025081, ERS025082 [ECO:0000348]
+            ##Evidence-Data-END##
+            COMPLETENESS: complete on the 3' end.
+PRIMARY     REFSEQ_SPAN         PRIMARY_IDENTIFIER PRIMARY_SPAN        COMP
+            1-155               BX420505.2         175-329
+            156-1297            AK122582.1         1-1142
+            1298-1935           AC103957.8         112249-112886
+            1936-3423           AK122582.1         1781-3268
+            3424-3585           AC068353.34        57099-57260         c
+            3586-3600           ABBA01026926.1     23264-23278
+            3601-4391           AC068353.34        56299-57089         c
+            4392-4718           AK122582.1         4238-4564
+            4719-4726           AL833872.1         2175-2182
+FEATURES             Location/Qualifiers
+     source          1..4726
+                     /organism="Homo sapiens"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:10239"
+                     /chromosome="8"
+                     /map="8p23.1"
+     gene            1..4726
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+                     /note="homolog of rat pragma of Rnd2"
+                     /db_xref="GeneID:157285"
+     misc_feature    13..15
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+                     /note="upstream in-frame stop codon"
+     CDS             88..4308
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+                     /EC_number="2.7.10.2"
+                     /note="sugen kinase 223"
+                     /codon_start=1
+                     /product="tyrosine-protein kinase SgK223"
+                     /protein_id="NP_001074295.2"
+                     /db_xref="GI:595582408"
+                     /db_xref="CCDS:CCDS43706.1"
+                     /db_xref="GeneID:157285"
+                     /translation="MHQTLCLNPESLKMSACSDFVEHIWKPGSCKNCFCLRSDHQLVA
+                     GPPQPRAGSLPPPPRLPPRPENCRLEDEGVNSSPYSKPTIAVKPTMMSSEASDVWTEA
+                     NLSAEVSQVIWRRAPGKLPLPKQEDAPVVYLGSFRGVQKPAGPSTSPDGNSRCPPAYT
+                     MVGLHNLEPRGERNIAFHPVSFPEEKAVHKEKPSFPYQDRPSTQESFRQKLAAFAGTT
+                     SGCHQGPGPLRESLPSEDDSDQRCSPSGDSEGGEYCSILDCCPGSPVAKAASQTAGSR
+                     GRHGGRDCSPTCWEQGKCSGPAEQEKRGPSFPKECCSQGPTAHPSCLGPKKLSLTSEA
+                     AISSDGLSCGSGSGSGSGASSPFVPHLESDYCSLMKEPAPEKQQDPGCPGVTPSRCLG
+                     LTGEPQPPAHPREATQPEPIYAESTKRKKAAPVPSKSQAKIEHAAAAQGQGQVCTGNA
+                     WAQKAASGWGRDSPDPTPQVSATITVMAAHPEEDHRTIYLSSPDSAVGVQWPRGPVSQ
+                     NSEVGEEETSAGQGLSSRESHAHSASESKPKERPAIPPKLSKSSPVGSPVSPSAGGPP
+                     VSPLADLSDGSSGGSSIGPQPPSQGPADPAPSCRTNGVAISDPSRCPQPAASSASEQR
+                     RPRFQAGTWSRQCRIEEEEEVEQELLSHSWGRETKNGPTDHSNSTTWHRLHPTDGSSG
+                     QNSKVGTGMSKSASFAFEFPKDRSGIETFSPPPPPPKSRHLLKMNKSSSDLEKVSQGS
+                     AESLSPSFRGVHVSFTTGSTDSLASDSRTCSDGGPSSELAHSPTNSGKKLFAPVPFPS
+                     GSTEDVSPSGPQQPPPLPQKKIVSRAASSPDGFFWTQGSPKPGTASPKLNLSHSETNV
+                     HDESHFSYSLSPGNRHHPVFSSSDPLEKAFKGSGHWLPAAGLAGNRGGCGSPGLQCKG
+                     APSASSSQLSVSSQASTGSTQLQLHGLLSNISSKEGTYAKLGGLYTQSLARLVAKCED
+                     LFMGGQKKELHFNENNWSLFKLTCNKPCCDSGDAIYYCATCSEDPGSTYAVKICKAPE
+                     PKTVSYCSPSVPVHFNIQQDCGHFVASVPSSMLSSPDAPKDPVPALPTHPPAQEQDCV
+                     VVITREVPHQTASDFVRDSAASHQAEPEAYERRVCFLLLQLCNGLEHLKEHGIIHRDL
+                     CLENLLLVHCTLQAGPGPAPAPAPAPAPAAAAPPCSSAAPPAGGTLSPAAGPASPEGP
+                     REKQLPRLIISNFLKAKQKPGGTPNLQQKKSQARLAPEIVSASQYRKFDEFQTGILIY
+                     ELLHQPNPFEVRAQLRERDYRQEDLPPLPALSLYSPGLQQLAHLLLEADPIKRIRIGE
+                     AKRVLQCLLWGPRRELVQQPGTSEEALCGTLHNWIDMKRALMMMKFAEKAVDRRRGVE
+                     LEDWLCCQYLASAEPGALLQSLKLLQLL"
+     misc_feature    2173..2175
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="Phosphoserine; propagated from UniProtKB/Swiss-Prot
+                     (Q86YV5.3); phosphorylation site"
+     misc_feature    2320..2322
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="Phosphoserine; propagated from UniProtKB/Swiss-Prot
+                     (Q86YV5.3); phosphorylation site"
+     misc_feature    2563..2565
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /note="Phosphoserine; propagated from UniProtKB/Swiss-Prot
+                     (Q86YV5.3); phosphorylation site"
+     polyA_signal    4699..4704
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+     polyA_site      4726
+                     /gene="SGK223"
+                     /gene_synonym="PRAGMIN"
+ORIGIN      
+        1 gaagccgctc tgtgacccac ctctgaatcc cacaaaactg caccagagag ccgggcgcaa
+       61 gatgaaccag caccctgtcg gctcaagatg caccagaccc tctgcctgaa ccccgagagc
+      121 ctgaaaatgt ctgcgtgcag tgactttgtg gagcacatct ggaaacccgg gtcctgcaag
+      181 aactgcttct gcctgcggag cgaccaccag ctggtggccg gccctcccca gcccagagcg
+      241 ggcagcctgc cccctccacc gcgcctgcct cccaggcctg agaactgccg cctggaagat
+      301 gaaggtgtga acagctcacc ttactccaag cccacaattg ccgtgaagcc caccatgatg
+      361 agctccgagg cctctgatgt gtggacagag gccaacctga gtgccgaagt ctcgcaggtc
+      421 atctggagac gagcccctgg caagctcccc ctcccgaagc aggaggatgc ccccgtcgtc
+      481 tacctgggca gcttccgagg tgtacagaag cctgctggtc cctctacctc ccctgatggc
+      541 aattctcgct gtcccccagc ttacaccatg gtcggcctgc acaaccttga gccccgcggc
+      601 gagaggaaca ttgccttcca cccggtgagc ttcccggagg agaaggctgt gcacaaagaa
+      661 aaaccctcat ttccttacca agaccggccc tccacccagg agagcttccg ccagaaactg
+      721 gctgcctttg ctgggaccac atctggctgt caccagggcc ctgggcccct gcgggaatcc
+      781 ctgccctcgg aggatgacag tgatcaaagg tgctcgccct ccggggacag cgagggtgga
+      841 gagtactgct ccatcctgga ctgctgccct gggagccctg ttgccaaggc tgcctcccag
+      901 actgcaggtt cccggggcag gcatggtggc agggactgct cacccacgtg ctgggagcag
+      961 gggaagtgtt ccgggcccgc agagcaggag aagcggggcc cgagcttccc caaggagtgc
+     1021 tgtagccagg gccccactgc ccacccatcc tgcctgggcc ccaagaaact gtccctcacc
+     1081 tcggaggctg ccatttcttc cgacggcctc tcttgtggca gcggcagcgg cagcggcagc
+     1141 ggcgccagta gccccttcgt cccccacctc gagagtgatt actgctccct catgaaggaa
+     1201 cctgccccag agaagcagca ggaccctggc tgcccagggg tgacccctag cagatgcctt
+     1261 gggctgacgg gggagcccca gcccccggcc cacccccggg aggctacaca gcctgaaccc
+     1321 atctatgctg agagcaccaa gaggaagaag gcagctccgg tgccttccaa gtcacaggcc
+     1381 aagatagaac atgcagctgc tgcccagggc caaggccagg tatgcacagg taatgcctgg
+     1441 gcccagaaag cagcatctgg ctggggccgg gacagcccag acccaactcc ccaggtgtca
+     1501 gccaccatca cagtcatggc ggcccacccg gaagaggacc atcggacgat ctacctgagc
+     1561 agccctgact ctgcagtggg ggtgcagtgg ccacgagggc ctgtgagcca gaactccgag
+     1621 gtaggtgaag aggagacttc ggctgggcag gggctgagct ccagggaaag ccatgctcac
+     1681 agtgccagcg agagcaagcc caaggagagg cccgccattc cccccaagtt gtccaagagt
+     1741 agccctgtag ggtccccggt gtcaccgtct gctggagggc ccccagtgtc accgctggct
+     1801 gaccttagtg atgggagctc tggcggcagc agcattgggc cccagcctcc atcccaaggt
+     1861 cctgctgacc ccgctccttc ctgccggacc aacggtgtcg ctatcagtga cccatccagg
+     1921 tgtccccagc ctgccgcctc gtcagcctcg gaacagaggc ggcccaggtt ccaggcaggc
+     1981 acctggagtc gtcagtgccg gatagaggaa gaagaggagg tggagcagga attgctgagt
+     2041 cacagctggg gaagagagac caaaaatggc cccacggacc attcaaactc cacgacctgg
+     2101 caccgtctcc accccacaga tggctcctct gggcagaaca gcaaagttgg gaccgggatg
+     2161 agcaaatccg cctcttttgc ctttgagttc cccaaggaca gaagtgggat tgagacattc
+     2221 tcacctcctc ctccgcctcc aaagtcgcgg caccttctaa aaatgaacaa gagcagctct
+     2281 gatttggaaa aagtgagcca gggctctgca gaaagcctca gcccatcctt caggggtgtc
+     2341 cacgtcagct tcaccaccgg ctccacggac agcctggcct cagactctag gacctgcagc
+     2401 gatggaggtc cctcgtctga gctggctcac tcgcccacca acagcgggaa gaagctcttt
+     2461 gctcccgttc cgtttccttc aggctccact gaggacgtgt cccccagtgg cccccagcag
+     2521 ccccctccac tcccccagaa aaagatagtg agccgggcag cctcttcacc ggatggcttc
+     2581 ttctggaccc aaggctcccc caagcccgga acagcaagcc ccaagctgaa cctaagccac
+     2641 tcggaaacca acgtccacga cgaatctcac tttagctatt cgttgagccc cgggaaccgc
+     2701 caccatcctg tcttctcctc ttccgatcct ctggagaaag ctttcaaagg cagtggccac
+     2761 tggcttccgg cagcagggct ggcgggcaac agaggcggct gcgggagccc tggcctccag
+     2821 tgcaaagggg ccccctccgc ctcatcctcc cagctgagcg tgtccagtca agcctccacc
+     2881 gggagcaccc agcttcagct gcacggtctc ctgagcaaca tcagcagcaa ggagggcacc
+     2941 tatgccaagc tggggggact ctacacccag tccctggccc gccttgtagc caaatgtgag
+     3001 gacctcttca tgggcggcca gaaaaaggag ctccacttca atgagaataa ctggtcgctc
+     3061 ttcaagctga cttgtaacaa gccctgctgt gactcggggg atgccattta ttactgtgcc
+     3121 acctgctctg aggaccccgg cagcacctat gctgtgaaaa tctgcaaagc ccctgagccc
+     3181 aaaacagtct cctactgcag cccgtccgtg cccgtgcact ttaacatcca gcaggactgc
+     3241 ggccacttcg tcgcctcggt gccgtccagc atgctcagct cccccgacgc gcccaaggac
+     3301 cctgtgcctg ccctgcccac acacccccct gcccaggagc aggactgcgt ggtggtcatc
+     3361 acccgagagg tgccacatca gaccgcctcc gacttcgtgc gggactcggc ggccagccac
+     3421 caggcggagc ccgaggcgta cgagcggcgc gtgtgcttcc tgcttctgca actctgcaac
+     3481 gggctggagc acctgaagga gcacgggatc atccaccggg acctgtgcct ggagaacctg
+     3541 ctgctggtgc actgcaccct ccaggccggc cccgggcccg cccccgcccc cgccccggct
+     3601 cccgcccccg ccgccgccgc gcctccctgc tcctctgccg ccccgcctgc tggtggcact
+     3661 ctcagccccg cagccggccc cgcctccccg gaagggcccc gggagaagca gctgccccgg
+     3721 ctcatcatca gcaacttttt gaaggccaag cagaagccgg gcggcacccc aaacctgcag
+     3781 cagaagaaga gccaggcccg gctggccccc gagatcgtgt ctgcttccca gtaccgcaag
+     3841 ttcgatgagt tccagacagg catcctcatc tacgagctgc tgcaccaacc caacccgttc
+     3901 gaggtgcgcg cccagctgcg ggagagagac taccggcagg aggacctgcc gccgctgccc
+     3961 gcgctgtccc tctactcacc cggcctgcag cagctggcac atctgctact ggaggccgac
+     4021 cccatcaagc gtatccgcat cggcgaggcc aagcgcgtgc tgcagtgcct gctgtggggg
+     4081 cctcggcgcg agctggtgca gcagccgggc acctcggagg aggcgctgtg cggcacgctg
+     4141 cacaactgga tcgacatgaa gcgggccctg atgatgatga agtttgcgga gaaggcggtg
+     4201 gatcgcaggc ggggcgtgga gctggaggac tggctttgct gccagtacct ggcgtctgcg
+     4261 gagcccgggg ccctcttaca gtcgctgaag ctcctgcagc ttctgtgagc caagccccag
+     4321 cctgcaccgt cgctgcccct tccctgccta accctttcct gtctcgcctt ggaagcaccc
+     4381 atgtctccct gggaaatggt acagatgact gggatacctg gatgtaaaat atataaatat
+     4441 atatatagaa aatacatata ccatatataa atatgaaaga ctaaggatgc tgttgcccgt
+     4501 ccacactcgt ctcctctctg cactaagtcc tccctgtttt cttctgtaat tatacacatt
+     4561 tccagttcca tgcaacgtcc tgaggacagt tctgtgaact gaatgcagcc tggacactgg
+     4621 cctcaatacc ttgtttagga tttcttcacc cttttgtcaa attgttattt aaagaaaaaa
+     4681 aaaaaagaag aaaattccat taaaattttt tttggttgag tcatga
+//
+
+LOCUS       NM_001290753            4875 bp    mRNA    linear   ROD 19-MAR-2014
+DEFINITION  Mus musculus Eph receptor B2 (Ephb2), transcript variant 1, mRNA.
+ACCESSION   NM_001290753 XM_006538532
+VERSION     NM_001290753.1  GI:595582364
+KEYWORDS    RefSeq.
+SOURCE      Mus musculus (house mouse)
+  ORGANISM  Mus musculus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Euarchontoglires; Glires; Rodentia;
+            Sciurognathi; Muroidea; Muridae; Murinae; Mus; Mus.
+REFERENCE   1  (bases 1 to 4875)
+  AUTHORS   Logan SM, Romero MI, Nguyen DH and Benson MD.
+  TITLE     Ephrin-B2 expression in the proprioceptive sensory system
+  JOURNAL   Neurosci. Lett. 545, 69-74 (2013)
+   PUBMED   23623938
+REFERENCE   2  (bases 1 to 4875)
+  AUTHORS   Arvanitis DN, Behar A, Tryoen-Toth P, Bush JO, Jungas T, Vitale N
+            and Davy A.
+  TITLE     Ephrin B1 maintains apical adhesion of neural progenitors
+  JOURNAL   Development 140 (10), 2082-2092 (2013)
+   PUBMED   23578932
+REFERENCE   3  (bases 1 to 4875)
+  AUTHORS   Zhang R, Huang H, Cao P, Wang Z, Chen Y and Pan Y.
+  TITLE     Sma- and Mad-related protein 7 (Smad7) is required for embryonic
+            eye development in the mouse
+  JOURNAL   J. Biol. Chem. 288 (15), 10275-10285 (2013)
+   PUBMED   23426374
+REFERENCE   4  (bases 1 to 4875)
+  AUTHORS   Cejalvo T, Munoz JJ, Tobajas E, Fanlo L, Alfaro D, Garcia-Ceca J
+            and Zapata A.
+  TITLE     Ephrin-B-dependent thymic epithelial cell-thymocyte interactions
+            are necessary for correct T cell differentiation and thymus
+            histology organization: relevance for thymic cortex development
+  JOURNAL   J. Immunol. 190 (6), 2670-2681 (2013)
+   PUBMED   23408838
+  REMARK    GeneRIF: Ephrin-B1 and ephrin-B2 expressed on thymocytes play an
+            autonomous role in T cell development and, expressed on thymic
+            epithelial cells (TECs), their nonautonomous roles are partially
+            overlapping.
+REFERENCE   5  (bases 1 to 4875)
+  AUTHORS   Nakamura PA and Cramer KS.
+  TITLE     EphB2 signaling regulates lesion-induced axon sprouting but not
+            critical period length in the postnatal auditory brainstem
+  JOURNAL   Neural Dev 8, 2 (2013)
+   PUBMED   23379484
+  REMARK    GeneRIF: We found that EphB2 signaling reduces the number of
+            induced ipsilateral projections to the medial nucleus of the
+            trapezoid body after unilateral ventral cochlear nucleus removal at
+            postnatal day seven
+            Publication Status: Online-Only
+REFERENCE   6  (bases 1 to 4875)
+  AUTHORS   Sommers CL, Huang K, Shores EW, Grinberg A, Charlick DA, Kozak CA
+            and Love PE.
+  TITLE     Murine txk: a protein tyrosine kinase gene regulated by T cell
+            activation
+  JOURNAL   Oncogene 11 (2), 245-251 (1995)
+   PUBMED   7542761
+REFERENCE   7  (bases 1 to 4875)
+  AUTHORS   Saito T, Seki N, Matsuda Y, Kitahara M, Murata M, Kanda N, Nomura
+            N, Yamamoto T and Hori TA.
+  TITLE     Identification of the human ERK gene as a putative receptor
+            tyrosine kinase and its chromosomal localization to 1p36.1: a
+            comparative mapping of human, mouse, and rat chromosomes
+  JOURNAL   Genomics 26 (2), 382-384 (1995)
+   PUBMED   7601466
+REFERENCE   8  (bases 1 to 4875)
+  AUTHORS   Becker N, Seitanidou T, Murphy P, Mattei MG, Topilko P, Nieto MA,
+            Wilkinson DG, Charnay P and Gilardi-Hebenstreit P.
+  TITLE     Several receptor tyrosine kinase genes of the Eph family are
+            segmentally expressed in the developing hindbrain
+  JOURNAL   Mech. Dev. 47 (1), 3-17 (1994)
+   PUBMED   7947319
+REFERENCE   9  (bases 1 to 4875)
+  AUTHORS   Henkemeyer M, Marengere LE, McGlade J, Olivier JP, Conlon RA,
+            Holmyard DP, Letwin K and Pawson T.
+  TITLE     Immunolocalization of the Nuk receptor tyrosine kinase suggests
+            roles in segmental patterning of the brain and axonogenesis
+  JOURNAL   Oncogene 9 (4), 1001-1014 (1994)
+   PUBMED   8134103
+REFERENCE   10 (bases 1 to 4875)
+  AUTHORS   Ben-David Y, Letwin K, Tannock L, Bernstein A and Pawson T.
+  TITLE     A mammalian protein kinase with potential for serine/threonine and
+            tyrosine phosphorylation is related to cell cycle regulators
+  JOURNAL   EMBO J. 10 (2), 317-325 (1991)
+   PUBMED   1825055
+COMMENT     VALIDATED REFSEQ: This record has undergone validation or
+            preliminary review. The reference sequence was derived from
+            CJ067955.1 and BC062924.1.
+            On Mar 19, 2014 this sequence version replaced gi:568930551.
+            
+            Transcript Variant: This variant (1) represents the longer
+            transcript and encodes the longer isoform (1).
+            
+            Publication Note:  This RefSeq record includes a subset of the
+            publications that are available for this gene. Please see the Gene
+            record to access additional publications.
+            
+            ##Evidence-Data-START##
+            Transcript exon combination :: BC062924.1 [ECO:0000332]
+            RNAseq introns              :: mixed/partial sample support
+                                           SRS307248, SRS307249 [ECO:0000350]
+            ##Evidence-Data-END##
+PRIMARY     REFSEQ_SPAN         PRIMARY_IDENTIFIER PRIMARY_SPAN        COMP
+            1-55                CJ067955.1         1-55
+            56-4875             BC062924.1         1-4820
+FEATURES             Location/Qualifiers
+     source          1..4875
+                     /organism="Mus musculus"
+                     /mol_type="mRNA"
+                     /strain="C57BL/6"
+                     /db_xref="taxon:2759"
+                     /chromosome="4"
+                     /map="4 69.0 cM"
+     gene            1..4875
+                     /gene="Ephb2"
+                     /gene_synonym="Cek5; Drt; Erk; ETECK; Hek5; Nuk; Prkm5;
+                     Qek5; Sek3; Tyro5"
+                     /note="Eph receptor B2"
+                     /db_xref="GeneID:13844"
+                     /db_xref="MGI:99611"
+     CDS             182..3145
+                     /gene="Ephb2"
+                     /gene_synonym="Cek5; Drt; Erk; ETECK; Hek5; Nuk; Prkm5;
+                     Qek5; Sek3; Tyro5"
+                     /EC_number="2.7.10.1"
+                     /note="isoform 1 precursor is encoded by transcript
+                     variant 1; ephrin type-B receptor 2; neural kinase; nuk
+                     receptor tyrosine kinase; tyrosine-protein kinase receptor
+                     EPH-3; tyrosine-protein kinase receptor SEK-3"
+                     /codon_start=1
+                     /product="ephrin type-B receptor 2 isoform 1 precursor"
+                     /protein_id="NP_001277682.1"
+                     /db_xref="GI:595582365"
+                     /db_xref="GeneID:13844"
+                     /db_xref="MGI:99611"
+                     /translation="MAVRRLGAALLLLPLLAAVEETLMDSTTATAELGWMVHPPSGWE
+                     EVSGYDENMNTIRTYQVCNVFESSQNNWLRTKFIRRRGAHRIHVEMKFSVRDCSSIPS
+                     VPGSCKETFNLYYYEADFDLATKTFPNWMENPWVKVDTIAADESFSQVDLGGRVMKIN
+                     TEVRSFGPVSRNGFYLAFQDYGGCMSLIAVRVFYRKCPRIIQNGAIFQETLSGAESTS
+                     LVAARGSCIANAEEVDVPIKLYCNGDGEWLVPIGRCMCKAGFEAVENGTVCRGCPSGT
+                     FKANQGDEACTHCPINSRTTSEGATNCVCRNGYYRADLDPLDMPCTTIPSAPQAVISS
+                     VNETSLMLEWTPPRDSGGREDLVYNIICKSCGSGRGACTRCGDNVQYAPRQLGLTEPR
+                     IYISDLLAHTQYTFEIQAVNGVTDQSPFSPQFASVNITTNQAAPSAVSIMHQVSRTVD
+                     SITLSWSQPDQPNGVILDYELQYYEKQELSEYNATAIKSPTNTVTVQGLKAGAIYVFQ
+                     VRARTVAGYGRYSGKMYFQTMTEAEYQTSIKEKLPLIVGSSAAGLVFLIAVVVIAIVC
+                     NRRGFERADSEYTDKLQHYTSGHMTPGMKIYIDPFTYEDPNEAVREFAKEIDISCVKI
+                     EQVIGAGEFGEVCSGHLKLPGKREIFVAIKTLKSGYTEKQRRDFLSEASIMGQFDHPN
+                     VIHLEGVVTKSTPVMIITEFMENGSLDSFLRQNDGQFTVIQLVGMLRGIAAGMKYLAD
+                     MNYVHRDLAARNILVNSNLVCKVSDFGLSRFLEDDTSDPTYTSALGGKIPIRWTAPEA
+                     IQYRKFTSASDVWSYGIVMWEVMSYGERPYWDMTNQDVINAIEQDYRLPPPMDCPSAL
+                     HQLMLDCWQKDRNHRPKFGQIVNTLDKMIRNPNSLKAMAPLSSGINLPLLDRTIPDYT
+                     SFNTVDEWLEAIKMGQYKESFANAGFTSFDVVSQMMMEDILRVGVTLAGHQKKILNSI
+                     QVMRAQMNQIQSVEV"
+     sig_peptide     182..235
+                     /gene="Ephb2"
+                     /gene_synonym="Cek5; Drt; Erk; ETECK; Hek5; Nuk; Prkm5;
+                     Qek5; Sek3; Tyro5"
+                     /inference="COORDINATES: ab initio prediction:SignalP:4.0"
+ORIGIN      
+        1 gagcccgggt ccccgttctg cccgggctgg atggctcatt ctgctggctg cgcggcggcg
+       61 gcggctcgtg tgtgtgtgcg ccgcgccccg ccgctccccg ccggcccccc gagcccgggg
+      121 cgcgcgctcc agcccggggg tccccgcggc gccgcggccg gaggctccgg gcagcgcagc
+      181 aatggccgtg cgcaggctgg gggccgcgct gctgctgctg ccgctgctag ccgccgtgga
+      241 agaaaccctg atggactcta cgacagcaac ggctgagctg ggctggatgg tacatccccc
+      301 atcagggtgg gaagaggtga gcggctacga cgagaacatg aacactatcc gtacctacca
+      361 ggtgtgcaat gtctttgagt caagccagaa caactggctg cggaccaaat tcatccggcg
+      421 ccgcggcgcc caccgcatcc acgtggagat gaagttctcg gtgcgtgact gcagcagcat
+      481 tcccagcgtg ccgggctcct gcaaggagac cttcaacctc tactactatg aggctgattt
+      541 tgacttagcc accaaaacct ttcccaactg gatggagaat ccgtgggtga aggtggacac
+      601 catcgcggcc gatgagagct tctctcaggt ggacctgggt ggccgcgtca tgaaaatcaa
+      661 cactgaggtg cgaagcttcg gtcccgtgtc ccgcaatggt ttctacctgg ccttccagga
+      721 ctatggcggc tgtatgtccc tcattgctgt gcgcgtcttc taccggaagt gcccccgaat
+      781 catccagaat ggtgccatct tccaggagac actgtcgggg gctgagagca cttcgctggt
+      841 ggcagctcgg ggcagctgca tcgccaatgc tgaagaagtg gatgtgccca tcaaactcta
+      901 ctgtaacggg gacggcgaat ggctggtgcc cataggtcgc tgcatgtgca aggcgggctt
+      961 cgaggctgtg gagaacggca ccgtctgccg aggttgtcca tcaggaacct tcaaggccaa
+     1021 ccaaggggac gaagcctgca cccactgtcc catcaacagc cgcaccacct ccgagggtgc
+     1081 caccaactgt gtatgccgca acggctacta cagggccgac ctggacccct tagacatgcc
+     1141 ttgcacaacc atcccctctg cgccccaggc tgtgatctcc agcgtcaacg agacgtccct
+     1201 catgctagag tggaccccac cccgagactc ggggggtcgc gaggatcttg tttacaacat
+     1261 catctgcaag agctgtggct ccggccgggg cgcatgcacg cgctgcgggg acaacgtgca
+     1321 gtacgcgccc cgccagctgg gcctgactga gccgcgcatc tacatcagtg acctgctggc
+     1381 acacacgcag tacaccttcg agatccaggc cgtgaacggt gtgactgacc agagtccctt
+     1441 ctcacctcag ttcgcctctg tgaacatcac caccaaccaa gcagcaccat cggccgtgtc
+     1501 catcatgcac caggtgagcc gcactgtgga cagcatcacc ctgtcgtggt cccagccaga
+     1561 ccagcccaac ggtgtgatcc tggactacga gctgcagtac tatgagaagc aggagctcag
+     1621 tgagtacaac gccacggcca taaaaagccc caccaacaca gtcactgtgc agggcctcaa
+     1681 agccggcgcc atctatgtct tccaggtgcg ggcacgcacc gttgcaggct atgggcgcta
+     1741 cagtggcaag atgtacttcc aaaccatgac agaagccgag taccagacca gcatcaagga
+     1801 aaagctaccc ctcatcgttg gctcctccgc cgccggctta gtcttcctca tcgctgtggt
+     1861 cgtcattgcc atcgtatgta acagacgggg gtttgagcgt gccgactcag agtacacgga
+     1921 caagctacaa cactacacca gcggacacat gaccccaggc atgaagatct atatagaccc
+     1981 tttcacctat gaagatccta atgaggcagt gcgggagttt gccaaggaaa ttgacatctc
+     2041 ctgtgtcaag attgagcagg tgatcggagc aggggaattt ggtgaggtct gcagtggcca
+     2101 tttgaagctg ccaggcaaga gagagatctt tgtagccatc aagaccctca agtcaggata
+     2161 cacggagaaa cagcgccggg acttcctgag tgaggcatcc atcatgggcc agttcgacca
+     2221 ccccaatgtc atccatctgg aaggggttgt caccaagagc acacctgtca tgatcatcac
+     2281 tgaattcatg gagaacggat ctctggactc cttcctccgg caaaacgatg ggcagttcac
+     2341 agtcatccaa ctggtgggca tgctgagggg cattgcagcc ggcatgaagt acctggcgga
+     2401 catgaactac gtgcaccgtg accttgctgc tcgaaacatc ctcgtcaaca gcaacctggt
+     2461 gtgtaaggtg tctgattttg ggctctcacg cttcctggag gatgacacgt ctgaccccac
+     2521 ctataccagc gctctgggtg ggaagatccc catccgttgg acggcaccgg aagccatcca
+     2581 gtaccggaaa ttcacctcgg ccagtgatgt gtggagctat ggcatcgtca tgtgggaggt
+     2641 gatgtcctac ggggaacgac cctactggga catgaccaat caagacgtaa tcaacgccat
+     2701 tgaacaggac tacagactac ctccgcccat ggactgccct agtgccctgc accagctcat
+     2761 gctggactgc tggcagaagg accgcaacca ccggcccaag ttcggccaga ttgtcaacac
+     2821 gctggacaag atgatccgaa accccaacag cctcaaagcc atggcacccc tgtcctctgg
+     2881 catcaacctg ccactgctgg accgcacgat accggactac accagcttta acacggtgga
+     2941 tgagtggcta gaggccatca agatgggcca gtacaaggag agctttgcca acgccggctt
+     3001 tacctctttc gacgttgtat ctcagatgat gatggaggac attctccgcg ttggggtcac
+     3061 tctagctggc caccagaaaa aaatcctgaa cagtatccag gtgatgcggg cccagatgaa
+     3121 ccagatccag tctgtagagg tttgacattc gcctgcctcg gttctcctct tcctccacgc
+     3181 cgccccctga gcccccctac atcggtcccc ctgctgctct gtccactaca aggtcagcca
+     3241 cctgccagga ggccacagac aacaggaaga accaagcagc actccagcca agccgtcacc
+     3301 aagagcccat gcaagtcaaa ggaaggaaaa ggggattggg tgggggggac acgcacctag
+     3361 atctgggagg gggcgggaca ggcaagagac gttcgttcca agaggattct cataagggaa
+     3421 gtgacggttc ttagaggaga aaagcaaaag gcttgggaga tccacatggc ctgtccccgt
+     3481 gaaggccaaa aagcattttc tctccaactc cttctgggaa ggttgagctg gccagagcca
+     3541 agaaacactt ccaggaacat taacatgaag ggaagaggtg agccaccctc cttgcctggc
+     3601 cttagccgtt tcttggagca tcactaatgg cccagccccc aggcacaagg ggcagagaga
+     3661 caggcagtcg ccccagatag gctccgggga agtccattcc agctgccacc ggcagacagg
+     3721 aggatagttg ttctgtcttg ggagacggtt tccaaaaact ccgagagact ttctgctaat
+     3781 ggttcaggag gcggaagagg agctcctggc ctcccaggtc acgccaaaca ggctagatct
+     3841 tcctgaggac agccacccag gtctgcagcc ccacaaggcc ctgctcctga tcagcctcag
+     3901 ccagaggacg aggaggcagg tgactgtcat cagcctcgac tgccacagag aagcatactc
+     3961 ttgcatctgg gtttgtttac agcgattccg tggaccgggg gtattttgat caggggtggt
+     4021 tttggtctgg gagggttttg tttgttgggt ttttttaaaa aaaaatgaca atgaagagac
+     4081 actttgacat ttcctacctt ttgaggactt gatccttctc caggaagaag gtgctttctg
+     4141 cttactgact taggcaatac accaagggcg agattttata tgcacatttc tggatttttt
+     4201 tatatgcttt tcattgatac ccttccctcc tcccacctgc tgccaggcct caccaaagcc
+     4261 aactgtcaca gggccacctg ggccactcag agacctcagt gggactggga gagtggaggg
+     4321 aactacatca gcgcccacac tggaccacag acggaggcag atgagggctc caaggccgga
+     4381 agtcctccct tcctccctgt ctgctctcat gctctccgcc ctgttctatc tggcacttcc
+     4441 caggcacaga ggccccttca ggttcctggg tgctcttcaa tggccaaaac tcgatttcat
+     4501 gtctgggagc ctggaccagg ctacccggga agtcaggacc ctgatcattc actgtgacac
+     4561 cccagccctc caagggtacc ccgggagacc acgtgactct ctctctctct ctgtctctct
+     4621 ctctctctgt ctctctctct ctctctctct ctctgtctct ctctctctct gtctctctct
+     4681 gtctctctcc cactccttct ttccccgagg cctttgcctg ggtctgaagg tcttggccag
+     4741 aggaacacca tcatcagtca aggggtctgg ccgcaggctc ccctgtgagc aaatgcaggg
+     4801 aatccgagca gaacaatcgg ttagtgaatt gaatggaaat aaatgcttta gttataaaaa
+     4861 aaaaaaaaaa aaaaa
+//
+
+LOCUS       NM_001290723            1572 bp    mRNA    linear   MAM 19-MAR-2014
+DEFINITION  Physeter catodon creatine kinase, muscle (CKM), mRNA.
+ACCESSION   NM_001290723 XM_007102689
+VERSION     NM_001290723.1  GI:595582353
+KEYWORDS    RefSeq.
+SOURCE      Physeter catodon (sperm whale)
+  ORGANISM  Physeter catodon
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Cetartiodactyla; Cetacea;
+            Odontoceti; Physeteridae; Physeter.
+COMMENT     INFERRED REFSEQ: This record is predicted by genome sequence
+            analysis and is not yet supported by experimental evidence. The
+            reference sequence was derived from AB286056.1.
+            On Mar 19, 2014 this sequence version replaced gi:593712432.
+            
+            ##Evidence-Data-START##
+            Transcript exon combination :: AB286056.1 [ECO:0000332]
+            ##Evidence-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..1572
+                     /organism="Physeter catodon"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:7776"
+     gene            1..1572
+                     /gene="CKM"
+                     /gene_synonym="CK"
+                     /note="creatine kinase, muscle"
+                     /db_xref="GeneID:102978628"
+     CDS             72..1217
+                     /gene="CKM"
+                     /gene_synonym="CK"
+                     /note="cytoplasmic creatine kinases"
+                     /codon_start=1
+                     /product="creatine kinase, muscle"
+                     /protein_id="NP_001277652.1"
+                     /db_xref="GI:595582354"
+                     /db_xref="GeneID:102978628"
+                     /translation="MPFGNTHNKYKLNFKSEEEYPDLSQHNNHMAKALTPELYKKLRD
+                     KETPSGFTLDDVIQTGVDNPGHPFIMTVGCVAGDEESYVVFKDLFDPIIQDRHGGYKP
+                     TDKHKTDLNHENLKGGDDLDPNYVISSRVRTGRSIKGFSLPPHCSRGERRAVEKLAVE
+                     ALNSLTGEFKGKYYPLKNMTEKEQQQLIDDHFLFDKPVSPLLLASGMARDWPDARGIW
+                     HNDNKSFLVWVNEEDHLRVISMEKGGNMKQVFRRFCLGLQKIEEIFKKAGHPFMWNEH
+                     LGYVLTCPSNLGTGLRGGVHVKLAHLSKHPKFEEILTRLRLQKRGTGGVDTAAVGSVF
+                     DVSNADRLGSSEVEQVQLVVDGVKLMVEMEKKLEKGQSIDDMIPAQK"
+ORIGIN      
+        1 ggtcagcgtt gcctccggga tacagacagc cccttccagc acagcacagc caggtccccc
+       61 acgccgccac catgccgttc ggtaacaccc acaacaagta caagctgaac ttcaagtctg
+      121 aggaggaata cccagacctc agccagcaca acaaccacat ggccaaggca ctgacccccg
+      181 agctctacaa gaagctgcgg gacaaggaga cgccgtctgg tttcactctg gacgatgtca
+      241 tccagacagg tgtggacaac ccaggtcacc ccttcatcat gaccgtgggc tgtgtggctg
+      301 gcgacgagga gtcctacgtg gttttcaagg acctctttga ccccatcatc caggaccggc
+      361 acgggggcta caaacccacc gacaagcaca agaccgacct caaccacgag aacctcaagg
+      421 gtggagatga cctggacccc aactacgtga tcagcagccg cgtccgcacg ggccgcagca
+      481 tcaagggctt ctcgctgccc ccgcactgct cccgcggtga gcgccgggct gtggagaaac
+      541 tcgccgtgga agccctcaac agcctgacgg gagagttcaa ggggaaatac tatcctctga
+      601 agaacatgac agagaaggaa cagcagcagc tcatcgatga ccacttccta tttgacaagc
+      661 ccgtgtcccc gctgctgctg gcttcaggca tggcccgaga ctggcctgat gcccgtggca
+      721 tctggcacaa tgacaacaag agcttcctgg tgtgggtgaa cgaggaggac cacctccgag
+      781 tcatctccat ggagaagggg ggcaacatga agcaggtttt ccgccgcttc tgcttggggt
+      841 tgcagaagat tgaggagatc ttcaagaaag ccggccaccc cttcatgtgg aacgagcacc
+      901 tgggctacgt gctcacctgc ccatctaacc tgggcaccgg gctgcgtgga ggcgtgcatg
+      961 tgaaactagc gcacctgagc aagcatccca aattcgagga aatcctcact cgtctgcgcc
+     1021 tgcagaagcg gggcacaggt ggcgtggaca cggccgccgt gggctcagtg ttcgacgtgt
+     1081 ccaacgccga taggctgggc tcgtcggagg tagaacaggt gcagctggtg gtggatggtg
+     1141 tgaagctcat ggtggagatg gagaagaagc tggaaaaggg ccagtccatc gacgacatga
+     1201 tccccgccca gaagtaggcg cactgcccgc ccgccgccga ctgctggagc cccagccaaa
+     1261 gggaggaccc agcccacagg aggcccgccc tccaccctct gccccgcccc tttctcccgg
+     1321 agtcccgcct ataaaggttt agtctactcg ggtctctatc caccctcctt cgagttccag
+     1381 ttccaaccag agttccaacc aatgggctcc attctctggg ttctggccaa tgacttaacc
+     1441 tcccttatgc tctcctctcc ttttgcctga gctccgccca ccatcaggcg ctctggctaa
+     1501 tggagagcac cctagctcac ctgcgggtca tgctttttct ccgctcaaag caacaaataa
+     1561 aagcaatggt gg
+//
+
+LOCUS       NM_001290724            1471 bp    mRNA    linear   MAM 19-MAR-2014
+DEFINITION  Physeter catodon creatine kinase, mitochondrial 2 (sarcomeric)
+            (CKMT2), mRNA.
+ACCESSION   NM_001290724 XM_007121922
+VERSION     NM_001290724.1  GI:595582112
+KEYWORDS    RefSeq.
+SOURCE      Physeter catodon (sperm whale)
+  ORGANISM  Physeter catodon
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Cetartiodactyla; Cetacea;
+            Odontoceti; Physeteridae; Physeter.
+COMMENT     INFERRED REFSEQ: This record is predicted by genome sequence
+            analysis and is not yet supported by experimental evidence. The
+            reference sequence was derived from AB286057.1.
+            On Mar 19, 2014 this sequence version replaced gi:593766952.
+            
+            ##Evidence-Data-START##
+            Transcript exon combination :: AB286057.1 [ECO:0000332]
+            ##Evidence-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..1471
+                     /organism="Physeter catodon"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:9443"
+     gene            1..1471
+                     /gene="CKMT2"
+                     /gene_synonym="MiCK"
+                     /note="creatine kinase, mitochondrial 2 (sarcomeric)"
+                     /db_xref="GeneID:102986412"
+     CDS             71..1330
+                     /gene="CKMT2"
+                     /gene_synonym="MiCK"
+                     /note="mitochondrial creatine kinase"
+                     /codon_start=1
+                     /product="creatine kinase, mitochondrial 2 (sarcomeric)"
+                     /protein_id="NP_001277653.1"
+                     /db_xref="GI:595582113"
+                     /db_xref="GeneID:102986412"
+                     /translation="MASTFSKLLTGRNASLLFATLGTSALTTGYLLKRQNVCAEAREQ
+                     HKLFPPSSDYPDLRKHNNCMAECLTPAIYAKLRNKVTPNGYTLDQCIQTGVDNPGHPF
+                     IKTVGMVAGDEESYEVFADLFDPVIKLRHNGYDPTVMKHPTDLDESKITQGQFDERYV
+                     LSSRVRTGRSIRGLSLPPACTRAERREVENVTVMALKGLKGDLAGRYYRLSEMTEQDQ
+                     QRLIDDHFLFDKPVSPLLTCAGMARDWPDARGIWHNNEKTFLIWINEEDHTRVISMEK
+                     GGNMKRVFERFCRGLKEVERLIQERGWEFMWNERLGYILTCPSNLGTGLRAGVHVRIP
+                     KLSKDPRFSKILENLRLQKRGTGGVDTEAVADVYDISNIDRIGRSEVELVQIVIDGVN
+                     YLVDCEKKLERGQDIKVPPPLPQFSKK"
+ORIGIN      
+        1 gtcctgggct gttcgcgagc ggcaggacgt gggagactcc cggctccaag acactcatcc
+       61 aagaggaagg atggccagta ccttctcgaa gttgctaact ggccgcaatg cctctctgtt
+      121 atttgctacc ttgggcacca gtgccctgac tactgggtac ctgctgaaac ggcagaacgt
+      181 gtgtgctgag gcccgggaac agcacaagct attccctcca agctcagact accctgatct
+      241 gcgcaaacac aacaactgca tggccgagtg cctcacgccg gccatctacg ccaagctccg
+      301 caacaaggtg acacccaacg gctacaccct ggaccagtgt atccagactg gagtggataa
+      361 ccccggccac cccttcataa agaccgtggg catggtggct ggtgacgagg agtcctatga
+      421 ggtgtttgcc gacctttttg accctgtcat caagctgagg cacaatggct atgaccccac
+      481 ggtgatgaag caccccacgg atctggacga atccaagatc acacaggggc agttcgacga
+      541 gcgctacgtg ctgtcgtctc gggtgcgcac cggccgcagc atccgcgggc tgagcctgcc
+      601 gcccgcctgc acccgggccg agcggaggga ggtggagaac gtgaccgtca tggccctgaa
+      661 gggcctcaag ggagacctgg ccggccgcta ctaccggctg tccgagatga cagagcagga
+      721 ccagcagcgg ctcatcgatg accactttct atttgataag ccagtatccc ctttactaac
+      781 ttgtgctggg atggcccgtg actggccaga tgccagggga atctggcata ataatgagaa
+      841 gacatttctc atctggatta atgaggaaga ccacaccagg gtaatctcta tggagaaagg
+      901 aggcaatatg aaaagagtat ttgagcgatt ctgtcgtgga ctaaaagagg tagaacgcct
+      961 aatccaagaa cgaggctggg agttcatgtg gaatgagcgc ctgggataca tcctgacctg
+     1021 cccttcgaac ctcggcacag gattacgggc tggtgtccac gttaggatcc caaagctcag
+     1081 caaggatccg cgattttcta agatcctgga gaacctgaga ctccagaagc gtggcacagg
+     1141 tggtgtggac acggaagcag tggcagatgt gtatgacatt tccaacatag atcgaattgg
+     1201 ccgatcagag gttgagcttg ttcagatagt catcgatgga gtcaattacc tggtggattg
+     1261 tgaaaagaag ttggagagag gccaagatat taaggtgcca cctcctctac ctcagtttag
+     1321 caagaagtga actttccctt ccctaattta taaataatct gtctgctggt atgacagact
+     1381 taaagaaatt tctactcaga gtttttgtag acttggaaaa atgtaaaaac tgtaggtcct
+     1441 gtctatcttt acaataaaac tctccttaat a
+//
+
+LOCUS       JEMT01000476            2074 bp    DNA     linear   PLN 18-MAR-2014
+DEFINITION  Rhizophagus irregularis DAOM 197198w jcf7180003165684, whole genome
+            shotgun sequence.
+ACCESSION   JEMT01000476 JEMT01000000
+VERSION     JEMT01000476.1  GI:595508533
+DBLINK      BioProject: PRJNA230015
+            BioSample: SAMN02422737
+KEYWORDS    WGS.
+SOURCE      Rhizophagus irregularis DAOM 197198w
+  ORGANISM  Rhizophagus irregularis DAOM 197198w
+            Eukaryota; Fungi; Glomeromycota; Glomeromycetes; Glomerales;
+            Glomeraceae; Rhizophagus.
+REFERENCE   1  (bases 1 to 2074)
+  AUTHORS   Lin,K., Geurts,R., Zhang,Z., Limpens,E., Saunders,D.G., Mu,D.,
+            Pang,E., Cao,H., Cha,H., Lin,T., Zhou,Q., Shang,Y., Li,Y.,
+            Ivanov,S., Sharma,T., Velzen,R.V., Ruijter,N.D., Aanen,D.K.,
+            Win,J., Kamoun,S., Bisseling,T. and Huang,S.
+  TITLE     Single nucleus genome sequencing reveals high similarity among
+            nuclei of an endomycorrhizal fungus
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 2074)
+  AUTHORS   Lin,K. and Geurts,R.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (14-FEB-2014) Laboratory of Computational Molecular
+            Biology, College of Life Sciences, Beijing Normal University, No.
+            19, Xinjiekouwai Street, Haidian District, Beijing, China
+COMMENT     Reference genome assembled based on the reads used for genome
+            assemblies in JAQW00000000, JAQX00000000, JAQY00000000,
+            JAQZ00000000, JARA00000000 and JARB00000000.
+            
+            ##Genome-Assembly-Data-START##
+            Assembly Method       :: Celera Assembler v. 7.0
+            Assembly Name         :: Rir
+            Genome Coverage       :: 60.0x
+            Sequencing Technology :: Illumina HiSeq
+            ##Genome-Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..2074
+                     /organism="Rhizophagus irregularis DAOM 197198w"
+                     /mol_type="genomic DNA"
+                     /strain="DAOM 197198w"
+                     /isolation_source="spores of a mycorrhized root culture"
+                     /host="Cichorium intybus (chicory)"
+                     /db_xref="taxon:9606"
+                     /note="reference genome Rir"
+     gene            184..1903
+                     /locus_tag="RirG_000880"
+     mRNA            join(184..413,512..609,682..910,985..1052,1117..1384,
+                     1455..1549,1615..1903)
+                     /locus_tag="RirG_000880"
+                     /product="bifunctional choline kinase/ethanolamine kinase
+                     EKI1"
+     CDS             join(212..413,512..609,682..910,985..1052,1117..1384,
+                     1455..1549,1615..1716)
+                     /locus_tag="RirG_000880"
+                     /codon_start=1
+                     /product="bifunctional choline kinase/ethanolamine kinase
+                     EKI1"
+                     /protein_id="EXX79932.1"
+                     /db_xref="GI:595508534"
+                     /translation="MLSNGAFDVSSLEQLETYIQNNIKYIDYFVVSSNLFECALELAL
+                     RLFPTWKKEDLELEQCKDGITNKLIKCTNKPLGFSILIRTYGNKSEVLIDRKQEIYNI
+                     VSLSSLDLSPPLYGRFNNGIVYGFIEGKVFSVADLSDPFKSLLAAKNLAIWHGTDIAG
+                     EKKPNLFITLKKWLKEVTKSYDNDEKFLKHFNIEKLNKELISLEQELVKVNSPVTFCH
+                     NDLLYANIIYNESAKKVSFIDYEYACYSYRGFDIGNHFCEFAGFECDYSLYPDEKFQM
+                     QWLRHYLNAFNSTRDATDEEISILYREVNKFALASHFYWGLWGLIQAQLSDIDFNYME
+                     YAVLRFKEYYKRKDEFLSL"
+ORIGIN      
+        1 cttagggtag aaataactgc aatttccata gccacactta gccacagtca aatcacatga
+       61 atcacgtgcc cgagcttttt tatggtgtta ctggggaaga tcattgtttg taagcgtcca
+      121 gcggtccagg tgatgtcacg agtgcatata ctttgcctaa aacatcaaga aattaaaaat
+      181 tctgccgatt ctttctgtct tattttttaa catgttgagt aacggagcgt ttgatgttag
+      241 ttctttggaa caacttgaaa cgtacataca aaataacata aaatatatcg attatttcgt
+      301 agtgtcgtca aacctctttg aatgcgcctt agaacttgct ttgagattat ttcccacctg
+      361 gaaaaaagag gacctggagt tagagcaatg taaagatgga atcaccaata aacgtaaata
+      421 agaattgtta ttgctggaaa tttactaata aacttattat tatagattat aaacaactta
+      481 aaaaacctta aacttattaa aaataaccta gttatcaagt gcacaaataa gcctcttgga
+      541 ttttctatat taattcgaac ctatggtaat aaatcggaag ttctaataga caggaaacaa
+      601 gaaatatatg taagacccat taaatttaaa tgtattggtt tagagcattc ttaaagtcta
+      661 attgggtttt cctaacttta gaatatagtt tcgttgtcga gtttagattt gtcgccacct
+      721 ctttatggac gcttcaataa cggaatcgtt tacggtttta tagaagggaa agtgttttct
+      781 gttgctgatt taagtgaccc gttcaaatct ttattagctg ccaaaaattt ggctatttgg
+      841 catggcacgg atattgcggg agaaaaaaag ccgaatttat ttattacctt aaagaaatgg
+      901 cttaaagaag gtaataattt tactcaatat attacctata caaatatatt accaatatat
+      961 taattatttg ttttttttgt atagtaacaa agtcttatga caacgacgag aaattcctaa
+     1021 aacatttcaa tatagaaaag cttaataaag aggtaatgac accagaatat aacaacttat
+     1081 atgaatttat taaataaaat taaatatttc atttagttaa ttagtttgga acaggaattg
+     1141 gtaaaagtta attcccccgt tacgttttgt cataacgatc tcctttatgc aaacattatt
+     1201 tataatgaat ctgcaaaaaa agtttcattc attgattatg aatatgcatg ttatagctac
+     1261 cgaggatttg acatcggaaa ccatttttgt gaatttgctg gatttgaatg tgattatagt
+     1321 ttgtatcctg atgagaaatt tcaaatgcaa tggttgagac actatcttaa tgcatttaat
+     1381 tccagtaaat ataagttcaa gtcttgttta ttcaaatttt tagtgacaaa agtgctaatt
+     1441 tacttttttt atagctcgcg atgctactga tgaggaaatt tctatattat atcgagaagt
+     1501 caataaattt gcgttagctt ctcattttta ttggggactt tggggtttgg taatattcaa
+     1561 gaattttatt tatatatttt ctatattaag ttgctaaatc tttcttttta atagattcaa
+     1621 gcccagcttt ccgatattga ttttaattat atggaatatg ctgtgttacg gtttaaagag
+     1681 tattacaagc gaaaagatga atttttatca ttgtgattca ttactatata ttactatatg
+     1741 taggatcgga ccagaattat ctcaattttg ttattgatca tatattataa ttttggaatt
+     1801 ttggtcaaaa ttccaattct ggcctaattt ataagtaata tttttaaact gacaatatag
+     1861 aaaggctaaa taaacaaata aactataaac tatttattta cgtaattttt acgtgatgat
+     1921 catctgtccg catagtgtca caaatgacca tgaaaaaaac tgaaaaaacc attacttatc
+     1981 gccgttttcg aattattgta aacagtataa acaggaaaaa taaaataaaa aaaagtggat
+     2041 tttcttaaaa cccatgaaaa cagtaaattt tatt
+//
+
+LOCUS       KF528683                1430 bp    DNA     linear   PLN 19-MAR-2014
+DEFINITION  Ulex argenteus subsp. argenteus isolate SRKBP64C1 SymRK protein
+            kinase gene, partial cds.
+ACCESSION   KF528683
+VERSION     KF528683.1  GI:594553085
+KEYWORDS    .
+SOURCE      Ulex argenteus subsp. argenteus
+  ORGANISM  Ulex argenteus subsp. argenteus
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliophyta; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Fabales; Fabaceae; Papilionoideae;
+            Genisteae; Ulex.
+REFERENCE   1  (bases 1 to 1430)
+  AUTHORS   Dias,P.M.B., Martin,G., Ourari,M., Misset,M.-T., Ainouche,M. and
+            Ainouche,A.
+  TITLE     Phylogeny and evolution of the nodulation SymRK gene in genistoid
+            legumes: evidence of ancient duplication
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 1430)
+  AUTHORS   Dias,P.M.B., Martin,G., Ourari,M., Misset,M.-T., Ainouche,M. and
+            Ainouche,A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (06-AUG-2013) MOB team, UMR CNRS - Universite de Rennes 1
+            ECOBIO 6553, Bat 14 A, Campus de Beaulieu, Rennes 35000, France
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..1430
+                     /organism="Ulex argenteus subsp. argenteus"
+                     /mol_type="genomic DNA"
+                     /isolate="SRKBP64C1"
+                     /sub_species="argenteus"
+                     /db_xref="taxon:9445"
+     mRNA            join(<1..424,1327..>1430)
+                     /product="SymRK protein kinase"
+     CDS             join(<1..424,1327..>1430)
+                     /note="receptor-like kinase SYMRK"
+                     /codon_start=3
+                     /product="SymRK protein kinase"
+                     /protein_id="AHM10383.1"
+                     /db_xref="GI:594553086"
+                     /translation="KRSCRQISKDVSNYGSNENVRLFDIDEGKRCYNLPTIKNEVYLI
+                     RGIFPSGELSNSSFYVTIGVTQLGAVISSRLQDLGIEGVFRATKDYIDFCLVKEEVNP
+                     YISRLELRPLPEEYIHGLPITVLKLISRNNLKGGEDDIRYPVDKSDRIWKGTSSPSYA
+                     LPLSSNASNFDPKTN"
+ORIGIN      
+        1 ataaaagaag ttgcagacaa ataagcaagg atgtgtcaaa ctatggaagc aatgaaaatg
+       61 ttagattgtt tgatatagat gagggaaaga gatgctacaa tttgccaaca attaagaatg
+      121 aagtatatct gataaggggc atatttccat ctggtgaatt atcaaattct tccttttatg
+      181 ttacaattgg ggtaacacaa ttaggtgcag tgatatcatc caggctccag gatttgggaa
+      241 ttgagggagt tttcagagcc accaaagact acatagactt ctgcttagtg aaggaggaag
+      301 ttaatcccta tatttctcgg cttgaattaa ggccattgcc tgaagagtac atacatggtt
+      361 tgcctattac tgttctaaaa ctgataagca gaaacaatct taagggcggg gaagatgaca
+      421 tcaggtacac aatctacttt atctttgaga taaattcctt ctccatttga caatgaaagt
+      481 gtttctccta gatatggctt taggggttat cacttttttg gcttttatgg aagcaaaata
+      541 gtcatacaca gagtacttaa tatgaattca acatctctct ataggggaca attgtcattt
+      601 ctgttatgcc tgaccatggt tttagaccaa ctaaatttaa gcagcatgat gcatgaacct
+      661 tacacatgat tgaaataact tatgcttcac tttataaaag gaactataag atgcttgaac
+      721 atgttagata atataaaatc atctatgtga tttcacctaa aaacttaagc ttttggaaaa
+      781 gatgattcat gacatagtat tagaacctct gaccaaatgg tctagaattt gatccttgtc
+      841 atcccattct tctaataaaa gttgaatttc attacaaggt acatggacat ttgtccatgc
+      901 ttcaaactca aaggactctt gcatgagggg aatgttagat atacaaaatc atttatgtat
+      961 cttcacctaa tagctgaagt ctttggcaga gatggttcat gaaaaccatt atattaactt
+     1021 ttttcattat gatgcaatga gatgcatctg agtgaaaatc aacaaataag aaaataggat
+     1081 tcataaatat atcactcaat ccatcataat atgcaactca agaattacta ttgccacatc
+     1141 agatcggtca ccttaagtgg tgcaaactgc aaagagaagg gtgtaaatgt agggtgtctt
+     1201 gagtttactg ttgaagtgat tcgtgcatag tgtttggcct gtaactttat tttgttgctt
+     1261 tgatgcatgg aatatacatg tgcatggaca aaaagagctt ataatttgtg tatttaccgg
+     1321 tttcaggtat ccagttgaca aaagtgatag aatctggaaa ggaacctcaa gtccatcata
+     1381 tgctcttcca ttatcttcca atgccagcaa ctttgacccc aaaactaata
+//
+
+LOCUS       KF989488                1248 bp    mRNA    linear   PLN 19-MAR-2014
+DEFINITION  Puccinia striiformis calmodulin-dependent protein kinase (CaMK4)
+            mRNA, complete cds.
+ACCESSION   KF989488
+VERSION     KF989488.1  GI:594551389
+KEYWORDS    .
+SOURCE      Puccinia striiformis
+  ORGANISM  Puccinia striiformis
+            Eukaryota; Fungi; Dikarya; Basidiomycota; Pucciniomycotina;
+            Pucciniomycetes; Pucciniales; Pucciniaceae; Puccinia.
+REFERENCE   1  (bases 1 to 1248)
+  AUTHORS   Qin,J., Guo,J. and Kang,Z.
+  TITLE     Cloning and functional analysis of PsCaMK genes encoding
+            calcium-dependent protein kinase in Puccinia striiformis f. sp.
+            tritici
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 1248)
+  AUTHORS   Qin,J., Guo,J. and Kang,Z.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (19-DEC-2013) Plant Protection College, Northwest A&F
+            University, No. 3 Taicheng Road, Yangling, Shaanxi 712100, China
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..1248
+                     /organism="Puccinia striiformis"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:2"
+     gene            1..1248
+                     /gene="CaMK4"
+                     /note="PsCaMK4"
+     CDS             1..1248
+                     /gene="CaMK4"
+                     /codon_start=1
+                     /product="calmodulin-dependent protein kinase"
+                     /protein_id="AHM10191.1"
+                     /db_xref="GI:594551390"
+                     /translation="MGFPDSYSKKKNYIFEEVLGSGSFGFVKKAVWIPHGNLPVAVKC
+                     IKKKTLHGNVQVVHDEIKVLKGLNHPNVVKLYDWFESRDKFYLVFELASGGELFQRIY
+                     EQGKFTEADAIKVIGATLSGIAYLHSHQIVHRDLKPENLLYKTRVELNPTGTELLRPK
+                     SSLLSGMSHHENRNDDELVIADFGIATSMSSDDEVLTTMCGSPGYAAPEILNNQGHGK
+                     PVDLWSIGVITYTLLCGYSPFRSENRAELIKETTRAKVEFHHRYWTNISQAAKEFILG
+                     LLKSNPDDRMDAEQALQHQWLTGKIESEHDISDGLRKHWYDHFTSSSRKRDYTHPQAP
+                     SGLTELMFRAVYLWYDRRIPRRRWKLAINAVLATNRMRCLGPSISPSTTIASSHSSRS
+                     MNRSSSTISDPDSATFGRLSMNR"
+ORIGIN      
+        1 atgggattcc ctgattccta tagcaagaag aagaactaca tctttgaaga agtcttggga
+       61 tccggtagct tcggattcgt caaaaaagct gtctggatcc ctcatggaaa cttgccggtc
+      121 gcagtaaaat gtatcaagaa aaagactttg cacggtaatg tccaggtcgt tcacgatgaa
+      181 atcaaggtcc tcaagggttt gaatcacccc aacgttgtca agctgtacga ttggtttgaa
+      241 tcgcgtgata aattttattt ggtcttcgaa ctagcgtcgg gaggagagct tttccaaagg
+      301 atatacgaac aggggaagtt tactgaggcg gatgcaatca aggtgatcgg ggccacctta
+      361 tcagggattg cctacttgca ctcacaccaa atcgtccatc gggatctcaa gcctgaaaac
+      421 ctactctaca aaacccgggt tgagctcaac ccgactggaa ccgagctcct ccgtcccaag
+      481 agctcgcttc tctctggcat gtctcaccac gagaatcgga atgatgacga gctggtcatc
+      541 gctgactttg gtatagctac ctcaatgtcc tccgatgatg aggtcttgac cactatgtgt
+      601 ggtagccctg gttatgctgc tcctgaaata ttgaacaatc aaggacacgg taaaccagtc
+      661 gatctgtgga gtattggcgt gattacctat accttactat gtggctacag tcctttcagg
+      721 tccgagaaca gggctgaatt aatcaaggaa accacgaggg ccaaagtgga atttcatcat
+      781 cgttattgga ctaacatttc tcaagccgcc aaggaattca ttctcggatt gttgaagtct
+      841 aatccggacg acaggatgga cgccgaacaa gctttacaac accagtggtt gaccggtaag
+      901 atcgagagtg aacatgacat atcggatgga ttgagaaagc attggtacga tcattttacg
+      961 tcttcctcca ggaaaagaga ttatactcat cctcaagcgc catctggatt gactgaattg
+     1021 atgttccggg ctgtttacct ctggtatgat cgtaggattc caaggaggag atggaaatta
+     1081 gcgatcaatg cagtcctggc gaccaaccgc atgagatgtt tgggtccaag catttctcct
+     1141 tctactacaa tcgcttcttc gcactcttct cgttcgatga accggtcctc ctccaccatt
+     1201 tccgaccccg actcggctac tttcggtcgt ttatcaatga atcgttaa
+//
+
+LOCUS       KF986170                 840 bp    DNA     linear   PLN 19-MAR-2014
+DEFINITION  Morus indica isolate 100G maturase K (matK) gene, partial cds;
+            chloroplast.
+ACCESSION   KF986170
+VERSION     KF986170.1  GI:594550953
+KEYWORDS    .
+SOURCE      chloroplast Morus indica
+  ORGANISM  Morus indica
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliophyta; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Rosales; Moraceae; Morus.
+REFERENCE   1  (bases 1 to 840)
+  AUTHORS   Chen,J., Liu,D.X. and Hu,J.
+  TITLE     A successful case use of DNA barcoding in an international trade
+            disputes
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 840)
+  AUTHORS   Chen,J., Liu,D.X. and Hu,J.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (19-DEC-2013) Zhongshan Entry-Exit Inspection and
+            Quarantine Technology Centre, Zhong Shan Entry-Exit Inspection and
+            Quarantine Bureau, No. 2 of Zhongshan Six Road, Zhongshan,
+            Guangdong 528403, China
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..840
+                     /organism="Morus indica"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /isolate="100G"
+                     /db_xref="taxon:1236"
+                     /country="China"
+                     /collection_date="2013"
+                     /PCR_primers="fwd_name: 3F-KIM, fwd_seq: tttgtgtttacgag,
+                     rev_name: 1R-KIM, rev_seq: acccagtccatctggaaatcttggttc"
+     gene            <1..>840
+                     /gene="matK"
+     CDS             <1..>840
+                     /gene="matK"
+                     /note="megakaryocyte-associated tyrosine kinase"
+                     /codon_start=3
+                     /transl_table=11
+                     /product="maturase K"
+                     /protein_id="AHM09975.1"
+                     /db_xref="GI:594550954"
+                     /translation="TLRYWVKDASSLHLLRFFLHDYYNWNTLIIPNKYISIFSKSNPR
+                     LFLFLYNSHVCEYESILLFLRNQSSHLRLTSSGGFFERIYFYGKIKHPVEEVFANDSP
+                     TSLWFLEDLFMHYVRYQGKSILASKDTPLFMNKWKYYLVLLWQCHFYVWSQPGRMYIN
+                     QLCKHSFSFLGYLSSMQINLSVVRSQMLENSFLMDNAMKKIDTLVPISLLIGSLDKMK
+                     FCNVLGHPVSKSTWADSSDFDIIDRFVCICRNLFHYYSGSSKKKSLYRIKYILRLSCV
+                     KTL"
+ORIGIN      
+        1 aaacccttcg ctactgggta aaagatgcct cctctttgca tttattacgg ttttttcttc
+       61 acgactatta taattggaat actcttatta ttccaaataa atatatttct attttttcaa
+      121 aaagtaatcc aagattattc ttgttcctat ataattctca tgtttgcgaa tacgaatcta
+      181 tcttactctt tctacgtaac caatcttctc atttacgatt aacatcttct gggggttttt
+      241 ttgagcgaat atatttctat ggaaaaataa aacatcccgt agaagaagtc tttgctaatg
+      301 attctccgac tagcttatgg ttcctcgagg atctcttcat gcattatgtt agatatcaag
+      361 gaaaatcaat tctggcttca aaggatacgc ctcttttcat gaataaatgg aaatattacc
+      421 ttgtcctttt atggcaatgt catttttatg tgtggtctca accaggaagg atgtatataa
+      481 accaattatg caaacattcc ttcagctttt tgggctatct ttcaagtatg caaataaatc
+      541 tttcagtagt acggagtcaa atgctagaaa attcgtttct aatggataat gctatgaaga
+      601 agattgatac attagttcca attagtcttc tgattggatc gttggataaa atgaaatttt
+      661 gtaacgtatt aggacatccc gttagtaagt cgacctgggc cgattcgtcg gattttgata
+      721 ttatcgaccg atttgtgtgt atatgcagaa atctttttca ttattacagt ggatcctcaa
+      781 aaaaaaagag tttgtatcga ataaaatata tacttcgact ttcttgtgtt aaaactttgg
+//
+
+LOCUS       KF986165                 837 bp    DNA     linear   PLN 19-MAR-2014
+DEFINITION  Hordeum vulgare isolate SG1 maturase K (matK) gene, partial cds;
+            chloroplast.
+ACCESSION   KF986165
+VERSION     KF986165.1  GI:594550943
+KEYWORDS    .
+SOURCE      chloroplast Hordeum vulgare
+  ORGANISM  Hordeum vulgare
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliophyta; Liliopsida; Poales; Poaceae; BEP
+            clade; Pooideae; Triticeae; Hordeum.
+REFERENCE   1  (bases 1 to 837)
+  AUTHORS   Chen,J., Liu,D.X. and Hu,J.
+  TITLE     A successful case use of DNA barcoding in an international trade
+            disputes
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 837)
+  AUTHORS   Chen,J., Liu,D.X. and Hu,J.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (19-DEC-2013) Zhongshan Entry-Exit Inspection and
+            Quarantine Technology Centre, Zhong Shan Entry-Exit Inspection and
+            Quarantine Bureau, No. 2 of Zhongshan Six Road, Zhongshan,
+            Guangdong 528403, China
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..837
+                     /organism="Hordeum vulgare"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /isolate="SG1"
+                     /db_xref="taxon:561"
+                     /country="China"
+                     /collection_date="2013"
+                     /PCR_primers="fwd_name: 3F-KIM, fwd_seq: tttgtgtttacgag,
+                     rev_name: 1R-KIM, rev_seq: acccagtccatctggaaatcttggttc"
+     gene            <1..>837
+                     /gene="matK"
+     CDS             <1..>837
+                     /gene="matK"
+                     /note="megakaryocyte-associated tyrosine kinase"
+                     /codon_start=3
+                     /transl_table=11
+                     /product="maturase K"
+                     /protein_id="AHM09970.1"
+                     /db_xref="GI:594550944"
+                     /translation="LLQYRIQDVPSLHLLRFFLNYYSNWNSFITSMKSILFFQKENKR
+                     LVKFLYNSYVSEYEFFLLFLRKQSSCLPLAYSGTFLERIHFSRKMEHFGIMYPGFSRK
+                     TLWFFMDPLIHYVRYQGKAILASKGSFFLKKKWKCYLINFWQYYFFFWTQPRRIHINQ
+                     LANSCFDFMGYLSSVPKSPLLVRNQMLENSFLIDTRMKKFDTIVPATLLIGYLSKAQF
+                     CTGSGHPISKPIWTDLSDWDILDRFGRICRNLFHYHSGSSKKRTLYRLKYILRLSCAR
+                     TL"
+ORIGIN      
+        1 aactccttca ataccgtatc caagatgttc catctttgca tttattgcga ttctttctca
+       61 actactattc gaattggaat agttttatta cttcaatgaa atccattctt ttttttcaaa
+      121 aagaaaataa aagactagtt aaattcctat ataactctta tgtatcagaa tatgaatttt
+      181 tcttgttgtt tcttcgtaaa caatcttctt gcttaccatt agcatattct ggaacttttc
+      241 tggaacgaat ccacttttct aggaagatgg aacattttgg gataatgtac cctggttttt
+      301 ctcggaaaac cttatggttc tttatggatc ctcttataca ttatgttcga tatcaaggaa
+      361 aggcaattct tgcatcaaaa ggcagttttt ttttgaaaaa gaaatggaaa tgctacctta
+      421 tcaatttctg gcaatattat ttcttttttt ggactcagcc gcgaagaatc catataaacc
+      481 aattagcaaa ctcttgcttc gattttatgg gatacctttc aagtgtacca aaaagtcctt
+      541 tgttggtaag gaatcaaatg ctggagaatt catttctcat agatactcga atgaaaaaat
+      601 tcgataccat agtccccgct actctcctca taggatactt atcaaaagct caattttgta
+      661 ctggatcggg gcatcctatt agtaaaccca tttggacgga tttatcagat tgggatattc
+      721 ttgatcgatt tggtcggata tgtagaaatc tttttcatta tcatagtgga tcttcgaaaa
+      781 aacggacttt gtatcgacta aagtatatac ttcgactttc atgcgctaga actttag
+//
+
+LOCUS       KC814772                 211 bp    DNA     linear   BCT 18-MAR-2014
+DEFINITION  Bacterium symbiont of Osedax sp. clone T1071-6 putative CheA signal
+            transduction histidine kinase (cheA) gene, partial cds.
+ACCESSION   KC814772
+VERSION     KC814772.1  GI:522577967
+KEYWORDS    .
+SOURCE      bacterium symbiont of Osedax sp.
+  ORGANISM  bacterium symbiont of Osedax sp.
+            Bacteria.
+REFERENCE   1  (bases 1 to 211)
+  AUTHORS   Goffredi,S.K., Yi,H., Zhang,Q., Klann,J.E., Struve,I.A.,
+            Vrijenhoek,R.C. and Brown,C.T.
+  TITLE     Genomic versatility and functional variation between two dominant
+            heterotrophic symbionts of deep-sea Osedax worms
+  JOURNAL   ISME J 8, 908-924 (2014)
+   PUBMED   24225886
+REFERENCE   2  (bases 1 to 211)
+  AUTHORS   Goffredi,S.K.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (21-MAR-2013) Biology, Occidental College, 1600 Campus
+            Rd., Los Angeles, CA 91104, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..211
+                     /organism="bacterium symbiont of Osedax sp."
+                     /mol_type="genomic DNA"
+                     /isolation_source="deep-sea polychaete"
+                     /host="Osedax sp."
+                     /db_xref="taxon:158483"
+                     /clone="T1071-6"
+     gene            <1..>211
+                     /gene="cheA"
+     CDS             <1..>211
+                     /gene="cheA"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="putative CheA signal transduction histidine
+                     kinase"
+                     /protein_id="AGQ16406.1"
+                     /db_xref="GI:522577968"
+                     /translation="LELPAQRIASGKPETGTIKLDAYHQNGFIVIAISDDGKGLDVVK
+                     IRAKALQKNLITEEQILSEDDIHALI"
+ORIGIN      
+        1 ttggagctgc cggcgcaacg catcgccagc ggcaaacctg aaaccggtac cataaaactg
+       61 gatgcctacc atcaaaatgg ctttatcgtc atagctataa gcgatgatgg gaaggggcta
+      121 gatgtggtta aaattcgggc caaagcactg caaaaaaact taattacaga agagcaaatc
+      181 ctctctgaag acgacatcca tgcgctaatt t
+//
+

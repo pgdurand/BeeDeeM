@@ -1,0 +1,42 @@
+>gnl|CDD|176948 CHL00003, psbA, photosystem II protein D1
+RRESTSLWGRFCNWITSTENRLYIGWFGVLMIPTLLTATSVFIIAFIAAPPVDIDGIREPVSGSLLYGNN
+IISGAIIPSSAAIGLHFYPIWEAASVDEWLYNGGPYELIVLHFLLGVACYMGREWELSFRLGMRPWIAVA
+YSAPVAAATAVFLIYPIGQGSFSDGMPLGISGTFNFMIVFQAEHNILMHPFHMLGVAGVFGGSLFSAMHG
+SLVTSSLIRETTENESANLGYKFGQEEETYNIVAAHGYFGRLIFQYASFNNSRSLHFFLAAWPVVGIWFT
+ALGISTMAFNLNGFNFNQSVVDSQGRVINTWADIINRANLGMEVMHERNAHNFPLDLA
+>gnl|CDD|227101 COG4759, COG4759, Uncharacterized protein conserved in bacteria containing thioredoxin-like domain [Posttranslational modification, protein turnover, chaperones]
+MNCRFCSDVSKANGEDPIGTANTRDGYLLIEAPQPWTENVLDSKPIPQNLQDLLEELYKAGGVIPLAIAP
+DREYSQPGYTRVLIYRRPAKLFAGYSKQEFLVPDAELGVLILALLLQGKELAQFDIYPQHTRDILVCTHG
+NVDVCCARFGYPFYQQLRAQYADLNLENLRVWQSSHFGGHRFAPTLIDLPQGQYYGHLDPESLDSLLTRT
+GDVKQLKPFYRGWGGLPKFEQIAEREIWMQHGWDWLNYKKSGQVLEQDEDENWAEVEIDFTSPDGDIWGY
+YLARVEVEGSVMTVRSSCGDPQLETVKQYSVSQLTE
+>gnl|CDD|214437 MTH00152, ND6, NADH dehydrogenase subunit 6; Provisional
+MSLMILLSVCFSLFLLLPLSKQPLSLGLVLLLLSLFVCVEIGLTLSSWYGYLLFLVYVGGLLVMFAYVVS
+LSPNPLFGSNFKFVFFSLTLFGFLGLFFFFLYLYSSGGLSLSSLFDGSSGSLSFGGGLYSSSGWSIFVFL
+AVLLLIVMVSVVKICYYEEGSLR
+>gnl|CDD|178777 PLN03239, PLN03239, histone acetyltransferase; Provisional
+YYVHYKDFNRRMDEWISKDKSNEEILALPSDHLATHTVGEDVVATIAAPELDEHEGLDDAALKEHEEVTK
+VKNVAFLELGPYQMDTWYFSPLPKELFKAGGFIDVLYVCEFSFGFFARKSELLRFQAKELPKERRHPPGN
+EIYRCGDLAMFEVDGFEERIYCQNLCYIAKLFLDHKTLYFDVDPFLFYVLCEVDERGFHPVGYYSKEKYS
+DVGYNLACILTFPAHQRKGYGRFLIAFSYELSKKEEKVGSPEKPMSDLGQQAYIPYWGSTIVDFLLNHSG
+NDSSLSIMDIAKKTSIMAEDIVFALNQLGILKFINGIYFIAAEKGLLEELAEKHPVKEPRVDPSKLHWTP
+>gnl|CDD|273284 TIGR00815, Sulfate_transporter, high affinity sulphate transporter 1.  The SulP family is a large and ubiquitous family with over 30 sequenced members derived from bacteria, fungi, plants and animals. Many organisms including Bacillus subtilis, Synechocystis sp, Saccharomyces cerevisiae, Arabidopsis thaliana and Caenorhabditis elegans possess multiple SulP family paralogues. Many of these proteins are functionally characterized, and all are sulfate uptake transporters. Some transport their substrate with high affinities, while others transport it with relatively low affinities. Most function by SO42- :H+symport, but SO42- :HCO3- antiport has been reported for the rat protein (spP45380). The bacterial proteins vary in size from 434 residues to 566 residues with one exception, a Mycobacterium tuberculosis protein with 784 residues. The eukaryotic proteins vary in size from 611 residues to 893 residues with one exception, a protein designated "early nodulin 70 protein" from Glycine max which is reported to be of 485 residues. Thus, the eukaryotic proteins are almost without exception larger than the prokaryotic proteins. These proteins exhibit 10-13 putative transmembrane a-helical spanners (TMSs) depending on the protein. The phylogenetic tree for the SulP family reveals five principal branches. Three of these are bacterial specific as follows: one bears a single protein from M. tuberculosis; a second bears two proteins, one from M. tuberculosis, the other from Synechocystis sp, and the third bears all remaining prokaryotic proteins. The remaining two clusters bear only eukaryotic proteins with the animal proteins all localized to one branch and the plant and fungal proteins localized to the other. The generalized transport reactions catalyzed by SulP family proteins are: (1) SO42- (out) + nH+ (out) --_ SO42- (in) + nH+ (in). (2) SO42- (out) + nHCO3- (in) SO42- (in) + nHCO3- (out). [Transport and binding proteins, Anions]
+PVLRWLRKYRLKKFKGDLMAGLTVGILLIPQAIAYAKLAGLPPIYGLYTSFVPPIIYALFGSSRHIAIGP
+TASVSLLLGSLVQREGLQGLFDDYIRLAFTATLLAGIFQVIMGLLRLGFLIEYLSHAVLVGFTAGAAITI
+GLSQLKGLLGLSIFVKTDILGVVISTWASLHQNNWCTLVIGLLFLLFLLATKELGKRNKKLLWAPAPAPL
+LVVVLATLIVTIGLHDSQGVSIVGHIPQGLSFFPPITFTWQHLPTLAPDAIAIAIVGLTESILTARVFAA
+MTGYEIDANKELVALGIANIVGSFFSCYPATGSLSRTAVNYKAGCKTQLSAIVMAIVVLLVLLVLAPLFY
+YIPLAALAAIIISAAVGLIDIRELYLLWKADKMDFVVWLGTFLGVVFTSIEIGLLVGVSLSAFFFILRVA
+RPRAAVLGRIPGTEDYENIEQYPKAQTPPGILIFRVDGPLYFANAEDLKERLLKWLETLELDPQIIILDM
+SAVPFLDTSGIHALEELFKELKARGIQLLLANPNPAVISTLARAGFVELIGEEHFFPSVHDA
+>gnl|CDD|132918 cd07035, TPP_PYR_POX_like, Pyrimidine (PYR) binding domain of POX and related proteins.  Thiamine pyrophosphate (TPP family), pyrimidine (PYR) binding domain of pyruvate oxidase (POX) and related protiens subfamily. The PYR domain is found in many key metabolic enzymes which use TPP (also known as thiamine diphosphate) as a cofactor. TPP binds in the cleft formed by a PYR domain and a PP domain. The PYR domain, binds the aminopyrimidine ring of TPP, the PP domain binds the diphosphate residue. A polar interaction between the conserved glutamate of the PYR domain and the N1' of the TPP aminopyrimidine ring is shared by most TPP-dependent enzymes, and participates in the activation of TPP. For glyoxylate carboligase, which belongs to this subfamily, but lacks this conserved glutamate, the rate of the initial TPP activation step is reduced but the ensuing steps of the enzymic reaction proceed efficiently. The PYR and PP domains have a common fold, but do not share strong sequence conservation. The PP domain is not included in this sub-family. Most TPP-dependent enzymes have the PYR and PP domains on the same subunit although these domains can be alternatively arranged in the primary structure. TPP-dependent enzymes are multisubunit proteins, the smallest catalytic unit being a dimer-of-active sites, for many the active sites lie between PP and PYR domains on different subunits. POX decarboxylates pyruvate, producing hydrogen peroxide and the energy-storage metabolite acetylphosphate. This subfamily includes pyruvate decarboxylase (PDC) and indolepyruvate decarboxylase (IPDC). PDC catalyzes the conversion of pyruvate to acetaldehyde and CO2 in alcoholic fermentation. IPDC plays a role in the indole-3-pyruvic acid (IPA) pathway in plants and various plant-associated bacteria, it catalyzes the decarboxylation of IPA to IAA. This subfamily also includes the large catalytic subunit of acetohydroxyacid synthase (AHAS). AHAS catalyzes the condensation of two molecules of pyruvate to give the acetohydroxyacid, 2-acetolactate, a precursor of the branched chain amino acids, valine and leucine. AHAS also catalyzes the condensation of pyruvate and 2-ketobutyrate to form 2-aceto-2-hydroxybutyrate in isoleucine biosynthesis. Methanococcus jannaschii sulfopyruvate decarboxylase (MjComDE) and phosphonopyruvate decarboxylase (PpyrDc) also belong to this subfamily. PpyrDc is a homotrimeric enzyme having the PP and PYR domains tandemly arranged on the same subunit. It functions in the biosynthesis of C-P compounds such as bialaphos tripeptide in Streptomyces hygroscopicus. MjComDE is a dodecamer having the PYR and PP domains on different subunits, it has six alpha (PYR/ComD) subunits and six beta (PP/ComE) subunits. MjComDE catalyzes the decarboxylation of sulfopyruvic acid to sulfoacetaldehyde in the coenzyme M pathway
+DALVEALKAEGVDHVFGVPGGAILPLLDALARSGIRYILVRHEQGAVGMADGYARATGKPGVVLVTSGPG
+LTNAVTGLANAYLDSIPLLVITGQRPTAGEGRGAFQEIDQVALFRPITKWAYRVTSPEEIPEALRRAFRI
+ALSGRPGPVALDLPK
+>gnl|CDD|251920 pfam03391, Nepo_coat, Nepovirus coat protein, central domain.  The members of this family are derived from nepoviruses. Together with comoviruses and picornaviruses, nepoviruses are classified in the picornavirus superfamily of plus strand single-stranded RNA viruses. This family aligns several nepovirus coat protein sequences. In several cases, this is found at the C-terminus of the RNA2-encoded viral polyprotein. The coat protein consists of three trapezoid-shaped beta-barrel domains, and forms a pseudo T = 3 icosahedral capsid structure
+PTLTYPIKFGDLSLLFLRLPPKFIALGGTTALKSPLLLAGQTVSHGGRIVYSFNAALLSHFLGWGGTIHG
+SVHSTSSAFVTCSLRVASSWNGATPTLEQLFQRPHVIVESDGQFEIKIQSPYHRTATRFGDAGSRFYISS
+LSGPIAPKDMEAKYQFMIHIEGIVAVP
+>gnl|CDD|215026 smart01104, CTD, Spt5 C-terminal nonapeptide repeat binding Spt4.  The C-terminal domain of the transcription elongation factor protein Spt5 is necessary for binding to Spt4 to form the functional complex that regulates early transcription elongation by RNA polymerase II. The complex may be involved in pre-mRNA processing through its association with mRNA capping enzymes. This CTD domain carries a regular nonapeptide repeat that can be present in up to 18 copies, as in S. pombe. The repeat has a characteristic TPA motif
+GGRTPAWGASGSKTPAWGSRTPGTAAGGAPTARGGSGSRTPAWGGAGSRTPAWGGAGPTGSRTPAWGGAS
+AWGNKSSEGSASSWAAGPGGAYGAPTPGYGGTPSAYGPATPGGGAMAGSAS
