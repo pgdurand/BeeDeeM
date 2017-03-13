@@ -1,6 +1,6 @@
 #*BeeDeeM*: the Bioinformatics Databank Manager System 
 
-[![License AGPL](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt)
+[![License AGPL](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt) [![](https://tokei.rs/b1/github/pgdurand/BeeDeeM?category=code)](https://github.com/pgdurand/BeeDeeM)
 
 *BeeDeeM* is a general purpose **B**ioinformatics **D**atabank **M**anager. 
 
