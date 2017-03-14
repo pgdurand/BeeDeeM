@@ -1,4 +1,4 @@
-#*BeeDeeM*: the Bioinformatics Databank Manager System 
+# *BeeDeeM*: the Bioinformatics Databank Manager System 
 
 [![License AGPL](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt) [![](https://tokei.rs/b1/github/pgdurand/BeeDeeM?category=code)](https://github.com/pgdurand/BeeDeeM) [![](https://img.shields.io/badge/platform-Java--1.7+-yellow.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) [![](https://img.shields.io/badge/run_on-Linux--Mac_OSX--Windows-yellowgreen.svg)]()
 
@@ -55,17 +55,17 @@ Among others, these databanks can be used to:
 
 [This manual](https://pgdurand.gitbooks.io/beedeem/) explains how to install, configure and use *BeeDeeM*.
 
-##Requirements
+## Requirements
 
 Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downloads/index.html) 1.7 (or above) from Oracle. 
 
 *Not tested with any other JVM providers but Oracle... so there is no guarantee that the software will work as expected if not using Oracle's JVM.* [More](https://pgdurand.gitbooks.io/beedeem/) about *BeeDeeM* requirements.
 
-##Software installation, use and configuration
+## Software installation, use and configuration
 
 See [*BeeDeeM* manual](https://pgdurand.gitbooks.io/beedeem/).
 
-##License and dependencies
+## License and dependencies
 
 *BeeDeeM* itself is released under the GNU Affero General Public License, Version 3.0. [AGPL](https://www.gnu.org/licenses/agpl-3.0.txt)
 
