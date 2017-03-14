@@ -1,2 +1,9 @@
 - MaJ descripteurs avec dépendances ; temporairement virer pfam (marche plus ?)
 - MaJ doc: formatdb->makeblastdb 
+
+remote: warning: GH001: Large files detected. You may want to try Git Large File Storage - https://git-lfs.github.com.
+remote: warning: See http://git.io/iEPt8g for more information.
+remote: warning: File tests/junit/databank/fasta_multi2/fasta4.faa is 64.63 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB
+remote: warning: File tests/junit/databank/fasta_multi2/fasta2.faa is 64.63 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB
+remote: warning: File tests/junit/databank/fasta_multi2/fasta3.faa is 64.63 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB
+To https://github.com/pgdurand/BeeDeeM.git
