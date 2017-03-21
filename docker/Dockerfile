@@ -80,6 +80,21 @@ RUN \
 COPY run_bdm.sh /usr/local/bin
 
 # ###
+#     Add/update bank descriptors.
+#
+#     If you want to update existing bank descriptors, or to add new
+#     ones, simply update the following COPY line accordingly, then
+#     uncomment it and re-run the 'docker build'.
+#
+#     DO NOT modify '/opt/beedeem/conf/descriptors/': this is the place
+#     where bank descriptors MUST BE located within the container to
+#     enable BeeDeeM to use them.
+#
+#     Using COPY: https://docs.docker.com/engine/reference/builder/#copy
+#
+#COPY mytest.gd mybank.dsc /opt/beedeem/conf/descriptors/
+
+# ###
 #     Start BeeDeeM. 
 #
 ENTRYPOINT ["/usr/local/bin/run_bdm.sh"]
