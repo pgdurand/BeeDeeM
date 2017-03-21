@@ -38,19 +38,19 @@ Use this command:
  
       docker run .../... beedeem_machine -c install swiss
  
-Will invoke 'install.sh' BeeDeeM script. See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.htmlinstall-a-bank) for more details. 
+Will invoke 'install.sh' BeeDeeM script. See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.html\#install-a-bank) for more details. 
 
 2/ query a bank: 
  
       docker run .../... beedeem_machine -c query protein 1433S_HUMAN txt
  
-Will invoke 'query.sh' BeeDeeM script. See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.htmlquery-the-beedeem-bank-repository) for more details. 
+Will invoke 'query.sh' BeeDeeM script. See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.html\#query-the-beedeem-bank-repository) for more details. 
 
 3/ annotate a BLAST result: 
  
       docker run .../... beedeem_machine -c annotate 1433S_HUMAN.blastp 1433S_HUMAN.zml full
  
-Will invoke 'annotate.sh' BeeDeeM script.See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.htmlrun-a-blast-search) for more details. 
+Will invoke 'annotate.sh' BeeDeeM script.See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.html\#run-a-blast-search) for more details. 
 
 ### Monitor BeeDeeM
    
