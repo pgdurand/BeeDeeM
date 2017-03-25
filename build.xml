@@ -39,7 +39,8 @@
 	<property name="KLMirrorClass" value="${rootpkg}.CmdLineInstaller" />
 	<property name="KLUIMirrorClass" value="${rootpkg}.UiInstaller" />
 	<property name="KLQueryMirrorClass" value="${rootpkg}.CmdLineQuery" />
-	<property name="KLMirrorAnnot" value="${rootpkg}.Annotate" />
+  <property name="KLMirrorAnnot" value="${rootpkg}.Annotate" />
+  <property name="KLMirrorInfo" value="${rootpkg}DumpBankList" />
 
 	<path id="class.path">
 		<pathelement path="${classpath}" />
@@ -147,6 +148,11 @@
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorAnnot}" />
 			</filterset>
 		</copy>
+    <copy file="${scripts}/info.sh" todir="${Dscripts}">
+      <filterset>
+        <filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
+      </filterset>
+    </copy>
 		<copy file="${scripts}/install.bat" todir="${Dscripts}">
 			<filterset>
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorClass}" />
@@ -167,6 +173,11 @@
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorAnnot}" />
 			</filterset>
 		</copy>
+    <copy file="${scripts}/info.bat" todir="${Dscripts}">
+      <filterset>
+        <filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
+      </filterset>
+    </copy>
 
 		<!-- Copy the DBMS main config file -->
 		<copy file="${scripts}/dbms.config" todir="${Dscripts}" />

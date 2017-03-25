@@ -18,6 +18,8 @@ package bzh.plealog.dbmirror.main;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,7 +43,22 @@ public class StarterUtils {
   private static final String ERR1     = "Unable to load network config: ";
   private static final String USER_DIR = "user.dir";
 
-  private static String getConfPath() {
+  /**
+   * Return the content of the version resource.
+   */
+  protected static Properties getVersionProperties() {
+    Properties props = new Properties();
+    try (InputStream in = StarterUtils.class
+        .getResourceAsStream("version.properties");) {
+      props.load(in);
+      in.close();
+    } catch (Exception ex) {// should not happen
+      System.err.println("Unable to read props: " + ex.toString());
+    }
+    return props;
+  }
+  
+  protected static String getConfPath() {
     String path;
 
     /*
@@ -52,7 +69,7 @@ public class StarterUtils {
       path = Utils.terminatePath(path);
     else
       path = Utils.terminatePath(System.getProperty(USER_DIR));
-    path += ("conf" + File.separator);
+    path += (DBMSAbstractConfig.CONF_PATH_NAME + File.separator);
     return path;
   }
 

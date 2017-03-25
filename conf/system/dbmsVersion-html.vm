@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>$bdminfo.config.name</title>
+    <meta charset="UTF-8">
+  </head>
+
+  <body>
+
+  <!-- CONFIGURATION -->
+  <div id="conf">
+    <h4>Banks managed by $bdminfo.config.name</h4>
+    <h5>Configuration</h5>
+    <p>
+    <ul>
+    <li><i>Install path: </i>$bdminfo.config.instpath</li>
+    <li><i>Master configuration: </i>$bdminfo.config.instconfpath</li>
+    <li><i>Logs path: </i>$bdminfo.config.logpath</li>
+    <li><i>Working path: </i>$bdminfo.config.wkpath</li>
+    <li><i>Bank configuration: </i>$bdminfo.config.confpath</li>
+    <li><i>Bank storage path: </i>$bdminfo.config.dbpath</li>
+    <li><i>Bank repository size: </i>$bdminfo.config.reposize</i></li>
+    </ul>
+    </p>
+  </div>
+  
+  <div id="db">
+    <!-- DATABANK: protein -->
+    #set( $dbTable = $bdminfo.databases2.mirror_p )
+    <h4>Protein banks: <span>${dbTable.size()}</span></h4>
+      #if( ${dbTable.size()} == 0 )
+        <p>none</p>
+      #else
+        <table border="1">
+          <tr>
+            <th>Name</th>
+            <!-- <th>Code</th> -->
+            <th>Description</th>
+            <th>Annotated</th>
+            <th>Size (sequences)</th>
+            <th>Size on disk</th>
+            <th>Install date</th>
+          </tr>
+          #foreach( $db in $dbTable )
+            <tr>
+              <td>$db.getName()</td>
+              <!-- <td>$db.getCode()</td> -->
+              <td>$db.getDescription()</br>BLAST+ use: -db $db.getDbPath().substring(0, $db.getDbPath().lastIndexOf("."))</td>
+              <td>$db.hasAnnotation()</td>
+              <td>$db.getNbSequence()</td>
+              <td>$db.getDiskSize()</td>
+              <td>$db.getTimeStamp()</td>
+            </tr>
+            #end
+        </table>
+      #end
+  
+    <!-- DATABANK: nucleotide -->
+    #set( $dbTable = $bdminfo.databases2.mirror_n )
+    <h4>Nucleotide banks: <span>${dbTable.size()}</span></h4>
+      #if( ${dbTable.size()} == 0 )
+        <p>none</p>
+      #else
+        <table border="1">
+          <tr>
+            <th>Name</th>
+            <!-- <th>Code</th> -->
+            <th>Description</th>
+            <th>Annotated</th>
+            <th>Size (sequences)</th>
+            <th>Size on disk</th>
+            <th>Install date</th>
+          </tr>
+          #foreach( $db in $dbTable )
+            <tr>
+              <td>$db.getName()</td>
+              <!-- <td>$db.getCode()</td> -->
+              <td>$db.getDescription()</br>BLAST+ use: -db $db.getDbPath().substring(0, $db.getDbPath().lastIndexOf("."))</td>
+              <td>$db.hasAnnotation()</td>
+              <td>$db.getNbSequence()</td>
+              <td>$db.getDiskSize()</td>
+              <td>$db.getTimeStamp()</td>
+            </tr>
+            #end
+        </table>
+      #end
+    <!-- DATABANK: bco -->
+    #set( $dbTable = $bdminfo.databases2.mirror_d )
+    <h4>Biological classification banks: <span>${dbTable.size()}</span></h4>
+      #if( ${dbTable.size()} == 0 )
+        <p>none</p>
+      #else
+        <table border="1">
+          <tr>
+            <th>Name</th>
+            <!-- <th>Code</th> -->
+            <th>Description</th>
+            <th>Size (sequences)</th>
+            <th>Size on disk</th>
+            <th>Install date</th>
+          </tr>
+          #foreach( $db in $dbTable )
+            <tr>
+              <td>$db.getName()</td>
+              <!-- <td>$db.getCode()</td> -->
+              <td>$db.getDescription()</td>
+              <td>$db.getNbSequence()</td>
+              <td>$db.getDiskSize()</td>
+              <td>$db.getTimeStamp()</td>
+            </tr>
+            #end
+        </table>
+      #end
+	</div>
+  
+  </body>
+</html>

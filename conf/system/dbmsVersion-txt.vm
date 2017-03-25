@@ -1,0 +1,52 @@
+$bdminfo.config.name
+
+Configuration:
+
+  Install path           : $bdminfo.config.instpath
+  Master configuration   : $bdminfo.config.instconfpath
+  Log path               : $bdminfo.config.logpath
+  Work path              : $bdminfo.config.wkpath
+  Bank configuration file: $bdminfo.config.confpath
+  Bank repository path   : $bdminfo.config.dbpath
+  Bank repository size   : $bdminfo.config.reposize
+
+Installed banks
+#set( $pTable = $bdminfo.databases2.mirror_p ) 
+ - Protein banks: ${pTable.size()}
+#if( ${pTable.size()} != 0 )
+#foreach( $db in $pTable )
+      * $db.getName()
+        Description: $db.getDescription()
+        BLAST+ use: -db $db.getDbPath().substring(0, $db.getDbPath().lastIndexOf("."))
+        Annotated bank: $db.hasAnnotation()
+        Size (sequences): $db.getNbSequence()
+        Size on disk: $db.getDiskSize()
+        Install date: $db.getTimeStamp()
+#end
+#end
+  
+#set( $nTable = $bdminfo.databases2.mirror_n ) 
+ - Nucleotide banks: ${nTable.size()}
+#if( ${nTable.size()} != 0 )
+#foreach( $db in $nTable )
+      * $db.getName()
+        Description: $db.getDescription()
+        BLAST+ use: -db $db.getDbPath().substring(0, $db.getDbPath().lastIndexOf("."))
+        Annotated bank: $db.hasAnnotation()
+        Size (sequences): $db.getNbSequence()
+        Size on disk: $db.getDiskSize()
+        Install date: $db.getTimeStamp()
+#end
+#end
+
+#set( $dTable = $bdminfo.databases2.mirror_d ) 
+ - Biological classification banks: ${dTable.size()}
+#if( ${dTable.size()} != 0 )
+#foreach( $db in $dTable )
+      * $db.getName()
+        Description: $db.getDescription()
+        Size (terms): $db.getNbSequence()
+        Size on disk: $db.getDiskSize()
+        Install date: $db.getTimeStamp()
+#end
+#end

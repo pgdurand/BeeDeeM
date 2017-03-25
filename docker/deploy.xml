@@ -16,6 +16,14 @@
 		<os family="unix"/>
 	</condition>
 
+  <!-- ============================================================= -->
+  <target name="help">
+    <echo>This is the Ant project file to install DBMS for Docker container.</echo>
+    <echo/>
+    <echo>Available target is: install</echo>
+    <echo/>
+  </target>
+
 	<!-- ============================================================= -->
 	<target name="install">
 		<echo>Current configuration is:</echo>
@@ -56,7 +64,8 @@
 		<chmod file="${installDir}/UiInstall.sh"  perm="ugo+x" />
 		<chmod file="${installDir}/install.sh"    perm="ugo+x" />
 		<chmod file="${installDir}/query.sh"      perm="ugo+x" />
-		<chmod file="${installDir}/annotate.sh"   perm="ugo+x" />
+    <chmod file="${installDir}/annotate.sh"   perm="ugo+x" />
+    <chmod file="${installDir}/info.sh"   perm="ugo+x" />
 	</target>
 
   <!-- ============================================================= -->
@@ -98,10 +107,14 @@
 			<param name="kscript" value="query"/>
 			<param name="kext" value="sh"/>
 		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="annotate"/>
-			<param name="kext" value="sh"/>
-		</antcall>
+    <antcall target="prepareScript">
+      <param name="kscript" value="annotate"/>
+      <param name="kext" value="sh"/>
+    </antcall>
+    <antcall target="prepareScript">
+      <param name="kscript" value="info"/>
+      <param name="kext" value="sh"/>
+    </antcall>
 		<!-- Copy and configure the KDBMS main config file-->
 		<copy file="${installDir}/scripts/dbms.config" todir="${installDir}/conf">
 			<filterset>

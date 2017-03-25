@@ -5,11 +5,11 @@
 #
 # Use: ./run_bdm.sh -c <command> <arguments>
 #
-#        <command>: one of install, query, annotate
+#        <command>: one of install, query, annotate, info
 #      <arguments>: remaining arguments passed in after <command> are passed
-#                   to the appropriate BeeDeeM program: install.sh, query.sh
-#                   or annotate.sh. Please refer to these programs to review
-#                   their expected arguments.
+#                   to the appropriate BeeDeeM program: install.sh, query.sh,
+#                   annotate.sh or info.sh. Please refer to these programs to 
+#                   review their expected arguments.
 #
 # Copyright (c) 2017, Patrick G. Durand
 # ========================================================================================
@@ -49,6 +49,9 @@ case "$COMMAND" in
     ;;
   annotate)
     . /opt/beedeem/annotate.sh $ALL_ARGS
+    ;;
+  info)
+    . /opt/beedeem/info.sh
     ;;
 esac
 

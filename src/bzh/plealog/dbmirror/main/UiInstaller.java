@@ -20,7 +20,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.InputStream;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -38,27 +37,13 @@ import com.plealog.genericapp.api.EZGenericApplication;
 import com.plealog.genericapp.api.EZUIStarterListener;
 
 public class UiInstaller {
-  /**
-   * Return the content of the version resource.
-   */
-  private static Properties getVersionProperties() {
-    Properties props = new Properties();
-    try (InputStream in = UiInstaller.class
-        .getResourceAsStream("version.properties");) {
-      props.load(in);
-      in.close();
-    } catch (Exception ex) {// should not happen
-      System.err.println("Unable to read props: " + ex.toString());
-    }
-    return props;
-  }
 
   public static void main(String[] args) {
     // This has to be done at the very beginning, i.e. first method call within
     // main().
     EZGenericApplication.initialize("DB-Manager");
     // Add application branding
-    Properties props = UiInstaller.getVersionProperties();
+    Properties props = StarterUtils.getVersionProperties();
     EZApplicationBranding.setAppName(props.getProperty("prg.app.name"));
     EZApplicationBranding.setAppVersion(props.getProperty("prg.version"));
     EZApplicationBranding.setCopyRight(props.getProperty("prg.copyright"));
