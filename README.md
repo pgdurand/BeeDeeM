@@ -4,7 +4,7 @@
 
 *BeeDeeM* is a general purpose **B**ioinformatics **D**atabank **M**anager. 
 
-It provides a suite of command-line and UI softwares to install and use major sequence databanks and biological classifications.
+It provides a suite of command-line and UI softwares to install and use major sequence databanks and biological classifications. It is the ideal companion of the [NCBI BLAST suite of softwares](https://pgdurand.gitbooks.io/beedeem/test_install.html#run-a-blast-search).
 
 ## Main features
 
