@@ -63,7 +63,8 @@ Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downl
 
 ## Software installation, use and configuration
 
-See [*BeeDeeM* manual](https://pgdurand.gitbooks.io/beedeem/).
+* [BeeDeeM manual on GitBook](https://pgdurand.gitbooks.io/beedeem/)
+* BeeDeeM manual on GitHub: [Introduction](https://github.com/pgdurand/BeeDeeM-User-Manual/blob/master/README.md) and [Table of Content](https://github.com/pgdurand/BeeDeeM-User-Manual/blob/master/SUMMARY.md).
 
 ## License and dependencies
 
