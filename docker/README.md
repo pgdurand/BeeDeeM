@@ -91,7 +91,7 @@ Try a "docker run" using "-c install swiss":
         -v /Users/pdurand/tmp/beedeem/log:/var/beedeem \
         beedeem_machine -c install swiss
 
-*Important notice:* in the above command, dapt values of '-v' directives to target **YOUR** local directories.
+*Important notice:* in the above command, adapt values of '-v' directives to target **YOUR** local directories.
 
 After having installed that bank, you can try to query the bank as follows:
 
