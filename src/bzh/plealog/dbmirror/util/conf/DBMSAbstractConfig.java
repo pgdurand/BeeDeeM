@@ -586,7 +586,7 @@ public class DBMSAbstractConfig {
   /**
    * Initializes the Configurator object given a standard KDMS Configuration
    * file. This system has been introduced for the GUI. Calling this method
-   * onece is enough to initialize the db configurator.
+   * once is enough to initialize the db configurator.
    */
   public static void initializeConfigurator(String kdmsConfFile) {
     if (_configurator == null) {
@@ -599,6 +599,8 @@ public class DBMSAbstractConfig {
       }
       updateConfiguration();
       _configurator.addConfigurationListener(CONF_LISTENER);
+      LoggerCentral.info(LOGGER, "Configuration:");
+      _configurator.dumpContent(LOGGER);
 
       // manage the tmp filter directory
       try {
@@ -645,6 +647,8 @@ public class DBMSAbstractConfig {
     }
     updateConfiguration();
     _configurator.addConfigurationListener(CONF_LISTENER);
+    LoggerCentral.info(LOGGER, "Configuration:");
+    _configurator.dumpContent(LOGGER);
   }
 
   /**
@@ -756,6 +760,38 @@ public class DBMSAbstractConfig {
    */
   public static DBMSConfigurator getConfigurator() {
     return _configurator;
+  }
+
+  public static DBMSConfigurator.LUCENE_FS_VALUES getLuceneFSType(){
+    if (_configurator == null) {
+      return DBMSConfigurator.LUCENE_FS_VALUES.FS_DEFAULT;
+    }
+    String value = _configurator.getProperty(DBMSConfigurator.LUCENE_FS);
+    if ("nio".equalsIgnoreCase(value)){
+    	return DBMSConfigurator.LUCENE_FS_VALUES.FS_NIO;
+    }
+    else if ("simple".equalsIgnoreCase(value)){
+    	return DBMSConfigurator.LUCENE_FS_VALUES.FS_SIMPLE;
+    }
+    else {
+    	return DBMSConfigurator.LUCENE_FS_VALUES.FS_DEFAULT;
+    }
+  }
+
+  public static DBMSConfigurator.LUCENE_LK_VALUES getLuceneLockType(){
+    if (_configurator == null) {
+      return DBMSConfigurator.LUCENE_LK_VALUES.LK_DEFAULT;
+    }
+    String value = _configurator.getProperty(DBMSConfigurator.LUCENE_LOCK);
+    if ("simple".equalsIgnoreCase(value)){
+    	return DBMSConfigurator.LUCENE_LK_VALUES.LK_SIMPLE;
+    }
+    else if ("native".equalsIgnoreCase(value)){
+    	return DBMSConfigurator.LUCENE_LK_VALUES.LK_NATIVE;
+    }
+    else {
+    	return DBMSConfigurator.LUCENE_LK_VALUES.LK_DEFAULT;
+    }
   }
 
   public static void addDBMirrorListener(DBMirrorListener listener) {

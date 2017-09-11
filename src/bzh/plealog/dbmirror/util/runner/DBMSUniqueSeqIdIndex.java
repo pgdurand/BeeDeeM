@@ -31,6 +31,8 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
+import bzh.plealog.dbmirror.indexer.LuceneUtils;
+
 /**
  * This class represents a Lucene-based index aims at storing unique sequence
  * IDs.
@@ -171,7 +173,7 @@ public class DBMSUniqueSeqIdIndex {
     try {
 
       File dirIndex = new File(_indexName);
-      FSDirectory index = FSDirectory.open(dirIndex);
+      FSDirectory index = LuceneUtils.getDirectory(dirIndex);
       // if (!(dirIndex.exists())) {
       // _writer = new IndexWriter(index, new
       // StandardAnalyzer(Version.LUCENE_29), true,
@@ -207,12 +209,12 @@ public class DBMSUniqueSeqIdIndex {
     boolean readOnly = true;
 
     // WARNING - potential poor multi-threading performance - check
-    // SimpleFSDirectory
+    // SimpleSimpleFSDirectory
     try {
       if (_searcher != null) {
         _searcher.close();
       }
-      _searcher = new IndexSearcher(FSDirectory.open(new File(_indexName)),
+      _searcher = new IndexSearcher(LuceneUtils.getDirectory(new File(_indexName)),
           readOnly);
       this.nbDocInIndex = _searcher.maxDoc();
     } catch (IOException e) {

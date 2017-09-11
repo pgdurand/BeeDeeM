@@ -41,6 +41,7 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
+import bzh.plealog.dbmirror.indexer.LuceneUtils;
 import bzh.plealog.dbmirror.lucenedico.go.Serialization_GeneOntologyTerm;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
@@ -335,7 +336,7 @@ public class DicoStorageSystemImplem implements DicoStorageSystem,
     boolean bRet = true;
 
     try {
-      _writer = new IndexWriter(FSDirectory.open(new File(_indexName)),
+      _writer = new IndexWriter(LuceneUtils.getDirectory(new File(_indexName)),
           this.analyzer, true, MaxFieldLength.UNLIMITED);
       _writerOk = true;
 
@@ -375,7 +376,7 @@ public class DicoStorageSystemImplem implements DicoStorageSystem,
     boolean bRet = true;
 
     try {
-      _readerFsDir = FSDirectory.open(new File(_indexName));
+      _readerFsDir = LuceneUtils.getDirectory(new File(_indexName));
       _searcher = new IndexSearcher(_readerFsDir, true);
       _readerOk = true;
     } catch (IOException e) {

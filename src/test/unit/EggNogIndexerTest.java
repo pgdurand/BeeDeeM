@@ -157,7 +157,8 @@ public class EggNogIndexerTest {
         PFTPLoaderDescriptor.MAINTASK_DOWNLOAD);
 
     // test index
-    Assert.assertEquals(28, EggNogPreparator.reverseIndex.getSize());
+    int reverseSize = EggNogPreparator.reverseIndex.getSize();
+    Assert.assertEquals(28, reverseSize);
     List<String> indexEntries = EggNogPreparator.reverseIndex
         .getById("224325_AF0466");
     Assert.assertEquals(1, indexEntries.size());
@@ -225,7 +226,7 @@ public class EggNogIndexerTest {
             .contains("FT   DOMAIN        1     391       db_xref=NOG:arcNOG04042"));
     Assert
         .assertTrue(allData
-            .contains("ID   5833_PF13_0308              Reviewed;         915 AA."));
+            .contains("ID   5833_PF13_0308              Reviewed;         1215 AA."));
     Assert.assertTrue(allData
         .contains("FT   DOMAIN        353     791       db_xref=NOG:COG0553"));
     Assert
@@ -235,7 +236,7 @@ public class EggNogIndexerTest {
     Assert.assertTrue(allData.contains("OX   NCBI_TaxID=5833;"));
     Assert
         .assertTrue(eukaryotaData
-            .contains("ID   5833_PF13_0308              Reviewed;         915 AA."));
+            .contains("ID   5833_PF13_0308              Reviewed;         1215 AA."));
     Assert.assertTrue(eukaryotaData
         .contains("FT   DOMAIN        353     791       db_xref=NOG:COG0553"));
     Assert

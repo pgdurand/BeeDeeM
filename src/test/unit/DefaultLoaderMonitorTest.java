@@ -39,7 +39,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.store.FSDirectory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -49,9 +48,9 @@ import org.junit.Test;
 
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
 import bzh.plealog.dbmirror.fetcher.DefaultLoaderMonitor;
+import bzh.plealog.dbmirror.fetcher.LoaderMonitor;
 import bzh.plealog.dbmirror.fetcher.PFTPLoaderDescriptor;
 import bzh.plealog.dbmirror.fetcher.PLocalLoader;
-import bzh.plealog.dbmirror.fetcher.LoaderMonitor;
 import bzh.plealog.dbmirror.indexer.DBEntry;
 import bzh.plealog.dbmirror.indexer.LuceneStorageSystem;
 import bzh.plealog.dbmirror.indexer.LuceneUtils;
@@ -73,11 +72,11 @@ import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptor;
+import bzh.plealog.dbmirror.util.descriptor.DBDescriptor.TYPE;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
 import bzh.plealog.dbmirror.util.descriptor.DatabankFormat;
 import bzh.plealog.dbmirror.util.descriptor.DescriptorEntry;
 import bzh.plealog.dbmirror.util.descriptor.IdxDescriptor;
-import bzh.plealog.dbmirror.util.descriptor.DBDescriptor.TYPE;
 import bzh.plealog.dbmirror.util.runner.DBMSUniqueSeqIdDetector;
 import bzh.plealog.dbmirror.util.sequence.TaxonMatcherHelper;
 import bzh.plealog.dbmirror.util.xref.DBXrefInstancesManager;
@@ -308,7 +307,7 @@ public class DefaultLoaderMonitorTest {
         _dbConf.getLocalTmpFolder(), _dbConf.getName() + ".ldx");
     try {
       reader = IndexReader.open(
-          FSDirectory.open(new File(luceneIndexDirectory)), true);
+    		  LuceneUtils.getDirectory(new File(luceneIndexDirectory)), true);
       assertNotNull(reader.document(index));
       entry = LuceneUtils.getEntry(luceneIndexDirectory, reader.document(index)
           .get(LuceneStorageSystem.ID_FIELD));
@@ -409,7 +408,7 @@ public class DefaultLoaderMonitorTest {
     }
     try {
       reader = IndexReader.open(
-          FSDirectory.open(new File(luceneIndexDirectory)), true);
+    		  LuceneUtils.getDirectory(new File(luceneIndexDirectory)), true);
       assertNotNull(reader.document(0));
       String data = reader.document(0).get(LuceneStorageSystem.ID_FIELD);
       if (!_dbConf.getTypeCode().equals("d")) {

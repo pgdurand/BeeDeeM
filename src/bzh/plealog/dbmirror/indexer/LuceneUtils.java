@@ -17,6 +17,7 @@
 package bzh.plealog.dbmirror.indexer;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -36,6 +37,11 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.FSLockFactory;
+import org.apache.lucene.store.NIOFSDirectory;
+import org.apache.lucene.store.NativeFSLockFactory;
+import org.apache.lucene.store.SimpleFSDirectory;
+import org.apache.lucene.store.SimpleFSLockFactory;
 
 import bzh.plealog.dbmirror.fetcher.UserProcessingMonitor;
 import bzh.plealog.dbmirror.lucenedico.DicoStorageSystem;
@@ -45,6 +51,7 @@ import bzh.plealog.dbmirror.task.PTaskEngine;
 import bzh.plealog.dbmirror.task.PTaskEngineAbortException;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.conf.DBMSConfigurator;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
@@ -166,7 +173,7 @@ public class LuceneUtils {
       fullIdxPath = new ArrayList<String>();
       for (i = 0; i < size; i++) {
         path = indexPaths.get(i);
-        // check here before calling FSDirectory API: require otherwise
+        // check here before calling SimpleFSDirectory API: require otherwise
         // that API may create path if it does not exist.
         /*
          * f = new File(path); if (f.exists()==false){ throw new
@@ -205,7 +212,7 @@ public class LuceneUtils {
           }
           LoggerCentral.info(LOGGER, "merging (" + (i + 1) + "/" + size + ") "
               + path + " with main index");
-          indexDir = FSDirectory.open(new File(path));
+          indexDir = LuceneUtils.getDirectory(new File(path));
           reader = IndexReader.open(indexDir, true);
           indexSize = reader.maxDoc();
           if (indexSize > 1000000) {
@@ -439,4 +446,55 @@ public class LuceneUtils {
     return entries;
   }
 
+  /**
+   * Factory method used to create a Lucene based file system for a given
+   * directory path.
+   * 
+   * @param directory use an absolute path
+   * 
+   * @return a Lucene based file system
+   */
+  public static FSDirectory getDirectory(File directory) throws IOException{
+	  DBMSConfigurator.LUCENE_LK_VALUES lkType = DBMSAbstractConfig.getLuceneLockType();
+	  DBMSConfigurator.LUCENE_FS_VALUES fsType = DBMSAbstractConfig.getLuceneFSType();
+
+	  // backward compatibility prior to release 4.1.1: this system was not available
+	  if (lkType.equals(DBMSConfigurator.LUCENE_LK_VALUES.LK_DEFAULT) &&
+			  fsType.equals(DBMSConfigurator.LUCENE_FS_VALUES.FS_DEFAULT)){
+		  return FSDirectory.open(directory);
+	  }
+
+	  FSDirectory fsDir;
+	  FSLockFactory fsLock;
+
+	  switch(lkType){
+	  case LK_SIMPLE:
+		  fsLock = new SimpleFSLockFactory();
+		  break;
+	  case LK_NATIVE:
+		  fsLock = new NativeFSLockFactory();
+		  break;
+	  default:
+		  fsLock = null;
+	  }
+
+	  // Notice: using xxxFSDirectory constructor with Lock argument does NOT
+	  // behave the same as using xxxFSDirectory basic constructor, then calling
+	  // setLockFactory(). So, we retain the following ugly code.
+	  switch(fsType){
+	  case FS_NIO:
+		  fsDir = fsLock!=null ? NIOFSDirectory.open(directory, fsLock) : 
+			  NIOFSDirectory.open(directory);
+		  break;
+	  case FS_SIMPLE:
+		  fsDir = fsLock!=null ? SimpleFSDirectory.open(directory, fsLock) :
+			  SimpleFSDirectory.open(directory);
+		  break;
+	  default:
+		  fsDir = fsLock!=null ? FSDirectory.open(directory, fsLock) :
+			  FSDirectory.open(directory);
+	  }
+
+	  return fsDir;
+  }
 }

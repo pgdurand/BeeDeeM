@@ -35,10 +35,10 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.util.Version;
 
+import bzh.plealog.dbmirror.indexer.LuceneUtils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 
 /**
@@ -112,7 +112,8 @@ public class SimpleIndex<T> {
   public void open() throws CorruptIndexException, LockObtainFailedException,
       IOException {
     if (this.writer == null) {
-      this.writer = new IndexWriter(FSDirectory.open(this.directory),
+      /*Use a SimpleFSLockFactory to solve pb when using Lustre FS*/
+    	this.writer = new IndexWriter(LuceneUtils.getDirectory(this.directory),
           this.analyzer, !this.directory.exists(), MaxFieldLength.UNLIMITED);
     }
   }
@@ -154,7 +155,7 @@ public class SimpleIndex<T> {
 
       private void initialize() {
         try {
-          this.index = new IndexSearcher(FSDirectory.open(directory), true);
+          this.index = new IndexSearcher(LuceneUtils.getDirectory(directory), true);
           totalObjects = this.index.maxDoc();
         } catch (IOException ex) {
           LOGGER.warn("Unable to read max doc for storage '" + getDirectory()
@@ -252,7 +253,7 @@ public class SimpleIndex<T> {
   public IndexSearcher getSearcher() {
     if (this.searcher == null) {
       try {
-        this.searcher = new IndexSearcher(FSDirectory.open(directory), true);
+        this.searcher = new IndexSearcher(LuceneUtils.getDirectory(directory), true);
       } catch (Exception e) {
         LOGGER.warn("Unable to create searcher for storage '" + getDirectory()
             + "' : " + e.getMessage());

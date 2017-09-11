@@ -29,6 +29,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import bzh.plealog.dbmirror.util.Utils;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
  * This class handles the data contains in the standard KDMS Main Configuration
@@ -53,11 +54,25 @@ public class DBMSConfigurator {
   public static final String        COPY_WORKERS         = "copy.workers";
   //unit is number of Gb
   public static final String        FASTA_VOLSIZE        = "fasta.volsize";
+  //use to handle Lucene FileSystem and Lock without recompiling the soft
+  // introduced to handle particular FS, such as Lustre, etc.
+  // Introduced in BeeDeeM 4.1.1; for backward compatibility, these keys are
+  // not mandatory in dbms.config files. If so, default Lucene library values
+  // are use (see Lucene API doc).
+  public static final String        LUCENE_FS            = "lucene.fs";
+  public static final String        LUCENE_LOCK          = "lucene.lock";
 
+  public static enum LUCENE_FS_VALUES {FS_DEFAULT, FS_NIO, FS_SIMPLE};
+  public static enum LUCENE_LK_VALUES {LK_DEFAULT, LK_NATIVE, LK_SIMPLE};
+  
   private static final Log          LOGGER               = LogFactory
                                                              .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                  + ".DBMSConfigurator");
 
+  private static final String[] KEYS ={MIRROR_PATH, MIRROR_PREPA_PATH, MIRROR_FILE,
+		  LONG_FILE_NAME, FDB_PRG_NAME, FDB_PATH_NAME, UI_SHOW_PATH, COPY_WORKERS,
+		  FASTA_VOLSIZE, LUCENE_FS, LUCENE_LOCK};
+  
   public static String              TMP_FILTER_DIRECTORY = Utils
                                                              .terminatePath(DBMSAbstractConfig
                                                                  .getLocalMirrorPath())
@@ -204,6 +219,14 @@ public class DBMSConfigurator {
       key = (String) menum.nextElement();
       _pConfig.setProperty(key, props.getProperty(key));
     }
+  }
+
+  public void dumpContent(Log logger) {
+	  for (String key : KEYS) {
+		  if (_pConfig.containsKey(key) == false)
+			  continue;
+		  LoggerCentral.info(logger, key + "=" + _pConfig.getProperty(key));
+	  }
   }
 
 }
