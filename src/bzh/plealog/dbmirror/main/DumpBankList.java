@@ -54,6 +54,7 @@ import com.plealog.genericapp.api.log.EZLogger;
  * arguments are: <br>
  * -d type of repository. One of: n, p, b, all. Default is: all.<br>
  * -f format. One of: txt, html, galaxy. Default is: txt. <br>
+ * -u user-name. <br>
  * In addition, some parameters can be passed to the JVM for special
  * configuration purposes:<br>
  * -DKL_HOME=an_absolute_path ; the absolute path to the KDMS installation home
@@ -70,6 +71,7 @@ import com.plealog.genericapp.api.log.EZLogger;
 public class DumpBankList {
   public static final String DB_ARG = "d";
   public static final String FT_ARG = "f";
+  public static final String US_ARG = "u";
 
   private static final Log   LOGGER = LogFactory
                                         .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
@@ -112,7 +114,10 @@ public class DumpBankList {
     opts = new Options();
     opts.addOption(DB_ARG, true,
         "type of repository. One of: n, p, b, all. Default is: all.");
-    opts.addOption(FT_ARG, true, "format. One of: txt, html, galaxy. Default is: txt.");
+    opts.addOption(FT_ARG, true, 
+    		"format. One of: txt, html, galaxy. Default is: txt.");
+    opts.addOption(US_ARG, true, 
+    		"user-name. A valid user login name.");
     return opts;
   }
 
@@ -131,11 +136,19 @@ public class DumpBankList {
     String val = cmdLine.getOptionValue(FT_ARG);
     return val == null ? "txt" : val;
   }
+  
+  /**
+   * Get format to use to report bank list. Default is txt.
+   */
+  private static String getUserLoginName(CommandLine cmdLine) {
+    String val = cmdLine.getOptionValue(US_ARG);
+    return val == null ? "?" : val;
+  }
 
   /**
    * Prepare the bank list for a given type.
    */
-  private static List<DatabankDescriptor> getMirrorDBList(DBDescriptor.TYPE type) {
+  private static List<DatabankDescriptor> getMirrorDBList(DBDescriptor.TYPE type, String overridenUserName) {
     String dbMirrorConfFile = DBMSAbstractConfig.getLocalMirrorConfFile();
     DBMirrorConfig conf = DBDescriptorUtils.getDBMirrorConfig(dbMirrorConfFile);
     List<DatabankDescriptor> dbList = new ArrayList<DatabankDescriptor>();
@@ -143,7 +156,7 @@ public class DumpBankList {
     for (IdxDescriptor descriptor : DBDescriptorUtils.getDBList(conf, type,
         true)) {
       try {
-        if (descriptor.isUserAuthorized()){
+        if (descriptor.isUserAuthorized(overridenUserName)){
     	  dbList.add(new DatabankDescriptor(descriptor));
         }
       } catch (Exception ex) {
@@ -168,15 +181,15 @@ public class DumpBankList {
   /**
    * Return set of names of annotated banks.
    */
-  private Set<String> getAnnotatedBanks(){
+  private Set<String> getAnnotatedBanks(String overridenUserName){
     HashSet<String> annotatedBanks = new HashSet<>();
     List<DatabankDescriptor> dbList;
     
-    dbList = getMirrorDBList(DBDescriptor.TYPE.proteic);
+    dbList = getMirrorDBList(DBDescriptor.TYPE.proteic, overridenUserName);
     for(DatabankDescriptor dd : dbList){
       annotatedBanks.add(dd.getName());
     }
-    dbList = getMirrorDBList(DBDescriptor.TYPE.nucleic);
+    dbList = getMirrorDBList(DBDescriptor.TYPE.nucleic, overridenUserName);
     for(DatabankDescriptor dd : dbList){
       annotatedBanks.add(dd.getName());
     }
@@ -200,7 +213,7 @@ public class DumpBankList {
     VelocityContext context;
     Template t;
     StringWriter writer;
-    String db, ft;
+    String db, ft, us;
     CommandLine cmdLine;
     List<DatabankDescriptor> emptyList = new ArrayList<DatabankDescriptor>();
     List<DatabankDescriptor> dbList;
@@ -216,12 +229,13 @@ public class DumpBankList {
     cmdLine = handleArguments(args);
     db = getDatabaseType(cmdLine);
     ft = getFormatType(cmdLine);
-
+    us = getUserLoginName(cmdLine);
+    
     // Setup Maps to be used with Velocity Template engine
     LinkedHashtable<String, Object> mdserverinfo = new LinkedHashtable<String, Object>();
     LinkedHashtable<String, Object> config = new LinkedHashtable<String, Object>();
     LinkedHashtable<String, Object> dbs2 = new LinkedHashtable<String, Object>();
-    Set<String> annotatedBanks = getAnnotatedBanks();
+    Set<String> annotatedBanks = getAnnotatedBanks(us);
     
     // Report software configuration
     config.put(
@@ -239,20 +253,20 @@ public class DumpBankList {
     // Report bank list
     if ("all".equals(db)) {
       // all
-      dbList = getMirrorDBList(DBDescriptor.TYPE.blastn);
+      dbList = getMirrorDBList(DBDescriptor.TYPE.blastn, us);
       setAnnotatedStatus(dbList, annotatedBanks);
       dbTotalSize = countSize(dbTotalSize, dbList);
       dbs2.put("mirror_n", dbList);
-      dbList = getMirrorDBList(DBDescriptor.TYPE.blastp);
+      dbList = getMirrorDBList(DBDescriptor.TYPE.blastp, us);
       setAnnotatedStatus(dbList, annotatedBanks);
       dbTotalSize = countSize(dbTotalSize, dbList);
       dbs2.put("mirror_p", dbList);
-      dbList = getMirrorDBList(DBDescriptor.TYPE.dico);
+      dbList = getMirrorDBList(DBDescriptor.TYPE.dico, us);
       dbTotalSize = countSize(dbTotalSize, dbList);
       dbs2.put("mirror_d", dbList);
     } else if ("n".equals(db)) {
       // only nucleotide
-      dbList = getMirrorDBList(DBDescriptor.TYPE.blastn);
+      dbList = getMirrorDBList(DBDescriptor.TYPE.blastn, us);
       setAnnotatedStatus(dbList, annotatedBanks);
       dbTotalSize = countSize(dbTotalSize, dbList);
       dbs2.put("mirror_n", dbList);
@@ -260,7 +274,7 @@ public class DumpBankList {
       dbs2.put("mirror_d", emptyList);
     } else if ("p".equals(db)) {
       // only protein
-      dbList = getMirrorDBList(DBDescriptor.TYPE.blastp);
+      dbList = getMirrorDBList(DBDescriptor.TYPE.blastp, us);
       setAnnotatedStatus(dbList, annotatedBanks);
       dbTotalSize = countSize(dbTotalSize, dbList);
       dbs2.put("mirror_p", dbList);
@@ -268,7 +282,7 @@ public class DumpBankList {
       dbs2.put("mirror_d", emptyList);
     } else if ("b".equals(db)) {
       // only biological classification
-      dbList = getMirrorDBList(DBDescriptor.TYPE.dico);
+      dbList = getMirrorDBList(DBDescriptor.TYPE.dico, us);
       dbTotalSize = countSize(dbTotalSize, dbList);
       dbs2.put("mirror_d", dbList);
       dbs2.put("mirror_n", emptyList);

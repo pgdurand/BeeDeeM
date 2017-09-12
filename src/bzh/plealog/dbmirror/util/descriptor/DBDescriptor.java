@@ -127,16 +127,35 @@ public class DBDescriptor {
    * Current user is identified by his/her login name.
    * */
   public boolean isUserAuthorized(){
+	return isUserAuthorized(null);
+  }
+  /**
+   * Check whether of not current user can access this bank descriptor.
+   * Current user is identified by his/her login name.
+   * 
+   * @param userName check access for a specific users. Only available for
+   * administrator users. See ADMIN_USERS definition.
+   * */
+  public boolean isUserAuthorized(String userName){
 	if (ALL_USERS.equals(_users)){
 		return true;
 	}
 	String uname = System.getProperty("user.name");
 	// Admin users can view all DBs available
-	if (StringUtils.containsIgnoreCase(ADMIN_USERS, uname))
-		return true;
+	if (StringUtils.containsIgnoreCase(ADMIN_USERS, uname)){
+		if (userName==null || "?".equals(userName)){
+			//get all DBs
+			return true;
+		}
+		else{
+			// get DBs list for a particular user
+			return StringUtils.containsIgnoreCase(_users, userName);
+		}
 	// otherwise filter out DBs list by user credentials
-	else
+	}
+	else{
 		return StringUtils.containsIgnoreCase(_users, uname);
+	}
   }
   
   public long getSequences() {
