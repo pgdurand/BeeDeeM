@@ -39,7 +39,7 @@ for /F %%f in ('dir /b *.jar') do set FILES=!FILES!;%KL_APP_HOME%\\bin\\%%f
 
 rem *** Start application
 cd %CUR_DIR%
-"%KL_JAVA_VM%" %KL_JAVA_ARGS% -classpath "%FILES%" bzh.plealog.dbmirror.main.DumpBankList
+"%KL_JAVA_VM%" %KL_JAVA_ARGS% -classpath "%FILES%" bzh.plealog.dbmirror.main.DumpBankList %*
 
 rem *** do not leave immediately (to check potential cmd line messages coming from the application)
 pause
