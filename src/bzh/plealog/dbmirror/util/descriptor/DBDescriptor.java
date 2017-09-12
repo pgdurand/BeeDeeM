@@ -16,6 +16,8 @@
  */
 package bzh.plealog.dbmirror.util.descriptor;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * This class describes the properties of a database available for BLAST.
  * 
@@ -33,8 +35,12 @@ public class DBDescriptor {
   private long               _diskSize;
   private long               _blastSize;
 
+  // default accessibility of a DB: all users
   public static final String ALL_USERS = "*";
-
+  
+  // special users that can view all DBs whatever user restrictions
+  private static final String ADMIN_USERS = "root,galaxy";
+  
   public static enum TYPE {
     nucleic, proteic, dico, blastp, blastn
   };
@@ -116,6 +122,23 @@ public class DBDescriptor {
     this._users = users;
   }
 
+  /**
+   * Check whether of not current user can access this bank descriptor.
+   * Current user is identified by his/her login name.
+   * */
+  public boolean isUserAuthorized(){
+	if (ALL_USERS.equals(_users)){
+		return true;
+	}
+	String uname = System.getProperty("user.name");
+	// Admin users can view all DBs available
+	if (StringUtils.containsIgnoreCase(ADMIN_USERS, uname))
+		return true;
+	// otherwise filter out DBs list by user credentials
+	else
+		return StringUtils.containsIgnoreCase(_users, uname);
+  }
+  
   public long getSequences() {
     return _sequences;
   }

@@ -1,0 +1,15 @@
+# $bdminfo.config.name configuration file for Galaxy
+
+#set( $pTable = $bdminfo.databases2.mirror_p ) 
+#if( ${pTable.size()} != 0 )
+#foreach( $db in $pTable )
+$db.getName()	$db.getDescription() - $db.getTimeStamp()	$db.getDbPath().substring(0, $db.getDbPath().lastIndexOf("."))
+#end
+#end
+  
+#set( $nTable = $bdminfo.databases2.mirror_n ) 
+#if( ${nTable.size()} != 0 )
+#foreach( $db in $nTable )
+$db.getName()	$db.getDescription() - $db.getTimeStamp()	$db.getDbPath().substring(0, $db.getDbPath().lastIndexOf("."))
+#end
+#end

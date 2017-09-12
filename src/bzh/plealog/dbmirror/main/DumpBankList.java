@@ -53,13 +53,13 @@ import com.plealog.genericapp.api.log.EZLogger;
  * This is the class to use to report the list of installed banks. Accepted
  * arguments are: <br>
  * -d type of repository. One of: n, p, b, all. Default is: all.<br>
- * -f format. One of: txt, html. Default is: txt. <br>
+ * -f format. One of: txt, html, galaxy. Default is: txt. <br>
  * In addition, some parameters can be passed to the JVM for special
  * configuration purposes:<br>
  * -DKL_HOME=an_absolute_path ; the absolute path to the KDMS installation home
  * dir. If not set, use user.dir java property. -DKL_DEBUG=true ; if true, if
  * set, log will be in debug mode<br>
- * -DKL_WORKING_DIR=an_absolute_path ; if not set, log and working diretories
+ * -DKL_WORKING_DIR=an_absolute_path ; if not set, log and working directories
  * are set to java.io.tmp<br>
  * -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that name within
  * KL_WORKING_DIR<br>
@@ -112,7 +112,7 @@ public class DumpBankList {
     opts = new Options();
     opts.addOption(DB_ARG, true,
         "type of repository. One of: n, p, b, all. Default is: all.");
-    opts.addOption(FT_ARG, true, "format. One of: txt, html. Default is: txt.");
+    opts.addOption(FT_ARG, true, "format. One of: txt, html, galaxy. Default is: txt.");
     return opts;
   }
 
@@ -143,7 +143,9 @@ public class DumpBankList {
     for (IdxDescriptor descriptor : DBDescriptorUtils.getDBList(conf, type,
         true)) {
       try {
-        dbList.add(new DatabankDescriptor(descriptor));
+        if (descriptor.isUserAuthorized()){
+    	  dbList.add(new DatabankDescriptor(descriptor));
+        }
       } catch (Exception ex) {
         EZLogger.warn("Unable to read databank "
             + (descriptor != null ? descriptor.getName() : "") + " : "
