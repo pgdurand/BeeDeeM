@@ -20,15 +20,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.FileStore;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -129,37 +120,9 @@ public class UiInstaller {
     public void preStart() {
       // This method is called by the framework at the very beginning of
       // application startup.
-    	URI rootURI = null;
-		try {
-			rootURI = new URI("file:///");
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        Path rootPath = Paths.get(rootURI);
-        Path dirPath = rootPath.resolve("/home1/homedir4/perso/pgdurand/devel/BeeDeeM");
-    	//FileSystem fs = FileSystems.getFileSystem(dirPath.toUri());//.getDefault();
-    	FileSystem fs = FileSystems.getDefault();
-    	for (FileStore store : fs.getFileStores()) {
-    	      printDetails(store);
-    	}
     }
   }
 
-  public static void printDetails(FileStore store) {
-	    try {
-	      String desc = store.name();
-	      String type = store.type();
-	      long totalSpace = store.getTotalSpace();
-	      long unallocatedSpace = store.getUnallocatedSpace();
-	      long availableSpace = store.getUsableSpace();
-	      
-	      System.out.println(desc + " (" + type + "), Total: " + totalSpace + ",  Unallocated: "
-	          + unallocatedSpace + ",  Available: " + availableSpace);
-	    } catch (IOException e) {
-	      e.printStackTrace();
-	    }
-	  }
   /*
    * Show how to work with generic action (see ui.properties for the definition
    * of action FileOpen)
