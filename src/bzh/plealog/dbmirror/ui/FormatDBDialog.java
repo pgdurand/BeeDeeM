@@ -24,7 +24,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.text.MessageFormat;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -40,6 +39,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.text.JTextComponent;
+
+import com.plealog.genericapp.api.EZEnvironment;
 
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
 import bzh.plealog.dbmirror.reader.DBUtils;
@@ -57,8 +58,6 @@ import bzh.plealog.dbmirror.util.runner.FormatDBMonitor;
 import bzh.plealog.dbmirror.util.runner.FormatDBRunner;
 import bzh.plealog.dbmirror.util.runner.UniqueIDGenerator;
 import bzh.plealog.dbmirror.util.sequence.TaxonMatcherHelper;
-
-import com.plealog.genericapp.api.EZEnvironment;
 
 /**
  * This class displays a dialogue box embedding a FormatDBPanel and a FormatDB
@@ -328,7 +327,6 @@ public class FormatDBDialog extends JDialog {
       DBMirrorConfig mirrorConfig, newConfig;
       String reader;
       String dbPath;
-      Date now = new Date();
 
       mirrorConfig = DBDescriptorUtils.getDBMirrorConfig(DBMSAbstractConfig
           .getLocalMirrorConfFile());
@@ -336,7 +334,7 @@ public class FormatDBDialog extends JDialog {
       dbPath = getDBPath();
       // create the time stamp
       int totSeq = getTotalSequences();
-      DBMSAbstractConfig.writeDBStamp(dbPath, now, new int[] { -1,
+      DBMSAbstractConfig.writeDBStamp(dbPath, new int[] { -1,
           totSeq == 0 ? -1 : totSeq });
       dbPath = Utils.terminatePath(getDBPath()) + getDBName()
           + FormatDBRunner.BLAST_ALIAS_TAG;

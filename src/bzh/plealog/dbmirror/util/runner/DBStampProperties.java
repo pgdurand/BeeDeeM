@@ -17,9 +17,14 @@
 package bzh.plealog.dbmirror.util.runner;
 
 public interface DBStampProperties {
+  // DB time stamp as provided by data provider
+  public static final String RELEASE_TIME_STAMP   = "release.time.stamp";
+  // DB installation time stamp
   public static final String TIME_STAMP   = "time.stamp";
+  // nb of entries in Lucene index
   public static final String NB_ENTRIES   = "entries";
+  // nb sequences in blast bank
   public static final String NB_SEQUENCES = "sequences";
+  // total size of the bank (all files in all DB dir and its sub-dirs)
   public static final String DB_SIZE      = "size";
-
 }

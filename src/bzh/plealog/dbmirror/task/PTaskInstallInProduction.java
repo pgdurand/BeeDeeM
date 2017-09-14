@@ -23,7 +23,6 @@ import java.io.FilenameFilter;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -287,7 +286,6 @@ public class PTaskInstallInProduction extends PAbstractTask {
     DBMirrorConfig mirrorConfig;
     String dbPath, dbPathCur, dbPathDStamp, str, dbPathInstalled, dbPathDownload;
     File fCur;
-    Date now;
     int[] dbSizes;
 
     try {
@@ -298,7 +296,6 @@ public class PTaskInstallInProduction extends PAbstractTask {
         throw new Exception(
             "unable to install DBs into production: process aborted.");
       }
-      now = new Date();
       mirrorConfig = DBDescriptorUtils.getDBMirrorConfig(DBMSAbstractConfig
           .getLocalMirrorConfFile());
       if (mirrorConfig != null) {
@@ -352,7 +349,7 @@ public class PTaskInstallInProduction extends PAbstractTask {
         dbPathInstalled = Utils.terminatePath(dbPathCur) + db.getName();
 
         // create the time stamp
-        if (!DBMSAbstractConfig.writeDBStamp(dbPathDownload, now, dbSizes)) {
+        if (!DBMSAbstractConfig.writeDBStamp(dbPathDownload, dbSizes)) {
           throw new Exception("unable to write time stamp file");
         }
         // save the new installed mirror within the central configuration

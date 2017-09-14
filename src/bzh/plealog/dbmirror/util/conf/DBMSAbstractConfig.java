@@ -513,28 +513,30 @@ public class DBMSAbstractConfig {
    * 
    * @param dbPath
    *          the mirror path (parent of mirror current dir)
-   * @param now
-   *          today's date
    * @param entries
    *          an array of two integers: nb. of entries (Lucene index) and nb. of
    *          sequences (Blast formatdb)
    */
-  public static boolean writeDBStamp(String dbPath, Date now, int[] entries) {
-    FileOutputStream writer = null;
+  public static boolean writeDBStamp(String dbPath, int[] entries) {
+    File dbFile = new File(dbPath);
+	FileOutputStream writer = null;
     String fName;
     Properties props;
+    Date now = Calendar.getInstance().getTime();
+    SimpleDateFormat dFormatter = new SimpleDateFormat(
+            "yyyy-MM-dd, HH:mm");
     boolean bRet = false;
 
     fName = Utils.terminatePath(dbPath) + DBMSAbstractConfig.TIME_STAMP_FNAME;
     try {
       props = new Properties();
-      props.put(DBStampProperties.TIME_STAMP, new SimpleDateFormat(
-          "yyyy-MM-dd, HH:mm").format(now));
+      props.put(DBStampProperties.TIME_STAMP, dFormatter.format(now));
+      props.put(DBStampProperties.RELEASE_TIME_STAMP, dFormatter.format(Utils.getOldestFile(dbFile)));
       props.put(DBStampProperties.NB_ENTRIES, String.valueOf(entries[0]));
       props.put(DBStampProperties.NB_SEQUENCES, String.valueOf(entries[1]));
 
       props.put(DBStampProperties.DB_SIZE,
-          String.valueOf(FileUtils.sizeOfDirectory(new File(dbPath))));
+          String.valueOf(FileUtils.sizeOfDirectory(dbFile)));
       writer = new FileOutputStream(fName);
       props.store(writer, "");
       writer.flush();

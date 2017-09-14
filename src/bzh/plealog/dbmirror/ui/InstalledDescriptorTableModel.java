@@ -50,14 +50,15 @@ public class InstalledDescriptorTableModel extends AbstractTableModel {
   protected static final int       NBSEQS_HEADER      = 3;
   protected static final int       DBSIZE_HEADER      = 4;
   protected static final int       DATE_HEADER        = 5;
-  protected static final int       PERM_HEADER        = 6;
+  protected static final int       REL_DATE_HEADER    = 6;
+  protected static final int       PERM_HEADER        = 7;
 
   protected static final int[]     HEADERS_INT        = { ICON_HEADER,
       NAME_HEADER, DESCRIPTION_HEADER, NBSEQS_HEADER, DBSIZE_HEADER,
-      DATE_HEADER, PERM_HEADER                       };
+      DATE_HEADER, REL_DATE_HEADER, PERM_HEADER                       };
   protected static final String[]  HEADERS            = { " ", "  Name   ",
       "  Description   ", "  Size (entries)  ", "  Size on disk  ",
-      "  Update date   ", "  Permissions   "         };
+      "  Install date   ", "  Release date   ", "  Permissions   "         };
 
   private NumberFormat             numFormatter       = DecimalFormat
                                                           .getInstance();
@@ -153,6 +154,20 @@ public class InstalledDescriptorTableModel extends AbstractTableModel {
       return buf.toString();
   }
 
+  private String getReleaseDate(Properties props) {
+    StringBuffer buf;
+    String value;
+    buf = new StringBuffer();
+    value = props.getProperty(DBStampProperties.RELEASE_TIME_STAMP);
+    if (value != null) {
+      buf.append(value);
+    }
+    if (buf.length() == 0)
+      return MSG3;
+    else
+      return buf.toString();
+  }
+
   public Object getValueAt(int row, int col) {
     IdxDescriptor desc;
     Object val = null;
@@ -182,8 +197,11 @@ public class InstalledDescriptorTableModel extends AbstractTableModel {
         val = getSizeOnDisk(desc.getType(), props, desc);
         break;
       case DATE_HEADER:
-        val = getUpdateDate(props);
-        break;
+          val = getUpdateDate(props);
+          break;
+      case REL_DATE_HEADER:
+          val = getReleaseDate(props);
+          break;
       case PERM_HEADER:
         val = desc.getAuthorizedUsers();
         break;

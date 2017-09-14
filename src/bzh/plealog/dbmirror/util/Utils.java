@@ -33,6 +33,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -860,4 +861,23 @@ public class Utils {
       IOUtils.closeQuietly(writer);
     }
   }
+  
+  /**
+   * Return the oldest file of a directory. This method does not
+   * dig into sub-directories if any.
+   */
+  public static Date getOldestFile(File directory){
+    Date now = Calendar.getInstance().getTime();
+    Date oldest = now;
+    Iterator<File> files = FileUtils.iterateFiles(directory, null, false);
+
+    while(files.hasNext()){
+      File f = files.next();
+      if (FileUtils.isFileOlder(f, oldest)){
+        oldest = new Date(f.lastModified());
+      }
+    }
+    return oldest;
+  }
+  
 }

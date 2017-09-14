@@ -180,6 +180,9 @@ public class InstalledDescriptorTable extends JTable {
         } else if (header
             .equals(InstalledDescriptorTableModel.HEADERS[InstalledDescriptorTableModel.DATE_HEADER])) {
           val = 2 * fm.stringWidth(header) + 20;
+        } else if (header
+            .equals(InstalledDescriptorTableModel.HEADERS[InstalledDescriptorTableModel.REL_DATE_HEADER])) {
+          val = 2 * fm.stringWidth(header) + 20;
         } else {
           val = fm.stringWidth(header) + 20;
         }
