@@ -823,6 +823,7 @@ public class DBMSAbstractConfig {
     // mirror prepa directory path
     path = _configurator.getProperty(DBMSConfigurator.MIRROR_PREPA_PATH);
     if (StringUtils.isNotBlank(path)) {
+      path = DBMSExecNativeCommand.formatNativePath(path, false, false);
       localMirrorPrepaPath = Utils.terminatePath(path);
     }
 
