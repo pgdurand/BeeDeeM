@@ -278,16 +278,12 @@ public abstract class PIndexerTask extends PAbstractTask implements
       // something to do in inherited classes ?
       this.parsingDone();
     } catch (Exception ex) {
-      if (lss != null)
-        lss.close();
       _errMsg = " indexing of " + _src + " failed: " + ex;
       return false;
     } finally {
       try {
-        lss.close();
-      } catch (Exception e) {
-
-      }
+        if (lss != null){lss.close();}
+      } catch (Exception e) {}
     }
     return true;
   }
