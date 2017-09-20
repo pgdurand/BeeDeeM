@@ -1,7 +1,7 @@
 #PDB_proteins
-#Sun Jul 31 17:23:32 CEST 2016
+#Fri Sep 15 13:47:28 CEST 2017
 db.files.include=pdbaa.gz
-tasks.global.post=formatdb(lclid\=true;check\=true;nr\=true)
+tasks.global.post=delgz,formatdb(lclid\=true;check\=true;nr\=true)
 tasks.unit.post=gunzip,idxfas
 ftp.pswd=user@institute.org
 ftp.uname=anonymous
