@@ -31,6 +31,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
+import com.plealog.genericapp.api.file.EZFileFilter;
+
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
 import bzh.plealog.dbmirror.lucenedico.Dicos;
 import bzh.plealog.dbmirror.task.PTask;
@@ -715,5 +717,24 @@ public class DBDescriptorUtils {
       }
     }
     return false;
+  }
+  
+  /**
+   * Locate a Blast bank given a databank install path.
+   * 
+   * @param path path targeting databank installation location
+   * 
+   * @return the Blast bank alias name without its extension
+   * */
+  public static String getBlastBankAliasName(String dbPath){
+    String aliasName = null;
+    
+    Iterator<File> files = FileUtils.iterateFiles(new File(dbPath), 
+        new String[]{FormatDBRunner.PROTEIN_ALIAS, FormatDBRunner.NUCLEIC_ALIAS},  false);
+    
+    if (files.hasNext() == false)
+      return null;
+    aliasName =  EZFileFilter.getWithoutExtension(files.next());
+    return aliasName;
   }
 }

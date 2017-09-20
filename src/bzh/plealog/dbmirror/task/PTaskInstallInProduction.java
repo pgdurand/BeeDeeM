@@ -35,6 +35,7 @@ import bzh.plealog.dbmirror.fetcher.DBServerConfig;
 import bzh.plealog.dbmirror.indexer.LuceneUtils;
 import bzh.plealog.dbmirror.lucenedico.Dicos;
 import bzh.plealog.dbmirror.lucenedico.task.PTaskDicoIndexer;
+import bzh.plealog.dbmirror.util.BlastCmd;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.ant.PAntTasks;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -277,7 +278,13 @@ public class PTaskInstallInProduction extends PAbstractTask {
         }
       }
     }
-
+    if (sequences==-1 && entries==-1){
+      String aliasName = DBDescriptorUtils.getBlastBankAliasName(path);
+      if (aliasName!=null){
+        BlastCmd bc = new BlastCmd();
+        entries = sequences = bc.getNbSequences(aliasName);
+      }
+    }
     return new int[] { entries, sequences };
   }
 
