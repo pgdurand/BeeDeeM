@@ -27,6 +27,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ 
+  BlastCmdTest.class,
   CddParserTest.class, 
   DBXrefInstancesManagerTest.class, 
   DefaultLoaderMonitorTest.class,
