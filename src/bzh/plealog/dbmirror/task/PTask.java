@@ -43,7 +43,8 @@ public interface PTask {
   public static final String TASK_G_MAKEALIAS        = "makealias";
   public static final String TASK_G_NOTINSTALLINPROD = "noiip";
   public static final String TASK_G_NOG_PREPARE      = "eggnog";
-
+  public static final String TASK_G_RELDATE          = "reldate";
+  
   // special common arguments
   public static final String TAX_INCLUDE             = "taxinc";
   public static final String TAX_EXCLUDE             = "taxexc";

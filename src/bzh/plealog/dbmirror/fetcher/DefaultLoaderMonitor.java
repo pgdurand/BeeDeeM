@@ -42,6 +42,7 @@ import bzh.plealog.dbmirror.task.PTaskLuceneGBIndexer;
 import bzh.plealog.dbmirror.task.PTaskLuceneSWIndexer;
 import bzh.plealog.dbmirror.task.PTaskMakeBlastAlias;
 import bzh.plealog.dbmirror.task.PTaskPrepareEggNog;
+import bzh.plealog.dbmirror.task.PTaskReleaseDate;
 import bzh.plealog.dbmirror.task.PTaskUntar;
 import bzh.plealog.dbmirror.task.PTaskUntarTgz;
 import bzh.plealog.dbmirror.task.PTaskUnzip;
@@ -118,6 +119,7 @@ public class DefaultLoaderMonitor implements LoaderMonitor {
     StringTokenizer tokenizer;
     String str, tasks, task, dicoPath, aName;
 
+    // Then we manage user provided tasks if any
     tasks = _dbConf.getGlobalPostTasks();
     if (tasks == null)
       return;
@@ -217,6 +219,12 @@ public class DefaultLoaderMonitor implements LoaderMonitor {
     uTasks = _dbConf.getUnitPostTasks();
     gTasks = _dbConf.getGlobalPostTasks();
 
+    if (_fileCounter==0){
+      // We always get bank release date for all banks
+      _taskEngine.addTask(new PTaskReleaseDate(_dbConf.getLocalTmpFolder(), fName), _dbConf.getName());
+
+    }
+    
     // at the origin of the system, list of unit tasks where not tokenized
     // using a comma (,)
     // and we allowed the use of comma for tasks parameters. Later on, we

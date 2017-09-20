@@ -22,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
@@ -124,10 +123,8 @@ public class DBMSAbstractConfig {
   // file extension for bank nb. of sequences (formatdb only)
   public static final String             FDBEXT_NUM                   = "_fdb.num";
 
-  public static final String             TIME_STAMP_FNAME             = "time.txt";
-
   public static final String             KDMS_ROOTLOG_CATEGORY        = "dbms";
-
+  
   private static MyConfigurationListener CONF_LISTENER                = new MyConfigurationListener();
 
   /**
@@ -519,19 +516,18 @@ public class DBMSAbstractConfig {
    */
   public static boolean writeDBStamp(String dbPath, int[] entries) {
     File dbFile = new File(dbPath);
-	FileOutputStream writer = null;
+    FileOutputStream writer = null;
     String fName;
     Properties props;
     Date now = Calendar.getInstance().getTime();
-    SimpleDateFormat dFormatter = new SimpleDateFormat(
-            "yyyy-MM-dd, HH:mm");
+    
     boolean bRet = false;
 
-    fName = Utils.terminatePath(dbPath) + DBMSAbstractConfig.TIME_STAMP_FNAME;
+    fName = Utils.terminatePath(dbPath) + DBStampProperties.TIME_STAMP_FNAME;
     try {
       props = new Properties();
-      props.put(DBStampProperties.TIME_STAMP, dFormatter.format(now));
-      props.put(DBStampProperties.RELEASE_TIME_STAMP, dFormatter.format(Utils.getOldestFile(dbFile)));
+      props.put(DBStampProperties.TIME_STAMP, DBStampProperties.BANK_DATE_FORMATTER.format(now));
+      props.put(DBStampProperties.RELEASE_TIME_STAMP, DBStampProperties.readReleaseDate(dbPath));
       props.put(DBStampProperties.NB_ENTRIES, String.valueOf(entries[0]));
       props.put(DBStampProperties.NB_SEQUENCES, String.valueOf(entries[1]));
 
@@ -569,7 +565,7 @@ public class DBMSAbstractConfig {
     String fName;
 
     props = new Properties();
-    fName = Utils.terminatePath(dbPath) + DBMSAbstractConfig.TIME_STAMP_FNAME;
+    fName = Utils.terminatePath(dbPath) + DBStampProperties.TIME_STAMP_FNAME;
     try {
       reader = new FileInputStream(fName);
       props.load(reader);

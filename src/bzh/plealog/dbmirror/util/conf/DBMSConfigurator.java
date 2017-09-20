@@ -50,6 +50,7 @@ public class DBMSConfigurator {
   public static final String        LONG_FILE_NAME       = "long.file.name";
   public static final String        FDB_PRG_NAME         = "formater";
   public static final String        FDB_PATH_NAME        = "location";
+  public static final String        BCMD_PRG_NAME        = "blastcmd";
   public static final String        UI_SHOW_PATH         = "ui.showpath";
   public static final String        COPY_WORKERS         = "copy.workers";
   //unit is number of Gb

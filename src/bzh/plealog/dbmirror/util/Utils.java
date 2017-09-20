@@ -879,5 +879,7 @@ public class Utils {
     }
     return oldest;
   }
-  
+  public static Date getOldestFile(String directory){
+    return getOldestFile(new File(directory));
+  }
 }
