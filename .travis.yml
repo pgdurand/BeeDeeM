@@ -1,12 +1,23 @@
 language: java
+
+os:
+  - linux
+  - osx
+
 jdk:
   - oraclejdk8
+
+# BeeDeeM uses graphical layers from Java/Swing. So, to enable
+# GUI app to run on Travis CI, we have to add these lines:
+# (according to https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI)
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
+
 script:
   ant ut
+
 after_failure:
   if [ -f /home/travis/build/pgdurand/BeeDeeM/distrib/tests-result/TEST-test.unit.AllTests.txt ]; then cat /home/travis/build/pgdurand/BeeDeeM/distrib/tests-result/TEST-test.unit.AllTests.txt; fi
 
