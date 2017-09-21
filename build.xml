@@ -25,7 +25,8 @@
 	<property name="Dbin" value="${distrib}/bin" />
 	<property name="Dconf" value="${distrib}/conf" />
 	<property name="Dlib" value="${distrib}/lib" />
-	<property name="Ddoc" value="${distrib}/doc" />
+  <property name="Ddoc" value="${distrib}/doc" />
+  <property name="Dtr" value="${distrib}/tests-result" />
 	<property name="Dscripts" value="${distrib}/scripts" />
 	<property name="Dexternal" value="${distrib}/external" />
 
@@ -39,8 +40,8 @@
 	<property name="KLMirrorClass" value="${rootpkg}.CmdLineInstaller" />
 	<property name="KLUIMirrorClass" value="${rootpkg}.UiInstaller" />
 	<property name="KLQueryMirrorClass" value="${rootpkg}.CmdLineQuery" />
-  <property name="KLMirrorAnnot" value="${rootpkg}.Annotate" />
-  <property name="KLMirrorInfo" value="${rootpkg}DumpBankList" />
+	<property name="KLMirrorAnnot" value="${rootpkg}.Annotate" />
+	<property name="KLMirrorInfo" value="${rootpkg}.DumpBankList" />
 
 	<path id="class.path">
 		<pathelement path="${classpath}" />
@@ -62,8 +63,9 @@
 		<echo>This is the Ant's project file to manage BeeDeeM.</echo>
 		<echo />
 		<echo>Available targets are:</echo>
-    <echo>    makejar: compile and package beedem</echo>
-    <echo>    makedistrib: prepare the release zip file</echo>
+		<echo>        makejar: only compile and package beedem jar</echo>
+    <echo>    makedistrib: prepare the full release file</echo>
+    <echo>             ut: compile beedeem and run unit tests</echo>
 		<echo />
 	</target>
 	<target name="prepare">
@@ -74,13 +76,17 @@
 		<mkdir dir="${Dconf}" />
 		<mkdir dir="${Dlib}" />
 		<mkdir dir="${Dscripts}" />
-		<mkdir dir="${Ddoc}" />
+    <mkdir dir="${Ddoc}" />
 		<mkdir dir="${Dexternal}" />
 	</target>
+
 	<target name="makejar" depends="prepare">
 		<!-- Copy all necessary jar files (third party librairies) -->
 		<copy todir="${Dbin}">
-			<fileset dir="${jar}" />
+			<fileset dir="${jar}" >
+        <exclude name="hamcrest*" />
+        <exclude name="junit*" />
+      </fileset>
 		</copy>
 		<!-- Copy Configuration files -->
 		<copy todir="${Dconf}">
@@ -148,11 +154,11 @@
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorAnnot}" />
 			</filterset>
 		</copy>
-    <copy file="${scripts}/info.sh" todir="${Dscripts}">
-      <filterset>
-        <filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
-      </filterset>
-    </copy>
+		<copy file="${scripts}/info.sh" todir="${Dscripts}">
+			<filterset>
+				<filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
+			</filterset>
+		</copy>
 		<copy file="${scripts}/install.bat" todir="${Dscripts}">
 			<filterset>
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorClass}" />
@@ -173,18 +179,18 @@
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorAnnot}" />
 			</filterset>
 		</copy>
-    <copy file="${scripts}/info.bat" todir="${Dscripts}">
-      <filterset>
-        <filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
-      </filterset>
-    </copy>
+		<copy file="${scripts}/info.bat" todir="${Dscripts}">
+			<filterset>
+				<filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
+			</filterset>
+		</copy>
 
 		<!-- Copy the DBMS main config file -->
 		<copy file="${scripts}/dbms.config" todir="${Dscripts}" />
 		<!-- Copy license files-->
 		<copy file="${lbasedir}/LICENSE.txt" todir="${distrib}/license" />
 		<copy file="${lbasedir}/NOTICE.txt" todir="${distrib}/license" />
-		
+
 		<!-- remove useless data -->
 		<delete dir="${Dlib}" />
 		<delete dir="${Dsrc}" />
@@ -197,7 +203,7 @@
 		<delete dir="${Ddoc}" />
 		<delete dir="${Dscripts}" />
 		<delete dir="${distrib}/license" />
-		
+
 		<!-- Copy the DBMS Ant installer files -->
 		<copy file="${scripts}/config-std.properties" tofile="${distrib}/config.properties" />
 		<copy file="${scripts}/envDBMS" todir="${distrib}" />
@@ -218,4 +224,52 @@
 		<zip destfile="${distrib}/${prg.name}-${prg.version}-distrib.zip" basedir="${distrib}" />
 
 	</target>
+
+	<!-- ============================================================= -->
+	<target name="ut" depends="prepare">
+		<!-- Ant/JUnit doc: https://ant.apache.org/manual/Tasks/junit.html -->
+		<mkdir dir="${Dtr}" />
+		<!-- Copy all necessary jar files (third party librairies) -->
+		<copy todir="${Dbin}">
+			<fileset dir="${jar}">
+        <exclude name="ant*" />
+      </fileset>
+		</copy>
+		<!-- Copy Java source code files -->
+		<copy todir="${Dsrc}">
+			<fileset dir="${src}" />
+		</copy>
+		<!-- Compile source code ready for distribution-->
+		<javac srcdir="${Dsrc}" 
+             destdir="${Dlib}" 
+             classpathref="distribClass.path" 
+             debug="${compile.debug}" 
+             optimize="${compile.optimize}" 
+             deprecation="${compile.deprecation}">
+		</javac>
+		<!-- Copy resource files -->
+    <copy todir="${Dlib}">
+      <fileset dir="${src}">
+        <include name="**/*.png" />
+        <include name="**/*.dsc" />
+        <include name="**/*.config" />
+        <include name="**/*.properties" />
+        <include name="**/*.gif" />
+      </fileset>
+    </copy>
+		<!-- Start Test Suite -->
+	  <antcall target="ut2" />
+	</target>
+	
+	<target name="ut2">
+    <junit printsummary="yes" fork="yes" haltonfailure="yes">
+      <classpath>
+        <path refid="distribClass.path"/>
+      </classpath>
+      <formatter type="plain"/>
+      <test name="test.unit.AllTests" todir="${Dtr}"/>
+    </junit>
+		<echo>Test results are in: ${Dtr}</echo>
+ </target>
+
 </project>
