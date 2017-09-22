@@ -19,12 +19,10 @@ package bzh.plealog.dbmirror.util.conf;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Properties;
 
 import org.apache.commons.configuration.event.ConfigurationEvent;
 import org.apache.commons.configuration.event.ConfigurationListener;
@@ -48,7 +46,6 @@ import bzh.plealog.dbmirror.util.event.DBMirrorListener;
 import bzh.plealog.dbmirror.util.event.DBMirrorListenerSupport;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
 import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
-import bzh.plealog.dbmirror.util.runner.DBStampProperties;
 
 /**
  * This class contains the application configuration.
@@ -503,82 +500,6 @@ public class DBMSAbstractConfig {
   public static void addLogAppender(Appender app) {
     Category cat = Logger.getInstance(KDMS_ROOTLOG_CATEGORY);
     cat.addAppender(app);
-  }
-
-  /**
-   * Writes a time stamp that identifies when a mirror has been installed.
-   * 
-   * @param dbPath
-   *          the mirror path (parent of mirror current dir)
-   * @param entries
-   *          an array of two integers: nb. of entries (Lucene index) and nb. of
-   *          sequences (Blast formatdb)
-   */
-  public static boolean writeDBStamp(String dbPath, int[] entries) {
-    File dbFile = new File(dbPath);
-    FileOutputStream writer = null;
-    String fName;
-    Properties props;
-    Date now = Calendar.getInstance().getTime();
-    
-    boolean bRet = false;
-
-    fName = Utils.terminatePath(dbPath) + DBStampProperties.TIME_STAMP_FNAME;
-    try {
-      props = new Properties();
-      props.put(DBStampProperties.TIME_STAMP, DBStampProperties.BANK_DATE_FORMATTER.format(now));
-      props.put(DBStampProperties.RELEASE_TIME_STAMP, DBStampProperties.readReleaseDate(dbPath));
-      props.put(DBStampProperties.NB_ENTRIES, String.valueOf(entries[0]));
-      props.put(DBStampProperties.NB_SEQUENCES, String.valueOf(entries[1]));
-
-      props.put(DBStampProperties.DB_SIZE,
-          String.valueOf(FileUtils.sizeOfDirectory(dbFile)));
-      writer = new FileOutputStream(fName);
-      props.store(writer, "");
-      writer.flush();
-      bRet = true;
-    } catch (Exception e1) {
-      LOGGER.warn(e1);
-    } finally {
-      if (writer != null) {
-        try {
-          writer.close();
-        } catch (IOException e) {
-        }
-      }
-    }
-    return bRet;
-  }
-
-  /**
-   * Reads a time stamp.
-   * 
-   * @param dbPath
-   *          the mirror path (parent of mirror current dir)
-   * 
-   * @return a string or null. Use DBStampProperties.TIME_STAMP_FORMATTER to
-   *         decode the time stamp into a Date object.
-   * */
-  public static Properties readDBStamp(String dbPath) {
-    FileInputStream reader = null;
-    Properties props;
-    String fName;
-
-    props = new Properties();
-    fName = Utils.terminatePath(dbPath) + DBStampProperties.TIME_STAMP_FNAME;
-    try {
-      reader = new FileInputStream(fName);
-      props.load(reader);
-    } catch (Exception e1) {
-    } finally {
-      if (reader != null) {
-        try {
-          reader.close();
-        } catch (IOException e) {
-        }
-      }
-    }
-    return props;
   }
 
   /**

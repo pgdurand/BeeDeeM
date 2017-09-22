@@ -43,6 +43,7 @@ import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
 import bzh.plealog.dbmirror.util.descriptor.IdxDescriptor;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
+import bzh.plealog.dbmirror.util.runner.DBStampProperties;
 import bzh.plealog.dbmirror.util.runner.FormatDBRunner;
 
 /**
@@ -356,7 +357,7 @@ public class PTaskInstallInProduction extends PAbstractTask {
         dbPathInstalled = Utils.terminatePath(dbPathCur) + db.getName();
 
         // create the time stamp
-        if (!DBMSAbstractConfig.writeDBStamp(dbPathDownload, dbSizes)) {
+        if (!DBStampProperties.writeDBStamp(dbPathDownload, dbSizes)) {
           throw new Exception("unable to write time stamp file");
         }
         // save the new installed mirror within the central configuration

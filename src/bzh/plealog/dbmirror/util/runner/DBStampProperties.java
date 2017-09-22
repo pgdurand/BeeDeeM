@@ -16,15 +16,22 @@
  */
 package bzh.plealog.dbmirror.util.runner;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
-import bzh.plealog.dbmirror.util.Utils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-public interface DBStampProperties {
+import bzh.plealog.dbmirror.util.Utils;
+import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+
+public class DBStampProperties {
 
   // File used to store release bank date as provided by the data provider
   public static final String           RELDATE_FNAME       = "release-date.txt";
@@ -45,6 +52,10 @@ public interface DBStampProperties {
   // Date formatter
   public static final SimpleDateFormat BANK_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd, HH:mm");
 
+  private static final Log             LOGGER              = LogFactory
+      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+          + ".DBStampProperties");
+
   /**
    * Save a bank release date within an appropriate file.
    * 
@@ -59,6 +70,7 @@ public interface DBStampProperties {
       props.store(writer, "");
       writer.flush();
     } catch (Exception e1) {
+      LOGGER.warn(e1);
       return false;
     }
     return true;
@@ -81,7 +93,67 @@ public interface DBStampProperties {
       d = props.getProperty(RELEASE_TIME_STAMP);
     }
     catch(Exception ex){
+      LOGGER.warn(ex);
     }
     return d;
   }
+  
+  /**
+   * Writes a time stamp that identifies when a mirror has been installed.
+   * 
+   * @param dbPath
+   *          the mirror path (parent of mirror current dir)
+   * @param entries
+   *          an array of two integers: nb. of entries (Lucene index) and nb. of
+   *          sequences (Blast formatdb)
+   */
+  public static boolean writeDBStamp(String dbPath, int[] entries) {
+    File dbFile = new File(dbPath);
+    String fName;
+    Properties props;
+    Date now = Calendar.getInstance().getTime();
+    
+    boolean bRet = false;
+
+    fName = Utils.terminatePath(dbPath) + DBStampProperties.TIME_STAMP_FNAME;
+    try (FileOutputStream writer = new FileOutputStream(fName)) {
+      props = new Properties();
+      props.put(DBStampProperties.TIME_STAMP, DBStampProperties.BANK_DATE_FORMATTER.format(now));
+      props.put(DBStampProperties.RELEASE_TIME_STAMP, DBStampProperties.readReleaseDate(dbPath));
+      props.put(DBStampProperties.NB_ENTRIES, String.valueOf(entries[0]));
+      props.put(DBStampProperties.NB_SEQUENCES, String.valueOf(entries[1]));
+
+      props.put(DBStampProperties.DB_SIZE,
+          String.valueOf(FileUtils.sizeOfDirectory(dbFile)));
+      props.store(writer, "");
+      writer.flush();
+      bRet = true;
+    } catch (Exception e1) {
+      LOGGER.warn(e1);
+    }
+    return bRet;
+  }
+
+  /**
+   * Reads a time stamp.
+   * 
+   * @param dbPath
+   *          the mirror path (parent of mirror current dir)
+   * 
+   * @return a Properties instance.
+   * */
+  public static Properties readDBStamp(String dbPath) {
+    Properties props;
+    String fName;
+
+    props = new Properties();
+    fName = Utils.terminatePath(dbPath) + DBStampProperties.TIME_STAMP_FNAME;
+    try (FileInputStream reader = new FileInputStream(fName)) {
+      props.load(reader);
+    } catch (Exception e1) {
+      LOGGER.warn(e1);
+    }
+    return props;
+  }
+
 }

@@ -25,14 +25,13 @@ import java.util.Properties;
 import javax.swing.ImageIcon;
 import javax.swing.table.AbstractTableModel;
 
+import com.plealog.genericapp.api.EZEnvironment;
+
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.Utils;
-import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptor;
 import bzh.plealog.dbmirror.util.descriptor.IdxDescriptor;
 import bzh.plealog.dbmirror.util.runner.DBStampProperties;
-
-import com.plealog.genericapp.api.EZEnvironment;
 
 /**
  * This is the TableModel that must be used with InstalledDescriptorTable.
@@ -179,7 +178,7 @@ public class InstalledDescriptorTableModel extends AbstractTableModel {
       return desc;
     path = desc.getCode();
     // todo: optimize this code since we access the file at rendering time
-    props = DBMSAbstractConfig.readDBStamp(new File(path).getParent());
+    props = DBStampProperties.readDBStamp(new File(path).getParent());
     switch (HEADERS_INT[col]) {
       case ICON_HEADER:
         val = "-";

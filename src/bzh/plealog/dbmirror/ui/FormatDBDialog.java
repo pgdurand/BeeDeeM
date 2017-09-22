@@ -54,6 +54,7 @@ import bzh.plealog.dbmirror.util.descriptor.IdxDescriptor;
 import bzh.plealog.dbmirror.util.event.DBMirrorEvent;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
 import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
+import bzh.plealog.dbmirror.util.runner.DBStampProperties;
 import bzh.plealog.dbmirror.util.runner.FormatDBMonitor;
 import bzh.plealog.dbmirror.util.runner.FormatDBRunner;
 import bzh.plealog.dbmirror.util.runner.UniqueIDGenerator;
@@ -334,7 +335,7 @@ public class FormatDBDialog extends JDialog {
       dbPath = getDBPath();
       // create the time stamp
       int totSeq = getTotalSequences();
-      DBMSAbstractConfig.writeDBStamp(dbPath, new int[] { -1,
+      DBStampProperties.writeDBStamp(dbPath, new int[] { -1,
           totSeq == 0 ? -1 : totSeq });
       dbPath = Utils.terminatePath(getDBPath()) + getDBName()
           + FormatDBRunner.BLAST_ALIAS_TAG;

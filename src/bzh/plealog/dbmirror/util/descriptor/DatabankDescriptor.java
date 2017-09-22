@@ -26,7 +26,6 @@ import java.util.Properties;
 import org.apache.commons.io.FileUtils;
 
 import bzh.plealog.dbmirror.util.Utils;
-import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptor.TYPE;
 import bzh.plealog.dbmirror.util.runner.DBStampProperties;
 
@@ -66,7 +65,7 @@ public class DatabankDescriptor implements Serializable {
       _type = "D";
 
     String directory = new File(_dbPath).getParent();
-    Properties props = DBMSAbstractConfig.readDBStamp(directory);
+    Properties props = DBStampProperties.readDBStamp(directory);
 
     _timeStamp = props.getProperty(DBStampProperties.TIME_STAMP);
     

@@ -217,7 +217,7 @@ public class DBMirrorConfig {
         value = _dbMirrorConfig.getProperty(dbKey + SEQS);
         if (value == null) {
           try {
-            Properties props = DBMSAbstractConfig.readDBStamp(dbPath);
+            Properties props = DBStampProperties.readDBStamp(dbPath);
             value = props.getProperty(DBStampProperties.NB_SEQUENCES);
           } catch (Exception e) {
             value = "0";
@@ -504,7 +504,7 @@ public class DBMirrorConfig {
       // compatibility issue: SEQS was introduced for KDMS 4.4.1
       if (StringUtils.isBlank(sValue)) {
         String dbPath = new File(getMirrorPath(dbKey)).getParent();
-        Properties props = DBMSAbstractConfig.readDBStamp(dbPath);
+        Properties props = DBStampProperties.readDBStamp(dbPath);
         lValue = Long
             .valueOf(props.getProperty(DBStampProperties.NB_SEQUENCES));
       } else {

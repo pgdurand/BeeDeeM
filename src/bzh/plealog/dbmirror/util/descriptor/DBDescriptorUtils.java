@@ -349,7 +349,7 @@ public class DBDescriptorUtils {
     }
 
     try {
-      Properties props = DBMSAbstractConfig.readDBStamp(dbDownloadPath);
+      Properties props = DBStampProperties.readDBStamp(dbDownloadPath);
       sequences = Long.valueOf(props
           .getProperty(DBStampProperties.NB_SEQUENCES));
     } catch (Exception e) {

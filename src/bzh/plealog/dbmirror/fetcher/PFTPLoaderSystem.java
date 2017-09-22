@@ -19,6 +19,7 @@ package bzh.plealog.dbmirror.fetcher;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +35,7 @@ import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.ant.PAntTasks;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
+import bzh.plealog.dbmirror.util.runner.DBStampProperties;
 
 /**
  * This class is the central system responsible for downloading sets of files
@@ -267,63 +269,83 @@ public class PFTPLoaderSystem {
                 // just dump the list of files to retrieve
                 // already done by FTPLoader task, so does nothing here
               } else {
-                // download and process the DB
-                LoggerCentral.info(LOGGER, "Loading db files.");
-                if (_userMonitor != null) {
-                  _userMonitor.startProcessing(dbConf.getName());
+                // Control release date: remote vs. local
+                boolean updateBank=true;
+                
+                //date of bank currently installed
+                String dbPathCur = Paths.get(DBMSAbstractConfig.getLocalMirrorPath(),
+                        dbConf.getTypeCode(), dbConf.getName(), 
+                        DBMSAbstractConfig.CURRENT_DIR, dbConf.getName()).toString();
+                // cuation: first time bank installation, dbPathCur does not exist
+                if (new File(dbPathCur).exists()){
+                  String curDate = DBStampProperties.readReleaseDate(dbPathCur);            
+                  String newDate = DBStampProperties.BANK_DATE_FORMATTER.format(
+                      validNames.get(0).getFtpFile().getTimestamp().getTime());
+                  updateBank = !curDate.equalsIgnoreCase(newDate);
                 }
+                //do we have to install naw release of bank?
+                if (!updateBank){
+                  LoggerCentral.info(LOGGER, "BANK IS UP TO DATE: nothing to do.");
+                }
+                else{
+                  // download and process the DB
+                  LoggerCentral.info(LOGGER, "Loading db files.");
+                  if (_userMonitor != null) {
+                    _userMonitor.startProcessing(dbConf.getName());
+                  }
 
-                processedDB.add(dbConf);
+                  processedDB.add(dbConf);
 
-                if (!resume) {
-                  str = dbConf.getLocalFolder()
-                      + DBMSAbstractConfig.DOWNLOADING_DIR;
-                  if (new File(str).exists()) {
-                    if (!PAntTasks.deleteDirectory(str)) {
-                      LoggerCentral.error(LOGGER,
-                          "unable to delete old index: " + str);
+                  if (!resume) {
+                    str = dbConf.getLocalFolder()
+                        + DBMSAbstractConfig.DOWNLOADING_DIR;
+                    if (new File(str).exists()) {
+                      if (!PAntTasks.deleteDirectory(str)) {
+                        LoggerCentral.error(LOGGER,
+                            "unable to delete old index: " + str);
+                      }
                     }
                   }
-                }
 
-                if (isFTP) {
-                  monitor = new DefaultLoaderMonitor(_taskEngine, dbConf,
-                      validNames.size());
-                  loaderEngine = new PFTPLoaderEngine(dbConf, monitor,
-                      validNames);
-                  ((PFTPLoaderEngine) loaderEngine)
-                      .setUserProcessingMonitor(_userMonitor);
-                  ((PFTPLoaderEngine) loaderEngine).setScheduleTime(ftpDelay);
-                  ((PFTPLoaderEngine) loaderEngine).setRetry(ftpRetry);
-                } else {
-                  String destPath = dbConf.getLocalTmpFolder();
-                  monitor = new DefaultLoaderMonitor(_taskEngine, dbConf,
-                      validNamesFile.size());
-                  loaderEngine = new PLocalLoaderEngine(dbConf, validNamesFile,
-                      destPath, monitor);
-                  ((PLocalLoaderEngine) loaderEngine)
-                      .setUserProcessingMonitor(_userMonitor);
-                }
-
-                loaderEngine.start();
-
-                try {
-                  loaderEngine.join();
-                } catch (InterruptedException e) {
-                  LoggerCentral.error(LOGGER,
-                      "Unexpected thread interruption while processing db: "
-                          + dbNames[i]);
-                }
-
-                if (isFTP) {
-                  if (_userMonitor != null) {
-                    _userMonitor.processingMessage(WORKER_ID, dbConf.getName(),
-                        UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
-                        UserProcessingMonitor.MSG_TYPE.OK,
-                        "file transfer processing done");
+                  if (isFTP) {
+                    monitor = new DefaultLoaderMonitor(_taskEngine, dbConf,
+                        validNames.size());
+                    loaderEngine = new PFTPLoaderEngine(dbConf, monitor,
+                        validNames);
+                    ((PFTPLoaderEngine) loaderEngine)
+                        .setUserProcessingMonitor(_userMonitor);
+                    ((PFTPLoaderEngine) loaderEngine).setScheduleTime(ftpDelay);
+                    ((PFTPLoaderEngine) loaderEngine).setRetry(ftpRetry);
+                  } else {
+                    String destPath = dbConf.getLocalTmpFolder();
+                    monitor = new DefaultLoaderMonitor(_taskEngine, dbConf,
+                        validNamesFile.size());
+                    loaderEngine = new PLocalLoaderEngine(dbConf, validNamesFile,
+                        destPath, monitor);
+                    ((PLocalLoaderEngine) loaderEngine)
+                        .setUserProcessingMonitor(_userMonitor);
                   }
-                } else {
-                  // copie ok
+
+                  loaderEngine.start();
+
+                  try {
+                    loaderEngine.join();
+                  } catch (InterruptedException e) {
+                    LoggerCentral.error(LOGGER,
+                        "Unexpected thread interruption while processing db: "
+                            + dbNames[i]);
+                  }
+
+                  if (isFTP) {
+                    if (_userMonitor != null) {
+                      _userMonitor.processingMessage(WORKER_ID, dbConf.getName(),
+                          UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
+                          UserProcessingMonitor.MSG_TYPE.OK,
+                          "file transfer processing done");
+                    }
+                  } else {
+                    // copie ok
+                  }
                 }
               }
             }
