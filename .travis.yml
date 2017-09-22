@@ -4,9 +4,6 @@ os:
   - linux
   - osx
 
-#before_install:
-#  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then jdk_switcher use oraclejdk8; fi
-
 jdk:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then oraclejdk8; fi
 
