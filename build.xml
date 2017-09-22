@@ -243,9 +243,9 @@
 		<javac srcdir="${Dsrc}" 
              destdir="${Dlib}" 
              classpathref="distribClass.path" 
-             debug="${compile.debug}" 
-             optimize="${compile.optimize}" 
-             deprecation="${compile.deprecation}">
+             debug="on" 
+             optimize="off" 
+             deprecation="off">
 		</javac>
 		<!-- Copy resource files -->
     <copy todir="${Dlib}">
