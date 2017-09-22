@@ -25,8 +25,8 @@
 	<property name="Dbin" value="${distrib}/bin" />
 	<property name="Dconf" value="${distrib}/conf" />
 	<property name="Dlib" value="${distrib}/lib" />
-  <property name="Ddoc" value="${distrib}/doc" />
-  <property name="Dtr" value="${distrib}/tests-result" />
+	<property name="Ddoc" value="${distrib}/doc" />
+	<property name="Dtr" value="${distrib}/tests-result" />
 	<property name="Dscripts" value="${distrib}/scripts" />
 	<property name="Dexternal" value="${distrib}/external" />
 
@@ -64,11 +64,41 @@
 		<echo />
 		<echo>Available targets are:</echo>
 		<echo>        makejar: only compile and package beedem jar</echo>
-    <echo>    makedistrib: prepare the full release file</echo>
-    <echo>             ut: compile beedeem and run unit tests</echo>
+		<echo>    makedistrib: prepare the full release file</echo>
+		<echo>             ut: compile beedeem and run unit tests</echo>
 		<echo />
 	</target>
-	<target name="prepare">
+	
+  <!-- ============================================================= -->
+  <!-- check Ant and Java version                                    -->
+  <target name="checkversion">
+    <echo>Current Ant version is: ${ant.version}</echo>
+    <fail message="***   Ant 1.9.1+ required   ***">
+      <!-- ant 1.9.1 introduced unless directive used in this script-->
+      <condition>
+        <not>
+          <antversion atleast="1.9.1" />
+        </not>
+      </condition>
+    </fail>
+    <echo>  ok</echo>
+    <echo>Current Java version is: ${ant.java.version}</echo>
+    <fail message="***   Oracle Java SDK 1.8+ not found   ***">
+      <condition>
+        <not>
+          <or>
+            <equals arg1="1.8" arg2="${ant.java.version}" />
+            <equals arg1="1.9" arg2="${ant.java.version}" />
+          </or>
+        </not>
+      </condition>
+    </fail>
+    <echo>  ok</echo>
+  </target>
+
+	<!-- ============================================================= -->
+	<!-- Prepare directory structure used to compile and package sof   -->
+	<target name="prepare" depends="checkversion">
 		<!-- Prepare the distrib directory tree -->
 		<delete dir="${distrib}" />
 		<mkdir dir="${Dsrc}" />
@@ -76,17 +106,19 @@
 		<mkdir dir="${Dconf}" />
 		<mkdir dir="${Dlib}" />
 		<mkdir dir="${Dscripts}" />
-    <mkdir dir="${Ddoc}" />
+		<mkdir dir="${Ddoc}" />
 		<mkdir dir="${Dexternal}" />
 	</target>
 
+  <!-- ============================================================= -->
+  <!-- Compile code and make software Jar                            -->
 	<target name="makejar" depends="prepare">
 		<!-- Copy all necessary jar files (third party librairies) -->
 		<copy todir="${Dbin}">
 			<fileset dir="${jar}" >
-        <exclude name="hamcrest*" />
-        <exclude name="junit*" />
-      </fileset>
+				<exclude name="hamcrest*" />
+				<exclude name="junit*" />
+			</fileset>
 		</copy>
 		<!-- Copy Configuration files -->
 		<copy todir="${Dconf}">
@@ -132,6 +164,7 @@
 	</target>
 
 	<!-- ============================================================= -->
+  <!-- Compile code and make software dustribution package           -->
 	<target name="makedistrib" depends="makejar">
 		<!-- Copy the DBMS scripts for Mac, Linux and Windows -->
 		<copy file="${scripts}/install.sh" todir="${Dscripts}">
@@ -226,14 +259,15 @@
 	</target>
 
 	<!-- ============================================================= -->
+	<!-- Compile code and run Unit Tests                               -->
 	<target name="ut" depends="prepare">
 		<!-- Ant/JUnit doc: https://ant.apache.org/manual/Tasks/junit.html -->
 		<mkdir dir="${Dtr}" />
 		<!-- Copy all necessary jar files (third party librairies) -->
 		<copy todir="${Dbin}">
 			<fileset dir="${jar}">
-        <exclude name="ant*" />
-      </fileset>
+				<exclude name="ant*" />
+			</fileset>
 		</copy>
 		<!-- Copy Java source code files -->
 		<copy todir="${Dsrc}">
@@ -248,28 +282,28 @@
              deprecation="off">
 		</javac>
 		<!-- Copy resource files -->
-    <copy todir="${Dlib}">
-      <fileset dir="${src}">
-        <include name="**/*.png" />
-        <include name="**/*.dsc" />
-        <include name="**/*.config" />
-        <include name="**/*.properties" />
-        <include name="**/*.gif" />
-      </fileset>
-    </copy>
+		<copy todir="${Dlib}">
+			<fileset dir="${src}">
+				<include name="**/*.png" />
+				<include name="**/*.dsc" />
+				<include name="**/*.config" />
+				<include name="**/*.properties" />
+				<include name="**/*.gif" />
+			</fileset>
+		</copy>
 		<!-- Start Test Suite -->
-	  <antcall target="ut2" />
+		<antcall target="ut2" />
 	</target>
-	
+
 	<target name="ut2">
-    <junit printsummary="yes" fork="yes" haltonfailure="yes">
-      <classpath>
-        <path refid="distribClass.path"/>
-      </classpath>
-      <formatter type="plain"/>
-      <test name="test.unit.AllTests" todir="${Dtr}"/>
-    </junit>
+		<junit printsummary="yes" fork="yes" haltonfailure="yes">
+			<classpath>
+				<path refid="distribClass.path"/>
+			</classpath>
+			<formatter type="plain"/>
+			<test name="test.unit.AllTests" todir="${Dtr}"/>
+		</junit>
 		<echo>Test results are in: ${Dtr}</echo>
- </target>
+	</target>
 
 </project>
