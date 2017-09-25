@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -276,11 +277,13 @@ public class PFTPLoaderSystem {
                 String dbPathCur = Paths.get(DBMSAbstractConfig.getLocalMirrorPath(),
                         dbConf.getTypeCode(), dbConf.getName(), 
                         DBMSAbstractConfig.CURRENT_DIR, dbConf.getName()).toString();
-                // cuation: first time bank installation, dbPathCur does not exist
+                // caution: first time bank installation, dbPathCur does not exist
                 if (new File(dbPathCur).exists()){
                   String curDate = DBStampProperties.readReleaseDate(dbPathCur);            
                   String newDate = DBStampProperties.BANK_DATE_FORMATTER.format(
-                      validNames.get(0).getFtpFile().getTimestamp().getTime());
+                      (validNames==null||validNames.isEmpty()) ? 
+                          Calendar.getInstance().getTime() :
+                          validNames.get(0).getFtpFile().getTimestamp().getTime());
                   updateBank = !curDate.equalsIgnoreCase(newDate);
                 }
                 //do we have to install naw release of bank?
