@@ -1,0 +1,18 @@
+<tool id="beedeem_info" name="Personal BLAST databases" version="@PRG_VERSION@">
+    <!-- This is a wrapper for Galaxy Workflow system. It aims at displaying
+         list of available banks (managed with BeeDeem) for some tools, e.g.
+         BLAST.
+     -->
+    <description>get my BLAST databases list</description>
+    <requirements>
+        <requirement type="package" version="@PRG_VERSION@">beedeem</requirement>
+    </requirements>
+    <command><![CDATA[ 
+	info.sh -f galaxy -d n >& $my_blastn_db;
+        info.sh -f galaxy -d p >& $my_blastp_db
+    ]]></command>
+    <outputs>
+        <data format="beedeemn" name="my_blastn_db" label="My nucleotide BLAST databases" />
+        <data format="beedeemp" name="my_blastp_db" label="My protein BLAST databases" />
+    </outputs>
+</tool>

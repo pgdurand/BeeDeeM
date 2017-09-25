@@ -133,6 +133,10 @@
 		<copy todir="${Dexternal}">
 			<fileset dir="${external}" />
 		</copy>
+    <!-- Copy documentation files -->
+    <copy todir="${Ddoc}">
+      <fileset dir="${doc}" />
+    </copy>
 		<!-- Copy Java source code files -->
 		<copy todir="${Dsrc}">
 			<fileset dir="${src}">
@@ -219,6 +223,12 @@
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
 			</filterset>
 		</copy>
+		<!-- Galaxy wrapper to list available DBs -->
+    <copy file="${scripts}/beedeem_info.xml" todir="${Dconf}/system">
+      <filterset>
+        <filter token="PRG_VERSION" value="${prg.version}" />
+      </filterset>
+    </copy>
 
 		<!-- Copy the DBMS main config file -->
 		<copy file="${scripts}/dbms.config" todir="${Dscripts}" />
