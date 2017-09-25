@@ -123,7 +123,9 @@
 		<!-- Copy Configuration files -->
 		<copy todir="${Dconf}">
 			<fileset dir="${conf}">
-				<exclude name="dbms.config" />
+        <exclude name="*.bak" />
+        <exclude name="ifremer*.*" />
+        <exclude name="dbms.config" />
 				<exclude name="dbms_test.config" />
 			</fileset>
 		</copy>
