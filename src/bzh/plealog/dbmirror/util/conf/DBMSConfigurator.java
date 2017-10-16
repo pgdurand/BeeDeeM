@@ -63,6 +63,10 @@ public class DBMSConfigurator {
   public static final String        LUCENE_FS            = "lucene.fs";
   public static final String        LUCENE_LOCK          = "lucene.lock";
 
+  public static final String        ASPERA_KEY           = "aspera.key";
+  public static final String        ASPERA_PATH          = "aspera.bin.path";
+  public static final String        ASPERA_BIN           = "aspera.bin.name";
+
   public static enum LUCENE_FS_VALUES {FS_DEFAULT, FS_NIO, FS_SIMPLE};
   public static enum LUCENE_LK_VALUES {LK_DEFAULT, LK_NATIVE, LK_SIMPLE};
   
@@ -72,7 +76,7 @@ public class DBMSConfigurator {
 
   private static final String[] KEYS ={MIRROR_PATH, MIRROR_PREPA_PATH, MIRROR_FILE,
 		  LONG_FILE_NAME, FDB_PRG_NAME, FDB_PATH_NAME, UI_SHOW_PATH, COPY_WORKERS,
-		  FASTA_VOLSIZE, LUCENE_FS, LUCENE_LOCK};
+		  FASTA_VOLSIZE, LUCENE_FS, LUCENE_LOCK, ASPERA_KEY, ASPERA_PATH, ASPERA_BIN};
   
   public static String              TMP_FILTER_DIRECTORY = Utils
                                                              .terminatePath(DBMSAbstractConfig
