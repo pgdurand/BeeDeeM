@@ -258,7 +258,7 @@ public class PLocalLoader {
   public int copyFiles(List<File> files, String destDir, LoaderMonitor monitor) {
     InputStream input = null;
     OutputStream output = null;
-    String fName = null;
+    String fName = null, msg;
     int result = 0;
     File destPath = new File(destDir);
     int fileNum, nFiles;
@@ -279,49 +279,46 @@ public class PLocalLoader {
         fileNum++;
         fName = file.getName();
 
-        if (monitor != null)
+        if (monitor != null){
           monitor.beginLoading(fName);
-
+        }
+        
+        msg = "Copying file " + fileNum + "/" + nFiles + ": " + fName;
+        LoggerCentral.info(LOGGER, WORKER_ID + ": " + msg);
+        
         if (_userMonitor != null) {
           _userMonitor.processingMessage(WORKER_ID, fName,
               UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
-              UserProcessingMonitor.MSG_TYPE.OK, "Copying file " + fileNum
-                  + "/" + nFiles + ": " + fName);
+              UserProcessingMonitor.MSG_TYPE.OK, msg);
         }
-        if (file.canRead()) {
-
+        
+        // does not copy file if already done
+        File dFile = new File(destDir + file.getName());
+        if (dFile.exists() && dFile.length()==file.length()){
+          msg = "Skip already copyied file: " + fName;
+        }
+        else{
           input = new FileInputStream(file);
           output = new FileOutputStream(destDir + file.getName());
-
-        } else {
-          LoggerCentral.error(LOGGER, "Cannot copy file: " + fName);
-          if (monitor != null)
-            monitor.doneLoading(fName, LoaderMonitor.STATUS_FAILURE);
-          if (_userMonitor != null) {
-            _userMonitor.processingMessage(WORKER_ID, fName,
-                UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
-                UserProcessingMonitor.MSG_TYPE.ERROR, "Cannot copy file: "
-                    + fName);
-          }
-        }
-
-        if (output != null && input != null) {
           fSize = file.length();
           Util.copyStream(input, output, Util.DEFAULT_COPY_BUFFER_SIZE, fSize,
               new MyCopyStreamListener(WORKER_ID, _userMonitor, file.getName(),
                   file.getName(), fSize));
-          if (monitor != null) {
-            monitor.doneLoading(fName, LoaderMonitor.STATUS_OK);
-          }
-          if (_userMonitor != null) {
-            _userMonitor
-                .processingMessage(WORKER_ID, fName,
-                    UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
-                    UserProcessingMonitor.MSG_TYPE.OK, "Done coying file: "
-                        + fName);
-          }
-          result = 1;
+          msg = "Done coying file: " + fName;
         }
+        
+        LoggerCentral.info(LOGGER, msg);
+        
+        if (monitor != null) {
+          monitor.doneLoading(fName, LoaderMonitor.STATUS_OK);
+        }
+        if (_userMonitor != null) {
+          _userMonitor
+              .processingMessage(WORKER_ID, fName,
+                  UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
+                  UserProcessingMonitor.MSG_TYPE.OK, msg);
+        }
+        result = 1;
       } catch (MyCopyInteruptException ex) {
         result = 3;
       } catch (Exception e) {

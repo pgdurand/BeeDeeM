@@ -95,7 +95,7 @@ public class FormatDBRunner extends Thread {
                                                                       + ".FormatDBRunner");
 
   private static final MessageFormat FORMAT_MSG1_HEADER       = new MessageFormat(
-                                                                  "Reading {0}...");
+                                                                  "Reading file ({0}/{1}) {2}...");
   private static final MessageFormat FORMAT_MSG2_HEADER       = new MessageFormat(
                                                                   "Formatting {0}...");
   private static final String        FORMAT_MSG3_HEADER       = "Creating Fasta volumes...";
@@ -380,12 +380,12 @@ public class FormatDBRunner extends Thread {
     String fName, dbLocation, dbPath, msg;
     List<String> dbList;
     ArrayList<String> formattedDbList;
-    Object[] values = new Object[1]; // needed to format the messages
+    Object[] values = new Object[3]; // needed to format the messages
     File volumeOkFile;
     List<String> volumes;
 
     SeqInfo si;
-    int ret, totSeq;
+    int ret, totSeq, curFile=0, totFiles;
     long tim;
     boolean runOk = true;
 
@@ -409,8 +409,9 @@ public class FormatDBRunner extends Thread {
         // required
         removeOldAlias(dbPath, _isProteic);
         // required
-
+        totFiles=dbList.size();
         for (String dbFileName : dbList) {
+          curFile++;
           if (!new File(dbFileName).exists()) {
             msg = "File not found: " + dbFileName;
             _monitor.setErrMsg(msg);
@@ -424,7 +425,10 @@ public class FormatDBRunner extends Thread {
 
           // first pass: check the source file for its format and for redundant
           // sequences
-          values[0] = fName;
+          
+          values[0] = curFile;
+          values[1] = totFiles;
+          values[2] = fName;
           msg = FORMAT_MSG1_HEADER.format(values);
           _monitor.setTxtMessage(msg);
           tim = System.currentTimeMillis();
@@ -500,6 +504,8 @@ public class FormatDBRunner extends Thread {
 
       // third pass: start formatdb process
       values[0] = volumes.toString();
+      values[1] = null;
+      values[2] = null;
       msg = FORMAT_MSG2_HEADER.format(values);
       _monitor.setTxtMessage(msg);
       if (_formatDBCmd.indexOf("formatdb") > 1) {

@@ -179,7 +179,7 @@ public class PFTPLoader {
     FileOutputStream fos = null;
     InputStream ftpIS = null;
     File file, filegz;
-    String remoteFName, name;
+    String remoteFName, name, msg;
     Date remoteFDate;
     long remoteFSize, lclFSize;
     int bRet;
@@ -193,13 +193,14 @@ public class PFTPLoader {
     file = new File(fsc.getLocalTmpFolder() + remoteFName);
     lclFSize = file.length();
     if (file.exists() && lclFSize == remoteFSize) {
+      msg = "Skipping already loaded file "
+          + (fileNum + 1) + "/" + totFiles + ": ";
       LoggerCentral.info(LOGGER,
-          _loaderId + ": Skip existing file: " + file.getAbsolutePath());
+          _loaderId + msg + file.getAbsolutePath());
       if (_userMonitor != null) {
         _userMonitor.processingMessage(_loaderId, fsc.getName(),
             UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
-            UserProcessingMonitor.MSG_TYPE.OK, "Skipping already loaded file "
-                + (fileNum + 1) + "/" + totFiles + ": " + remoteFName);
+            UserProcessingMonitor.MSG_TYPE.OK, msg + remoteFName);
       }
       return 2;
     } else {
@@ -209,26 +210,29 @@ public class PFTPLoader {
       if (name.endsWith(".gz")) {
         filegz = new File(name.substring(0, name.length() - 3));
         if (filegz.exists()) {
-          LoggerCentral.info(LOGGER, _loaderId + ": Skip existing file: "
+          msg = "Skipping already loaded file " + (fileNum + 1) + "/"
+              + totFiles + ": ";
+          LoggerCentral.info(LOGGER, _loaderId + ": " + msg
               + file.getAbsolutePath() + ": gunzipped version already here.");
           if (_userMonitor != null) {
             _userMonitor.processingMessage(_loaderId, fsc.getName(),
                 UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
                 UserProcessingMonitor.MSG_TYPE.OK,
-                "Skipping already loaded file " + (fileNum + 1) + "/"
-                    + totFiles + ": " + remoteFName);
+                msg + remoteFName);
           }
           return 2;
         }
       }
     }
     // if not: start download
+    msg = "loading file " + (fileNum + 1) + "/" + totFiles + ": " + remoteFName
+        + " (" + Utils.getBytes(remoteFSize) + ")";
+    LoggerCentral.info(LOGGER, _loaderId + ": " + msg);
     if (_userMonitor != null) {
       _userMonitor.processingMessage(_loaderId, fsc.getName(),
           UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
           UserProcessingMonitor.MSG_TYPE.OK,
-          "loading file " + (fileNum + 1) + "/" + totFiles + ": " + remoteFName
-              + " (" + Utils.getBytes(remoteFSize) + ")");
+          msg);
     }
     try {
       // enter remote directory
