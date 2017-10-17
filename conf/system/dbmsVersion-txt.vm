@@ -21,6 +21,7 @@ Installed banks
         Annotated bank: $db.hasAnnotation()
         Size (sequences): $db.getNbSequence()
         Size on disk: $db.getDiskSize()
+        Release date: $db.getReleaseTimeStamp()
         Install date: $db.getTimeStamp()
 #end
 #end
@@ -35,6 +36,7 @@ Installed banks
         Annotated bank: $db.hasAnnotation()
         Size (sequences): $db.getNbSequence()
         Size on disk: $db.getDiskSize()
+        Release date: $db.getReleaseTimeStamp()
         Install date: $db.getTimeStamp()
 #end
 #end
@@ -47,6 +49,7 @@ Installed banks
         Description: $db.getDescription()
         Size (terms): $db.getNbSequence()
         Size on disk: $db.getDiskSize()
+        Release date: $db.getReleaseTimeStamp()
         Install date: $db.getTimeStamp()
 #end
 #end

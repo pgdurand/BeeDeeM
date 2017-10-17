@@ -39,6 +39,7 @@
             <th>Annotated</th>
             <th>Size (sequences)</th>
             <th>Size on disk</th>
+            <th>Release date</th>
             <th>Install date</th>
           </tr>
           #foreach( $db in $dbTable )
@@ -49,6 +50,7 @@
               <td>$db.hasAnnotation()</td>
               <td>$db.getNbSequence()</td>
               <td>$db.getDiskSize()</td>
+              <td>$db.getReleaseTimeStamp()</td>
               <td>$db.getTimeStamp()</td>
             </tr>
             #end
@@ -69,6 +71,7 @@
             <th>Annotated</th>
             <th>Size (sequences)</th>
             <th>Size on disk</th>
+            <th>Release date</th>
             <th>Install date</th>
           </tr>
           #foreach( $db in $dbTable )
@@ -79,6 +82,7 @@
               <td>$db.hasAnnotation()</td>
               <td>$db.getNbSequence()</td>
               <td>$db.getDiskSize()</td>
+              <td>$db.getReleaseTimeStamp()</td>
               <td>$db.getTimeStamp()</td>
             </tr>
             #end
@@ -97,6 +101,7 @@
             <th>Description</th>
             <th>Size (sequences)</th>
             <th>Size on disk</th>
+            <th>Release date</th>
             <th>Install date</th>
           </tr>
           #foreach( $db in $dbTable )
@@ -106,6 +111,7 @@
               <td>$db.getDescription()</td>
               <td>$db.getNbSequence()</td>
               <td>$db.getDiskSize()</td>
+              <td>$db.getReleaseTimeStamp()</td>
               <td>$db.getTimeStamp()</td>
             </tr>
             #end

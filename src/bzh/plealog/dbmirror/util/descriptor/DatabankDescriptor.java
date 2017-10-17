@@ -45,6 +45,7 @@ public class DatabankDescriptor implements Serializable {
   private String            _nbSequence;
   private String            _diskSize;
   private String            _timeStamp;
+  private String            _releaseStamp;
   private long              _diskSizeL;
   private boolean           hasAnnotation = false;
   
@@ -68,6 +69,7 @@ public class DatabankDescriptor implements Serializable {
     Properties props = DBStampProperties.readDBStamp(directory);
 
     _timeStamp = props.getProperty(DBStampProperties.TIME_STAMP);
+    _releaseStamp = props.getProperty(DBStampProperties.RELEASE_TIME_STAMP);
     
     if (_type.equals("D"))
       _nbSequence = numFormatter.format(Long.valueOf(props
@@ -144,5 +146,8 @@ public class DatabankDescriptor implements Serializable {
     return _timeStamp;
   }
   
+  public String getReleaseTimeStamp() {
+    return _releaseStamp;
+  }
   
 }

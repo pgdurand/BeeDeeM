@@ -148,10 +148,12 @@ public class DBStampProperties {
 
     props = new Properties();
     fName = Utils.terminatePath(dbPath) + DBStampProperties.TIME_STAMP_FNAME;
-    try (FileInputStream reader = new FileInputStream(fName)) {
-      props.load(reader);
-    } catch (Exception e1) {
-      LOGGER.warn(e1);
+    if (new File(fName).exists()){//do this to avoid an exception when file does not exist
+      try (FileInputStream reader = new FileInputStream(fName)) {
+        props.load(reader);
+      } catch (Exception e1) {
+        LOGGER.warn(e1);
+      }
     }
     return props;
   }
