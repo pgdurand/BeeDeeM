@@ -57,6 +57,7 @@ public class DBMSAbstractConfig {
   private static String                  _localMirrorConfFile;
   private static String                  _installAppPath;
   private static String                  _logAppPath;
+  private static String                  _logAppFileName;
   private static String                  _logAppFile;
   private static String                  _workingTmpPath;
   private static String                  _externalBinPath;
@@ -225,6 +226,14 @@ public class DBMSAbstractConfig {
     return _logAppPath;
   }
 
+  public static String getLogAppFileName(){
+    return _logAppFileName;
+  }
+
+  public static void setLogAppFileName(String logAppFileName){
+    _logAppFileName = logAppFileName;
+  }
+  
   public static String pruneQuotes(String str) {
     if (str == null)
       return str;
@@ -354,7 +363,7 @@ public class DBMSAbstractConfig {
       return _appConfPath+confType.getDirectoryName() + File.separator;
     _appConfPath = getInstallAppPath() + CONF_PATH_NAME + File.separator;
     LOGGER.debug("user conf path: " + _appConfPath);
-    return (_appConfPath+confType.getDirectoryName() + File.separator);
+    return (Utils.terminatePath(_appConfPath+confType.getDirectoryName()));
   }
 
   /*
@@ -414,6 +423,8 @@ public class DBMSAbstractConfig {
     else
       _logAppFile = logName + ".log";
 
+    DBMSAbstractConfig.setLogAppFileName(_logAppFile);
+    
     userPath = DBMSAbstractConfig.getLogAppPath();
     szLogFileName = userPath + _logAppFile;
 

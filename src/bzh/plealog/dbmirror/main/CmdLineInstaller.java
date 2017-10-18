@@ -19,7 +19,9 @@ package bzh.plealog.dbmirror.main;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Properties;
 
+import org.apache.commons.cli.CommandLine;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -103,8 +105,18 @@ public class CmdLineInstaller {
           + " is successful. Databases are now in production.");
     }
   }
-
-  private void startApplication(String descriptorName) {
+  private void dumpStarterMessage(){
+    Properties props = StarterUtils.getVersionProperties();
+    StringBuffer buf = new StringBuffer("\n");
+    buf.append(props.getProperty("prg.app.name"));
+    buf.append(" ");
+    buf.append(props.getProperty("prg.version"));
+    buf.append(".\n");
+    System.out.println(buf.toString());
+    System.out.println("Log file is: "+DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName());
+    System.out.println("             check out this file to get processing details...");
+  }
+  private void startApplication(String descriptorName, PFTPLoaderDescriptor fDescCmd) {
     PFTPLoaderSystem lSystem;
     PFTPLoaderDescriptor fDesc;
     String descriptor;
@@ -112,6 +124,8 @@ public class CmdLineInstaller {
     StarterUtils.configureApplication(null,
         DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + "-" + descriptorName, true,
         false, true);
+    dumpStarterMessage();
+    
     descriptor = descriptorName + DBMSAbstractConfig.FEXT_GD;
 
     try {
@@ -119,6 +133,9 @@ public class CmdLineInstaller {
       fDesc = new PFTPLoaderDescriptor(descriptor);
       fDesc.load(new FileInputStream(DBMSAbstractConfig.getOSDepConfPath(Configuration.DESCRIPTOR)
           + descriptor), true);
+      if (fDescCmd!=null){
+        fDesc.update(fDescCmd);
+      }
       lSystem = new PFTPLoaderSystem(new PFTPLoaderDescriptor[] { fDesc });
       lSystem.runProcessing();
       // send email to administrator if needed
@@ -130,21 +147,49 @@ public class CmdLineInstaller {
     } catch (Exception e) {
       LoggerCentral.error(LOGGER, ERR3 + e);
     }
+    if (LoggerCentral.errorMsgEmitted()){
+      System.out.println("Failed: review log file");
+    }
+    else{
+      System.out.println("SUCCESS");
+    }
   }
 
   /**
-   * Only one parameter is required which is the file name containing the
-   * mirroring directives. Such a file must have the extension gd (stands for
-   * Global Descriptor) and must be located within the OS-dependent conf path of
-   * the application. Pass the file name without its extension.
+   * Expect either a single argument, such an argument and some options or
+   * some options only.<br/><br/>
+   * 
+   * First case: argument is the name of a global descriptor file. Such a file must have 
+   * the extension gd (stands for Global Descriptor) and must be located within the 
+   * OS-dependent conf path of the application. Pass the file name without its extension.
+   * <br/><br/>
+   * Second case: argument is same as above. One can also pass in some additional
+   * options that will override declarations of the global descriptor.
+   * <br/><br/>
+   * Third case: use command-line options only to define what have to be installed.
+   * <br/><br/>
+   * Options are defined in CmdLineInstallerOptions utility class. Use -h or -help
+   * option to get software command-line description.
    */
   public static void main(String[] args) {
-    if (args.length < 1) {
-      System.err.println(CmdLineInstaller.ERR_DESC_MISSING);
-    } else {
-      CmdLineInstaller mirror = new CmdLineInstaller();
-      mirror.startApplication(args[0]);
+    // convert the array of strings into an appropriate object
+    CommandLine cmd = CmdLineInstallerOptions.handleArguments(args);
+    
+    // nothing to do, exit!
+    if (cmd==null){
+      return;
     }
+    
+    // do we have a global descriptor name? (first and second cases described above)
+    String globalDesc = CmdLineInstallerOptions.getDescriptorName(cmd);
+    globalDesc = (globalDesc==null?"CmdLine":globalDesc);
+    
+    // do we have options? (second and third cases described above)
+    PFTPLoaderDescriptor fDescCmd = CmdLineInstallerOptions.getDescriptorFromOptions(cmd);
+    
+    //go, go, go...
+    CmdLineInstaller mirror = new CmdLineInstaller();
+    mirror.startApplication(globalDesc, fDescCmd);
   }
 
 }

@@ -26,7 +26,8 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author Patrick G. Durand
  */
 @RunWith(Suite.class)
-@SuiteClasses({ 
+@SuiteClasses({
+  CmdLineOptionsTest.class,
   BlastCmdTest.class,
   CddParserTest.class, 
   DBXrefInstancesManagerTest.class, 

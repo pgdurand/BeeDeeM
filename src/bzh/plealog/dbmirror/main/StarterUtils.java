@@ -130,9 +130,6 @@ public class StarterUtils {
     DBMSAbstractConfig.initializeConfigurator(confPath
         + DBMSAbstractConfig.MASTER_CONF_FILE);
     LoggerCentral.reset();
-    if (!standalone) {
-      return;
-    }
   }
 
   /**

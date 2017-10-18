@@ -36,7 +36,8 @@ import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
 public class PFTPLoaderDescriptor {
   private Properties         _properties       = new Properties();
   private String             _descriptor;
-
+  private boolean            _makeAbsolutePath;
+  
   public static final String DBLIST_KEY        = "db.list";
   public static final String RESUMEDT_KEY      = "resume.date";
   // accepted values: download, info; default is info
@@ -56,6 +57,12 @@ public class PFTPLoaderDescriptor {
 
   public static final String NO_RESUME_DATE    = "none";
 
+  public static final String UNSET_VALUE    = "-";
+  
+  private String [] KEYS = {DBLIST_KEY,RESUMEDT_KEY,MAINTASK_KEY,TASK_DELAY_KEY,FTP_DELAY_KEY,FTP_RETRY_KEY,MAILER_HOST,MAILER_PORT,
+      MAILER_SENDER,MAILER_PSWD,MAILER_RECP};
+  
+  
   public PFTPLoaderDescriptor(String descriptorName) {
     super();
     _descriptor = descriptorName;
@@ -93,24 +100,33 @@ public class PFTPLoaderDescriptor {
     _properties.load(inStream);
 
     Enumeration<?> e;
-    StringBuffer buf;
-    String key, value, fName;
-    String[] dbNames;
+    String key, value;
 
+    _makeAbsolutePath = makeAbsolutePath;
     e = _properties.keys();
     while (e.hasMoreElements()) {
       key = (String) e.nextElement();
       value = _properties.getProperty(key).trim();
       _properties.setProperty(key, value);
     }
+    String dbs = prepareDBList(this.getProperty(PFTPLoaderDescriptor.DBLIST_KEY));
+    if (dbs!=null){
+      _properties.setProperty(PFTPLoaderDescriptor.DBLIST_KEY, dbs);
+    }
+  }
+
+  private String prepareDBList(String desc){
+    StringBuffer buf;
+    String fName;
+    String[] dbNames;
     // when loading a conf file, db descriptor could be relative : make absolute
     // file name
-    dbNames = Utils.tokenize(this.getProperty(PFTPLoaderDescriptor.DBLIST_KEY));
+    dbNames = Utils.tokenize(desc);
     if (dbNames.length == 0)
-      return;
+      return null;
     buf = new StringBuffer();
     for (int i = 0; i < dbNames.length; i++) {
-      if (makeAbsolutePath)
+      if (_makeAbsolutePath)
         fName = DBMSAbstractConfig.getOSDepConfPath(Configuration.DESCRIPTOR) + dbNames[i];
       else
         fName = DBMSExecNativeCommand.formatNativePath(dbNames[i], false, true);
@@ -120,9 +136,9 @@ public class PFTPLoaderDescriptor {
         buf.append(",");
       }
     }
-    _properties.setProperty(PFTPLoaderDescriptor.DBLIST_KEY, buf.toString());
+    return buf.toString();
   }
-
+  
   /**
    * Stores a configuration file. This method delegates the store to the store
    * method of class Properties.
@@ -167,7 +183,38 @@ public class PFTPLoaderDescriptor {
     return _properties;
   }
 
+  /**
+   * Return the descriptor name.
+   */
   public String getDescriptorName() {
     return _descriptor;
+  }
+  
+  /**
+   * Update the content of this descriptor with values from parameter.
+   */
+  public void update(PFTPLoaderDescriptor desc){
+    String value;
+    for(String key : KEYS){
+      value = desc.getProperty(key);
+      // key is not defined in "desc"
+      if (value==null){
+        continue;
+      }
+      // we want to reset a value
+      if (value.equals(UNSET_VALUE)){
+        value="";
+      }
+      this.setProperty(key, value);
+    }
+    //only update DB list if desc provides new one(s)
+    value = desc.getProperty(PFTPLoaderDescriptor.DBLIST_KEY);
+    if (value==null || value.isEmpty()){
+      return;
+    }
+    String dbs = prepareDBList(this.getProperty(PFTPLoaderDescriptor.DBLIST_KEY));
+    if (dbs!=null){
+      setProperty(PFTPLoaderDescriptor.DBLIST_KEY, dbs);
+    }
   }
 }
