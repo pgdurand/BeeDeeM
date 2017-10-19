@@ -36,7 +36,6 @@ import org.junit.Test;
 import bzh.plealog.dbmirror.indexer.LuceneUtils;
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
 import bzh.plealog.dbmirror.util.Utils;
-import bzh.plealog.dbmirror.util.conf.Configuration;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
@@ -164,8 +163,7 @@ public class UtilsTest {
     }
 
     String confPath = getConfPath();
-    DBMSAbstractConfig.setInstallAppConfPath(confPath);
-    DBMSAbstractConfig.setOSDepConfPath(DBMSAbstractConfig.getConfPath(Configuration.DESCRIPTOR));
+    DBMSAbstractConfig.setConfPath(confPath);
     DBMSAbstractConfig.forceInitializeConfigurator(confPath
         + "dbms_test.config");
     DBMSAbstractConfig.testMode = true;

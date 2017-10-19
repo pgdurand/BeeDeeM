@@ -44,7 +44,7 @@ public class SwissProtTaxonIndexerTest {
   public static void main(String[] args) {
     String confPath = getConfPath();
     DBMSAbstractConfig.configureLog4J("kdmsUI");
-    DBMSAbstractConfig.setInstallAppConfPath(confPath);
+    DBMSAbstractConfig.setConfPath(confPath);
 
     DBMSAbstractConfig.initializeConfigurator(confPath
         + DBMSAbstractConfig.MASTER_CONF_FILE);

@@ -144,7 +144,7 @@ public class PFormatter {
     ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
         "org.apache.velocity.runtime.log.NullLogSystem");
     ve.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
-        DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM));
+        DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
     ve.init();
     _velocityEngine = ve;
     return ve;

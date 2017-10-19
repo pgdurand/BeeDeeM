@@ -136,7 +136,7 @@ public class DBMSExecNativeCommandTest {
     BasicConfigurator.configure();
     String confPath = getConfPath();
     DBMSAbstractConfig.configureLog4J("kdmsUI");
-    DBMSAbstractConfig.setInstallAppConfPath(confPath);
+    DBMSAbstractConfig.setConfPath(confPath);
     DBMSAbstractConfig.initializeConfigurator(confPath
         + DBMSAbstractConfig.MASTER_CONF_FILE);
     LoggerCentral.reset();

@@ -52,7 +52,7 @@ public class GenpeptReaderTest {
    */
   public static void main(String[] args) {
     DBMSAbstractConfig.configureLog4J("GenpeptReader");
-    DBMSAbstractConfig.setInstallAppConfPath("./conf");
+    DBMSAbstractConfig.setConfPath("./conf");
     test5("./tests/junit/DBXrefManager/NP_006580.gp");
   }
 

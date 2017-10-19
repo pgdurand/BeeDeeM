@@ -132,7 +132,7 @@ public class CmdLineInstaller {
     try {
       LoggerCentral.reset();
       fDesc = new PFTPLoaderDescriptor(descriptor);
-      fDesc.load(new FileInputStream(DBMSAbstractConfig.getOSDepConfPath(Configuration.DESCRIPTOR)
+      fDesc.load(new FileInputStream(DBMSAbstractConfig.getConfPath(Configuration.DESCRIPTOR)
           + descriptor), true);
       if (fDescCmd!=null){
         fDesc.update(fDescCmd);

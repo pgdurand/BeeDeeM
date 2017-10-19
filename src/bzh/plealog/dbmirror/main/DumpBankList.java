@@ -243,7 +243,7 @@ public class DumpBankList {
         props.getProperty("prg.app.name") + " - "
             + props.getProperty("prg.version"));
     config.put("instpath", DBMSAbstractConfig.getInstallAppPath());
-    config.put("instconfpath", StarterUtils.getConfPath()
+    config.put("instconfpath", DBMSAbstractConfig.getConfPath(Configuration.ROOT)
         + DBMSAbstractConfig.MASTER_CONF_FILE);
     config.put("wkpath", DBMSAbstractConfig.getWorkingPath());
     config.put("logpath", DBMSAbstractConfig.getLogAppPath());
@@ -298,7 +298,7 @@ public class DumpBankList {
     ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
         "org.apache.velocity.runtime.log.NullLogSystem");
     ve.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH,
-        DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM));
+        DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
 
     // Run Velocity Engine
     try (BufferedWriter outWriter = new BufferedWriter(new OutputStreamWriter(

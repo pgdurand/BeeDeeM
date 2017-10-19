@@ -61,9 +61,7 @@ public class DBMSAbstractConfig {
   private static String                  _logAppFile;
   private static String                  _workingTmpPath;
   private static String                  _externalBinPath;
-  private static String                  _installAppConfPath;
-  private static String                  _OSDepConfPath;
-  private static String                  _appConfPath;
+  private static String                  _confPath;
   private static String                  _startDate;
   private static PProxyConfig            _proxyConfig;
   private static boolean                 _standalone                  = false;
@@ -91,6 +89,7 @@ public class DBMSAbstractConfig {
   public static final String             BIN_PATH_NAME                = "bin";
   private static final String            APP_HOME_PROP_KEY            = "KL_HOME";
   private static final String            APP_WORKING_DIR_PROP_KEY     = "KL_WORKING_DIR";
+  private static final String            APP_CONF_DIR_PROP_KEY        = "KL_CONF_DIR";
   private static final String            APP_DEBUG_MODE_PROP_KEY      = "KL_DEBUG";
   private static final String            APP_LOG_FILE_PROP_KEY        = "KL_LOG_FILE";
   private static final String            LCL_MIRROR_PROP_KEY          = "MIRROR_HOME";
@@ -318,52 +317,24 @@ public class DBMSAbstractConfig {
     _startDate = dt;
   }
 
-  /**
-   * Returns the common configuration path.
-   */
-  public static String getInstallAppConfPath(Configuration confType) {
-    if (_installAppConfPath != null)
-      return _installAppConfPath+confType.getDirectoryName() + File.separator;
-    _installAppConfPath = getInstallAppPath() + CONF_PATH_NAME + File.separator;
-    LOGGER.debug("install app conf path: " + _installAppConfPath);
-    return (_installAppConfPath+confType.getDirectoryName() + File.separator);
-  }
-
-  public static void setInstallAppConfPath(String path) {
-    _installAppConfPath = Utils.terminatePath(path);
-    LOGGER.debug("install app conf path: " + _installAppConfPath);
-  }
-
-  /**
-   * Returns the Operating System dependent configuration path. The path
-   * specifically points to the OS localized dir (linux, windows or macos)
-   * located under InstallAppConfPath.
-   */
-  public static String getOSDepConfPath(Configuration confType) {
-    if (_OSDepConfPath != null)
-      return _OSDepConfPath+confType.getDirectoryName() + File.separator;
-    _OSDepConfPath = getInstallAppPath() + CONF_PATH_NAME + File.separator
-        + DBMSExecNativeCommand.getOSName() + File.separator;
-    LOGGER.debug("OS dep. conf path: " + _OSDepConfPath);
-    return (_OSDepConfPath+confType.getDirectoryName() + File.separator);
-  }
-
-  public static void setOSDepConfPath(String path) {
-    _OSDepConfPath = Utils.terminatePath(path);
-    LOGGER.debug("OS dep. conf path: " + _OSDepConfPath);
-  }
-
   public static void setConfPath(String path) {
-    _appConfPath = Utils.terminatePath(path);
-    LOGGER.debug("user conf path: " + _appConfPath);
+    _confPath = Utils.terminatePath(path);
+    LOGGER.debug("user conf path: " + _confPath);
   }
 
   public static String getConfPath(Configuration confType) {
-    if (_appConfPath != null)
-      return _appConfPath+confType.getDirectoryName() + File.separator;
-    _appConfPath = getInstallAppPath() + CONF_PATH_NAME + File.separator;
-    LOGGER.debug("user conf path: " + _appConfPath);
-    return (Utils.terminatePath(_appConfPath+confType.getDirectoryName()));
+    if (_confPath != null)
+      return _confPath+confType.getDirectoryName() + File.separator;
+    
+    String path = pruneQuotes(System.getProperty(APP_CONF_DIR_PROP_KEY));
+    if (path != null) {
+      _confPath = path;
+    } else {
+      _confPath = DBMSAbstractConfig.getInstallAppPath();
+    }
+    
+    LOGGER.debug("user conf path: " + _confPath);
+    return (Utils.terminatePath(_confPath+confType.getDirectoryName()));
   }
 
   /*
@@ -646,7 +617,7 @@ public class DBMSAbstractConfig {
     String conf = null;
 
     try {
-      file = new File(DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM)
+      file = new File(DBMSAbstractConfig.getConfPath(Configuration.SYSTEM)
           + DB_XREF_CONF_FILE);
       reader = new BufferedReader(new InputStreamReader(new FileInputStream(
           file), "UTF-8"));

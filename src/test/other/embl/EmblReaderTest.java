@@ -50,7 +50,7 @@ public class EmblReaderTest {
     // setup the logger system
     DBMSAbstractConfig.configureLog4J("EmblReader");
     // target the path containing Velocity templates (.vm files)
-    DBMSAbstractConfig.setInstallAppConfPath("./conf");
+    DBMSAbstractConfig.setConfPath("./conf");
     // reformat a simple EMBL entry
     try {
       format("./tests/junit/DBXrefManager/FK669046.embl");

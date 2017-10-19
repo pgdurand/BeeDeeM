@@ -37,7 +37,7 @@ public class DescriptorUITest extends JFrame {
     DBMSAbstractConfig.configureLog4J("autoMirror");
     // KDMSAbstractConfig.setLocalMirrorPath(args[0]);
     // KDMSAbstractConfig.setLocalMirrorConfFile(Utils.terminatePath(args[0])+"dbmirror.config");
-    DBMSAbstractConfig.setInstallAppConfPath(args[1]);
+    DBMSAbstractConfig.setConfPath(args[1]);
 
     DBMSAbstractConfig.initializeConfigurator(Utils.terminatePath(args[1])
         + DBMSAbstractConfig.MASTER_CONF_FILE);

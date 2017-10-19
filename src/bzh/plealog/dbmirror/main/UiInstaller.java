@@ -74,7 +74,7 @@ public class UiInstaller {
     EZEnvironment.setUIStarterListener(new MyStarterListener());
 
     // We setup the Preferences Dialogue Box
-    String confPath = DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM);
+    String confPath = DBMSAbstractConfig.getConfPath(Configuration.SYSTEM);
     confPath += "prefEditor.config";
     EZEnvironment.setPreferencesConfigurationFile(confPath);
 
@@ -92,7 +92,7 @@ public class UiInstaller {
 
       mainPanel = new JPanel(new BorderLayout());
       DBMSPanel pnl = DBMSUserInterface.getUserInterface(
-          DBMSAbstractConfig.getInstallAppConfPath(Configuration.DESCRIPTOR), true);
+          DBMSAbstractConfig.getConfPath(Configuration.DESCRIPTOR), true);
       mainPanel.add(pnl, BorderLayout.CENTER);
       return mainPanel;
     }

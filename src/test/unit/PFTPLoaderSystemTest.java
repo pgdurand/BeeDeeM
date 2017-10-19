@@ -50,7 +50,7 @@ public class PFTPLoaderSystemTest {
     String mainTestsFilePath = UtilsTest
         .getTestFilePath("KFTPLoaderSystemTest");
 
-    DBMSAbstractConfig.setOSDepConfPath(mainTestsFilePath);
+    DBMSAbstractConfig.setConfPath(mainTestsFilePath);
     File gdFile = new File(mainTestsFilePath, dbName + ".gd");
     DBServerConfig config = new DBServerConfig();
     try {

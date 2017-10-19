@@ -127,7 +127,7 @@ public class PFTPLoaderDescriptor {
     buf = new StringBuffer();
     for (int i = 0; i < dbNames.length; i++) {
       if (_makeAbsolutePath)
-        fName = DBMSAbstractConfig.getOSDepConfPath(Configuration.DESCRIPTOR) + dbNames[i];
+        fName = DBMSAbstractConfig.getConfPath(Configuration.DESCRIPTOR) + dbNames[i];
       else
         fName = DBMSExecNativeCommand.formatNativePath(dbNames[i], false, true);
       fName += DBMSAbstractConfig.FEXT_DD;

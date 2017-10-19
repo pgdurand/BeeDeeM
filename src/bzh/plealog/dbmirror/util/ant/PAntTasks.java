@@ -42,8 +42,8 @@ public class PAntTasks {
 
     try {
       // init
-      at.init(DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM) + "tasks.xml",
-          DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM));
+      at.init(DBMSAbstractConfig.getConfPath(Configuration.SYSTEM) + "tasks.xml",
+          DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
       // properties
       m.put("host", host);
       m.put("port", port);
@@ -73,8 +73,8 @@ public class PAntTasks {
     boolean bRet = false;
     try {
       // init
-      at.init(DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM) + "tasks.xml",
-          DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM));
+      at.init(DBMSAbstractConfig.getConfPath(Configuration.SYSTEM) + "tasks.xml",
+          DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
       // properties
       m.put("src", srcFile);
       m.put("dest", destDir);
@@ -95,8 +95,8 @@ public class PAntTasks {
 
     try {
       // init
-      at.init(DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM) + "tasks.xml",
-          DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM));
+      at.init(DBMSAbstractConfig.getConfPath(Configuration.SYSTEM) + "tasks.xml",
+          DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
       // properties
       m.put("src", srcFile);
       m.put("dest", destDir);
@@ -118,8 +118,8 @@ public class PAntTasks {
 
     try {
       // init
-      at.init(DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM) + "tasks.xml",
-          DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM));
+      at.init(DBMSAbstractConfig.getConfPath(Configuration.SYSTEM) + "tasks.xml",
+          DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
       // properties
       m.put("src", srcFile);
       m.put("dest", destDir);
@@ -141,8 +141,8 @@ public class PAntTasks {
 
     try {
       // init
-      at.init(DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM) + "tasks.xml",
-          DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM));
+      at.init(DBMSAbstractConfig.getConfPath(Configuration.SYSTEM) + "tasks.xml",
+          DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
       // properties
       m.put("dir", dir);
       m.put("ffilter", fileFilter);
@@ -169,8 +169,8 @@ public class PAntTasks {
       }
 
       // init
-      at.init(DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM) + "tasks.xml",
-          DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM));
+      at.init(DBMSAbstractConfig.getConfPath(Configuration.SYSTEM) + "tasks.xml",
+          DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
       // properties
       m.put("dir", dir);
       at.setProperties(m, false);
@@ -191,8 +191,8 @@ public class PAntTasks {
     boolean bRet = false;
     try {
       // init
-      at.init(DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM) + "tasks.xml",
-          DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM));
+      at.init(DBMSAbstractConfig.getConfPath(Configuration.SYSTEM) + "tasks.xml",
+          DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
       // properties
       m.put("src", src);
       m.put("dest", dest);
@@ -216,8 +216,8 @@ public class PAntTasks {
     boolean bRet = false;
     try {
       // init
-      at.init(DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM) + "tasks.xml",
-          DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM));
+      at.init(DBMSAbstractConfig.getConfPath(Configuration.SYSTEM) + "tasks.xml",
+          DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
       // properties
       m.put("src", srcDir);
       m.put("dest", destZipFile);
@@ -237,8 +237,8 @@ public class PAntTasks {
     boolean bRet = false;
     try {
       // init
-      at.init(DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM) + "tasks.xml",
-          DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM));
+      at.init(DBMSAbstractConfig.getConfPath(Configuration.SYSTEM) + "tasks.xml",
+          DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
       // properties
       m.put("src", srcDir);
       m.put("dest", destZipFile);

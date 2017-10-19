@@ -41,7 +41,6 @@ public class StarterUtils {
                                                + ".StarterUtils");
   private static final String MSG1     = "Loaded network config from: ";
   private static final String ERR1     = "Unable to load network config: ";
-  private static final String USER_DIR = "user.dir";
 
   /**
    * Return the content of the version resource.
@@ -58,27 +57,13 @@ public class StarterUtils {
     return props;
   }
   
-  protected static String getConfPath() {
-    String path;
-
-    /*
-     * path = System.getProperty( "KDMS_CONF_DIR");
-     */
-    path = DBMSAbstractConfig.getInstallAppPath();
-    if (path != null)
-      path = Utils.terminatePath(path);
-    else
-      path = Utils.terminatePath(System.getProperty(USER_DIR));
-    path += (DBMSAbstractConfig.CONF_PATH_NAME + File.separator);
-    return path;
-  }
 
   private static void initNetConfig() {
     PProxyConfig proxy;
     String netConf;
     File f;
 
-    netConf = DBMSAbstractConfig.getInstallAppConfPath(Configuration.SYSTEM)
+    netConf = DBMSAbstractConfig.getConfPath(Configuration.SYSTEM)
         + PProxyConfig.CONF_FILE;
     f = new File(netConf);
     if (f.exists() == false) {
@@ -123,9 +108,7 @@ public class StarterUtils {
       DBMSAbstractConfig.setInstallAppPath(Utils.terminatePath(appHome));
     if (configureLogger)
       DBMSAbstractConfig.configureLog4J(nameLogger);
-    String confPath = getConfPath();
-    DBMSAbstractConfig.setInstallAppConfPath(confPath);
-    DBMSAbstractConfig.setOSDepConfPath(DBMSAbstractConfig.getConfPath(Configuration.ROOT));
+    String confPath = DBMSAbstractConfig.getConfPath(Configuration.ROOT);
     initNetConfig();
     DBMSAbstractConfig.initializeConfigurator(confPath
         + DBMSAbstractConfig.MASTER_CONF_FILE);
@@ -144,7 +127,7 @@ public class StarterUtils {
     String lib2 = "openjdk";
     String msg1 = "GNU libgcj is not compatible with the application.";
     String msg2 = "OpenJDK is not compatible with the application.";
-    String msg3 = "Please use a Sun/Oracle Java Virtual Machine 1.7+.";
+    String msg3 = "Please use an Oracle Java Virtual Machine 1.8+.";
 
     jvmName = System.getProperty(prop).toLowerCase();
 
