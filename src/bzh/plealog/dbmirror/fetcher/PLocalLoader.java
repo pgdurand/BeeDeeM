@@ -79,10 +79,11 @@ public class PLocalLoader {
     boolean bDownload;
     int i = 1;
     String windowsRoot;
-    File currentFile;
+    File currentFile, aFile;
     File[] remoteFiles;
     File rFile;
-
+    long size, totSize=0l;
+    
     // get list of remote folders
     confFolders = _dbsc.getRemoteLocalFolders();
     // we just have a list of files ?
@@ -96,7 +97,11 @@ public class PLocalLoader {
       remoteLocalFolders = new StringTokenizer(confFolders, ",");
       LoggerCentral.info(LOGGER, "Preparing list of files:");
       while (remoteLocalFolders.hasMoreTokens()) {
-        validNames.add(new File(remoteLocalFolders.nextToken().trim()));
+        aFile = new File(remoteLocalFolders.nextToken().trim());
+        size = aFile.length();
+        totSize+=size;
+        LoggerCentral.info(LOGGER, "  " + aFile.getAbsolutePath() + " (" + Utils.getBytes(size) + ")");
+        validNames.add(aFile);
       }
     } else {
       confFolders = DBMSExecNativeCommand.formatNativePath(confFolders, false,
@@ -155,7 +160,9 @@ public class PLocalLoader {
               }
               if (bDownload) {
                 validNames.add(rFile);
-                LoggerCentral.info(LOGGER, "  " + rFile.getName());
+                size = rFile.length();
+                totSize+=size;
+                LoggerCentral.info(LOGGER, "  " + rFile.getAbsolutePath() + " (" + Utils.getBytes(size) + ")");
               }
             }
           }
@@ -176,6 +183,7 @@ public class PLocalLoader {
     } else {
       LoggerCentral.info(LOGGER, "Nb. of files matching criteria: "
           + validNames.size());
+      LoggerCentral.info(LOGGER, "Total bytes to copy: " + Utils.getBytes(totSize));
     }
 
     return true;

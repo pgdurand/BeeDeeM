@@ -304,10 +304,10 @@ public class PFTPLoader {
       }
       val = rFile.getFtpFile().getSize();
       LoggerCentral.info(LOGGER, "    " + rFile.getFtpFile().getName() + ": "
-          + val + " bytes");
+          + Utils.getBytes(val));
       totBytes += val;
     }
-    LoggerCentral.info(LOGGER, "Total bytes to download: " + totBytes);
+    LoggerCentral.info(LOGGER, "Total bytes to download: " + Utils.getBytes(totBytes));
     if (_userMonitor != null) {
       _userMonitor.fileTransferInfo(_loaderId, fsc, nFiles, totBytes);
     }
