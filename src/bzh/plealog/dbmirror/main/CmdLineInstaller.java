@@ -114,7 +114,8 @@ public class CmdLineInstaller {
     buf.append(".\n");
     System.out.println(buf.toString());
     System.out.println("Log file is: "+DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName());
-    System.out.println("             check out this file to get processing details...");
+    System.out.println("             check out this file to get processing details");
+    System.out.println("Job is now running...");
   }
   private void startApplication(String descriptorName, PFTPLoaderDescriptor fDescCmd) {
     PFTPLoaderSystem lSystem;
@@ -148,10 +149,10 @@ public class CmdLineInstaller {
       LoggerCentral.error(LOGGER, ERR3 + e);
     }
     if (LoggerCentral.errorMsgEmitted()){
-      System.out.println("Failed: review log file");
+      System.out.println("Job done with status: FAILURE. Review log file");
     }
     else{
-      System.out.println("SUCCESS");
+      System.out.println("Job done with status: SUCCESS");
     }
   }
 
