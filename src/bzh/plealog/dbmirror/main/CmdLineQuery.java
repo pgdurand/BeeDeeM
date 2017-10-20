@@ -19,21 +19,18 @@ package bzh.plealog.dbmirror.main;
 import java.util.Hashtable;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import bzh.plealog.dbmirror.reader.PQueryMirrorBase;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 
 /**
- * This is the class to use to query the databanks managed with KDMS.
+ * This is the class to use to query the databanks managed with BeeDeeM.
  * Command line is as follows:<br>
  * -d   input Blast file to annotate (absolute path)<br>
  * -i   output file containing the annotated Blast result (absolute path)<br>
  * -f   type of annotation to retrieve. Options: bco or full. Use bco to only retrieve
+ * biological classifications information. Use full to retrieve full feature tables.<br>
  * <br>
  * In addition, some parameters can be passed to the JVM for special
  * configuration purposes:<br>
@@ -57,35 +54,6 @@ public class CmdLineQuery {
 
   private static final String[] mandatory_args = { database, seqid, format };
 
-  private static final Log LOGGER = LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".Query");
-
-  private void printUsage() {
-    HelpFormatter formatter = new HelpFormatter();
-    formatter.printHelp("Query", getCmdLineOptions());
-  }
-
-  public CommandLine handleArguments(String[] args) {
-    Options options;
-    GnuParser parser;
-    CommandLine line = null;
-
-    options = getCmdLineOptions();
-    try {
-      parser = new GnuParser();
-      line = parser.parse(options, args);
-      for (String arg : mandatory_args) {
-        if (!line.hasOption(arg)) {
-          throw new Exception("missing mandatory argument: " + arg);
-        }
-      }
-    } catch (Exception exp) {
-      LOGGER.warn("invalid command-line:" + exp);
-      printUsage();
-      line = null;
-    }
-    return line;
-  }
-
   /**
    * Setup the valid command-line of the application.
    */
@@ -96,6 +64,7 @@ public class CmdLineQuery {
     opts.addOption(database, true, "type of repository. One of: nucleotide, protein, dico.");
     opts.addOption(seqid, true, "a sequence ID");
     opts.addOption(format, true, "format. One of: txt, fas, html, insd, finsd.");
+    opts.addOption(CmdLineUtils.getConfDirOption());
     return opts;
   }
 
@@ -103,11 +72,13 @@ public class CmdLineQuery {
     PQueryMirrorBase qm;
     Hashtable<String, String> values;
     CommandLine cmdLine;
-
+    Options options;
+    String toolName = "Query";
+    
     // prepare the Logging system
-    StarterUtils.configureApplication(null, "QueryMirror", true, false, true);
-
-    cmdLine = handleArguments(args);
+    StarterUtils.configureApplication(null, toolName, true, false, true);
+    options = getCmdLineOptions();
+    cmdLine = CmdLineUtils.handleArguments(args, mandatory_args, options, toolName);
     if (cmdLine == null) {
       System.exit(1);
     }

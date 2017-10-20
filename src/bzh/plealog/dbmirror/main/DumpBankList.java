@@ -26,8 +26,6 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,6 +34,8 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
+
+import com.plealog.genericapp.api.log.EZLogger;
 
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.Configuration;
@@ -46,8 +46,6 @@ import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
 import bzh.plealog.dbmirror.util.descriptor.DatabankDescriptor;
 import bzh.plealog.dbmirror.util.descriptor.IdxDescriptor;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
-
-import com.plealog.genericapp.api.log.EZLogger;
 
 /**
  * This is the class to use to report the list of installed banks. Accepted
@@ -80,34 +78,6 @@ public class DumpBankList {
                                             + ".DumpBankList");
 
   /**
-   * Print program usage.
-   */
-  private void printUsage() {
-    HelpFormatter formatter = new HelpFormatter();
-    formatter.printHelp("DumpBankList", getCmdLineOptions());
-  }
-
-  /**
-   * handle command-line arguments.
-   */
-  public CommandLine handleArguments(String[] args) {
-    Options options;
-    GnuParser parser;
-    CommandLine line = null;
-
-    options = getCmdLineOptions();
-    try {
-      parser = new GnuParser();
-      line = parser.parse(options, args);
-    } catch (Exception exp) {
-      LOGGER.warn("invalid command-line:" + exp);
-      printUsage();
-      line = null;
-    }
-    return line;
-  }
-
-  /**
    * Setup the valid command-line of the application.
    */
   private static Options getCmdLineOptions() {
@@ -120,6 +90,7 @@ public class DumpBankList {
     		"format. One of: txt, html, galaxy. Default is: txt.");
     opts.addOption(US_ARG, true, 
     		"user-name. A valid user login name.");
+    opts.addOption(CmdLineUtils.getConfDirOption());
     return opts;
   }
 
@@ -228,7 +199,7 @@ public class DumpBankList {
     Properties props = StarterUtils.getVersionProperties();
 
     // Handle command-line
-    cmdLine = handleArguments(args);
+    cmdLine = CmdLineUtils.handleArguments(args, null, getCmdLineOptions(), "Dump Bank List");
     db = getDatabaseType(cmdLine);
     ft = getFormatType(cmdLine);
     us = getUserLoginName(cmdLine);

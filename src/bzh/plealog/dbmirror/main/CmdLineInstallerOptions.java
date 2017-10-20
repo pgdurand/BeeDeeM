@@ -3,11 +3,8 @@ package bzh.plealog.dbmirror.main;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
@@ -35,12 +32,17 @@ public class CmdLineInstallerOptions {
       "pswd","mail.smtp.sender.pswd",
       "recipient","mail.smtp.recipient.mail"
       };
+  private static final String TOOL_NAME = "Command-line installer" ;
+  private static Options OPTIONS = null;
 
   /**
    * Create the command-line options.
    */
   @SuppressWarnings("static-access")
-  private static Options createOptions(){
+  protected static Options createOptions(){
+    if (OPTIONS!=null){
+      return OPTIONS;
+    }
     // Options to handle this configuration:
     // bzh.plealog.dbmirror.fetcher.PFTPLoaderDescriptor
     /*
@@ -133,66 +135,11 @@ public class CmdLineInstallerOptions {
     options.addOption(mssm);
     options.addOption(mssp);
     options.addOption(recipient);
+    options.addOption(CmdLineUtils.getConfDirOption());
     String msg = "print this message";
     options.addOption(new Option( "help", msg ));
     options.addOption(new Option( "h", msg ));
     return options;
-  }
-  
-  /**
-   * Handle the help message.
-   */
-  private static void printUsage(Options opt) {
-    // Get version info
-    Properties props = StarterUtils.getVersionProperties();
-    StringBuffer buf = new StringBuffer("\n");
-    buf.append(props.getProperty("prg.app.name"));
-    buf.append(" ");
-    buf.append(props.getProperty("prg.version"));
-    buf.append(" - ");
-    buf.append(props.getProperty("prg.copyright"));
-    buf.append("\n");
-    buf.append(props.getProperty("prg.license"));
-    
-    HelpFormatter formatter = new HelpFormatter();
-    formatter.printHelp(
-        props.getProperty("prg.app.name")+" Command-line installer", 
-        "install [options] [global-descriptor]", 
-        opt, 
-        buf.toString());
-  }
-
-  /**
-   * Convert command-line options to a Apache Commons CLI object.
-   * 
-   * @param args string array from main program method
-   * 
-   * @return a command-line object or null. Null is returned in two case:
-   * -h or -help is requested, or args parsing failed.
-   */
-  public static CommandLine handleArguments(String[] args) {
-    Options options;
-    GnuParser parser;
-    CommandLine line = null;
-
-    options = createOptions();
-    try {
-      parser = new GnuParser();
-      line = parser.parse(options, args, true);
-    } catch (Exception exp) {
-      //LOGGER.warn("invalid command-line:" + exp);
-      printUsage(options);
-      line = null;
-    }
-    
-    if(line!=null && 
-        ( line.hasOption( "help" ) ||  line.hasOption( "h" ) || 
-          ( line.getArgList().isEmpty() && line.getOptions().length==0 ) ) ){
-      // Initialize the member variable
-      printUsage(options);
-      line = null;
-    }
-    return line;
   }
   
   /**
@@ -240,4 +187,9 @@ public class CmdLineInstallerOptions {
     }
     return descriptor;
   }
+  
+  public static CommandLine handleArguments(String[] args){
+    return CmdLineUtils.handleArguments(args, null, createOptions(), TOOL_NAME);
+  }
+  
 }

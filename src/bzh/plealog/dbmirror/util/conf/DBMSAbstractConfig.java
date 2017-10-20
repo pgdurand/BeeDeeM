@@ -90,7 +90,7 @@ public class DBMSAbstractConfig {
   private static final String            APP_HOME_PROP_KEY            = "KL_HOME";
   private static final String            APP_WORKING_DIR_PROP_KEY     = "KL_WORKING_DIR";
   private static final String            APP_CONF_DIR_PROP_KEY        = "KL_CONF_DIR";
-  private static final String            APP_DEBUG_MODE_PROP_KEY      = "KL_DEBUG";
+  public  static final String            APP_DEBUG_MODE_PROP_KEY      = "KL_DEBUG";
   private static final String            APP_LOG_FILE_PROP_KEY        = "KL_LOG_FILE";
   private static final String            LCL_MIRROR_PROP_KEY          = "MIRROR_HOME";
   private static final String            USER_DIR_PROP_KEY            = "user.dir";
@@ -319,21 +319,19 @@ public class DBMSAbstractConfig {
 
   public static void setConfPath(String path) {
     _confPath = Utils.terminatePath(path);
-    LOGGER.debug("user conf path: " + _confPath);
   }
 
   public static String getConfPath(Configuration confType) {
     if (_confPath != null)
-      return _confPath+confType.getDirectoryName() + File.separator;
+      return Utils.terminatePath(_confPath+confType.getDirectoryName());
     
     String path = pruneQuotes(System.getProperty(APP_CONF_DIR_PROP_KEY));
     if (path != null) {
-      _confPath = path;
+      _confPath = Utils.terminatePath(path);
     } else {
-      _confPath = DBMSAbstractConfig.getInstallAppPath();
+      _confPath = Utils.terminatePath(DBMSAbstractConfig.getInstallAppPath()+CONF_PATH_NAME);
     }
     
-    LOGGER.debug("user conf path: " + _confPath);
     return (Utils.terminatePath(_confPath+confType.getDirectoryName()));
   }
 
@@ -500,6 +498,7 @@ public class DBMSAbstractConfig {
       }
       updateConfiguration();
       _configurator.addConfigurationListener(CONF_LISTENER);
+      LoggerCentral.info(LOGGER, "*** START APPLICATION *** " + new Date());
       LoggerCentral.info(LOGGER, "Configuration:");
       _configurator.dumpContent(LOGGER);
 

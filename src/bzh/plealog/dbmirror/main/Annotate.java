@@ -17,6 +17,7 @@
 package bzh.plealog.dbmirror.main;
 
 import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Options;
 
 import bzh.plealog.dbmirror.annotator.PAnnotateBlastResult;
 
@@ -39,17 +40,41 @@ import bzh.plealog.dbmirror.annotator.PAnnotateBlastResult;
  * @author Patrick G. Durand
  */
 public class Annotate {
+
+  private static final String[] mandatory_args = { 
+      PAnnotateBlastResult.input_file,
+      PAnnotateBlastResult.output_file, 
+      PAnnotateBlastResult.annot_type, 
+      PAnnotateBlastResult.writer_type
+  };
+
+  /**
+   * Setup the valid command-line of the application.
+   */
+  private static Options getCmdLineOptions() {
+    Options opts;
+
+    opts = new Options();
+    opts.addOption(PAnnotateBlastResult.annot_type, true,
+        "type of annotation to retrieve. Options: bco or full.");
+    opts.addOption(PAnnotateBlastResult.input_file, true, "input Blast file to annotate");
+    opts.addOption(PAnnotateBlastResult.output_file, true,
+        "output file containing the annotated Blast result");
+    opts.addOption(PAnnotateBlastResult.writer_type, true, "Type of writer. Options: xml or zml");
+
+    return opts;
+  }
+  
   public static void main(String[] args) {
     PAnnotateBlastResult annotator;
     CommandLine cmdLine;
     String input, output, writer, type;
-
+    Options options;
+    
     // prepare the Logging system
     StarterUtils.configureApplication(null, "Annotate", true, false, true);
-
-    annotator = new PAnnotateBlastResult();
-
-    cmdLine = annotator.handleArguments(args);
+    options = getCmdLineOptions();
+    cmdLine = CmdLineUtils.handleArguments(args, mandatory_args, options, "Annotate");
     if (cmdLine == null) {
       System.exit(1);
     }
@@ -58,9 +83,11 @@ public class Annotate {
     output = cmdLine.getOptionValue(PAnnotateBlastResult.output_file);
     writer = cmdLine.getOptionValue(PAnnotateBlastResult.writer_type);
     type = cmdLine.getOptionValue(PAnnotateBlastResult.annot_type);
-
+    
+    annotator = new PAnnotateBlastResult();
+    
     if (!annotator.annotate(input, output, writer, type)) {
-      System.exit(1);// do this to report error to calling app
+      System.exit(1);// exit code=1 : do this to report error to calling app
     }
   }
 }

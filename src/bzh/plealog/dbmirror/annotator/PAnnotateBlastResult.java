@@ -18,10 +18,6 @@ package bzh.plealog.dbmirror.annotator;
 
 import java.io.File;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -46,64 +42,11 @@ public class PAnnotateBlastResult {
   public static final String    output_file               = "o";
 
   public static final String    writer_type               = "writer";
-  private static final String   writer_type_xml           = "xml";
-
-  private static final String[] mandatory_args            = { input_file,
-      output_file, annot_type, writer_type               };
+  public static final String   writer_type_xml           = "xml";
+  
   protected static final Log    LOGGER                    = LogFactory
                                                               .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                   + ".PAnnotateBlastResult");
-
-  private void printUsage() {
-    HelpFormatter formatter = new HelpFormatter();
-    formatter.printHelp("KLAnnotateBlastResult", getCmdLineOptions());
-  }
-
-  public CommandLine handleArguments(String[] args) {
-    Options options;
-    GnuParser parser;
-    CommandLine line = null;
-
-    options = getCmdLineOptions();
-    try {
-      parser = new GnuParser();
-      line = parser.parse(options, args);
-      for (String arg : mandatory_args) {
-        if (!line.hasOption(arg)) {
-          throw new Exception("missing mandatory argument: " + arg);
-        }
-      }
-    } catch (Exception exp) {
-      LOGGER.warn("invalid command-line:" + exp);
-      printUsage();
-      line = null;
-    }
-    return line;
-  }
-
-  /**
-   * Setup the valid command-line of the application.
-   */
-  private static Options getCmdLineOptions() {
-    Options opts;
-
-    opts = new Options();
-    opts.addOption(annot_type, true,
-        "type of annotation to retrieve. Options: bco or full.");
-    opts.addOption(input_file, true, "input Blast file to annotate");
-    opts.addOption(output_file, true,
-        "output file containing the annotated Blast result");
-    opts.addOption(writer_type, true, "Type of writer. Options: xml or zml");
-
-    // other options are passed in to the JVM (-D):
-    // -DKL_DEBUG=true (whathever the value, if set, log will be in debug mode)
-    // -DKL_WORKING_DIR=an_absolute_path ; if not set, log and working dir are
-    // set to java.io.tmp
-    // -DKL_LOG_FILE=a_file_name ; if set, creates a a log file with that name
-    // within KL_WORKING_DIR
-    // (these options are defined within class KDMSAbstractConfig)
-    return opts;
-  }
 
   public boolean annotate(String input, String output, String writer,
       String type) {
