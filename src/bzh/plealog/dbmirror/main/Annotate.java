@@ -83,8 +83,8 @@ public class Annotate {
     CmdLineUtils.setConfDirOption(opts);
     return opts;
   }
-  
-  public static void main(String[] args) {
+
+  public static boolean doJob(String[] args){
     PAnnotateBlastResult annotator;
     CommandLine cmdLine;
     String input, output, writer, type;
@@ -105,7 +105,11 @@ public class Annotate {
     
     annotator = new PAnnotateBlastResult();
     
-    if (!annotator.annotate(input, output, writer, type)) {
+    return annotator.annotate(input, output, writer, type);
+  }
+
+  public static void main(String[] args) {
+    if (!doJob(args)){
       System.exit(1);// exit code=1 : do this to report error to calling app
     }
   }

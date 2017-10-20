@@ -31,8 +31,7 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
  * Command line is as follows:<br>
  * -d   input Blast file to annotate (absolute path)<br>
  * -i   output file containing the annotated Blast result (absolute path)<br>
- * -f   type of annotation to retrieve. Options: bco or full. Use bco to only retrieve
- * biological classifications information. Use full to retrieve full feature tables.<br>
+ * -f   format. One of: txt, fas, html, insd, finsd.<br>
  * <br>
  * In addition, some parameters can be passed to the JVM for special
  * configuration purposes:<br>
@@ -88,7 +87,7 @@ public class CmdLineQuery {
     return opts;
   }
 
-  private void doJob(String[] args) {
+  public static boolean doJob(String[] args) {
     PQueryMirrorBase qm;
     Hashtable<String, String> values;
     CommandLine cmdLine;
@@ -100,7 +99,7 @@ public class CmdLineQuery {
     options = getCmdLineOptions();
     cmdLine = CmdLineUtils.handleArguments(args, options, toolName);
     if (cmdLine == null) {
-      System.exit(1);
+      return false;
     }
     // start the Job
     qm = new PQueryMirrorBase();
@@ -112,9 +111,12 @@ public class CmdLineQuery {
     values.put("format", cmdLine.getOptionValue(FORMAT));
 
     qm.executeJob(values, System.out, DBMSAbstractConfig.getLocalMirrorConfFile());
+    return true;
   }
 
   public static void main(String[] args) {
-    new CmdLineQuery().doJob(args);
+    if (!doJob(args)){
+      System.exit(1);
+    }
   }
 }

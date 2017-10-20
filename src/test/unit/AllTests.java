@@ -41,7 +41,8 @@ import org.junit.runners.Suite.SuiteClasses;
   SeqIOUtilsTest.class,
   SequenceFileManagerTest.class,
   UtilsTest.class,
-  PAnnotateBlastResultTest.class
+  PAnnotateBlastResultTest.class,
+  CmdLineQueryTest.class,
   })
 public class AllTests {
 

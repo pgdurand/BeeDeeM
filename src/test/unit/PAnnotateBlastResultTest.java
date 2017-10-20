@@ -37,12 +37,14 @@ import bzh.plealog.bioinfo.api.data.searchresult.SRHspSequence;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.io.searchresult.srnative.NativeBlastLoader;
 import bzh.plealog.dbmirror.annotator.SROutputAnnotator;
+import bzh.plealog.dbmirror.main.Annotate;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 
 /**
  * Unit tests of the Blast results Annotator.
  * 
  * @author Ludovic Antin
+ * @author Patrick Durand
  */
 public class PAnnotateBlastResultTest {
 
@@ -162,8 +164,8 @@ public class PAnnotateBlastResultTest {
 				FileUtils.cleanDirectory(mirrorPath);
 				Thread.sleep(2000);
 			} catch (Exception e) {
-				//e.printStackTrace();
-				//Assert.fail("Unable to clean the directory : " + mirrorPath.getAbsolutePath());
+				e.printStackTrace();
+				Assert.fail("Unable to clean the directory : " + mirrorPath.getAbsolutePath());
 			}
 		}
 
@@ -212,5 +214,36 @@ public class PAnnotateBlastResultTest {
 		Assert.assertTrue(bo_empty != null);
 
 		compareBlastResults(bo_ref, bo_empty);
+	}
+	@Test
+	public void testCmdLine() {
+	   // delete the db_mirror directory to be sure that only one bank is installed
+    File mirrorPath = new File(DBMSAbstractConfig.getLocalMirrorPath());// getConfigurator().getProperty(KDMSConfigurator.MIRROR_PATH));
+    if (mirrorPath.exists()) {
+      try {
+        FileUtils.cleanDirectory(mirrorPath);
+        Thread.sleep(2000);
+      } catch (Exception e) {
+        e.printStackTrace();
+        Assert.fail("Unable to clean the directory : " + mirrorPath.getAbsolutePath());
+      }
+    }
+    // install the uniprot databank
+    DefaultLoaderMonitorTest.completeInstall("uniprot", "sample_Uniprot.dsc", true);
+    File fToAnnotate = new File(UtilsTest.getTestFilePath("blast_results", "testFull", "hits_only.xml"));
+    File result = null;
+    try {
+      result = File.createTempFile("bdmAnnotTest", ".zml");
+      result.deleteOnExit();
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.assertTrue(false);//force test to fail
+    }
+    String[] args = {
+        "-i", fToAnnotate.getAbsolutePath(), 
+        "-o", result.getAbsolutePath(),
+        "-type", "full",
+        "-writer", "zml"};
+    Assert.assertTrue(Annotate.doJob(args));
 	}
 }

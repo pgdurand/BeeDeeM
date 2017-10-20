@@ -24,7 +24,6 @@ import org.apache.commons.logging.LogFactory;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.io.searchresult.ncbi.BlastLoader;
 import bzh.plealog.bioinfo.io.searchresult.srnative.NativeBlastWriter;
-import bzh.plealog.dbmirror.main.StarterUtils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 
 /**
@@ -57,10 +56,6 @@ public class PAnnotateBlastResult {
     boolean bRet = true;
 
     try {
-      // prepare the application system
-      StarterUtils.configureApplication(null, "SROutputAnnotator", true, false,
-          true);
-
       LOGGER.debug("--> annotate");
       LOGGER.debug("input : " + input);
       LOGGER.debug("output: " + output);
