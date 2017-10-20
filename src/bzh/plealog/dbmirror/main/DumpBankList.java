@@ -26,6 +26,8 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -80,17 +82,34 @@ public class DumpBankList {
   /**
    * Setup the valid command-line of the application.
    */
+  @SuppressWarnings("static-access")
   private static Options getCmdLineOptions() {
     Options opts;
-
+    
+    Option type = OptionBuilder
+        .withArgName( "repository" )
+        .hasArg()
+        .withDescription("type of repository. One of: n, p, b, all. Default is: all." )
+        .create( DB_ARG );
+    
+    Option format = OptionBuilder
+        .withArgName( "format" )
+        .hasArg()
+        .withDescription("format. One of: txt, html, galaxy. Default is: txt." )
+        .create( FT_ARG );
+   
+    Option user = OptionBuilder
+        .withArgName( "user" )
+        .hasArg()
+        .withDescription("user-name. A valid user login name." )
+        .create( US_ARG );
+    
     opts = new Options();
-    opts.addOption(DB_ARG, true,
-        "type of repository. One of: n, p, b, all. Default is: all.");
-    opts.addOption(FT_ARG, true, 
-    		"format. One of: txt, html, galaxy. Default is: txt.");
-    opts.addOption(US_ARG, true, 
-    		"user-name. A valid user login name.");
-    opts.addOption(CmdLineUtils.getConfDirOption());
+    opts.addOption(type);
+    opts.addOption(format);
+    opts.addOption(user);
+    CmdLineUtils.setConfDirOption(opts);
+    CmdLineUtils.setHelpOption(opts);
     return opts;
   }
 
@@ -199,7 +218,10 @@ public class DumpBankList {
     Properties props = StarterUtils.getVersionProperties();
 
     // Handle command-line
-    cmdLine = CmdLineUtils.handleArguments(args, null, getCmdLineOptions(), "Dump Bank List");
+    cmdLine = CmdLineUtils.handleArguments(args, getCmdLineOptions(), "Dump Bank List");
+    if (cmdLine==null){
+      System.exit(1);
+    }
     db = getDatabaseType(cmdLine);
     ft = getFormatType(cmdLine);
     us = getUserLoginName(cmdLine);

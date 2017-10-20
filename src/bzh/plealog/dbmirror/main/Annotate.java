@@ -17,6 +17,8 @@
 package bzh.plealog.dbmirror.main;
 
 import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
 import bzh.plealog.dbmirror.annotator.PAnnotateBlastResult;
@@ -41,27 +43,44 @@ import bzh.plealog.dbmirror.annotator.PAnnotateBlastResult;
  */
 public class Annotate {
 
-  private static final String[] mandatory_args = { 
-      PAnnotateBlastResult.input_file,
-      PAnnotateBlastResult.output_file, 
-      PAnnotateBlastResult.annot_type, 
-      PAnnotateBlastResult.writer_type
-  };
-
   /**
    * Setup the valid command-line of the application.
    */
+  @SuppressWarnings("static-access")
   private static Options getCmdLineOptions() {
     Options opts;
 
-    opts = new Options();
-    opts.addOption(PAnnotateBlastResult.annot_type, true,
-        "type of annotation to retrieve. Options: bco or full.");
-    opts.addOption(PAnnotateBlastResult.input_file, true, "input Blast file to annotate");
-    opts.addOption(PAnnotateBlastResult.output_file, true,
-        "output file containing the annotated Blast result");
-    opts.addOption(PAnnotateBlastResult.writer_type, true, "Type of writer. Options: xml or zml");
+    Option type = OptionBuilder
+        .withArgName( "repository" )
+        .hasArg()
+        .isRequired()
+        .withDescription("type of annotation to retrieve. Options: bco or full. Mandatory." )
+        .create(PAnnotateBlastResult.annot_type);
+    Option in = OptionBuilder
+        .withArgName( "Blast file" )
+        .hasArg()
+        .isRequired()
+        .withDescription("input Blast file to annotate. Must be legacy BLAST XML format. Mandatory." )
+        .create(PAnnotateBlastResult.input_file);
+    Option out = OptionBuilder
+        .withArgName( "Annot file" )
+        .hasArg()
+        .isRequired()
+        .withDescription("output file containing the annotated Blast result. Mandatory." )
+        .create(PAnnotateBlastResult.output_file);
+    Option format = OptionBuilder
+        .withArgName( "repository" )
+        .hasArg()
+        .isRequired()
+        .withDescription("Type of writer. One of: xml, zml. Mandatory." )
+        .create(PAnnotateBlastResult.writer_type);
 
+    opts = new Options();
+    opts.addOption(type);
+    opts.addOption(in);
+    opts.addOption(out);
+    opts.addOption(format);
+    CmdLineUtils.setConfDirOption(opts);
     return opts;
   }
   
@@ -74,7 +93,7 @@ public class Annotate {
     // prepare the Logging system
     StarterUtils.configureApplication(null, "Annotate", true, false, true);
     options = getCmdLineOptions();
-    cmdLine = CmdLineUtils.handleArguments(args, mandatory_args, options, "Annotate");
+    cmdLine = CmdLineUtils.handleArguments(args, options, "Annotate");
     if (cmdLine == null) {
       System.exit(1);
     }

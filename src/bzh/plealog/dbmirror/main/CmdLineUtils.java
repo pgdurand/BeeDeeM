@@ -17,14 +17,22 @@ public class CmdLineUtils {
    * Prepare an option to deal with configuration path.
    */
   @SuppressWarnings("static-access")
-  protected static Option getConfDirOption(){
+  protected static void setConfDirOption(Options opts){
     Option confDir = OptionBuilder
         .withArgName("directory" )
         .withLongOpt("conf-dir")
         .hasArg()
         .withDescription("absolute path to custom conf directory" )
         .create();
-    return confDir;
+    opts.addOption(confDir);
+  }
+  /**
+   * Prepare an option to deal with help.
+   */
+  protected static void setHelpOption(Options opts){
+    String msg = "print this message";
+    opts.addOption(new Option( "help", msg ));
+    opts.addOption(new Option( "h", msg ));
   }
 
   /**
@@ -40,7 +48,11 @@ public class CmdLineUtils {
     buf.append(" - ");
     buf.append(props.getProperty("prg.copyright"));
     buf.append("\n");
-    buf.append(props.getProperty("prg.license"));
+    buf.append(props.getProperty("prg.license.short"));
+    buf.append("\n");
+    buf.append(props.getProperty("prg.app.name"));
+    buf.append(" manual: ");
+    buf.append(props.getProperty("prg.man.url"));
     
     HelpFormatter formatter = new HelpFormatter();
     formatter.printHelp(
@@ -58,7 +70,7 @@ public class CmdLineUtils {
    * @return a command-line object or null. Null is returned in two case:
    * -h or -help is requested, or args parsing failed.
    */
-  protected static CommandLine handleArguments(String[] args, String[] mandatoryAgrs, Options options, String toolName) {
+  protected static CommandLine handleArguments(String[] args, Options options, String toolName) {
     GnuParser parser;
     CommandLine line = null;
 
@@ -66,7 +78,7 @@ public class CmdLineUtils {
       parser = new GnuParser();
       line = parser.parse(options, args, true);
     } catch (Exception exp) {
-      //LOGGER.warn("invalid command-line:" + exp);
+      System.err.println(exp.getMessage());
       printUsage(toolName, options);
       line = null;
     }
@@ -81,14 +93,6 @@ public class CmdLineUtils {
         // Initialize the member variable
         printUsage(toolName, options);
         line = null;
-      }
-      if (mandatoryAgrs!=null){
-        for (String arg : mandatoryAgrs) {
-          if (!line.hasOption(arg)) {
-            System.err.println("missing mandatory argument: " + arg);
-            printUsage(toolName, options);
-          }
-        }
       }
     }
     return line;

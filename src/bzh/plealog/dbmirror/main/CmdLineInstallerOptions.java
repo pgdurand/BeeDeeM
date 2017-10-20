@@ -135,10 +135,8 @@ public class CmdLineInstallerOptions {
     options.addOption(mssm);
     options.addOption(mssp);
     options.addOption(recipient);
-    options.addOption(CmdLineUtils.getConfDirOption());
-    String msg = "print this message";
-    options.addOption(new Option( "help", msg ));
-    options.addOption(new Option( "h", msg ));
+    CmdLineUtils.setConfDirOption(options);
+    CmdLineUtils.setHelpOption(options);
     return options;
   }
   
@@ -189,7 +187,7 @@ public class CmdLineInstallerOptions {
   }
   
   public static CommandLine handleArguments(String[] args){
-    return CmdLineUtils.handleArguments(args, null, createOptions(), TOOL_NAME);
+    return CmdLineUtils.handleArguments(args, createOptions(), TOOL_NAME);
   }
   
 }

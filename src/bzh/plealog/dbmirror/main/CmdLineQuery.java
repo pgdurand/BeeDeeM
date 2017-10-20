@@ -19,6 +19,8 @@ package bzh.plealog.dbmirror.main;
 import java.util.Hashtable;
 
 import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
 import bzh.plealog.dbmirror.reader.PQueryMirrorBase;
@@ -48,23 +50,41 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
  * @author Patrick G. Durand
  */
 public class CmdLineQuery {
-  public static final String database = "d";
-  public static final String seqid = "i";
-  public static final String format = "f";
-
-  private static final String[] mandatory_args = { database, seqid, format };
+  public static final String DATABASE = "d";
+  public static final String SEQID = "i";
+  public static final String FORMAT = "f";
 
   /**
    * Setup the valid command-line of the application.
    */
+  @SuppressWarnings("static-access")
   private static Options getCmdLineOptions() {
     Options opts;
 
+    Option repo = OptionBuilder
+        .withArgName( "repository" )
+        .hasArg()
+        .isRequired()
+        .withDescription("type of repository. One of: nucleotide, protein, dico. Mandatory." )
+        .create(DATABASE);
+    Option in = OptionBuilder
+        .withArgName( "seqID" )
+        .hasArg()
+        .isRequired()
+        .withDescription("a sequence ID. Mandatory." )
+        .create(SEQID);
+    Option ft = OptionBuilder
+        .withArgName( "format" )
+        .hasArg()
+        .isRequired()
+        .withDescription("format. One of: txt, fas, html, insd, finsd. Mandatory." )
+        .create(FORMAT);
+
     opts = new Options();
-    opts.addOption(database, true, "type of repository. One of: nucleotide, protein, dico.");
-    opts.addOption(seqid, true, "a sequence ID");
-    opts.addOption(format, true, "format. One of: txt, fas, html, insd, finsd.");
-    opts.addOption(CmdLineUtils.getConfDirOption());
+    opts.addOption(repo);
+    opts.addOption(in);
+    opts.addOption(ft);
+    CmdLineUtils.setConfDirOption(opts);
     return opts;
   }
 
@@ -78,7 +98,7 @@ public class CmdLineQuery {
     // prepare the Logging system
     StarterUtils.configureApplication(null, toolName, true, false, true);
     options = getCmdLineOptions();
-    cmdLine = CmdLineUtils.handleArguments(args, mandatory_args, options, toolName);
+    cmdLine = CmdLineUtils.handleArguments(args, options, toolName);
     if (cmdLine == null) {
       System.exit(1);
     }
@@ -87,9 +107,9 @@ public class CmdLineQuery {
 
     // get the key/value data and process the query
     values = new Hashtable<>();
-    values.put("database", cmdLine.getOptionValue(database));
-    values.put("id", cmdLine.getOptionValue(seqid));
-    values.put("format", cmdLine.getOptionValue(format));
+    values.put("database", cmdLine.getOptionValue(DATABASE));
+    values.put("id", cmdLine.getOptionValue(SEQID));
+    values.put("format", cmdLine.getOptionValue(FORMAT));
 
     qm.executeJob(values, System.out, DBMSAbstractConfig.getLocalMirrorConfFile());
   }
