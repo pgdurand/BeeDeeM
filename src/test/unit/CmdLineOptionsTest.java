@@ -46,7 +46,7 @@ public class CmdLineOptionsTest {
     "db.list","SwissProt_human.dsc",
     // -END
     "db.main.task","download",
-    "force.delete","true",
+    "force.delete","false",
     "task.delay","1000",
     "ftp.delay","5000",
     "ftp.retry","3",
@@ -131,7 +131,7 @@ public class CmdLineOptionsTest {
       "db.list","SwissProt_human.dsc",
       // -END
       "db.main.task","download",
-      "force.delete","true",
+      "force.delete","false",
       "task.delay","1000",
       "ftp.delay","5000",
       "ftp.retry","3",

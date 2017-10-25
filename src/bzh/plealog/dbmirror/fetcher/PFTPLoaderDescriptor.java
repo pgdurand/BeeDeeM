@@ -115,8 +115,9 @@ public class PFTPLoaderDescriptor {
       _properties.setProperty(PFTPLoaderDescriptor.DBLIST_KEY, dbs);
     }
     //added to ensure backward compatibility; replacement of resume.date by force.delete
+    // and new mode being "resume" by default, we do not force bank deletion
     if (_properties.containsKey(FORCE_KEY)==false){
-      _properties.put(FORCE_KEY, "true");
+      _properties.put(FORCE_KEY, "false");
     }
   }
 

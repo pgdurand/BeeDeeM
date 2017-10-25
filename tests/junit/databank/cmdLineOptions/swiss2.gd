@@ -2,6 +2,8 @@ db.list=SwissProt_human
 
 db.main.task=download
 
+force.delete=true
+
 task.delay=1000
 
 ftp.delay=5000
