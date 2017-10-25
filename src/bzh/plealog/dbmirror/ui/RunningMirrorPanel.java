@@ -357,7 +357,7 @@ public class RunningMirrorPanel extends JPanel {
   }
 
   private PFTPLoaderDescriptor[] initProcess(List<DescriptorEntry> entries,
-      String wkMode, String resumeDate) {
+      String wkMode, String force) {
 
     resetUI();
     LoggerCentral.reset();
@@ -375,13 +375,13 @@ public class RunningMirrorPanel extends JPanel {
     int currentInstallOrder = entries.get(0).getInstallationOrder();
     ArrayList<PFTPLoaderDescriptor> descriptors = new ArrayList<PFTPLoaderDescriptor>();
     PFTPLoaderDescriptor currentDescriptor = PFTPLoaderDescriptor.create(
-        resumeDate, wkMode);
+        force, wkMode);
     descriptors.add(currentDescriptor);
     for (DescriptorEntry entry : entries) {
       if (entry.getInstallationOrder() == currentInstallOrder) {
         currentDescriptor.addDbToInstall(entry);
       } else {
-        currentDescriptor = PFTPLoaderDescriptor.create(resumeDate, wkMode);
+        currentDescriptor = PFTPLoaderDescriptor.create(force, wkMode);
         currentDescriptor.addDbToInstall(entry);
         descriptors.add(currentDescriptor);
         currentInstallOrder = entry.getInstallationOrder();
@@ -399,7 +399,7 @@ public class RunningMirrorPanel extends JPanel {
   public synchronized void startLoadingEntries(List<DescriptorEntry> entries,
       String wkMode) {
     PFTPLoaderDescriptor[] descriptors;
-    String resumeDate = PFTPLoaderDescriptor.NO_RESUME_DATE;
+    String forceNewInstall = "true";
     Date scheduleTime;
     boolean closeAfterProcess;
 
@@ -433,7 +433,7 @@ public class RunningMirrorPanel extends JPanel {
       }
 
       // to add depends entries before checking existed previous job
-      descriptors = initProcess(entries, wkMode, resumeDate);
+      descriptors = initProcess(entries, wkMode, forceNewInstall);
 
       // before starting a new job, check if we can resume a previous aborted
       // one
@@ -444,14 +444,14 @@ public class RunningMirrorPanel extends JPanel {
             DBMSMessages.getString("RunningMirrorPanel.msg2"),
             JOptionPane.YES_NO_CANCEL_OPTION);
         if (ret == JOptionPane.YES_OPTION) {
-          resumeDate = Utils.encodeDate(new Date());
+          forceNewInstall = "false";
         } else if (ret == JOptionPane.CANCEL_OPTION) {
           return;
         }
       }
       for (PFTPLoaderDescriptor descriptor : descriptors) {
         // set the resume date regarding the previous user choice
-        descriptor.setProperty(PFTPLoaderDescriptor.RESUMEDT_KEY, resumeDate);
+        descriptor.setProperty(PFTPLoaderDescriptor.FORCE_KEY, forceNewInstall);
       }
       _descList.setProcessingTime(scheduleTime);
 
@@ -463,7 +463,7 @@ public class RunningMirrorPanel extends JPanel {
         runner.run();
       }
     } else {
-      descriptors = initProcess(entries, wkMode, resumeDate);
+      descriptors = initProcess(entries, wkMode, forceNewInstall);
       new InfoRunner(entries, descriptors).start();
     }
   }
@@ -790,7 +790,7 @@ public class RunningMirrorPanel extends JPanel {
     }
 
     public void run() {
-      String resumeDate = PFTPLoaderDescriptor.NO_RESUME_DATE;
+      String forceNewInstall = "true";
       PFTPLoaderSystem loader;
       Date scheduleTime;
       boolean closeAfterProcess;
@@ -837,7 +837,7 @@ public class RunningMirrorPanel extends JPanel {
             DBMSMessages.getString("RunningMirrorPanel.msg2"),
             JOptionPane.YES_NO_CANCEL_OPTION);
         if (ret == JOptionPane.YES_OPTION) {
-          resumeDate = Utils.encodeDate(new Date());
+          forceNewInstall = "false";
         } else if (ret == JOptionPane.CANCEL_OPTION) {
           for (DescriptorEntry de : entries) {
             de.setStatus(DescriptorEntry.STATUS.unknown);
@@ -853,7 +853,7 @@ public class RunningMirrorPanel extends JPanel {
       for (PFTPLoaderDescriptor descriptor : descriptors) {
         descriptor.setProperty(PFTPLoaderDescriptor.MAINTASK_KEY,
             PFTPLoaderDescriptor.MAINTASK_DOWNLOAD);
-        descriptor.setProperty(PFTPLoaderDescriptor.RESUMEDT_KEY, resumeDate);
+        descriptor.setProperty(PFTPLoaderDescriptor.FORCE_KEY, forceNewInstall);
       }
 
       _monitor.setWorkingMode(PFTPLoaderDescriptor.MAINTASK_DOWNLOAD);

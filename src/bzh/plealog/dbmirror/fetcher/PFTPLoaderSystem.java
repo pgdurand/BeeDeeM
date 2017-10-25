@@ -92,7 +92,7 @@ public class PFTPLoaderSystem {
     FileListLoader fll;
     DefaultLoaderMonitor monitor;
     PProxyConfig pConfig;
-    boolean resume;
+    boolean forceFreshInstall;
     int i, ftpRetry;
     long taskDelay, ftpDelay;
     boolean isFTP;
@@ -144,10 +144,13 @@ public class PFTPLoaderSystem {
         return;
       }
       // figures out if one has to resume a previous aborted download process
-      resume = !(PFTPLoaderDescriptor.NO_RESUME_DATE.equals(descriptor
-          .getProperty(PFTPLoaderDescriptor.RESUMEDT_KEY)));
-      if (resume) {
-        LoggerCentral.info(LOGGER, "Resume previous download job");
+      forceFreshInstall = Boolean.TRUE.toString().equalsIgnoreCase(descriptor
+          .getProperty(PFTPLoaderDescriptor.FORCE_KEY));
+      if (forceFreshInstall) {
+        LoggerCentral.info(LOGGER, "DELETE previous download job");
+      }
+      else{
+        LoggerCentral.info(LOGGER, "RESUME previous download job");
       }
       DBMSAbstractConfig.setStarterDate(Utils.encodeDate(new Date()));
       // gets some FTP parameters
@@ -286,7 +289,7 @@ public class PFTPLoaderSystem {
                           validNames.get(0).getFtpFile().getTimestamp().getTime());
                   updateBank = !curDate.equalsIgnoreCase(newDate);
                 }
-                //do we have to install naw release of bank?
+                //do we have to install new release of bank?
                 if (!updateBank){
                   LoggerCentral.info(LOGGER, "BANK IS UP TO DATE: nothing to do.");
                 }
@@ -299,7 +302,7 @@ public class PFTPLoaderSystem {
 
                   processedDB.add(dbConf);
 
-                  if (!resume) {
+                  if (forceFreshInstall) {
                     str = dbConf.getLocalFolder()
                         + DBMSAbstractConfig.DOWNLOADING_DIR;
                     if (new File(str).exists()) {

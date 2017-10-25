@@ -2,8 +2,6 @@ db.list=SwissProt_human
 
 db.main.task=download
 
-resume.date=none
-
 task.delay=1000
 
 ftp.delay=5000

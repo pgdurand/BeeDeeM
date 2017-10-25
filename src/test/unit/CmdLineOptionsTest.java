@@ -46,7 +46,7 @@ public class CmdLineOptionsTest {
     "db.list","SwissProt_human.dsc",
     // -END
     "db.main.task","download",
-    "resume.date","none",
+    "force.delete","true",
     "task.delay","1000",
     "ftp.delay","5000",
     "ftp.retry","3",
@@ -60,7 +60,7 @@ public class CmdLineOptionsTest {
   private static final String[] TEST_2_ANSWERS = {
     "db.list","PDB",
     "db.main.task","null",
-    "resume.date","null",
+    "force.delete","null",
     "task.delay","null",
     "ftp.delay","null",
     "ftp.retry","null",
@@ -74,7 +74,7 @@ public class CmdLineOptionsTest {
   private static final String[] TEST_3_ANSWERS = {
     "db.list","PDB",
     "db.main.task","info",
-    "resume.date","none",
+    "force.delete","true",
     "task.delay","1000",
     "ftp.delay","5000",
     "ftp.retry","3",
@@ -93,7 +93,7 @@ public class CmdLineOptionsTest {
       "db.list","PDB.dsc",
       // -END
       "db.main.task","info",
-      "resume.date","20171018",
+      "force.delete","false",
       "task.delay","500",
       "ftp.delay","1000",
       "ftp.retry","5",
@@ -112,7 +112,7 @@ public class CmdLineOptionsTest {
       "db.list","PDB.dsc",
       // -END
       "db.main.task","info",
-      "resume.date","20171018",
+      "force.delete","false",
       "task.delay","null",
       "ftp.delay","null",
       "ftp.retry","null",
@@ -131,7 +131,7 @@ public class CmdLineOptionsTest {
       "db.list","SwissProt_human.dsc",
       // -END
       "db.main.task","download",
-      "resume.date","none",
+      "force.delete","true",
       "task.delay","1000",
       "ftp.delay","5000",
       "ftp.retry","3",
@@ -150,7 +150,7 @@ public class CmdLineOptionsTest {
       "db.list","SwissProt_human.dsc",
       // -END
       "db.main.task","download",
-      "resume.date","none",
+      "force.delete","true",
       "task.delay","1000",
       "ftp.delay","5000",
       "ftp.retry","3",
@@ -230,7 +230,7 @@ public class CmdLineOptionsTest {
   @Test
   public void testOptions2(){
     //test all but email options
-    String[]    CMDLINE = {"-desc","PDB","-task","info","-resume", "none","-td","1000","-fd","5000","-fr","3"};
+    String[]    CMDLINE = {"-desc","PDB","-task","info","-force", "true","-td","1000","-fd","5000","-fr","3"};
     CommandLine cmd = CmdLineInstallerOptions.handleArguments(CMDLINE);
 
     assertNotNull(cmd);
@@ -241,7 +241,7 @@ public class CmdLineOptionsTest {
   @Test
   public void testOptions2bis(){
     //same as previous but with long option names
-    String[]    CMDLINE = {"-desc","PDB","-task","info","-resume", "none","--task-delay","1000","--ftp-delay","5000","--ftp-retry","3"};
+    String[]    CMDLINE = {"-desc","PDB","-task","info","-force", "true","--task-delay","1000","--ftp-delay","5000","--ftp-retry","3"};
     CommandLine cmd = CmdLineInstallerOptions.handleArguments(CMDLINE);
 
     assertNotNull(cmd);
@@ -253,7 +253,7 @@ public class CmdLineOptionsTest {
   public void testOptions3(){
     // same as test2 but we pass Genbank global descriptor as argument
     String      GB = "Genbank";
-    String[]    CMDLINE = {"-desc","PDB","-task","info","-resume", "none","-td","1000","-fd","5000","-fr","3", GB};
+    String[]    CMDLINE = {"-desc","PDB","-task","info","-force", "true","-td","1000","-fd","5000","-fr","3", GB};
     CommandLine cmd = CmdLineInstallerOptions.handleArguments(CMDLINE);
 
     assertNotNull(cmd);
@@ -268,7 +268,7 @@ public class CmdLineOptionsTest {
     // by new ones passed in as cmdline options.
     // This is THE test that simulates new behavior of CmdLineInstaller Tool
     // expected to solve issue: https://github.com/pgdurand/BeeDeeM/issues/4
-    String[]             CMDLINE = {"-desc","PDB","-task","info","-resume", "20171018","-td","500","-fd","1000","-fr","5", "swiss"};
+    String[]             CMDLINE = {"-desc","PDB","-task","info","-force", "false","-td","500","-fd","1000","-fr","5", "swiss"};
     String               globalDesc;
     
     CommandLine          cmd = CmdLineInstallerOptions.handleArguments(CMDLINE);
@@ -293,7 +293,7 @@ public class CmdLineOptionsTest {
   @Test
   public void testOptions5(){
     // same as test4 but we reset some values
-    String[]             CMDLINE = {"-desc","PDB","-task","info","-resume", "20171018","-td","-","-fd","-","-fr","-"};
+    String[]             CMDLINE = {"-desc","PDB","-task","info","-force", "false","-td","-","-fd","-","-fr","-"};
     String               globalDesc = "swiss";
     String               gdPath = UtilsTest.getTestFilePath("databank", "cmdLineOptions", globalDesc+".gd");
     PFTPLoaderDescriptor fDesc = getDescriptor(globalDesc, gdPath);

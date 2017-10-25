@@ -22,7 +22,7 @@ public class CmdLineInstallerOptions {
   private static final String[] ARGUMENTS = {
       "desc", "db.list", 
       "task", "db.main.task",
-      "resume", "resume.date",
+      "force", "force.delete",
       "td", "task.delay",
       "fd","ftp.delay",
       "fr", "ftp.retry",
@@ -48,7 +48,7 @@ public class CmdLineInstallerOptions {
     /*
       db.list=<comma separated list of strings>
       db.main.task=<download | info>
-      resume.date=<none | YYYYMMdd>
+      force.delete=<true | false>
       task.delay=1000
       ftp.delay=5000
       ftp.retry=3
@@ -69,10 +69,10 @@ public class CmdLineInstallerOptions {
         .withDescription(  "one of: download, info" )
         .create( "task" );
     Option resume = OptionBuilder
-        .withArgName( "date" )
+        .withArgName( "bool" )
         .hasArg()
-        .withDescription(  "one of: none, YYYYMMdd" )
-        .create( "resume" );
+        .withDescription(  "one of: true, false" )
+        .create( "force" );
     Option taskDelay = OptionBuilder
         .withArgName( "delay" )
         .withLongOpt("task-delay")

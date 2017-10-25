@@ -39,7 +39,8 @@ public class PFTPLoaderDescriptor {
   private boolean            _makeAbsolutePath;
   
   public static final String DBLIST_KEY        = "db.list";
-  public static final String RESUMEDT_KEY      = "resume.date";
+  public static final String FORCE_KEY         = "force.delete";
+  
   // accepted values: download, info; default is info
   public static final String MAINTASK_KEY      = "db.main.task";
   public static final String MAINTASK_INFO     = "info";
@@ -56,10 +57,10 @@ public class PFTPLoaderDescriptor {
   public static final String MAILER_DEBUG      = "mail.debug";
 
   public static final String NO_RESUME_DATE    = "none";
-
+  
   public static final String UNSET_VALUE    = "-";
   
-  private String [] KEYS = {DBLIST_KEY,RESUMEDT_KEY,MAINTASK_KEY,TASK_DELAY_KEY,FTP_DELAY_KEY,FTP_RETRY_KEY,MAILER_HOST,MAILER_PORT,
+  private String [] KEYS = {DBLIST_KEY,FORCE_KEY,MAINTASK_KEY,TASK_DELAY_KEY,FTP_DELAY_KEY,FTP_RETRY_KEY,MAILER_HOST,MAILER_PORT,
       MAILER_SENDER,MAILER_PSWD,MAILER_RECP};
   
   
@@ -68,10 +69,10 @@ public class PFTPLoaderDescriptor {
     _descriptor = descriptorName;
   }
 
-  public static PFTPLoaderDescriptor create(String resumeDate, String workerMode) {
+  public static PFTPLoaderDescriptor create(String force, String workerMode) {
     PFTPLoaderDescriptor loaderDesc = new PFTPLoaderDescriptor("mirror");
     loaderDesc.setProperty(PFTPLoaderDescriptor.DBLIST_KEY, "");
-    loaderDesc.setProperty(PFTPLoaderDescriptor.RESUMEDT_KEY, resumeDate);
+    loaderDesc.setProperty(PFTPLoaderDescriptor.FORCE_KEY, force);
     loaderDesc.setProperty(PFTPLoaderDescriptor.MAINTASK_KEY, workerMode);
     loaderDesc.setProperty(PFTPLoaderDescriptor.FTP_DELAY_KEY, "5000");
     loaderDesc.setProperty(PFTPLoaderDescriptor.FTP_RETRY_KEY, "3");
@@ -112,6 +113,10 @@ public class PFTPLoaderDescriptor {
     String dbs = prepareDBList(this.getProperty(PFTPLoaderDescriptor.DBLIST_KEY));
     if (dbs!=null){
       _properties.setProperty(PFTPLoaderDescriptor.DBLIST_KEY, dbs);
+    }
+    //added to ensure backward compatibility; replacement of resume.date by force.delete
+    if (_properties.containsKey(FORCE_KEY)==false){
+      _properties.put(FORCE_KEY, "true");
     }
   }
 
