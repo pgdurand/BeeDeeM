@@ -26,6 +26,8 @@ rem -DKL_WORKING_DIR=an_absolute_path ; if not set, log and working
 rem  directories are set to java.io.tmp<br>
 rem -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that 
 rem  name within KL_WORKING_DIR<br><br>
+rem -DKL_CONF_DIR=an_absolute_path ; the absolute path to a home-made  
+rem  conf directory. If not set, use ${user.dir}/conf.
 
 set CUR_DIR=%cd%
 

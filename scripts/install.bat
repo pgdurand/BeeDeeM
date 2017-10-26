@@ -23,6 +23,8 @@ rem -DKL_WORKING_DIR=an_absolute_path ; if not set, log and working
 rem  directories are set to java.io.tmp<br>
 rem -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that 
 rem  name within KL_WORKING_DIR<br><br>
+rem -DKL_CONF_DIR=an_absolute_path ; the absolute path to a home-made  
+rem  conf directory. If not set, use ${user.dir}/conf.
 rem
 rem Proxy configuration: update configuration file: ${beedeemHome}/conf/system/network.config.
 
@@ -43,4 +45,4 @@ set FILES=
 for /F %%f in ('dir /b %KL_APP_HOME%\bin\*.jar') do set FILES=!FILES!;%KL_APP_HOME%\bin\%%f
 
 rem *** Start application
-"%KL_JAVA_VM%" %KL_JAVA_ARGS% -classpath "%FILES%" bzh.plealog.dbmirror.main.CmdLineInstaller %1
+"%KL_JAVA_VM%" %KL_JAVA_ARGS% -classpath "%FILES%" bzh.plealog.dbmirror.main.CmdLineInstaller %*

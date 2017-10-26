@@ -1,22 +1,19 @@
 #!/bin/sh
 #
-# DBMS program to query the repository ; for Mac/Windows
-# Copyright (c) - Patrick G. Durand, 2007-2017
+# -------------------------------------------------------------------
+# DBMS program to delete databanks ; for Mac/Linux
+# Copyright (c) - Patrick G. Durand, 2017
 # -------------------------------------------------------------------
 # User manual:
 #   https://pgdurand.gitbooks.io/beedeem/
 # -------------------------------------------------------------------
-# This is the program to use to query the databanks managed with 
-# DBMS. The program takes 3 argument, in this order:
+# The program can be used to delete a databank. It takes two arguments:
+# -code <bank-code>: index code of the bank to delete. Such a code can 
+#                    be obtained using the 'info' tool (use 'code' format).
+# -info: display bank directory to be deleted WITHOUT deleting it!
 #
-#    <database> <seqid> <format>
-#
-# Accepted values for 'database' is: dico, nucleotide or protein.
-# 
-# Accepted value for 'seqid' is a sequence identifier. 
-#
-# Accepted value for 'format' is: txt (default), html, 
-# insd, fas or finsd. 
+# See manual for more information: 
+# https://pgdurand.gitbooks.io/beedeem/
 #
 # In addition, some parameters can be passed to the JVM for special 
 # configuration purposes:<br>
@@ -45,5 +42,6 @@ KL_JAR_LIST_TMP=`\ls $KL_APP_HOME/bin/*.jar`
 KL_JAR_LIST=`echo $KL_JAR_LIST_TMP | sed 's/ /:/g'`
 
 # *** start application
-KL_APP_MAIN_CLASS=bzh.plealog.dbmirror.main.CmdLineQuery
-$KL_JAVA_VM $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS -d $1 -i $2 -f $3
+KL_APP_MAIN_CLASS=bzh.plealog.dbmirror.main.DeleteBank
+$KL_JAVA_VM $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS $1
+

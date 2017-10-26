@@ -21,6 +21,8 @@
 #  directories are set to java.io.tmp<br>
 # -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that 
 #  name within KL_WORKING_DIR<br><br>
+# -DKL_CONF_DIR=an_absolute_path ; the absolute path to a home-made  
+#  conf directory. If not set, use ${user.dir}/conf.
 #
 # Proxy configuration: update configuration file: ${beedeemHome}/conf/system/network.config.
 
@@ -41,6 +43,6 @@ KL_JAR_LIST=`echo $KL_JAR_LIST_TMP | sed 's/ /:/g'`
 
 # *** start application
 KL_APP_MAIN_CLASS=bzh.plealog.dbmirror.main.CmdLineInstaller
-$KL_JAVA_VM $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS $1
+$KL_JAVA_VM $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS $@
 
 chmod -R ugo+rX @BIOBASE_ROOTDIR@

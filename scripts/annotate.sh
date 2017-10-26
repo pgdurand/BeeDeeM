@@ -25,6 +25,8 @@
 #  directories are set to java.io.tmp
 # -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that 
 #  name within KL_WORKING_DIR
+# -DKL_CONF_DIR=an_absolute_path ; the absolute path to a home-made  
+#  conf directory. If not set, use ${user.dir}/conf.
 #
 
 # *** Application home
