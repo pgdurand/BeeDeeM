@@ -879,6 +879,10 @@ public class Utils {
     }
     return oldest;
   }
+  /**
+   * Return the oldest file of a directory. This method does not
+   * dig into sub-directories if any.
+   */
   public static Date getOldestFile(String directory){
     return getOldestFile(new File(directory));
   }

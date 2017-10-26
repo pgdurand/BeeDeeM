@@ -1,0 +1,25 @@
+$bdminfo.config.name
+
+#set( $pTable = $bdminfo.databases2.mirror_p ) 
+ - Protein banks: ${pTable.size()}
+#if( ${pTable.size()} != 0 )
+#foreach( $db in $pTable )
+      * $db.getName() : $db.getCode()
+#end
+#end
+  
+#set( $nTable = $bdminfo.databases2.mirror_n ) 
+ - Nucleotide banks: ${nTable.size()}
+#if( ${nTable.size()} != 0 )
+#foreach( $db in $nTable )
+      * $db.getName() : $db.getCode()
+#end
+#end
+
+#set( $dTable = $bdminfo.databases2.mirror_d ) 
+ - Biological classification banks: ${dTable.size()}
+#if( ${dTable.size()} != 0 )
+#foreach( $db in $dTable )
+      * $db.getName() : $db.getCode()
+#end
+#end

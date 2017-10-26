@@ -19,11 +19,9 @@ package bzh.plealog.dbmirror.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -45,20 +43,19 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
+import com.plealog.genericapp.api.EZEnvironment;
+
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
-import bzh.plealog.dbmirror.util.ant.PAntTasks;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
+import bzh.plealog.dbmirror.util.conf.DeleteBankHandler;
+import bzh.plealog.dbmirror.util.conf.DeleteBankUtility;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptor;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
 import bzh.plealog.dbmirror.util.descriptor.IdxDescriptor;
 import bzh.plealog.dbmirror.util.event.DBMirrorEvent;
 import bzh.plealog.dbmirror.util.event.DBMirrorListener;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
-import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
-
-import com.plealog.genericapp.api.EZEnvironment;
 
 /**
  * This class is used to display the list of installed databank.
@@ -525,146 +522,50 @@ public class InstalledDescriptorList extends JPanel implements DBMirrorListener 
   }
 
   private class DeleteThread extends Thread {
-    private MessageFormat _formatter = new MessageFormat(
-                                         DBMSMessages
-                                             .getString("InstalledDescriptorList.msg9b"));
 
-    private String getPotentialyDeletedBanks(String path, boolean osWin) {
-      StringBuffer buf;
-      IdxDescriptor d;
-      String lPath, path2;
-      int i, size;
-
-      buf = new StringBuffer();
-      // this was added because sometimes disk letter can be in lower or upper
-      // case!
-      if (osWin)
-        lPath = path.toUpperCase();
-      else
-        lPath = path;
-      size = _curDescs.size();
-      for (i = 0; i < size; i++) {
-        d = (IdxDescriptor) _curDescs.get(i);
-        // when creating simultaneously data index and blast db, both types
-        // of databank are in the same directory : when deleting one, actually
-        // all the content of 'path' is removed. As a consequence, we have
-        // to discard the other databank.
-        path2 = d.getCode();
-        if (osWin)
-          path2 = path2.toUpperCase();
-        if (path2.startsWith(lPath)) {
-          buf.append(d.getName());
-          buf.append("\n");
-        }
-      }
-      return buf.toString();
+    public void run() {
+      DeleteBankUtility.deleteBank(
+          _curDescs, 
+          (IdxDescriptor) _dbList.getValueAt(_dbList.getSelectedRow(), -1), 
+          new MyDeleteBankHandler());
+      EZEnvironment.setDefaultCursor();
     }
+  }
+  
+  private class MyDeleteBankHandler implements DeleteBankHandler {
+    private MessageFormat _formatter = new MessageFormat(
+        DBMSMessages
+            .getString("InstalledDescriptorList.msg9b"));
 
-    private void doTask(Frame f) {
-      ArrayList<IdxDescriptor> data;
-      DBMirrorConfig mConfig;
-      IdxDescriptor desc, d;
-      String path, path2, deletedDbs;
-      boolean discard, osWin;
-      int idx, i, size, ret;
-      List<String> deletedCodes = new ArrayList<String>();
-
-      desc = (IdxDescriptor) _dbList.getValueAt(_dbList.getSelectedRow(), -1);
-      if (desc == null)
-        return;
-
-      path = desc.getCode();
-      idx = path.indexOf(DBMSAbstractConfig.CURRENT_DIR);
-      if (idx != -1) {
-        // mirror handled by KDMS
-        path = path.substring(0, idx);
-      } else {
-        // personal DB : do not delete it, since it may be contained within a
-        // directory
-        // that also contains other databanks.
-        path = null;
-      }
-      ret = JOptionPane.showConfirmDialog(
+    @Override
+    public boolean confirmPersonalBankDeletion() {
+      int ret = JOptionPane.showConfirmDialog(
           JOptionPane.getFrameForComponent(InstalledDescriptorList.this),
           DBMSMessages.getString("InstalledDescriptorList.msg9"),
           DBMSMessages.getString("InstalledDescriptorList.msg8"),
           JOptionPane.YES_NO_OPTION);
-      if (ret == JOptionPane.NO_OPTION)
-        return;
-      osWin = DBMSExecNativeCommand.getOSType() == DBMSExecNativeCommand.WINDOWS_OS;
-      discard = false;
-      if (path != null) {
-        deletedDbs = getPotentialyDeletedBanks(path, osWin);
-        ret = JOptionPane.showConfirmDialog(
-            JOptionPane.getFrameForComponent(InstalledDescriptorList.this),
-            _formatter.format(new Object[] { path, deletedDbs }),
-            DBMSMessages.getString("InstalledDescriptorList.msg8"),
-            JOptionPane.YES_NO_CANCEL_OPTION);
-        if (ret == JOptionPane.CANCEL_OPTION)
-          return;
-        discard = (ret == JOptionPane.YES_OPTION);
-        if (discard) {
-          EZEnvironment.setWaitCursor();
-          if (!PAntTasks.deleteDirectory(path)) {
-
-            DicoTermQuerySystem.closeDicoTermQuerySystem();
-            if (!PAntTasks.deleteDirectory(path)) {
-              EZEnvironment.setDefaultCursor();
-              JOptionPane.showMessageDialog(JOptionPane
-                  .getFrameForComponent(InstalledDescriptorList.this),
-                  DBMSMessages.getString("InstalledDescriptorList.msg10"),
-                  DBMSMessages.getString("InstalledDescriptorList.msg8"),
-                  JOptionPane.WARNING_MESSAGE);
-              return;
-            }
-
-          }
-        }
-      }
-      data = new ArrayList<IdxDescriptor>();
-      size = _curDescs.size();
-      // this was added because sometimes disk letter can be in lower or upper
-      // case!
-      if (osWin)
-        path = path.toUpperCase();
-      for (i = 0; i < size; i++) {
-        d = (IdxDescriptor) _curDescs.get(i);
-        if (d != desc) {// compare by ref is ok here
-          // when creating simultaneously data index and blast db, both types
-          // of databank are in the same directory : when deleting one, actually
-          // all the content of 'path' is removed. As a consequence, we have
-          // to discard the other databank.
-          path2 = d.getCode();
-          if (osWin)
-            path2 = path2.toUpperCase();
-          if (discard) {
-            if (path2.startsWith(path) == false) {
-              data.add(d);
-            } else {
-              deletedCodes.add(d.getKbCode());
-            }
-          } else {
-            data.add(d);
-          }
-        } else {
-          deletedCodes.add(d.getKbCode());
-        }
-      }
-      mConfig = DBDescriptorUtils.getMirrorConfig(data, null);
-      // store this deleted index to not be re-used
-      mConfig.removeMirrorCode(deletedCodes);
-      DBDescriptorUtils.saveDBMirrorConfig(
-          DBMSAbstractConfig.getLocalMirrorConfFile(), mConfig);
-      DBMSAbstractConfig.fireMirrorEvent(new DBMirrorEvent(mConfig,
-          DBMirrorEvent.TYPE.dbRemoved));
-      _dbList.recompteColumnSize();
+      return (ret == JOptionPane.YES_OPTION);
     }
 
-    public void run() {
-      Frame f;
-      f = JOptionPane.getFrameForComponent(InstalledDescriptorList.this);
-      doTask(f);
+    @Override
+    public boolean confirmBankDeletion(String path, String deletedDbs) {
+      int ret = JOptionPane.showConfirmDialog(
+          JOptionPane.getFrameForComponent(InstalledDescriptorList.this),
+          _formatter.format(new Object[] { path, deletedDbs }),
+          DBMSMessages.getString("InstalledDescriptorList.msg8"),
+          JOptionPane.YES_NO_OPTION);
+      return (ret == JOptionPane.YES_OPTION);
+    }
+
+    @Override
+    public void cannotDeleteBank() {
       EZEnvironment.setDefaultCursor();
+      JOptionPane.showMessageDialog(JOptionPane
+          .getFrameForComponent(InstalledDescriptorList.this),
+          DBMSMessages.getString("InstalledDescriptorList.msg10"),
+          DBMSMessages.getString("InstalledDescriptorList.msg8"),
+          JOptionPane.WARNING_MESSAGE);
     }
+    
   }
 }
