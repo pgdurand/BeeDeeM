@@ -16,8 +16,10 @@
  */
 package bzh.plealog.dbmirror.main;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Properties;
@@ -63,14 +65,36 @@ import bzh.plealog.dbmirror.util.mail.PMailer;
  */
 public class CmdLineInstaller {
 
-  private static final Log    LOGGER           = LogFactory
-                                                   .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                                                       + ".PMirror");
+  private static final Log LOGGER = LogFactory
+                     .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+                         + ".PMirror");
 
+  private File prepareListOfBanks(){
+    File f=null;
+    FileOutputStream fos=null;
+    
+    try {
+      f = File.createTempFile("bdm-list-of-banks", ".txt");
+      fos = new FileOutputStream(f);
+      DumpBankList dbl = new DumpBankList();
+      dbl.doJob(fos, "all", "txt", "?");
+      fos.flush();
+      fos.close();
+      if (f.length()==0){
+        f.delete();
+        f=null;
+      }
+    } catch (Exception e) {
+      //for now, hide this msg, not really bad
+    }
+    
+    return f;
+  }
   private void sendTerminationMail(PFTPLoaderDescriptor fDescriptor) {
     PMailer mailer;
     String host, port, sender, pswd, recp, val, desc, subject, body;
-
+    File bankList=null;
+    
     host = fDescriptor.getProperty(PFTPLoaderDescriptor.MAILER_HOST);
     if (host == null || host.length() == 0)
       return;
@@ -91,23 +115,33 @@ public class CmdLineInstaller {
     if (val != null && val.equals("true"))
       mailer.setDebug(true);
     desc = fDescriptor.getDescriptorName();
-    if (LoggerCentral.errorMsgEmitted()) {
+    if (LoggerCentral.errorMsgEmitted()) { 
+      // ERROR
       subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg3")).format(
           new Object[]{desc});
       body = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg4")).format(
           new Object[]{desc});
-    } else if (LoggerCentral.processAborted()) {
+    } else if (LoggerCentral.processAborted()) { 
+      // ABORT
       subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg5")).format(
           new Object[]{desc});
       body = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg6")).format(
           new Object[]{desc});
-    } else {
+    } else { 
+      //OK
       subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg7")).format(
           new Object[]{desc});
       body = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg8")).format(
           new Object[]{desc});
+      bankList = prepareListOfBanks();
     }
-    mailer.sendMail(recp,subject,body);
+    if (bankList!=null){
+      mailer.sendMail(recp,subject,body, bankList.getAbsolutePath());
+      bankList.deleteOnExit();
+    }
+    else{
+      mailer.sendMail(recp,subject,body);
+    }
   }
   
   private void dumpStarterMessage(){

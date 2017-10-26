@@ -17,6 +17,7 @@
 package bzh.plealog.dbmirror.main;
 
 import java.io.BufferedWriter;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -201,23 +202,13 @@ public class DumpBankList {
   /**
    * Run job.
    */
-  private void doJob(String[] args) {
-    VelocityEngine ve;
-    VelocityContext context;
-    Template t;
-    StringWriter writer;
+  private void doJob(String[] args, OutputStream os) {
     String db, ft, us;
     CommandLine cmdLine;
-    List<DatabankDescriptor> emptyList = new ArrayList<DatabankDescriptor>();
-    List<DatabankDescriptor> dbList;
-    long dbTotalSize = 0l;
     String toolName = DBMSMessages.getString("Tool.Query.name");
     
     // Configure software
     StarterUtils.configureApplication(null, toolName, true, false, true);
-
-    // Get version info
-    Properties props = StarterUtils.getVersionProperties();
 
     // Handle command-line
     cmdLine = CmdLineUtils.handleArguments(args, getCmdLineOptions(), toolName);
@@ -227,7 +218,21 @@ public class DumpBankList {
     db = getDatabaseType(cmdLine);
     ft = getFormatType(cmdLine);
     us = getUserLoginName(cmdLine);
+    doJob(os, db, ft, us);
+  }
+  
+  protected void doJob(OutputStream os, String db, String ft, String us){
+    VelocityEngine ve;
+    VelocityContext context;
+    Template t;
+    StringWriter writer;
+    List<DatabankDescriptor> emptyList = new ArrayList<DatabankDescriptor>();
+    List<DatabankDescriptor> dbList;
+    long dbTotalSize = 0l;
     
+    // Get version info
+    Properties props = StarterUtils.getVersionProperties();
+
     // Setup Maps to be used with Velocity Template engine
     LinkedHashtable<String, Object> mdserverinfo = new LinkedHashtable<String, Object>();
     LinkedHashtable<String, Object> config = new LinkedHashtable<String, Object>();
@@ -298,8 +303,7 @@ public class DumpBankList {
         DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
 
     // Run Velocity Engine
-    try (BufferedWriter outWriter = new BufferedWriter(new OutputStreamWriter(
-        System.out))) {
+    try (BufferedWriter outWriter = new BufferedWriter(new OutputStreamWriter(os))) {
       ve.init();
       // Velocity template is taken from "conf/system" directory.
       // One can see that Velocity template name is generated using
@@ -316,6 +320,6 @@ public class DumpBankList {
   }
 
   public static void main(String[] args) {
-    new DumpBankList().doJob(args);
+    new DumpBankList().doJob(args, System.out);
   }
 }
