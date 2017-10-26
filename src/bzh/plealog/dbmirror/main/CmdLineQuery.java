@@ -24,6 +24,7 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
 import bzh.plealog.dbmirror.reader.PQueryMirrorBase;
+import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 
 /**
@@ -49,9 +50,9 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
  * @author Patrick G. Durand
  */
 public class CmdLineQuery {
-  public static final String DATABASE = "d";
-  public static final String SEQID = "i";
-  public static final String FORMAT = "f";
+  private static final String DATABASE = "d";
+  private static final String SEQID = "i";
+  private static final String FORMAT = "f";
 
   /**
    * Setup the valid command-line of the application.
@@ -61,22 +62,22 @@ public class CmdLineQuery {
     Options opts;
 
     Option repo = OptionBuilder
-        .withArgName( "repository" )
+        .withArgName( DBMSMessages.getString("Tool.Query.arg1.lbl") )
         .hasArg()
         .isRequired()
-        .withDescription("type of repository. One of: nucleotide, protein, dico. Mandatory." )
+        .withDescription( DBMSMessages.getString("Tool.Query.arg1.desc") )
         .create(DATABASE);
     Option in = OptionBuilder
-        .withArgName( "seqID" )
+        .withArgName( DBMSMessages.getString("Tool.Query.arg2.lbl") )
         .hasArg()
         .isRequired()
-        .withDescription("a sequence ID. Mandatory." )
+        .withDescription( DBMSMessages.getString("Tool.Query.arg2.desc") )
         .create(SEQID);
     Option ft = OptionBuilder
-        .withArgName( "format" )
+        .withArgName( DBMSMessages.getString("Tool.Query.arg3.lbl") )
         .hasArg()
         .isRequired()
-        .withDescription("format. One of: txt, fas, html, insd, finsd. Mandatory." )
+        .withDescription( DBMSMessages.getString("Tool.Query.arg3.desc") )
         .create(FORMAT);
 
     opts = new Options();
@@ -92,7 +93,7 @@ public class CmdLineQuery {
     Hashtable<String, String> values;
     CommandLine cmdLine;
     Options options;
-    String toolName = "Query";
+    String toolName = DBMSMessages.getString("Tool.Query.name");
     
     // prepare the Logging system
     StarterUtils.configureApplication(null, toolName, true, false, true);

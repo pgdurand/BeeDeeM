@@ -9,9 +9,13 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
+import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 
 public class CmdLineUtils {
+  private static final String HELP_KEY = "help";
+  private static final String H_KEY    = "h";
+  private static final String CONFDIR_KEY = "conf-dir";
   
   /**
    * Prepare an option to deal with configuration path.
@@ -19,10 +23,10 @@ public class CmdLineUtils {
   @SuppressWarnings("static-access")
   protected static void setConfDirOption(Options opts){
     Option confDir = OptionBuilder
-        .withArgName("directory" )
-        .withLongOpt("conf-dir")
+        .withArgName( DBMSMessages.getString("Tool.Utils.arg1.lbl") )
+        .withLongOpt(CONFDIR_KEY)
         .hasArg()
-        .withDescription("absolute path to custom conf directory" )
+        .withDescription( DBMSMessages.getString("Tool.Utils.arg1.desc" ) )
         .create();
     opts.addOption(confDir);
   }
@@ -30,9 +34,9 @@ public class CmdLineUtils {
    * Prepare an option to deal with help.
    */
   protected static void setHelpOption(Options opts){
-    String msg = "print this message";
-    opts.addOption(new Option( "help", msg ));
-    opts.addOption(new Option( "h", msg ));
+    String msg = DBMSMessages.getString("Tool.Utils.info.msg1" );
+    opts.addOption(new Option( HELP_KEY, msg ));
+    opts.addOption(new Option( H_KEY, msg ));
   }
 
   /**
@@ -85,10 +89,10 @@ public class CmdLineUtils {
     
     if(line!=null){ 
       //--conf-dir is a shortcut to JVM argument -DKL_CONF_DIR=a-path
-      if (line.hasOption( "conf-dir" ) ){
-        DBMSAbstractConfig.setConfPath(DBMSAbstractConfig.pruneQuotes(line.getOptionValue("conf-dir")));
+      if (line.hasOption( CONFDIR_KEY ) ){
+        DBMSAbstractConfig.setConfPath(DBMSAbstractConfig.pruneQuotes(line.getOptionValue(CONFDIR_KEY)));
       }
-      if ( line.hasOption( "help" ) ||  line.hasOption( "h" ) || 
+      if ( line.hasOption( HELP_KEY ) ||  line.hasOption( H_KEY ) || 
           ( line.getArgList().isEmpty() && line.getOptions().length==0 ) ){
         // Initialize the member variable
         printUsage(toolName, options);

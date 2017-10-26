@@ -39,6 +39,7 @@ import org.apache.velocity.runtime.RuntimeConstants;
 
 import com.plealog.genericapp.api.log.EZLogger;
 
+import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.Configuration;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -85,23 +86,23 @@ public class DumpBankList {
   @SuppressWarnings("static-access")
   private static Options getCmdLineOptions() {
     Options opts;
-    
+
     Option type = OptionBuilder
-        .withArgName( "repository" )
+        .withArgName( DBMSMessages.getString("Tool.Dump.arg1.lbl") )
         .hasArg()
-        .withDescription("type of repository. One of: n, p, b, all. Default is: all." )
+        .withDescription( DBMSMessages.getString("Tool.Dump.arg1.desc") )
         .create( DB_ARG );
     
     Option format = OptionBuilder
-        .withArgName( "format" )
+        .withArgName( DBMSMessages.getString("Tool.Dump.arg2.lbl") )
         .hasArg()
-        .withDescription("format. One of: txt, html, galaxy. Default is: txt." )
+        .withDescription( DBMSMessages.getString("Tool.Dump.arg2.desc") )
         .create( FT_ARG );
    
     Option user = OptionBuilder
-        .withArgName( "user" )
+        .withArgName( DBMSMessages.getString("Tool.Dump.arg3.lbl") )
         .hasArg()
-        .withDescription("user-name. A valid user login name." )
+        .withDescription( DBMSMessages.getString("Tool.Dump.arg3.desc") )
         .create( US_ARG );
     
     opts = new Options();
@@ -152,8 +153,8 @@ public class DumpBankList {
     	  dbList.add(new DatabankDescriptor(descriptor));
         }
       } catch (Exception ex) {
-        EZLogger.warn("Unable to read databank "
-            + (descriptor != null ? descriptor.getName() : "") + " : "
+        EZLogger.warn(DBMSMessages.getString("Tool.Dump.err.msg1")+" "
+            + (descriptor != null ? descriptor.getName() : "") + ": "
             + ex.getMessage());
       }
     }
@@ -210,15 +211,16 @@ public class DumpBankList {
     List<DatabankDescriptor> emptyList = new ArrayList<DatabankDescriptor>();
     List<DatabankDescriptor> dbList;
     long dbTotalSize = 0l;
+    String toolName = DBMSMessages.getString("Tool.Query.name");
     
     // Configure software
-    StarterUtils.configureApplication(null, "DumpBankList", true, false, true);
+    StarterUtils.configureApplication(null, toolName, true, false, true);
 
     // Get version info
     Properties props = StarterUtils.getVersionProperties();
 
     // Handle command-line
-    cmdLine = CmdLineUtils.handleArguments(args, getCmdLineOptions(), "Dump Bank List");
+    cmdLine = CmdLineUtils.handleArguments(args, getCmdLineOptions(), toolName);
     if (cmdLine==null){
       System.exit(1);
     }

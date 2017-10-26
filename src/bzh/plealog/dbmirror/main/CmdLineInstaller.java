@@ -19,6 +19,7 @@ package bzh.plealog.dbmirror.main;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
@@ -27,6 +28,7 @@ import org.apache.commons.logging.LogFactory;
 
 import bzh.plealog.dbmirror.fetcher.PFTPLoaderDescriptor;
 import bzh.plealog.dbmirror.fetcher.PFTPLoaderSystem;
+import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.conf.Configuration;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
@@ -61,17 +63,13 @@ import bzh.plealog.dbmirror.util.mail.PMailer;
  */
 public class CmdLineInstaller {
 
-  public static final String  ERR_DESC_MISSING = "Missing directives file. Processus aborted.";
-  private static final String ERR1             = "File not found: ";
-  private static final String ERR2             = "Unable to read file: ";
-  private static final String ERR3             = "Unexpected error: ";
   private static final Log    LOGGER           = LogFactory
                                                    .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                        + ".PMirror");
 
   private void sendTerminationMail(PFTPLoaderDescriptor fDescriptor) {
     PMailer mailer;
-    String host, port, sender, pswd, recp, val, desc;
+    String host, port, sender, pswd, recp, val, desc, subject, body;
 
     host = fDescriptor.getProperty(PFTPLoaderDescriptor.MAILER_HOST);
     if (host == null || host.length() == 0)
@@ -94,19 +92,24 @@ public class CmdLineInstaller {
       mailer.setDebug(true);
     desc = fDescriptor.getDescriptorName();
     if (LoggerCentral.errorMsgEmitted()) {
-      mailer.sendMail(recp, "[" + DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-          + "] - processing " + desc + ": ERROR", "Processing of " + desc
-          + " emitted warnings. Please check KDMS log files.");
+      subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg3")).format(
+          new Object[]{desc});
+      body = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg4")).format(
+          new Object[]{desc});
     } else if (LoggerCentral.processAborted()) {
-      mailer.sendMail(recp, "[" + DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-          + "] - processing " + desc + ": STOP", "Processing of " + desc
-          + " has been canceled. Please check KDMS log files.");
+      subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg5")).format(
+          new Object[]{desc});
+      body = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg6")).format(
+          new Object[]{desc});
     } else {
-      mailer.sendMail(recp, "[" + DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-          + "] - processing " + desc + ": OK", "Processing of " + desc
-          + " is successful. Databases are now in production.");
+      subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg7")).format(
+          new Object[]{desc});
+      body = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg8")).format(
+          new Object[]{desc});
     }
+    mailer.sendMail(recp,subject,body);
   }
+  
   private void dumpStarterMessage(){
     Properties props = StarterUtils.getVersionProperties();
     StringBuffer buf = new StringBuffer("\n");
@@ -115,9 +118,11 @@ public class CmdLineInstaller {
     buf.append(props.getProperty("prg.version"));
     buf.append(".\n");
     System.out.println(buf.toString());
-    System.out.println("Log file is: "+DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName());
-    System.out.println("             check out this file to get processing details");
-    System.out.println("Job is now running...");
+    
+    
+    String msg = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg2")).format(
+        new Object[]{DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName()});
+    System.out.println(msg);
   }
   private void startApplication(String descriptorName, PFTPLoaderDescriptor fDescCmd) {
     PFTPLoaderSystem lSystem;
@@ -144,17 +149,17 @@ public class CmdLineInstaller {
       // send email to administrator if needed
       sendTerminationMail(fDesc);
     } catch (FileNotFoundException e) {
-      LoggerCentral.error(LOGGER, ERR1 + descriptor);
+      LoggerCentral.error(LOGGER, DBMSMessages.getString("Tool.Install.error.msg2") + descriptor);
     } catch (IOException e) {
-      LoggerCentral.error(LOGGER, ERR2 + descriptor);
+      LoggerCentral.error(LOGGER, DBMSMessages.getString("Tool.Install.error.msg3") + descriptor);
     } catch (Exception e) {
-      LoggerCentral.error(LOGGER, ERR3 + e);
+      LoggerCentral.error(LOGGER, DBMSMessages.getString("Tool.Install.error.msg4") + e);
     }
     if (LoggerCentral.errorMsgEmitted()){
-      System.out.println("Job done with status: FAILURE. Review log file");
+      System.err.println(DBMSMessages.getString("Tool.Install.error.msg1"));
     }
     else{
-      System.out.println("Job done with status: SUCCESS");
+      System.out.println(DBMSMessages.getString("Tool.Install.info.msg1"));
     }
   }
 

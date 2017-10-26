@@ -10,6 +10,7 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
 import bzh.plealog.dbmirror.fetcher.PFTPLoaderDescriptor;
+import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 
 /**
  * This class handles available options for the command-line installer.
@@ -32,7 +33,6 @@ public class CmdLineInstallerOptions {
       "pswd","mail.smtp.sender.pswd",
       "recipient","mail.smtp.recipient.mail"
       };
-  private static final String TOOL_NAME = "Command-line installer" ;
   private static Options OPTIONS = null;
 
   /**
@@ -59,68 +59,78 @@ public class CmdLineInstallerOptions {
       mail.smtp.recipient.mail=
      */
     Option dbList = OptionBuilder
-        .withArgName( "descriptor" )
+        .withArgName( DBMSMessages.getString("Tool.Install.arg2.lbl") )
         .hasArg()
-        .withDescription(  "comma separated list of descriptor (.dsc) names" )
+        .withDescription( DBMSMessages.getString("Tool.Install.arg2.desc") )
         .create( "desc" );
+
     Option task = OptionBuilder
-        .withArgName( "task-name" )
+        .withArgName( DBMSMessages.getString("Tool.Install.arg3.lbl") )
         .hasArg()
-        .withDescription(  "one of: download, info" )
+        .withDescription(  DBMSMessages.getString("Tool.Install.arg3.desc") )
         .create( "task" );
+
     Option resume = OptionBuilder
-        .withArgName( "bool" )
+        .withArgName( DBMSMessages.getString("Tool.Install.arg4.lbl") )
         .hasArg()
-        .withDescription(  "one of: true, false" )
+        .withDescription( DBMSMessages.getString("Tool.Install.arg4.desc") )
         .create( "force" );
+    
+
     Option taskDelay = OptionBuilder
-        .withArgName( "delay" )
+        .withArgName( DBMSMessages.getString("Tool.Install.arg5.lbl") )
         .withLongOpt("task-delay")
         .hasArg()
-        .withDescription(  "time value in milliseconds between consecutive task execution" )
+        .withDescription( DBMSMessages.getString("Tool.Install.arg5.desc") )
         .create( "td" );
+    
     Option ftpDelay = OptionBuilder
-        .withArgName( "delay" )
+        .withArgName( DBMSMessages.getString("Tool.Install.arg6.lbl") )
         .withLongOpt("ftp-delay")
         .hasArg()
-        .withDescription(  "time value in milliseconds between consecutive FTP file retrieval" )
+        .withDescription(  DBMSMessages.getString("Tool.Install.arg6.desc") )
         .create( "fd" );
+    
     Option ftpRetry = OptionBuilder
-        .withArgName( "retry" )
+        .withArgName( DBMSMessages.getString("Tool.Install.arg7.lbl") )
         .withLongOpt("ftp-retry")
         .hasArg()
-        .withDescription(  "number of times to retry FTP file retrieval" )
+        .withDescription( DBMSMessages.getString("Tool.Install.arg7.desc") )
         .create( "fr" );
-    
+
     Option msh = OptionBuilder
-        .withArgName( "host" )
+        .withArgName( DBMSMessages.getString("Tool.Install.arg8.lbl") )
         .withLongOpt("mail-smtp-host")
         .hasArg()
-        .withDescription(  "smtp server host name or IP" )
+        .withDescription(  DBMSMessages.getString("Tool.Install.arg8.desc") )
         .create( "host" );
+
     Option msp = OptionBuilder
-        .withArgName( "port" )
+        .withArgName( DBMSMessages.getString("Tool.Install.arg9.lbl") )
         .withLongOpt("mail-smtp-port")
         .hasArg()
-        .withDescription(  "smtp server port" )
+        .withDescription( DBMSMessages.getString("Tool.Install.arg9.desc") )
         .create( "port" );
+    
     Option mssm = OptionBuilder
-        .withArgName( "email" )
+        .withArgName( DBMSMessages.getString("Tool.Install.arg10.lbl") )
         .withLongOpt("sender-mail")
         .hasArg()
-        .withDescription(  "email of the sender" )
+        .withDescription( DBMSMessages.getString("Tool.Install.arg10.desc") )
         .create( "sender" );
+
     Option mssp = OptionBuilder
-        .withArgName( "pswd" )
+        .withArgName( DBMSMessages.getString("Tool.Install.arg11.lbl") )
         .withLongOpt("sender-pswd")
         .hasArg()
-        .withDescription(  "password of the sender" )
+        .withDescription( DBMSMessages.getString("Tool.Install.arg11.desc") )
         .create( "pswd" );
+
     Option recipient = OptionBuilder
-        .withArgName( "email" )
+        .withArgName( DBMSMessages.getString("Tool.Install.arg12.lbl") )
         .withLongOpt("recipient-mail")
         .hasArg()
-        .withDescription(  "recipient of the email" )
+        .withDescription( DBMSMessages.getString("Tool.Install.arg12.desc") )
         .create( "recipient" );
     
     Options options = new Options();
@@ -187,7 +197,7 @@ public class CmdLineInstallerOptions {
   }
   
   public static CommandLine handleArguments(String[] args){
-    return CmdLineUtils.handleArguments(args, createOptions(), TOOL_NAME);
+    return CmdLineUtils.handleArguments(args, createOptions(), DBMSMessages.getString("Tool.Install.name"));
   }
   
 }

@@ -22,6 +22,7 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
 import bzh.plealog.dbmirror.annotator.PAnnotateBlastResult;
+import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 
 /**
  * This class can be used to annotate Blast results. Command line is as follows:<br>
@@ -49,30 +50,30 @@ public class Annotate {
   @SuppressWarnings("static-access")
   private static Options getCmdLineOptions() {
     Options opts;
-
+   
     Option type = OptionBuilder
-        .withArgName( "repository" )
+        .withArgName( DBMSMessages.getString("Tool.Annotate.arg1.lbl") )
         .hasArg()
         .isRequired()
-        .withDescription("type of annotation to retrieve. Options: bco or full. Mandatory." )
+        .withDescription( DBMSMessages.getString("Tool.Annotate.arg1.desc") )
         .create(PAnnotateBlastResult.annot_type);
     Option in = OptionBuilder
-        .withArgName( "Blast file" )
+        .withArgName( DBMSMessages.getString("Tool.Annotate.arg2.lbl") )
         .hasArg()
         .isRequired()
-        .withDescription("input Blast file to annotate. Must be legacy BLAST XML format. Mandatory." )
+        .withDescription( DBMSMessages.getString("Tool.Annotate.arg2.desc") )
         .create(PAnnotateBlastResult.input_file);
     Option out = OptionBuilder
-        .withArgName( "Annot file" )
+        .withArgName( DBMSMessages.getString("Tool.Annotate.arg3.lbl") )
         .hasArg()
         .isRequired()
-        .withDescription("output file containing the annotated Blast result. Mandatory." )
+        .withDescription( DBMSMessages.getString("Tool.Annotate.arg3.desc") )
         .create(PAnnotateBlastResult.output_file);
     Option format = OptionBuilder
-        .withArgName( "repository" )
+        .withArgName( DBMSMessages.getString("Tool.Annotate.arg4.lbl") )
         .hasArg()
         .isRequired()
-        .withDescription("Type of writer. One of: xml, zml. Mandatory." )
+        .withDescription( DBMSMessages.getString("Tool.Annotate.arg4.desc") )
         .create(PAnnotateBlastResult.writer_type);
 
     opts = new Options();
@@ -89,11 +90,12 @@ public class Annotate {
     CommandLine cmdLine;
     String input, output, writer, type;
     Options options;
-    
+    String toolName = DBMSMessages.getString("Tool.Annotate.name");
+
     // prepare the Logging system
-    StarterUtils.configureApplication(null, "Annotate", true, false, true);
+    StarterUtils.configureApplication(null, toolName, true, false, true);
     options = getCmdLineOptions();
-    cmdLine = CmdLineUtils.handleArguments(args, options, "Annotate");
+    cmdLine = CmdLineUtils.handleArguments(args, options, toolName);
     if (cmdLine == null) {
       System.exit(1);
     }
