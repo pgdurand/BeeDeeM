@@ -1,11 +1,15 @@
 package bzh.plealog.dbmirror.util.conf;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.io.FileUtils;
 
 import com.plealog.genericapp.api.EZEnvironment;
 
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
+import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.ant.PAntTasks;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
 import bzh.plealog.dbmirror.util.descriptor.IdxDescriptor;
@@ -52,8 +56,19 @@ public class DeleteBankUtility {
       if (osWin)
         path2 = path2.toUpperCase();
       if (path2.startsWith(lPath)) {
-        buf.append(d.getName());
-        buf.append("\n");
+        File[] files = new File(lPath).listFiles();
+        for (File f : files){
+          if (f.isDirectory()){
+            long diskSizeL = FileUtils.sizeOfDirectory(f);
+            buf.append(d.getName());
+            buf.append(File.separator);
+            buf.append(f.getName());
+            buf.append(" (");
+            buf.append(Utils.getBytes(diskSizeL));
+            buf.append(")");
+            buf.append("\n");
+          }
+        }
       }
     }
     return buf.toString();
