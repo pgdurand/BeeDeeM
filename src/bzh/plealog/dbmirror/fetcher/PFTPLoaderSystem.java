@@ -380,23 +380,26 @@ public class PFTPLoaderSystem {
       // final step: install downloaded/processed DBs into production
       if (processedDB.isEmpty() == false) {
 
+        // install bank in production
         ArrayList<DBServerConfig> installInProd = new ArrayList<DBServerConfig>();
+        for (DBServerConfig dbc : processedDB) {
+          // Install in prod only if required
+          if (dbc.mustBeInstallInProduction()) {
+            installInProd.add(dbc);
+          }
+        }
+        _taskEngine.addTask(new PTaskInstallInProduction(installInProd),
+            DBServerConfig.CENTRAl_CONF);
 
+        // handle history of older versions of a same bank
         for (DBServerConfig dbc : processedDB) {
           str = dbc.getHistoryToKeep();
           if (str != null) {
             _taskEngine.addTask(new PTaskHandleHistory(dbc.getLocalFolder(),
                 Integer.valueOf(str)), dbc.getName());
           }
-
-          // Install in prod only if required
-          if (dbc.mustBeInstallInProduction()) {
-            installInProd.add(dbc);
-          }
         }
-
-        _taskEngine.addTask(new PTaskInstallInProduction(installInProd),
-            DBServerConfig.CENTRAl_CONF);
+      
       }
       // wait for all jobs to terminate
       SystemTerminator st = new SystemTerminator();
