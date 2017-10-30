@@ -133,6 +133,12 @@ public class CmdLineInstallerOptions {
         .withDescription( DBMSMessages.getString("Tool.Install.arg12.desc") )
         .create( "recipient" );
     
+    Option eformat = OptionBuilder
+        .withArgName( DBMSMessages.getString("Tool.Install.arg13.lbl") )
+        .hasArg()
+        .withDescription( DBMSMessages.getString("Tool.Install.arg13.desc") )
+        .create( DumpBankList.FT_ARG );
+
     Options options = new Options();
     options.addOption(dbList);
     options.addOption(task);
@@ -145,6 +151,7 @@ public class CmdLineInstallerOptions {
     options.addOption(mssm);
     options.addOption(mssp);
     options.addOption(recipient);
+    options.addOption(eformat);
     CmdLineUtils.setConfDirOption(options);
     CmdLineUtils.setHelpOption(options);
     return options;

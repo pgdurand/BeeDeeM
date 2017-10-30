@@ -303,11 +303,25 @@ public class DumpBankList {
         DBMSAbstractConfig.getConfPath(Configuration.SYSTEM));
 
     // Run Velocity Engine
-    try (BufferedWriter outWriter = new BufferedWriter(new OutputStreamWriter(os))) {
+    try {
       ve.init();
+    }
+    catch(Exception e){
+      LoggerCentral.warn(LOGGER, "Cannot initialize Velocity Engine");
+      return;
+    }
+    try {
       // Velocity template is taken from "conf/system" directory.
       // One can see that Velocity template name is generated using
       // value of cmdline argument "-f"
+      t = ve.getTemplate(String.format("dbmsVersion-%s.vm", ft));
+    }
+    catch(Exception e){
+      String msg = String.format("dbmsVersion-%s.vm Velocity Template not found, use 'txt'", ft);
+      LoggerCentral.warn(LOGGER, msg);
+      ft = "txt";
+    }
+    try (BufferedWriter outWriter = new BufferedWriter(new OutputStreamWriter(os))) {
       t = ve.getTemplate(String.format("dbmsVersion-%s.vm", ft));
       context = new VelocityContext();
       context.put("bdminfo", mdserverinfo);

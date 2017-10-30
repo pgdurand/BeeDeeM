@@ -42,6 +42,11 @@ import bzh.plealog.dbmirror.util.mail.PMailer;
  * descriptor file name without its extension. That file is supposed to be
  * located within the conf directory of the application.<br>
  * <br>
+ * Starting with release 4.3, software can alternatively be configured using
+ * command-line arguments. For more information, see software manual or run it
+ * without any arguments. To ensure backward compatibility, this software can
+ * still be used as stated in the previous paragraph.
+ * <br>
  * The program may be configured using an environment variable: KDMS_CONF_DIR.
  * This variable should declare the absolute path to the configuration directory
  * of KDMS. If that variable is not declared, then the application locates the
@@ -69,7 +74,7 @@ public class CmdLineInstaller {
                      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                          + ".PMirror");
 
-  private File prepareListOfBanks(){
+  private File prepareListOfBanks(String bankListFormat){
     File f=null;
     FileOutputStream fos=null;
     
@@ -77,7 +82,7 @@ public class CmdLineInstaller {
       f = File.createTempFile("bdm-list-of-banks", ".txt");
       fos = new FileOutputStream(f);
       DumpBankList dbl = new DumpBankList();
-      dbl.doJob(fos, "all", "txt", "?");
+      dbl.doJob(fos, "all", bankListFormat, "?");
       fos.flush();
       fos.close();
       if (f.length()==0){
@@ -90,7 +95,7 @@ public class CmdLineInstaller {
     
     return f;
   }
-  private void sendTerminationMail(PFTPLoaderDescriptor fDescriptor) {
+  private void sendTerminationMail(PFTPLoaderDescriptor fDescriptor, String bankListFormat) {
     PMailer mailer;
     String host, port, sender, pswd, recp, val, desc, subject, body;
     File bankList=null;
@@ -118,22 +123,22 @@ public class CmdLineInstaller {
     if (LoggerCentral.errorMsgEmitted()) { 
       // ERROR
       subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg3")).format(
-          new Object[]{desc});
+          new Object[]{DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY, desc});
       body = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg4")).format(
           new Object[]{desc});
     } else if (LoggerCentral.processAborted()) { 
       // ABORT
       subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg5")).format(
-          new Object[]{desc});
+          new Object[]{DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY, desc});
       body = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg6")).format(
           new Object[]{desc});
     } else { 
       //OK
       subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg7")).format(
-          new Object[]{desc});
+          new Object[]{DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY, desc});
       body = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg8")).format(
           new Object[]{desc});
-      bankList = prepareListOfBanks();
+      bankList = prepareListOfBanks(bankListFormat);
     }
     if (bankList!=null){
       mailer.sendMail(recp,subject,body, bankList.getAbsolutePath());
@@ -158,7 +163,7 @@ public class CmdLineInstaller {
         new Object[]{DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName()});
     System.out.println(msg);
   }
-  private void startApplication(String descriptorName, PFTPLoaderDescriptor fDescCmd) {
+  private void startApplication(String descriptorName, PFTPLoaderDescriptor fDescCmd, String bankListFormat) {
     PFTPLoaderSystem lSystem;
     PFTPLoaderDescriptor fDesc;
     String descriptor;
@@ -181,7 +186,7 @@ public class CmdLineInstaller {
       lSystem = new PFTPLoaderSystem(new PFTPLoaderDescriptor[] { fDesc });
       lSystem.runProcessing();
       // send email to administrator if needed
-      sendTerminationMail(fDesc);
+      sendTerminationMail(fDesc, bankListFormat);
     } catch (FileNotFoundException e) {
       LoggerCentral.error(LOGGER, DBMSMessages.getString("Tool.Install.error.msg2") + descriptor);
     } catch (IOException e) {
@@ -229,9 +234,15 @@ public class CmdLineInstaller {
     // do we have options? (second and third cases described above)
     PFTPLoaderDescriptor fDescCmd = CmdLineInstallerOptions.getDescriptorFromOptions(cmd);
     
+    // default format for report: txt (this report is only created when
+    // email stuffs are used)
+    String bankListFormat = "txt";
+    if (cmd.hasOption(DumpBankList.FT_ARG)){
+      bankListFormat = cmd.getOptionValue(DumpBankList.FT_ARG);
+    }
     //go, go, go...
     CmdLineInstaller mirror = new CmdLineInstaller();
-    mirror.startApplication(globalDesc, fDescCmd);
+    mirror.startApplication(globalDesc, fDescCmd, bankListFormat);
   }
 
 }
