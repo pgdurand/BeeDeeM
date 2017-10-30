@@ -41,7 +41,8 @@
 	<property name="KLUIMirrorClass" value="${rootpkg}.UiInstaller" />
 	<property name="KLQueryMirrorClass" value="${rootpkg}.CmdLineQuery" />
 	<property name="KLMirrorAnnot" value="${rootpkg}.Annotate" />
-	<property name="KLMirrorInfo" value="${rootpkg}.DumpBankList" />
+  <property name="KLMirrorInfo" value="${rootpkg}.DumpBankList" />
+  <property name="KLMirrorDelete" value="${rootpkg}.DeleteBank" />
 
 	<path id="class.path">
 		<pathelement path="${classpath}" />
@@ -198,6 +199,11 @@
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
 			</filterset>
 		</copy>
+    <copy file="${scripts}/delete.sh" todir="${Dscripts}">
+      <filterset>
+        <filter token="APP_MAIN_CLASS" value="${KLMirrorDelete}" />
+      </filterset>
+    </copy>
 		<copy file="${scripts}/install.bat" todir="${Dscripts}">
 			<filterset>
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorClass}" />
@@ -223,6 +229,11 @@
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
 			</filterset>
 		</copy>
+    <copy file="${scripts}/delete.bat" todir="${Dscripts}">
+      <filterset>
+        <filter token="APP_MAIN_CLASS" value="${KLMirrorDelete}" />
+      </filterset>
+    </copy>
 		<!-- Galaxy wrapper to list available DBs -->
     <copy file="${scripts}/beedeem_info.xml" todir="${Dconf}/system">
       <filterset>
