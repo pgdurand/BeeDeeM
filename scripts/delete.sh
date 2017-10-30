@@ -43,5 +43,5 @@ KL_JAR_LIST=`echo $KL_JAR_LIST_TMP | sed 's/ /:/g'`
 
 # *** start application
 KL_APP_MAIN_CLASS=bzh.plealog.dbmirror.main.DeleteBank
-$KL_JAVA_VM $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS $1
+$KL_JAVA_VM $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS $@
 
