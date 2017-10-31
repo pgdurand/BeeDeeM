@@ -36,7 +36,6 @@ import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
 import bzh.plealog.dbmirror.util.descriptor.DescriptorEntry;
 import bzh.plealog.dbmirror.util.descriptor.IdxDescriptor;
-import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 public class BlastCmdTest {
 
@@ -66,7 +65,12 @@ public class BlastCmdTest {
     BlastCmd bc = new BlastCmd();
     return bc.getNbSequences(blastPath);
   }
-
+  private void countSequences(IdxDescriptor descriptor, int control){
+    // check nb sequences
+    String blastPath = descriptor.getCode().substring(0, descriptor.getCode().lastIndexOf("."));
+    LOGGER.debug("Counting sequences for: " + descriptor.getName());
+    assertEquals(getNbSequences(blastPath), control);
+  }
   @Test
   public void testInfo() {
     // install sample DBs for which we know nb of sequences
@@ -83,19 +87,11 @@ public class BlastCmdTest {
     String dbMirrorConfFile = DBMSAbstractConfig.getLocalMirrorConfFile();
     DBMirrorConfig conf = DBDescriptorUtils.getDBMirrorConfig(dbMirrorConfFile);
     for (IdxDescriptor descriptor : DBDescriptorUtils.getBlastDbList(conf, false)){
-      String blastPath = null;
-      
       if (descriptor.getName().equals("Uniprot_Sample")){
-        // check nb sequences
-        blastPath = descriptor.getCode().substring(0, descriptor.getCode().lastIndexOf("."));
-        LoggerCentral.info(LOGGER, "Counting sequences for: " + descriptor.getName());
-        assertEquals(getNbSequences(blastPath), 10);
+        countSequences(descriptor, 10);
       }
       else if (descriptor.getName().equals("Genbank_Sample")){
-        // check nb sequences
-        blastPath = descriptor.getCode().substring(0, descriptor.getCode().lastIndexOf("."));
-        assertEquals(getNbSequences(blastPath), 10);
-      }
+        countSequences(descriptor, 10);      }
     }
   }
 }
