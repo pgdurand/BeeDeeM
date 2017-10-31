@@ -146,6 +146,7 @@ public class BlastCmd {
 
 		@Override
 		public void info(String msg) {
+		  LOGGER.debug(msg);
 		  NumberFormat nf = NumberFormat.getInstance(Locale.US);
 			if (  msg.contains("sequences;") && 
 			      (msg.contains("total residues")||msg.contains("total bases")) 
