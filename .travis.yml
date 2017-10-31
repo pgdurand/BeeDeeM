@@ -17,6 +17,6 @@ before_script:
 script:
   ant ut
 
-after_failure:
+after_script:
   if [ -f /home/travis/build/pgdurand/BeeDeeM/distrib/tests-result/TEST-test.unit.AllTests.txt ]; then cat /home/travis/build/pgdurand/BeeDeeM/distrib/tests-result/TEST-test.unit.AllTests.txt; fi
 
