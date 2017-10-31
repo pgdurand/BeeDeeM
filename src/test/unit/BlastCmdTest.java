@@ -21,6 +21,8 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -34,8 +36,13 @@ import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
 import bzh.plealog.dbmirror.util.descriptor.DescriptorEntry;
 import bzh.plealog.dbmirror.util.descriptor.IdxDescriptor;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 public class BlastCmdTest {
+
+  private static final Log     LOGGER                  = LogFactory
+      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+          + ".BlastCmdTest");
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
@@ -69,7 +76,7 @@ public class BlastCmdTest {
     entries.add(entry);
     entry = RunningMirrorPanelTest.getEntry("sample_Genbank.dsc",
         false, "databank", "genbank");
-    entries.add(entry);
+    //entries.add(entry);
     RunningMirrorPanelTest.installerPanel.startLoadingEntries(entries,
         PFTPLoaderDescriptor.MAINTASK_DOWNLOAD);
     // locate the newly installed bank in the bank repository
@@ -81,6 +88,7 @@ public class BlastCmdTest {
       if (descriptor.getName().equals("Uniprot_Sample")){
         // check nb sequences
         blastPath = descriptor.getCode().substring(0, descriptor.getCode().lastIndexOf("."));
+        LoggerCentral.info(LOGGER, "Counting sequences for: " + descriptor.getName());
         assertEquals(getNbSequences(blastPath), 10);
       }
       else if (descriptor.getName().equals("Genbank_Sample")){

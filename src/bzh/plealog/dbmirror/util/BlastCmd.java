@@ -109,6 +109,7 @@ public class BlastCmd {
 		monitor = new InfoMonitor();
 		runner = new DBMSExecNativeCommand(monitor);
 		Map<String, CommandArgument> param = prepareParams(dbAliasPath);
+		LOGGER.debug("Parameters are: "+param.toString());
 		runner.executeAndWait(getBlastCmdPath(), param);
 		
 		return monitor.nbSequences;

@@ -332,6 +332,7 @@ public class DBMSExecNativeCommand {
       throw new DBMSExecNativeCommandException(
           "Command to execute is not defined.");
     }
+    LOGGER.debug("Can execute: "+cmd[0]+": "+new File(cmd[0]).canExecute());
     try {
       if (logInfo)
         info("Start execution of: " + getCmdLineAsString(cmd));
@@ -347,6 +348,7 @@ public class DBMSExecNativeCommand {
       thread.start();
       proc.waitFor();
       exitCode_ = proc.exitValue();
+      LOGGER.debug("Exit code: "+exitCode_);
       if (logInfo)
         info("Exit code: " + exitCode_);
     } catch (InterruptedException ex) {
