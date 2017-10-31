@@ -2,16 +2,15 @@
 
 rem
 rem -------------------------------------------------------------------
-rem DBMS program to delete databanks ; for Windows
+rem DBMS program to check DB descriptors ; for Windows
 rem Copyright (c) - Patrick G. Durand, 2017
 rem -------------------------------------------------------------------
 rem User manual:
 rem   https://pgdurand.gitbooks.io/beedeem/
 rem -------------------------------------------------------------------
-rem The program can be used to delete a databank. It takes two arguments:
-rem -code <bank-code>: index code of the bank to delete. Such a code can 
-rem                    be obtained using the 'info' tool (use 'code' format).
-rem -info: display bank directory to be deleted WITHOUT deleting it!
+rem The program can be used to check DSC files. It takes one argument:
+rem -dsc <bank-code>: descriptor name(s) to check (comma separated). 
+rem                   Use 'all' to check all descriptors.
 rem
 rem See manual for more information: 
 rem https://pgdurand.gitbooks.io/beedeem/
@@ -44,4 +43,4 @@ set FILES=
 for /F %%f in ('dir /b %KL_APP_HOME%\bin\*.jar') do set FILES=!FILES!;%KL_APP_HOME%\bin\%%f
 
 rem *** Start application
-"%KL_JAVA_VM%" %KL_JAVA_ARGS% -classpath "%FILES%" bzh.plealog.dbmirror.main.DeleteBank %*
+"%KL_JAVA_VM%" %KL_JAVA_ARGS% -classpath "%FILES%" bzh.plealog.dbmirror.main.AutoCheckDescriptors %*

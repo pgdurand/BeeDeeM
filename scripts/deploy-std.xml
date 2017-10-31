@@ -90,6 +90,7 @@
     <chmod file="${installDir}/annotate.sh"   perm="ugo+x" />
     <chmod file="${installDir}/info.sh"       perm="ugo+x" />
     <chmod file="${installDir}/delete.sh"     perm="ugo+x" />
+    <chmod file="${installDir}/check.sh"      perm="ugo+x" />
 	</target>
 
   <!-- ============================================================= -->
@@ -148,6 +149,10 @@
       <param name="kscript" value="delete"/>
       <param name="kext" value="bat"/>
     </antcall>
+    <antcall target="prepareScript">
+      <param name="kscript" value="check"/>
+      <param name="kext" value="bat"/>
+    </antcall>
 		<!-- Copy and configure the DBMS main config file-->
 		<copy file="${installDir}/scripts/dbms.config" tofile="${installDir}/conf/dbms.tmp">
 			<filterset>
@@ -186,6 +191,10 @@
     </antcall>
     <antcall target="prepareScript">
       <param name="kscript" value="delete"/>
+      <param name="kext" value="sh"/>
+    </antcall>
+    <antcall target="prepareScript">
+      <param name="kscript" value="check"/>
       <param name="kext" value="sh"/>
     </antcall>
 		<!-- Copy and configure the KDBMS main config file-->

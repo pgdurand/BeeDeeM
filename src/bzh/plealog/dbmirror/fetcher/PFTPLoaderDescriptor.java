@@ -67,6 +67,7 @@ public class PFTPLoaderDescriptor {
   public PFTPLoaderDescriptor(String descriptorName) {
     super();
     _descriptor = descriptorName;
+    _makeAbsolutePath = true;
   }
 
   public static PFTPLoaderDescriptor create(String force, String workerMode) {

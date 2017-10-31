@@ -138,9 +138,10 @@ public class PFTPLoaderSystem {
           _userMonitor.processingMessage(WORKER_ID,
               DBServerConfig.CENTRAl_CONF,
               UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
-              UserProcessingMonitor.MSG_TYPE.OK, "nothing to load");
-          _userMonitor.processingDone(UserProcessingMonitor.MSG_TYPE.OK);
+              UserProcessingMonitor.MSG_TYPE.ERROR, "nothing to load");
+          _userMonitor.processingDone(UserProcessingMonitor.MSG_TYPE.ERROR);
         }
+        LoggerCentral.error(LOGGER, "Nothing to load.");
         return;
       }
       // figures out if one has to resume a previous aborted download process
@@ -263,11 +264,11 @@ public class PFTPLoaderSystem {
               if (_userMonitor != null) {
                 _userMonitor.processingMessage(WORKER_ID, dbConf.getName(),
                     UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
-                    UserProcessingMonitor.MSG_TYPE.OK, "nothing to load");
+                    UserProcessingMonitor.MSG_TYPE.ERROR, "nothing to load");
               }
-              LoggerCentral.info(LOGGER, "Nothing to load.");
+              LoggerCentral.error(LOGGER, "Nothing to load.");
             } else if (validNamesFile != null && validNamesFile.isEmpty()) {
-              LoggerCentral.info(LOGGER, "Nothing to load.");
+              LoggerCentral.error(LOGGER, "Nothing to load.");
             } else {
               if (PFTPLoaderDescriptor.MAINTASK_INFO.equals(maintask)) {
                 // just dump the list of files to retrieve

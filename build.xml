@@ -43,6 +43,7 @@
 	<property name="KLMirrorAnnot" value="${rootpkg}.Annotate" />
   <property name="KLMirrorInfo" value="${rootpkg}.DumpBankList" />
   <property name="KLMirrorDelete" value="${rootpkg}.DeleteBank" />
+  <property name="KLMirrorCheck" value="${rootpkg}.AutoCheckDescriptors" />
 
 	<path id="class.path">
 		<pathelement path="${classpath}" />
@@ -204,6 +205,11 @@
         <filter token="APP_MAIN_CLASS" value="${KLMirrorDelete}" />
       </filterset>
     </copy>
+    <copy file="${scripts}/check.sh" todir="${Dscripts}">
+      <filterset>
+        <filter token="APP_MAIN_CLASS" value="${KLMirrorCheck}" />
+      </filterset>
+    </copy>
 		<copy file="${scripts}/install.bat" todir="${Dscripts}">
 			<filterset>
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorClass}" />
@@ -232,6 +238,11 @@
     <copy file="${scripts}/delete.bat" todir="${Dscripts}">
       <filterset>
         <filter token="APP_MAIN_CLASS" value="${KLMirrorDelete}" />
+      </filterset>
+    </copy>
+    <copy file="${scripts}/check.bat" todir="${Dscripts}">
+      <filterset>
+        <filter token="APP_MAIN_CLASS" value="${KLMirrorCheck}" />
       </filterset>
     </copy>
 		<!-- Galaxy wrapper to list available DBs -->
