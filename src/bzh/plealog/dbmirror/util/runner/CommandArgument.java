@@ -77,4 +77,7 @@ public class CommandArgument {
     this.isWorkingPath = isWorkingPath;
   }
 
+  public String toString(){
+    return argument;
+  }
 }
