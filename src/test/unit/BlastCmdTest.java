@@ -80,7 +80,7 @@ public class BlastCmdTest {
     entries.add(entry);
     entry = RunningMirrorPanelTest.getEntry("sample_Genbank.dsc",
         false, "databank", "genbank");
-    //entries.add(entry);
+    entries.add(entry);
     RunningMirrorPanelTest.installerPanel.startLoadingEntries(entries,
         PFTPLoaderDescriptor.MAINTASK_DOWNLOAD);
     // locate the newly installed bank in the bank repository
