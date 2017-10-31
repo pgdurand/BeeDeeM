@@ -27,22 +27,22 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-//  CmdLineOptionsTest.class,
+  CmdLineOptionsTest.class,
   BlastCmdTest.class,
-//  CddParserTest.class, 
-//  DBXrefInstancesManagerTest.class, 
-//  DefaultLoaderMonitorTest.class,
-//  EggNogIndexerTest.class,
-//  DBMSUniqueSeqIdDetectorTest.class,
-//  PLocalLoaderTest.class,
-//  LuceneStorageSystemTest.class,
-//  NcbiTaxonomyIndexerTest.class,
-//  RunningMirrorPanelTest.class,
-//  SeqIOUtilsTest.class,
-//  SequenceFileManagerTest.class,
-//  UtilsTest.class,
-//  PAnnotateBlastResultTest.class,
-//  CmdLineQueryTest.class,
+  CddParserTest.class, 
+  DBXrefInstancesManagerTest.class, 
+  DefaultLoaderMonitorTest.class,
+  EggNogIndexerTest.class,
+  DBMSUniqueSeqIdDetectorTest.class,
+  PLocalLoaderTest.class,
+  LuceneStorageSystemTest.class,
+  NcbiTaxonomyIndexerTest.class,
+  RunningMirrorPanelTest.class,
+  SeqIOUtilsTest.class,
+  SequenceFileManagerTest.class,
+  UtilsTest.class,
+  PAnnotateBlastResultTest.class,
+  CmdLineQueryTest.class,
   })
 public class AllTests {
 
