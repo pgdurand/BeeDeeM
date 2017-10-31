@@ -324,7 +324,7 @@
 				<path refid="distribClass.path"/>
 			</classpath>
 			<formatter type="plain"/>
-			<test name="test.unit.AllTests" todir="${Dtr}"/>
+			<test name="test.unit.BlastCmdTest" todir="${Dtr}"/>
 		</junit>
 		<echo>Test results are in: ${Dtr}</echo>
 	</target>
