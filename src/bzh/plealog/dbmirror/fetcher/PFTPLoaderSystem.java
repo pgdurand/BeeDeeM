@@ -130,6 +130,8 @@ public class PFTPLoaderSystem {
 
     // for all descriptors
     for (PFTPLoaderDescriptor descriptor : _fDescriptors) {
+      // dump desc content
+      descriptor.dumpContent();
       // gets the names of the databases to download
       dbNames = Utils.tokenize(descriptor
           .getProperty(PFTPLoaderDescriptor.DBLIST_KEY));

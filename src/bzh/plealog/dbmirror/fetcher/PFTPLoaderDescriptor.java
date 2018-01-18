@@ -22,10 +22,14 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.Configuration;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.descriptor.DescriptorEntry;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
 
 /**
@@ -63,7 +67,9 @@ public class PFTPLoaderDescriptor {
   private String [] KEYS = {DBLIST_KEY,FORCE_KEY,MAINTASK_KEY,TASK_DELAY_KEY,FTP_DELAY_KEY,FTP_RETRY_KEY,MAILER_HOST,MAILER_PORT,
       MAILER_SENDER,MAILER_PSWD,MAILER_RECP};
   
-  
+  private static final Log       LOGGER    = LogFactory
+          .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY+".LoaderDescriptor");
+
   public PFTPLoaderDescriptor(String descriptorName) {
     super();
     _descriptor = descriptorName;
@@ -223,5 +229,12 @@ public class PFTPLoaderDescriptor {
     if (dbs!=null){
       setProperty(PFTPLoaderDescriptor.DBLIST_KEY, dbs);
     }
+  }
+  
+  public void dumpContent() {
+	  LoggerCentral.info(LOGGER, String.format("Content of global descriptor: %s",_descriptor));
+	  for(String key : KEYS){
+		  LoggerCentral.info(LOGGER, String.format("%s=%s",key, _properties.getProperty(key)));
+	  }
   }
 }
