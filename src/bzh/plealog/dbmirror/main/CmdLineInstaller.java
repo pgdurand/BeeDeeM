@@ -166,7 +166,7 @@ public class CmdLineInstaller {
   private void startApplication(String descriptorName, PFTPLoaderDescriptor fDescCmd, String bankListFormat) {
     PFTPLoaderSystem lSystem;
     PFTPLoaderDescriptor fDesc;
-    String descriptor;
+    String descriptor, gdfile;
 
     StarterUtils.configureApplication(null,
         DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + "-" + descriptorName, true,
@@ -178,11 +178,17 @@ public class CmdLineInstaller {
     try {
       LoggerCentral.reset();
       fDesc = new PFTPLoaderDescriptor(descriptor);
-      fDesc.load(new FileInputStream(DBMSAbstractConfig.getConfPath(Configuration.DESCRIPTOR)
-          + descriptor), true);
+      // new in v4.3.0: GD file may not be provided
+      gdfile = DBMSAbstractConfig.getConfPath(Configuration.DESCRIPTOR) + descriptor;
+      if (new File(gdfile).exists()) {
+        fDesc.load(new FileInputStream(gdfile), true);
+      }
+      // new in v4.3.0: is no GD file provided, we can have cmdline arguments
+      // provided in optional fDescCmd. These arguments override those from GD file.
       if (fDescCmd!=null){
         fDesc.update(fDescCmd);
       }
+      // start job
       lSystem = new PFTPLoaderSystem(new PFTPLoaderDescriptor[] { fDesc });
       lSystem.runProcessing();
       // send email to administrator if needed

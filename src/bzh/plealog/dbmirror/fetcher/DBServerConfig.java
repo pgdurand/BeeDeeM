@@ -586,9 +586,17 @@ public class DBServerConfig {
   public String getRemotePatternsToExclude() {
     return _properties.getProperty(FTPRDIR_EXCL_KEY);
   }
+  
+  private String getNotNullProperty(String key) {
+    String value = _properties.getProperty(key);
+    if (value==null) {
+      value="";
+    }
+    return value;
+  }
 
   public String getUnitPostTasks() {
-    return _properties.getProperty(TASKS_U_POST);
+    return getNotNullProperty(TASKS_U_POST);
   }
 
   public void setUnitPostTasks(String tasks) {
@@ -596,7 +604,7 @@ public class DBServerConfig {
   }
 
   public String getGlobalPostTasks() {
-    return _properties.getProperty(TASKS_G_POST);
+    return getNotNullProperty(TASKS_G_POST);
   }
 
   public void setGlobalPostTasks(String tasks) {
