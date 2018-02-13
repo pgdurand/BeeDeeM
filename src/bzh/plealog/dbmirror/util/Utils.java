@@ -417,6 +417,7 @@ public class Utils {
       }
     } catch (Exception e) {
       volumes = null;
+      LOGGER.warn("Unable to process File Volumes: ", e);
     } finally {
       IOUtils.closeQuietly(fis);
       IOUtils.closeQuietly(bis);
