@@ -98,7 +98,7 @@ public class StarterUtils {
   }
 
   public static void configureApplication(String appHome, String nameLogger,
-      boolean standalone, boolean useUI, boolean configureLogger) {
+      boolean standalone, boolean useUI, boolean configureLogger, boolean initConfig) {
 
     if (standalone) {
       checkJVM();
@@ -108,11 +108,18 @@ public class StarterUtils {
       DBMSAbstractConfig.setInstallAppPath(Utils.terminatePath(appHome));
     if (configureLogger)
       DBMSAbstractConfig.configureLog4J(nameLogger);
-    String confPath = DBMSAbstractConfig.getConfPath(Configuration.ROOT);
-    initNetConfig();
-    DBMSAbstractConfig.initializeConfigurator(confPath
-        + DBMSAbstractConfig.MASTER_CONF_FILE);
+    if (initConfig){
+      String confPath = DBMSAbstractConfig.getConfPath(Configuration.ROOT);
+      initNetConfig();
+      DBMSAbstractConfig.initializeConfigurator(confPath
+          + DBMSAbstractConfig.MASTER_CONF_FILE);
+    }
     LoggerCentral.reset();
+  }
+
+  public static void configureApplication(String appHome, String nameLogger,
+      boolean standalone, boolean useUI, boolean configureLogger) {
+    configureApplication(appHome, nameLogger, standalone, useUI, configureLogger, true);
   }
 
   /**
