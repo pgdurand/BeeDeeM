@@ -90,17 +90,16 @@ public class CmdLineCutter {
       File filteredFile = filteredFiles.get(0);
       File sourceFile = new File(sequenceFile);
       String fName = sourceFile.getName();
-      String fExt = EZFileFilter.getExtension(sourceFile);
       String path = sourceFile.getParent();
       String f = from==-1?"1":String.valueOf(from);
       String t = to==-1?"end":String.valueOf(to);
-      
       String resultFile = Utils.terminatePath(path);
-      resultFile+=String.format("%s-%s-%s.%s", fName, f, t, fExt);
-      System.out.println(resultFile);
+      resultFile+=String.format("%s_%s-%s", fName, f, t);
+      System.out.println("Created file: "+resultFile);
       filteredFile.renameTo(new File(resultFile));
     }
     catch(Exception ex){
+      System.err.println("ERROR: unable to cut file: "+ex.toString());
       bRet = false;
     }
     return bRet;
