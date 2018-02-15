@@ -217,7 +217,13 @@ public class SequenceFileManager {
     }
 
     // init the tmp entry file
-    tmpEntryFile = new File(this.sequenceFile.getParent(), "tmp_entry_file.dat");
+    String parent=this.sequenceFile.getParent();
+    if (parent!=null) {
+      tmpEntryFile = new File(parent, "tmp_entry_file.dat");
+    }
+    else {
+      tmpEntryFile = new File("tmp_entry_file.dat");
+    }
     tmpEntryFile.createNewFile();
     fwTmpEntryFile = new FileWriter(tmpEntryFile);
 
@@ -226,8 +232,9 @@ public class SequenceFileManager {
         this.sequenceFile), "UTF-8"));
 
     // init writer
-    if (!this.filteredFile.getParentFile().exists()) {
-      this.filteredFile.getParentFile().mkdirs();
+    File parentFile=this.filteredFile.getParentFile();
+    if (parentFile!=null && !parentFile.exists()) {
+      parentFile.mkdirs();
     }
     if (this.filteredFile.exists()) {
       this.filteredFile.delete();
