@@ -224,7 +224,11 @@ public class LuceneStorageSystem implements StorageSystem {
       return keyName;
     }
     file = new File(idxName);
-    path = Utils.terminatePath(file.getParent());
+    String parent = file.getParent();
+    if (parent!=null)
+      path = Utils.terminatePath(parent);
+    else
+      path="";
     while (true) {
       keyName = FP_KEY_FILE_PREFIX + _queryCounter;
       file = new File(path + keyName);
