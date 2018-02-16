@@ -118,6 +118,20 @@ public class CmdLineCutter {
     return opts;
   }
 
+  /**
+   * Cut a sequence file into a slice.
+   * 
+   * @param sequenceFile the sequence file to cut
+   * @param resultDir the directory to put the resulting slice. Optional. 
+   * If not provided, the resulting file is saved next to sequence file.
+   * @param format the format of the sequence file
+   * @param from index of the first sequence to get from sequence file. 
+   * Use either 1 or -1 to start from beginning of source file.
+   * @param to index of the last sequence to get from sequence file. 
+   * Use -1 to target end of sequence file
+   * 
+   * @return true if file slicing is ok, false otherwise.
+   * */
   private static boolean cutFile(String sequenceFile, String resultDir, DatabankFormat format, int from, int to) {
     boolean bRet = true;
     
@@ -179,6 +193,13 @@ public class CmdLineCutter {
     return bRet;
   }
 
+  /**
+   * Convert a string to a integer.
+   * 
+   * @param val value to convert
+   * 
+   * @return the integer representation of argument
+   * */
   private static int getValue(String val){
     if (val==null){
       return -1;
@@ -188,6 +209,15 @@ public class CmdLineCutter {
     }
   }
 
+  /**
+   * 
+   * Return a bank format object given a command line bank format argument.
+   * 
+   * @param format command line bank format argument
+   * 
+   * @return a valid bank format object or null if provided command line 
+   * bank format argument denotes a unknown bank format.
+   * */
   protected static DatabankFormat getDatabankFormat(String format) {
     DatabankFormat dbFormat = null;
     if (format==null){
@@ -205,6 +235,14 @@ public class CmdLineCutter {
     }
     return dbFormat;
   }
+
+  /**
+   * Run cutting job.
+   * 
+   * @param args command line arguments
+   * 
+   * @return true if cutting is ok, false otherwise.
+   * */
   public static boolean doJob(String[] args){
     CommandLine cmdLine;
     String msg, toolName, part, from, to, file, format, resultDir;
@@ -274,6 +312,12 @@ public class CmdLineCutter {
     }
     return bRet;
   }
+
+  /**
+   * Start application.
+   * 
+   * @param args command line arguments
+   * */
   public static void main(String[] args) {
     if (!doJob(args)){
       // exit code=1 : do this to report error to calling app

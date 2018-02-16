@@ -48,6 +48,11 @@ import bzh.plealog.dbmirror.util.descriptor.DatabankFormat;
  * */
 public class CmdLineIndexer {
   
+  /**
+   * Prepare command-line arguments.
+   * 
+   * @return command line options
+   */
   @SuppressWarnings("static-access")
   private static Options getCmdLineOptions() {
     Options opts;
@@ -71,6 +76,13 @@ public class CmdLineIndexer {
     return opts;
   }
 
+  /**
+   * Return a sequence file parser given a bank format type.
+   * 
+   * @param dbFormat a bank format
+   * 
+   * @return a sequence file parser
+   */
   private static DBParsable getBankParser(DatabankFormat.DatabankFormatTypes dbFormat) {
     DBParsable parser=null;
     
@@ -91,6 +103,14 @@ public class CmdLineIndexer {
     return parser;
   }
   
+  /**
+   * Index a sequence file.
+   * 
+   * @param sequenceFile the sequence file for which we have to index entries
+   * @param dbFormat the format of the sequence file
+   * 
+   * @return true if indexing is ok, false otherwise.
+   */
   private static boolean indexFile(String sequenceFile, DatabankFormat dbFormat) {
     boolean bRet = true;
     DBParsable parser;
@@ -122,6 +142,13 @@ public class CmdLineIndexer {
     return bRet;
   }
   
+  /**
+   * Run indexing job.
+   * 
+   * @param args command line arguments
+   * 
+   * @return true if indexing is ok, false otherwise.
+   * */
   public static boolean doJob(String[] args){
     CommandLine cmdLine;
     String msg, toolName, file, format;
@@ -153,6 +180,11 @@ public class CmdLineIndexer {
     return indexFile(file, dbFormat);
   }
   
+  /**
+   * Start application.
+   * 
+   * @param args command line arguments
+   * */
   public static void main(String[] args) {
     if (!doJob(args)){
       // exit code=1 : do this to report error to calling app
