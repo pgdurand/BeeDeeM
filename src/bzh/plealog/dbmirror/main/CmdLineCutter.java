@@ -51,15 +51,15 @@ public class CmdLineCutter {
   // if not provided: must use from/to
   private static final String                      PART_ARG   = "p";
   // input sequence file
-  private static final String                      FILE_ARG   = "i";
+  protected static final String                      FILE_ARG   = "i";
   // input sequence file format
-  private static final String                      FORMAT_ARG = "k";
+  protected static final String                      FORMAT_ARG = "k";
   // where to create the resulting file?
   // if not provided: place the sliced file next to input sequence file
-  private static final String                      DIR_ARG    = "d";
+  protected static final String                      DIR_ARG    = "d";
   
   // a convenient mapping to DatabankFormat format names. 
-  private static Hashtable<String, DatabankFormat> formats;
+  protected static Hashtable<String, DatabankFormat> formats;
   static {
     formats = new Hashtable<>();
     formats.put("fa", DatabankFormat.fasta);
@@ -122,6 +122,9 @@ public class CmdLineCutter {
     boolean bRet = true;
     
     sequenceFile = CmdLineUtils.expandEnvVars(sequenceFile);
+    if (resultDir!=null) {
+      resultDir = CmdLineUtils.expandEnvVars(resultDir);
+    }
     if (new File(sequenceFile).exists() == false) {
       String msg = String.format(DBMSMessages.getString("Tool.Cutter.msg9"), sequenceFile);
       System.err.println(msg);
@@ -185,6 +188,23 @@ public class CmdLineCutter {
     }
   }
 
+  protected static DatabankFormat getDatabankFormat(String format) {
+    DatabankFormat dbFormat = null;
+    if (format==null){
+      dbFormat=DatabankFormat.fasta;//default is Fasta
+    }
+    else{
+      dbFormat = formats.get(format);
+      if (dbFormat==null){
+        String msg = String.format(DBMSMessages.getString("Tool.Cutter.msg4"), 
+            format, 
+            formats.keySet().toString());
+        System.err.println(msg);
+        return null;
+      }
+    }
+    return dbFormat;
+  }
   public static boolean doJob(String[] args){
     CommandLine cmdLine;
     String msg, toolName, part, from, to, file, format, resultDir;
@@ -219,18 +239,9 @@ public class CmdLineCutter {
       return false;
     }
     // get input file format
-    if (format==null){
-      dbFormat=DatabankFormat.fasta;//default is Fasta
-    }
-    else{
-      dbFormat = formats.get(format);
-      if (dbFormat==null){
-        msg = String.format(DBMSMessages.getString("Tool.Cutter.msg4"), 
-            format, 
-            formats.keySet().toString());
-        System.err.println(msg);
-        return false;
-      }
+    dbFormat = getDatabankFormat(format);
+    if (dbFormat==null) {
+      return false;
     }
     
     // convert Str to int
