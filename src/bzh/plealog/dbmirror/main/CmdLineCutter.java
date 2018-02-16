@@ -28,13 +28,16 @@ import org.apache.commons.cli.Options;
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.descriptor.DatabankFormat;
-import bzh.plealog.dbmirror.util.log.LoggerCentral;
 import bzh.plealog.dbmirror.util.sequence.SequenceFileManager;
 import bzh.plealog.dbmirror.util.sequence.SequenceValidatorCutFile;
 
 /**
- * A utility class to cut sequence file.
+ * A utility class to cut sequence file.<br><br>
  * 
+ * Sample use: CmdLineCutter -i tests/junit/databank/fasta_prot/uniprot.faa -f 3<br>
+ *             to get 3rd sequence up to the end of input file<br>
+ *             Note: environment variables are accepted in file path.<br>
+ *             
  * @author Patrick G. Durand
  * */
 public class CmdLineCutter {
@@ -55,6 +58,7 @@ public class CmdLineCutter {
   // if not provided: place the sliced file next to input sequence file
   private static final String                      DIR_ARG    = "d";
   
+  // a convenient mapping to DatabankFormat format names. 
   private static Hashtable<String, DatabankFormat> formats;
   static {
     formats = new Hashtable<>();
@@ -116,6 +120,13 @@ public class CmdLineCutter {
 
   private static boolean cutFile(String sequenceFile, String resultDir, DatabankFormat format, int from, int to) {
     boolean bRet = true;
+    
+    sequenceFile = CmdLineUtils.expandEnvVars(sequenceFile);
+    if (new File(sequenceFile).exists() == false) {
+      String msg = String.format(DBMSMessages.getString("Tool.Cutter.msg9"), sequenceFile);
+      System.err.println(msg);
+      return false;
+    }
     try{
       // create the sequence manager object
       SequenceFileManager sfm = new SequenceFileManager(sequenceFile, format, null, null);

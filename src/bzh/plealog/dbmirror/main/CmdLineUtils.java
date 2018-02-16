@@ -1,6 +1,8 @@
 package bzh.plealog.dbmirror.main;
 
+import java.util.Map;
 import java.util.Properties;
+import java.util.Map.Entry;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.GnuParser;
@@ -8,6 +10,8 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
+
+import com.plealog.genericapp.api.EZEnvironment;
 
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -100,6 +104,28 @@ public class CmdLineUtils {
       }
     }
     return line;
+  }
+  /**
+   * Replace environment variable names by their values.
+   * 
+   * @param text a file path that may contain env var, e.g. $HOME/my-file.txt
+   * 
+   * @return an update file path, e.g. /Users/pgdurand/my-file.txt
+   */
+  protected static String expandEnvVars(String text) {
+    Map<String, String> envMap = System.getenv();
+    for (Entry<String, String> entry : envMap.entrySet()) {
+      String key = entry.getKey();
+      String value = entry.getValue();
+      if (EZEnvironment.getOSType()==EZEnvironment.WINDOWS_OS) {
+        text = text.replaceAll("\\%" + key + "\\%", value);
+      }
+      else {
+        text = text.replaceAll("\\$\\{" + key + "\\}", value);
+        text = text.replaceAll("\\$" + key + "", value);
+      }
+    }
+    return text;
   }
 
 }
