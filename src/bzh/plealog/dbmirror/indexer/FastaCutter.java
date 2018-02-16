@@ -43,7 +43,7 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 @Deprecated
 /*
- * see also DBFileCutter in package util for a more generic method.
+ * see SequenceFileManager in package util.sequence for a more generic method.
  */
 public class FastaCutter {
 
