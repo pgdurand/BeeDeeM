@@ -15,6 +15,7 @@ import com.plealog.genericapp.api.EZEnvironment;
 
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 public class CmdLineUtils {
   private static final String HELP_KEY = "help";
@@ -50,6 +51,10 @@ public class CmdLineUtils {
     // Get version info
     Properties props = StarterUtils.getVersionProperties();
     StringBuffer buf = new StringBuffer("\n");
+    buf.append("Default log file: ");
+    buf.append(DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName());
+    buf.append("\n  (to redirect Log file, use JRE args: -DKL_WORKING_DIR=/my-path -DKL_LOG_FILE=my-file.log)\n");
+    buf.append("--\n");
     buf.append(props.getProperty("prg.app.name"));
     buf.append(" ");
     buf.append(props.getProperty("prg.version"));
@@ -126,6 +131,24 @@ public class CmdLineUtils {
       }
     }
     return text;
+  }
+  
+  /**
+   * Provide a dedicated message to user if tool fails. In case of error,
+   * this method calls system.exit with code 1.
+   * 
+   * @param jobInError true if tool fails, false otherwise
+   * */
+  protected static void informForErrorMsg(boolean jobInError) {
+    if (jobInError || LoggerCentral.errorMsgEmitted()) {
+      String msg = String.format(DBMSMessages.getString("Tool.msg1"), 
+          DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName());
+      System.err.println(msg);
+      if (jobInError) {
+        // exit code=1 : do this to report error to calling app
+        System.exit(1);
+      }
+    }
   }
 
 }

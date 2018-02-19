@@ -56,14 +56,17 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
  * @author Patrick G. Durand
  * */
 public class CmdLineUserQuery {
-  private static final String INDEX_ARG = "d";
-  private static final String SEQIDS_ARG = "i";
+  private static final String INDEX_ARG   = "d";
+  private static final String SEQIDS_ARG  = "i";
   private static final String IDSFILE_ARG = "f";
-  private static final String OUTPUT_ARG = "o";
+  private static final String OUTPUT_ARG  = "o";
 
-  private static final Log               LOGGER                       = LogFactory
-      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-          + ".CmdLineUserQuery");
+  private static final Log    LOGGER      = LogFactory
+      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".CmdLineUserQuery");
+
+  private static int _idProvidedCounter = 0;
+  private static int _idRetrievedCounter = 0;
+  
   /**
    * Setup the valid command-line of the application.
    */
@@ -115,6 +118,7 @@ public class CmdLineUserQuery {
         writer.write(line);
         writer.write("\n");
       }
+      _idRetrievedCounter++;
       writer.flush();
     } catch (Exception ex) {
       msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg4"), fEntry, ex.toString());
@@ -136,6 +140,7 @@ public class CmdLineUserQuery {
     tokenizer = new StringTokenizer(seqids, ",");
     while (tokenizer.hasMoreTokens()) {
       id = tokenizer.nextToken().trim();
+      _idProvidedCounter++;
       entry = LuceneUtils.getEntry(index, id);
       if (entry==null) {
         msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg5"), id);
@@ -192,6 +197,7 @@ public class CmdLineUserQuery {
 
     // prepare the Logging system
     StarterUtils.configureApplication(null, toolName, true, false, true, false);
+    LoggerCentral.info(LOGGER, "*** Starting "+toolName);
     
     // handle the command-line
     options = getCmdLineOptions();
@@ -237,7 +243,13 @@ public class CmdLineUserQuery {
     else {
       bRet = dumpSeqIDs(index, new File(idsfile), writer);
     }
-
+    
+    // provide some stats to the user (log file only)
+    msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg8a"), _idProvidedCounter);
+    LoggerCentral.info(LOGGER, msg);
+    msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg8b"), _idRetrievedCounter);
+    LoggerCentral.info(LOGGER, msg);
+    
     // carefully close I/O channels
     LuceneUtils.closeStorages();
     IOUtils.closeQuietly(writer);
@@ -245,24 +257,12 @@ public class CmdLineUserQuery {
     return bRet; 
   }
 
-  private static void informForErrorMsg() {
-    String msg = String.format(DBMSMessages.getString("Tool.msg1"), 
-        DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName());
-    System.err.println(msg);
-  }
   /**
    * Start application.
    * 
    * @param args command line arguments
    * */
   public static void main(String[] args) {
-    boolean bRet = doJob(args); 
-    if (!bRet || LoggerCentral.errorMsgEmitted()) {
-      informForErrorMsg();
-    }
-    if (!bRet){
-      // exit code=1 : do this to report error to calling app
-      System.exit(1);
-    }
+    CmdLineUtils.informForErrorMsg(!doJob(args)); 
   }
 }
