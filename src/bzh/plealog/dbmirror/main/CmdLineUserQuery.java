@@ -108,6 +108,14 @@ public class CmdLineUserQuery {
     return opts;
   }
 
+  /**
+   * Dump a sequence.
+   * 
+   * @param fEntry path to tmp file containing a retrieved sequence
+   * @param w final destination of the sequence
+   * 
+   * @return true if success, false if an error occurred. Error is reported in log file.
+   * */
   private static boolean dumpEntry(File fEntry, Writer w) {
     BufferedWriter writer = null;
     BufferedReader reader = null;
@@ -133,6 +141,16 @@ public class CmdLineUserQuery {
     return bRet;
   }
 
+  /**
+   * Dump sequences given IDs.
+   * 
+   * @param index path to Lucene index to query. Such an index is created using
+   * CmdLineIndexer tool.
+   * @param seqids comma separated list of sequence IDs
+   * @param w a writer
+   * 
+   * @return true if success, false if an error occurred. Error is reported in log file.
+   */
   private static boolean dumpSeqIDs(String index, String seqids, Writer w) {
     StringTokenizer tokenizer;
     String id, msg;
@@ -163,6 +181,17 @@ public class CmdLineUserQuery {
     return true;
   }
   
+  /**
+   * Dump sequences given IDs.
+   * 
+   * @param index path to Lucene index to query. Such an index is created using
+   * CmdLineIndexer tool.
+   * @param fofPath path to a file of IDs. Such a file contains lines of sequence IDs,
+   * one per line or several (comma separated) ones per line.
+   * @param w a writer
+   * 
+   * @return true if success, false if an error occurred. Error is reported in log file.
+   */
   private static boolean dumpSeqIDs(String index, File fofPath, Writer w) {
     LineIterator it = null;
     boolean bRet = true;
@@ -183,7 +212,7 @@ public class CmdLineUserQuery {
     return bRet;
   }
   /**
-   * Run cutting job.
+   * Run query job.
    * 
    * @param args command line arguments
    * 
