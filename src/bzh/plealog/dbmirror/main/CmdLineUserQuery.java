@@ -46,8 +46,11 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
 /**
  * A utility class to query a user sequence index.<br><br>
  * 
- * Sample use: CmdLineUserQuery -d <path-to-index> -i seqids<br>
- * Use program without any arguments to get help.<br><br>
+ * Sample use: CmdLineUserQuery -d <path-to-index> -i seqids<br><br>
+ *   CmdLineUserQuery -d tests/junit/databank/fasta_prot/uniprot.faa.ld -i M4K2_HUMAN<br>
+ *   CmdLineUserQuery -d tests/junit/databank/fasta_prot/uniprot.faa.ld -f tests/junit/databank/fasta_prot/fo-seqids.txt<br><br>
+ * Use program without any arguments to get help.<br>
+ * Note: environment variables are accepted in file path.<br>
  * 
  * A log file called UserIndexQuery.log is created within ${java.io.tmpdir}. This
  * default log file can be redirected using JRE variables KL_WORKING_DIR and
@@ -225,6 +228,7 @@ public class CmdLineUserQuery {
     // open the writer to dump sequences
     try {
       if (outputFile!=null) {
+        outputFile = CmdLineUtils.expandEnvVars(outputFile);
         writer = new FileWriter(outputFile);
       }
       else {
@@ -241,6 +245,7 @@ public class CmdLineUserQuery {
       bRet = dumpSeqIDs(index, seqids, writer);
     }
     else {
+      idsfile = CmdLineUtils.expandEnvVars(idsfile);
       bRet = dumpSeqIDs(index, new File(idsfile), writer);
     }
     

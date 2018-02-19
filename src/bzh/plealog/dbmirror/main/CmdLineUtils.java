@@ -144,6 +144,7 @@ public class CmdLineUtils {
       String msg = String.format(DBMSMessages.getString("Tool.msg1"), 
           DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName());
       System.err.println(msg);
+      
       if (jobInError) {
         // exit code=1 : do this to report error to calling app
         System.exit(1);

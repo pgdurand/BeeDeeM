@@ -24,10 +24,14 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.Utils;
+import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.descriptor.DatabankFormat;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 import bzh.plealog.dbmirror.util.sequence.SequenceFileManager;
 import bzh.plealog.dbmirror.util.sequence.SequenceValidatorCutFile;
 
@@ -38,6 +42,10 @@ import bzh.plealog.dbmirror.util.sequence.SequenceValidatorCutFile;
  *             to get 3rd sequence up to the end of input file<br>
  *             Note: environment variables are accepted in file path.<br>
  *             
+ * A log file called UserIndexQuery.log is created within ${java.io.tmpdir}. This
+ * default log file can be redirected using JRE variables KL_WORKING_DIR and
+ * KL_LOG_FILE. E.g. java ... -DKL_WORKING_DIR=/my-path -DKL_LOG_FILE=query.log<br><br>
+ * 
  * @author Patrick G. Durand
  * */
 public class CmdLineCutter {
@@ -58,6 +66,9 @@ public class CmdLineCutter {
   // if not provided: place the sliced file next to input sequence file
   protected static final String                      DIR_ARG    = "d";
   
+  private static final Log    LOGGER      = LogFactory
+      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".CmdLineCutter");
+
   // a convenient mapping to DatabankFormat format names. 
   protected static Hashtable<String, DatabankFormat> formats;
   static {
@@ -141,7 +152,7 @@ public class CmdLineCutter {
     }
     if (new File(sequenceFile).exists() == false) {
       String msg = String.format(DBMSMessages.getString("Tool.Cutter.msg9"), sequenceFile);
-      System.err.println(msg);
+      LoggerCentral.error(LOGGER, msg);
       return false;
     }
     try{
@@ -181,13 +192,13 @@ public class CmdLineCutter {
       resultFile+=String.format("%s_%s-%s%s", fName, f, t, fExt);
       // log a little message
       String msg = String.format(DBMSMessages.getString("Tool.Cutter.msg1"), resultFile);
-      System.out.println(msg);
+      LoggerCentral.info(LOGGER, msg);
       // rename !
       filteredFile.renameTo(new File(resultFile));
     }
     catch(Exception ex){
       String msg = String.format(DBMSMessages.getString("Tool.Cutter.msg2"), ex.toString());
-      System.err.println(msg);
+      LoggerCentral.error(LOGGER, msg);
       bRet = false;
     }
     return bRet;
@@ -229,7 +240,7 @@ public class CmdLineCutter {
         String msg = String.format(DBMSMessages.getString("Tool.Cutter.msg4"), 
             format, 
             formats.keySet().toString());
-        System.err.println(msg);
+        LoggerCentral.error(LOGGER, msg);
         return null;
       }
     }
@@ -255,6 +266,7 @@ public class CmdLineCutter {
 
     // prepare the Logging system
     StarterUtils.configureApplication(null, toolName, true, false, true, false);
+    LoggerCentral.info(LOGGER, "*** Starting "+toolName);
     
     // handle the command-line
     options = getCmdLineOptions();
@@ -273,7 +285,7 @@ public class CmdLineCutter {
     // add additional controls on cmdline values
     if (part!=null && (from!=null||to!=null)){
       msg = DBMSMessages.getString("Tool.Cutter.msg3");
-      System.err.println(msg);
+      LoggerCentral.error(LOGGER, msg);
       return false;
     }
     // get input file format
@@ -300,14 +312,14 @@ public class CmdLineCutter {
     else{
       msg = String.format(DBMSMessages.getString("Tool.Cutter.msg7"), ifrom, file);
     }
-    System.out.println(msg);
+    LoggerCentral.info(LOGGER, msg);
     
     // compute new file
     if (ipart==-1){
       bRet = cutFile(file, resultDir, dbFormat, ifrom, ito);
     }
     else{
-      System.err.println("ERROR: 'part' not yet implemented... sorry!");
+      LoggerCentral.error(LOGGER, "'part' not yet implemented... sorry!");
       bRet = false;
     }
     return bRet;
@@ -319,9 +331,6 @@ public class CmdLineCutter {
    * @param args command line arguments
    * */
   public static void main(String[] args) {
-    if (!doJob(args)){
-      // exit code=1 : do this to report error to calling app
-      System.exit(1);
-    }
+    CmdLineUtils.informForErrorMsg(!doJob(args)); 
   }
 }
