@@ -20,33 +20,50 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.StringTokenizer;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.LineIterator;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import bzh.plealog.dbmirror.indexer.DBEntry;
 import bzh.plealog.dbmirror.indexer.LuceneUtils;
 import bzh.plealog.dbmirror.reader.DBUtils;
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
+import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
  * A utility class to query a user sequence index.<br><br>
  * 
  * Sample use: CmdLineUserQuery -d <path-to-index> -i seqids<br>
- *             
+ * Use program without any arguments to get help.<br><br>
+ * 
+ * A log file called UserIndexQuery.log is created within ${java.io.tmpdir}. This
+ * default log file can be redirected using JRE variables KL_WORKING_DIR and
+ * KL_LOG_FILE. E.g. java ... -DKL_WORKING_DIR=/my-path -DKL_LOG_FILE=query.log<br><br>
+ * 
  * @author Patrick G. Durand
  * */
 public class CmdLineUserQuery {
   private static final String INDEX_ARG = "d";
   private static final String SEQIDS_ARG = "i";
   private static final String IDSFILE_ARG = "f";
+  private static final String OUTPUT_ARG = "o";
 
+  private static final Log               LOGGER                       = LogFactory
+      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+          + ".CmdLineUserQuery");
   /**
    * Setup the valid command-line of the application.
    */
@@ -70,16 +87,22 @@ public class CmdLineUserQuery {
         .hasArg()
         .withDescription( DBMSMessages.getString("Tool.UserQuery.arg3.desc") )
         .create(IDSFILE_ARG);
+    Option outputFile = OptionBuilder
+        .withArgName( DBMSMessages.getString("Tool.UserQuery.arg4.lbl") )
+        .hasArg()
+        .withDescription( DBMSMessages.getString("Tool.UserQuery.arg4.desc") )
+        .create(OUTPUT_ARG);
 
     opts = new Options();
     opts.addOption(index);
     opts.addOption(seqids);
     opts.addOption(idsfile);
+    opts.addOption(outputFile);
     CmdLineUtils.setHelpOption(opts);
     return opts;
   }
 
-  private static boolean dumpEntry(File fEntry) {
+  private static boolean dumpEntry(File fEntry, Writer w) {
     BufferedWriter writer = null;
     BufferedReader reader = null;
     String line, msg;
@@ -87,7 +110,7 @@ public class CmdLineUserQuery {
     try {
       reader = new BufferedReader(new InputStreamReader(new FileInputStream(
           fEntry), "UTF-8"));
-      writer = new BufferedWriter(new OutputStreamWriter(System.out));
+      writer = new BufferedWriter(w);
       while ((line = reader.readLine()) != null) {
         writer.write(line);
         writer.write("\n");
@@ -95,16 +118,15 @@ public class CmdLineUserQuery {
       writer.flush();
     } catch (Exception ex) {
       msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg4"), fEntry, ex.toString());
-      System.err.println(msg);
+      LoggerCentral.error(LOGGER, msg);
       bRet = false;
     } finally {
       IOUtils.closeQuietly(reader);
-      IOUtils.closeQuietly(writer);
     }
     return bRet;
   }
 
-  private static boolean dumpSeqIDs(String index, String seqids) {
+  private static boolean dumpSeqIDs(String index, String seqids, Writer w) {
     StringTokenizer tokenizer;
     String id, msg;
     DBEntry entry;
@@ -115,17 +137,42 @@ public class CmdLineUserQuery {
     while (tokenizer.hasMoreTokens()) {
       id = tokenizer.nextToken().trim();
       entry = LuceneUtils.getEntry(index, id);
+      if (entry==null) {
+        msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg5"), id);
+        LoggerCentral.error(LOGGER, msg);
+        continue;
+      }
       dbFile = DBUtils.readDBEntry(entry.getFName(), entry.getStart(), entry.getStop());
       if (dbFile == null) {
         msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg3"), id);
-        System.err.println(msg);
+        LoggerCentral.error(LOGGER, msg);
       }
       else {
-        dumpEntry(dbFile);
+        dumpEntry(dbFile, w);
         dbFile.delete();
       }
     }
     return true;
+  }
+  
+  private static boolean dumpSeqIDs(String index, File fofPath, Writer w) {
+    LineIterator it = null;
+    boolean bRet = true;
+    try {
+      it = FileUtils.lineIterator(fofPath, "UTF-8");
+        while (it.hasNext()) {
+          dumpSeqIDs(index, it.nextLine(), w);
+        }
+    } 
+    catch(Exception ex) {
+      String msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg6"), ex.toString());
+      LoggerCentral.error(LOGGER, msg);
+      bRet = false;
+    }
+    finally {
+      LineIterator.closeQuietly(it);
+    }
+    return bRet;
   }
   /**
    * Run cutting job.
@@ -136,9 +183,10 @@ public class CmdLineUserQuery {
    * */
   public static boolean doJob(String[] args){
     CommandLine cmdLine;
-    String msg, toolName, index, seqids,idsfile;
+    String msg, toolName, index, seqids, idsfile, outputFile;
     Options options;
     boolean bRet = true;
+    Writer writer;
     
     toolName = DBMSMessages.getString("Tool.UserQuery.name");
 
@@ -154,30 +202,65 @@ public class CmdLineUserQuery {
     index = cmdLine.getOptionValue(INDEX_ARG);
     seqids = cmdLine.getOptionValue(SEQIDS_ARG);
     idsfile = cmdLine.getOptionValue(IDSFILE_ARG);
+    outputFile = cmdLine.getOptionValue(OUTPUT_ARG);
     
     // add additional controls on cmdline values
     if (seqids==null && idsfile==null){
       msg = DBMSMessages.getString("Tool.UserQuery.msg1");
-      System.err.println(msg);
+      LoggerCentral.error(LOGGER, msg);
       return false;
     }
-
     if (seqids!=null && idsfile!=null){
       msg = DBMSMessages.getString("Tool.UserQuery.msg2");
-      System.err.println(msg);
+      LoggerCentral.error(LOGGER, msg);
       return false;
     }
 
-    return dumpSeqIDs(index, seqids);
+    // open the writer to dump sequences
+    try {
+      if (outputFile!=null) {
+        writer = new FileWriter(outputFile);
+      }
+      else {
+        writer = new OutputStreamWriter(System.out);
+      }
+    }
+    catch(Exception ex) {
+      msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg7"), ex.toString());
+      return false;
+    }
+
+    // get sequences
+    if (seqids!=null) {
+      bRet = dumpSeqIDs(index, seqids, writer);
+    }
+    else {
+      bRet = dumpSeqIDs(index, new File(idsfile), writer);
+    }
+
+    // carefully close I/O channels
+    LuceneUtils.closeStorages();
+    IOUtils.closeQuietly(writer);
+    
+    return bRet; 
   }
 
+  private static void informForErrorMsg() {
+    String msg = String.format(DBMSMessages.getString("Tool.msg1"), 
+        DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName());
+    System.err.println(msg);
+  }
   /**
    * Start application.
    * 
    * @param args command line arguments
    * */
   public static void main(String[] args) {
-    if (!doJob(args)){
+    boolean bRet = doJob(args); 
+    if (!bRet || LoggerCentral.errorMsgEmitted()) {
+      informForErrorMsg();
+    }
+    if (!bRet){
       // exit code=1 : do this to report error to calling app
       System.exit(1);
     }
