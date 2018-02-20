@@ -24,6 +24,8 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
 import org.apache.commons.cli.CommandLine;
@@ -44,11 +46,20 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
- * A utility class to query a user sequence index.<br><br>
+ * A utility class to query a user sequence index to get sequences. Such an index is 
+ * created using tool CmdLineIndexer, or BeeDeeM standard index.<br><br>
+ * 
+ * It is worth noting that this tool can also be used to get a complement set 
+ * of sequence IDs. Use argument '-c' for that purpose. <br><br>
  * 
  * Sample use: CmdLineUserQuery -d <path-to-index> -i seqids<br><br>
  *   CmdLineUserQuery -d tests/junit/databank/fasta_prot/uniprot.faa.ld -i M4K2_HUMAN<br>
- *   CmdLineUserQuery -d tests/junit/databank/fasta_prot/uniprot.faa.ld -f tests/junit/databank/fasta_prot/fo-seqids.txt<br><br>
+ *    -> retrieve sequence M4K2_HUMAN from index<br>
+ *   CmdLineUserQuery -d tests/junit/databank/fasta_prot/uniprot.faa.ld -c -i M4K2_HUMAN<br>
+ *    -> retrieve complement of sequence M4K2_HUMAN from index, i.e. retrieve ALL 
+ *    sequences BUT M4K2_HUMAN<br>
+ *   CmdLineUserQuery -d tests/junit/databank/fasta_prot/uniprot.faa.ld -f tests/junit/databank/fasta_prot/fo-seqids.txt<br>
+ *    -> retrieve from index sequence(s) identified from IDs contained in file fo-seqids.txt <br><br>
  * Use program without any arguments to get help.<br>
  * Note: environment variables are accepted in file path.<br>
  * 
@@ -63,6 +74,7 @@ public class CmdLineUserQuery {
   private static final String SEQIDS_ARG  = "i";
   private static final String IDSFILE_ARG = "f";
   private static final String OUTPUT_ARG  = "o";
+  private static final String COMPLEMENT_ARG  = "c";
 
   private static final Log    LOGGER      = LogFactory
       .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".CmdLineUserQuery");
@@ -98,12 +110,17 @@ public class CmdLineUserQuery {
         .hasArg()
         .withDescription( DBMSMessages.getString("Tool.UserQuery.arg4.desc") )
         .create(OUTPUT_ARG);
+    Option complement = OptionBuilder
+        .withArgName( DBMSMessages.getString("Tool.UserQuery.arg5.lbl") )
+        .withDescription( DBMSMessages.getString("Tool.UserQuery.arg5.desc") )
+        .create(COMPLEMENT_ARG);
 
     opts = new Options();
     opts.addOption(index);
     opts.addOption(seqids);
     opts.addOption(idsfile);
     opts.addOption(outputFile);
+    opts.addOption(complement);
     CmdLineUtils.setHelpOption(opts);
     return opts;
   }
@@ -142,6 +159,216 @@ public class CmdLineUserQuery {
   }
 
   /**
+   * Dump the content of an entry.
+   * 
+   * @param index path to Lucene index to query. Such an index is created using
+   * CmdLineIndexer tool.
+   * @param id the ide to find in the index
+   * @param w final destination of the sequence
+   * */
+  private static void dumpEntry(String index, String id, Writer w) {
+    String msg;
+    DBEntry entry;
+    File dbFile;
+
+    entry = LuceneUtils.getEntry(index, id);
+    if (entry==null) {
+      msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg5"), id);
+      LoggerCentral.error(LOGGER, msg);
+      return;
+    }
+    dbFile = DBUtils.readDBEntry(entry.getFName(), entry.getStart(), entry.getStop());
+    if (dbFile == null) {
+      msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg3"), id);
+      LoggerCentral.error(LOGGER, msg);
+    }
+    else {
+      dumpEntry(dbFile, w);
+      dbFile.delete();
+    }
+  }
+
+  /**
+   * Collect sequence IDs.
+   * 
+   * @param ids_map map populated in this method with seq IDs
+   * @param seqids source sequence IDs
+   * */
+  private static void collectSeqIDs(HashSet<String> ids_map, String seqids) {
+    StringTokenizer tokenizer;
+    String id;
+    tokenizer = new StringTokenizer(seqids, ",");
+    while (tokenizer.hasMoreTokens()) {
+      id = tokenizer.nextToken().trim();
+      ids_map.add(id);
+      _idProvidedCounter++;
+    }
+  }
+  /**
+   * Collect sequence IDs.
+   * 
+   * @param ids_map map populated in this method with seq IDs
+   * @param fofPath path to a file containing sequence IDs
+   * */
+  private static boolean collectSeqIDs(HashSet<String> ids_map, File fofPath) {
+    LineIterator it = null;
+    boolean bRet = true;
+    try {
+      it = FileUtils.lineIterator(fofPath, "UTF-8");
+        while (it.hasNext()) {
+          collectSeqIDs(ids_map, it.nextLine());
+        }
+    } 
+    catch(Exception ex) {
+      String msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg6"), ex.toString());
+      LoggerCentral.error(LOGGER, msg);
+      bRet = false;
+    }
+    finally {
+      LineIterator.closeQuietly(it);
+    }
+    return bRet;
+  }
+  
+  /**
+   * Locate a sequence ID in a map of sequence IDs.
+   * 
+   * @param ids_map map of sequence IDs
+   * @param id the sequence ID to locate in the map
+   * 
+   * @return true if found, false otherwise.
+   * */
+  private static boolean findIdInMap(HashSet<String> ids_map, String id) {
+    // take into account that a sequence ID may be formatted using
+    // NBCI rules, e.g. sp|P97756|KKCC1_RAT
+    StringTokenizer tokenizer = new StringTokenizer(id, "|");
+    String token;
+    boolean isPdb = false;
+    //code adapted from LuceneUtils.getQuery(String id);
+    while (tokenizer.hasMoreTokens()) {
+      token = tokenizer.nextToken();
+      //do we have to stkip bank name ?
+      if (LuceneUtils.DB_TOKENS.contains(token)) {
+        if ("GNL".equals(token)) {
+          // before skipping, check if it is possible to do so
+          if (tokenizer.hasMoreTokens())
+            tokenizer.nextToken();
+        } else if ("PDB".equals(token)) {
+          // when PDB is detected, read next token : the entry ID
+          // after reading that, we quit, since last token is the chain ID
+          isPdb = true;
+        }
+        continue;
+      }
+      // id found ?
+      if (ids_map.contains(token)) {
+        return true;
+      }
+      if (isPdb)
+        break;
+    }
+    return false;
+  }
+
+  /**
+   * Slice a sequence ID. When a sequence ID is provided as NCBI ID, e.g.
+   * sp|P47809|MP2K4_MOUSE, this method returns the first valid single ID,
+   * e.g. P47809.
+   * 
+   * @param id the sequence ID to slice
+   * 
+   * @return true if found, false otherwise.
+   * */
+  private static String sliceId(String id) {
+    // take into account that a sequence ID may be formatted using
+    // NBCI rules, e.g. sp|P97756|KKCC1_RAT
+    StringTokenizer tokenizer = new StringTokenizer(id, "|");
+    String token;
+    //code adapted from LuceneUtils.getQuery(String id);
+    while (tokenizer.hasMoreTokens()) {
+      token = tokenizer.nextToken();
+      //do we have to stkip bank name ?
+      if (LuceneUtils.DB_TOKENS.contains(token)) {
+        if ("GNL".equals(token)) {
+          // before skipping, check if it is possible to do so
+          if (tokenizer.hasMoreTokens())
+            tokenizer.nextToken();
+        }
+        continue;
+      }
+      return token;
+    }
+    return id;
+    
+  }
+  /**
+   * Dump sequences given complement of IDs.
+   * 
+   * @param index path to Lucene index to query. Such an index is created using
+   * CmdLineIndexer tool.
+   * @param ids_map a map of sequence IDs. These IDs are used to locate their complement 
+   * in index the index. 
+   * @param w a writer
+   * 
+   * @return true if success, false if an error occurred. Error is reported in log file.
+   */
+  private static boolean dumpComplementSeqIDs(String index, HashSet<String> ids_map, Writer w) {
+    boolean bRet = true;
+    Enumeration<DBEntry> entries;
+    DBEntry entry;
+    String id;
+    
+    entries = LuceneUtils.entries(index);
+    while(entries.hasMoreElements()) {
+      entry = entries.nextElement();
+      id = entry.getId().toUpperCase();
+      if (!findIdInMap(ids_map, id)) {
+        id = sliceId(id);
+        dumpEntry(index, id, w);
+      }
+    }
+    return bRet;
+  }
+  
+  /**
+   * Dump sequences given complement of IDs.
+   * 
+   * @param index path to Lucene index to query. Such an index is created using
+   * CmdLineIndexer tool.
+   * @param seqids sequence IDs 
+   * @param w a writer
+   * 
+   * @return true if success, false if an error occurred. Error is reported in log file.
+   */
+  private static boolean dumpComplementSeqIDs(String index, String seqids, Writer w) {
+    HashSet<String> ids_map;
+    
+    ids_map = new HashSet<>();
+    collectSeqIDs(ids_map, seqids);
+    dumpComplementSeqIDs(index, ids_map, w);
+    return true;
+  }
+
+  /**
+   * Dump sequences given complement of IDs.
+   * 
+   * @param index path to Lucene index to query. Such an index is created using
+   * CmdLineIndexer tool.
+   * @param fofPath fofPath path to a file of IDs.
+   * @param w a writer
+   * 
+   * @return true if success, false if an error occurred. Error is reported in log file.
+   */
+  private static boolean dumpComplementSeqIDs(String index, File fofPath, Writer w) {
+    HashSet<String> ids_map;
+    
+    ids_map = new HashSet<>();
+    collectSeqIDs(ids_map, fofPath);
+    dumpComplementSeqIDs(index, ids_map, w);
+    return true;
+  }
+
+  /**
    * Dump sequences given IDs.
    * 
    * @param index path to Lucene index to query. Such an index is created using
@@ -153,30 +380,13 @@ public class CmdLineUserQuery {
    */
   private static boolean dumpSeqIDs(String index, String seqids, Writer w) {
     StringTokenizer tokenizer;
-    String id, msg;
-    DBEntry entry;
-    File dbFile;
+    String id;
     
-    index = CmdLineUtils.expandEnvVars(index);
     tokenizer = new StringTokenizer(seqids, ",");
     while (tokenizer.hasMoreTokens()) {
       id = tokenizer.nextToken().trim();
       _idProvidedCounter++;
-      entry = LuceneUtils.getEntry(index, id);
-      if (entry==null) {
-        msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg5"), id);
-        LoggerCentral.error(LOGGER, msg);
-        continue;
-      }
-      dbFile = DBUtils.readDBEntry(entry.getFName(), entry.getStart(), entry.getStop());
-      if (dbFile == null) {
-        msg = String.format(DBMSMessages.getString("Tool.UserQuery.msg3"), id);
-        LoggerCentral.error(LOGGER, msg);
-      }
-      else {
-        dumpEntry(dbFile, w);
-        dbFile.delete();
-      }
+      dumpEntry(index, id, w);
     }
     return true;
   }
@@ -211,6 +421,25 @@ public class CmdLineUserQuery {
     }
     return bRet;
   }
+  
+  private static boolean dumpSeqIDs(String index, String seqids, Writer w, boolean complement) {
+    if (!complement) {
+      return dumpSeqIDs(index, seqids, w);
+    }
+    else {
+      return dumpComplementSeqIDs(index, seqids, w);
+    }
+  }
+  
+  private static boolean dumpSeqIDs(String index, File fofPath, Writer w, boolean complement) {
+    if (!complement) {
+      return dumpSeqIDs(index, fofPath, w);
+    }
+    else {
+      return dumpComplementSeqIDs(index, fofPath, w);
+    }
+  }
+
   /**
    * Run query job.
    * 
@@ -222,7 +451,7 @@ public class CmdLineUserQuery {
     CommandLine cmdLine;
     String msg, toolName, index, seqids, idsfile, outputFile;
     Options options;
-    boolean bRet = true;
+    boolean bRet = true, complement;
     Writer writer;
     
     toolName = DBMSMessages.getString("Tool.UserQuery.name");
@@ -241,6 +470,7 @@ public class CmdLineUserQuery {
     seqids = cmdLine.getOptionValue(SEQIDS_ARG);
     idsfile = cmdLine.getOptionValue(IDSFILE_ARG);
     outputFile = cmdLine.getOptionValue(OUTPUT_ARG);
+    complement = cmdLine.hasOption(COMPLEMENT_ARG);
     
     // add additional controls on cmdline values
     if (seqids==null && idsfile==null){
@@ -269,13 +499,14 @@ public class CmdLineUserQuery {
       return false;
     }
 
+    index = CmdLineUtils.expandEnvVars(index);
     // get sequences
     if (seqids!=null) {
-      bRet = dumpSeqIDs(index, seqids, writer);
+      bRet = dumpSeqIDs(index, seqids, writer, complement);
     }
     else {
       idsfile = CmdLineUtils.expandEnvVars(idsfile);
-      bRet = dumpSeqIDs(index, new File(idsfile), writer);
+      bRet = dumpSeqIDs(index, new File(idsfile), writer, complement);
     }
     
     // provide some stats to the user (log file only)

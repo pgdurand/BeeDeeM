@@ -22,6 +22,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -31,6 +32,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.Hit;
@@ -354,7 +356,61 @@ public class LuceneStorageSystem implements StorageSystem {
     }
     return entries;
   }
+  
+  /**
+   * Return an enumeration over all entries contained in an index. It is worth noting
+   * that this method does not handle deleted documents, so use it only with clean
+   * index.
+   */
+  public Enumeration<DBEntry> entries(){
+    return new Enumeration<DBEntry>() {
+      IndexReader reader;
+      boolean bFirst = true;
+      int curDoc, maxDoc;
+      
+      private void init() {
+        reader = _searcher.getIndexReader();
+        curDoc=0;
+        maxDoc=reader.maxDoc();
+        bFirst=false;
+      }
+      @Override
+      public boolean hasMoreElements() {
+        if (bFirst) {
+          init();
+        }
+        return curDoc<maxDoc;
+      }
 
+      /**
+       * This method returns a freshly created DBEntry on each call.
+       */
+      @Override
+      public DBEntry nextElement() {
+        if (bFirst) {
+          init();
+        }
+        Document doc;
+        try {
+          doc = reader.document(curDoc);
+        } catch (Exception e) {
+          throw new StorageSystemException("Unable to get document from index: "+e.toString());
+        }
+        String key = doc.get(FNAME_FIELD);
+        String fName = getRealFName(key);
+        if (fName == null) {
+          throw new StorageSystemException("Unable to get data fName for key: " + key);
+        }
+        DBEntry entry = new DBEntry(doc.get(ID_FIELD), doc.get(NAME_FIELD),
+            fName, doc.get(START_FIELD), doc.get(STOP_FIELD));
+        entry.setIndexPath(_indexName);
+        curDoc++;
+        return entry;
+      }
+      
+    };
+  }
+  
   /**
    * Closes a Lucene writer.
    */
