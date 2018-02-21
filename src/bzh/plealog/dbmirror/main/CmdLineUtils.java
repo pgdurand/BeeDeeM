@@ -1,8 +1,8 @@
 package bzh.plealog.dbmirror.main;
 
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.GnuParser;
@@ -15,7 +15,6 @@ import com.plealog.genericapp.api.EZEnvironment;
 
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
-import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 public class CmdLineUtils {
   private static final String HELP_KEY = "help";
@@ -26,7 +25,7 @@ public class CmdLineUtils {
    * Prepare an option to deal with configuration path.
    */
   @SuppressWarnings("static-access")
-  protected static void setConfDirOption(Options opts){
+  public static void setConfDirOption(Options opts){
     Option confDir = OptionBuilder
         .withArgName( DBMSMessages.getString("Tool.Utils.arg1.lbl") )
         .withLongOpt(CONFDIR_KEY)
@@ -38,7 +37,7 @@ public class CmdLineUtils {
   /**
    * Prepare an option to deal with help.
    */
-  protected static void setHelpOption(Options opts){
+  public static void setHelpOption(Options opts){
     String msg = DBMSMessages.getString("Tool.Utils.info.msg1" );
     opts.addOption(new Option( HELP_KEY, msg ));
     opts.addOption(new Option( H_KEY, msg ));
@@ -47,7 +46,7 @@ public class CmdLineUtils {
   /**
    * Handle the help message.
    */
-  protected static void printUsage(String toolName, Options opt) {
+  public static void printUsage(String toolName, Options opt) {
     // Get version info
     Properties props = StarterUtils.getVersionProperties();
     StringBuffer buf = new StringBuffer("\n");
@@ -83,7 +82,7 @@ public class CmdLineUtils {
    * @return a command-line object or null. Null is returned in two case:
    * -h or -help is requested, or args parsing failed.
    */
-  protected static CommandLine handleArguments(String[] args, Options options, String toolName) {
+  public static CommandLine handleArguments(String[] args, Options options, String toolName) {
     GnuParser parser;
     CommandLine line = null;
 
@@ -117,7 +116,7 @@ public class CmdLineUtils {
    * 
    * @return an update file path, e.g. /Users/pgdurand/my-file.txt
    */
-  protected static String expandEnvVars(String text) {
+  public static String expandEnvVars(String text) {
     Map<String, String> envMap = System.getenv();
     for (Entry<String, String> entry : envMap.entrySet()) {
       String key = entry.getKey();
@@ -131,25 +130,6 @@ public class CmdLineUtils {
       }
     }
     return text;
-  }
-  
-  /**
-   * Provide a dedicated message to user if tool fails. In case of error,
-   * this method calls system.exit with code 1.
-   * 
-   * @param jobInError true if tool fails, false otherwise
-   * */
-  protected static void informForErrorMsg(boolean jobInError) {
-    if (jobInError || LoggerCentral.errorMsgEmitted()) {
-      String msg = String.format(DBMSMessages.getString("Tool.msg1"), 
-          DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName());
-      System.err.println(msg);
-      
-      if (jobInError) {
-        // exit code=1 : do this to report error to calling app
-        System.exit(1);
-      }
-    }
   }
 
 }
