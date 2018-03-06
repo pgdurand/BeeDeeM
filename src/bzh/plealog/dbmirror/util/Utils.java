@@ -640,7 +640,7 @@ public class Utils {
       }
       out.flush();
     } catch (IOException e) {
-      LOGGER.warn("Couldn't open " + zipname + ".");
+      LOGGER.warn("Couldn't open " + zipname + ": "+e.toString());
       return null;
     }
 
