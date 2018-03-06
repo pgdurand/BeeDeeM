@@ -97,7 +97,7 @@ public class CmdLineInstaller {
   }
   private void sendTerminationMail(PFTPLoaderDescriptor fDescriptor, String bankListFormat) {
     PMailer mailer;
-    String host, port, sender, pswd, recp, val, desc, subject, body;
+    String host, port, sender, pswd, recp, val, desc, subject, body, dbList, logFile;
     File bankList=null;
     
     host = fDescriptor.getProperty(PFTPLoaderDescriptor.MAILER_HOST);
@@ -120,24 +120,26 @@ public class CmdLineInstaller {
     if (val != null && val.equals("true"))
       mailer.setDebug(true);
     desc = fDescriptor.getDescriptorName();
+    dbList = fDescriptor.getProperty(PFTPLoaderDescriptor.DBLIST_KEY);
+    logFile=DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName();
     if (LoggerCentral.errorMsgEmitted()) { 
       // ERROR
       subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg3")).format(
           new Object[]{DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY, desc});
       body = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg4")).format(
-          new Object[]{desc});
+          new Object[]{desc, dbList, logFile});
     } else if (LoggerCentral.processAborted()) { 
       // ABORT
       subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg5")).format(
           new Object[]{DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY, desc});
       body = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg6")).format(
-          new Object[]{desc});
+          new Object[]{desc, dbList, logFile});
     } else { 
       //OK
       subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg7")).format(
           new Object[]{DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY, desc});
       body = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg8")).format(
-          new Object[]{desc});
+          new Object[]{desc, dbList});
       bankList = prepareListOfBanks(bankListFormat);
     }
     if (bankList!=null){
