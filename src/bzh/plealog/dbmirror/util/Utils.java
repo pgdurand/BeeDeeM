@@ -417,6 +417,7 @@ public class Utils {
       }
     } catch (Exception e) {
       volumes = null;
+      LOGGER.warn("Unable to process File Volumes: ", e);
     } finally {
       IOUtils.closeQuietly(fis);
       IOUtils.closeQuietly(bis);
@@ -639,7 +640,7 @@ public class Utils {
       }
       out.flush();
     } catch (IOException e) {
-      LOGGER.warn("Couldn't open " + zipname + ".");
+      LOGGER.warn("Couldn't open " + zipname + ": "+e.toString());
       return null;
     }
 

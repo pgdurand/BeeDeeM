@@ -78,7 +78,7 @@ public class LuceneUtils {
   // gi,gb,emb,dbj,pir,prf,sp,pdb,pat,bbs,ref,gnl,lcl
   // if gnl, skip next token (database)
   // if pdb, get next token and wait (do not get chain)
-  private static HashSet<String>                        DB_TOKENS;
+  public static HashSet<String>                        DB_TOKENS;
   static {
     DB_TOKENS = new HashSet<String>();
     DB_TOKENS.add("GI");
@@ -300,6 +300,21 @@ public class LuceneUtils {
       return 0;
   }
 
+  /**
+   * Return an enumeration over all entries contained in an index. It is worth noting
+   * that this method does not handle deleted documents, so use it only with clean
+   * index.
+   * 
+   * @return an enumeration over all entries contained in the index or null.
+   */
+  public static Enumeration<DBEntry> entries(String indexName){
+    LuceneStorageSystem lss = LuceneUtils.getSequenceStorage(indexName);
+    if (lss != null)
+      return lss.entries();
+    else
+      return null;
+  }
+  
   @SuppressWarnings("deprecation")
   protected static Query getQuery(String id) throws ParseException {
     StringTokenizer tokenizer;

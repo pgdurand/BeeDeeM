@@ -83,6 +83,8 @@ public class SequenceFileManager {
 
   boolean                          abortProcess            = false;
 
+  private String                   tmpFileDirectory;
+  
   /**
    * Tell the SequenceFileManager to abort the process even if the execute
    * method has not yet finished his job
@@ -106,6 +108,7 @@ public class SequenceFileManager {
   public SequenceFileManager(String sequenceFilepath,
       DatabankFormat databankFormat, Log logger, JProgressBar progressBar)
       throws IOException {
+    setTmpFileDirectory(DBMSConfigurator.TMP_FILTER_DIRECTORY);
     this.sequenceFile = new File(sequenceFilepath);
     this.databankFormat = databankFormat;
     this.progressBar = progressBar;
@@ -124,6 +127,40 @@ public class SequenceFileManager {
     this.validators = new ArrayList<ISequenceValidator>();
   }
 
+  /**
+   * Creates a new SequenceFileManager
+   * 
+   * @param reader
+   *          the buffered reader
+   * @param writer
+   *          the buffered writer
+   * @param databankFormat
+   *          SeqIOUtils.UNKNOWN => SeqIOUtils.FASTQ
+   * @param logger
+   * 
+   * @throws IOException
+   */
+  public SequenceFileManager(BufferedReader reader, BufferedWriter writer,
+      DatabankFormat databankFormat, Log logger) {
+    setTmpFileDirectory(DBMSConfigurator.TMP_FILTER_DIRECTORY);
+    this.databankFormat = databankFormat;
+    this.logger = logger;
+    this.validators = new ArrayList<ISequenceValidator>();
+
+    // init reader
+    this.reader = reader;
+
+    // init writer
+    this.writer = writer;
+  }
+
+  /**
+   * Set a working directory. Default is DBMSConfigurator.TMP_FILTER_DIRECTORY.
+   */
+  public void setTmpFileDirectory(String tmpDir){
+    tmpFileDirectory = tmpDir;
+  }
+  
   /**
    * Method who gives a number of sequences. USE only if this objects contains a
    * SequenceValidatorSubset
@@ -165,8 +202,8 @@ public class SequenceFileManager {
 
   private void updateWithSequenceFile() throws IOException {
     // set the filtered file
-    this.filteredFile = new File(DBMSConfigurator.TMP_FILTER_DIRECTORY,
-        this.sequenceFile.getName());
+    this.filteredFile = new File(tmpFileDirectory,
+        "filtered_"+this.sequenceFile.getName());
 
     if (this.progressBar != null) {
       this.progressBar.setValue(0);
@@ -180,7 +217,13 @@ public class SequenceFileManager {
     }
 
     // init the tmp entry file
-    tmpEntryFile = new File(this.sequenceFile.getParent(), "tmp_entry_file.dat");
+    String parent=this.sequenceFile.getParent();
+    if (parent!=null) {
+      tmpEntryFile = new File(parent, "tmp_entry_file.dat");
+    }
+    else {
+      tmpEntryFile = new File("tmp_entry_file.dat");
+    }
     tmpEntryFile.createNewFile();
     fwTmpEntryFile = new FileWriter(tmpEntryFile);
 
@@ -189,41 +232,15 @@ public class SequenceFileManager {
         this.sequenceFile), "UTF-8"));
 
     // init writer
-    if (!this.filteredFile.getParentFile().exists()) {
-      this.filteredFile.getParentFile().mkdirs();
+    File parentFile=this.filteredFile.getParentFile();
+    if (parentFile!=null && !parentFile.exists()) {
+      parentFile.mkdirs();
     }
     if (this.filteredFile.exists()) {
       this.filteredFile.delete();
     }
     this.filteredFile.createNewFile();
     writer = new BufferedWriter(new FileWriter(this.filteredFile));
-  }
-
-  /**
-   * Creates a new SequenceFileManager
-   * 
-   * @param reader
-   *          the buffered reader
-   * @param writer
-   *          the buffered writer
-   * @param databankFormat
-   *          SeqIOUtils.UNKNOWN => SeqIOUtils.FASTQ
-   * @param logger
-   * 
-   * @throws IOException
-   */
-  public SequenceFileManager(BufferedReader reader, BufferedWriter writer,
-      DatabankFormat databankFormat, Log logger) {
-    this.databankFormat = databankFormat;
-
-    this.logger = logger;
-    this.validators = new ArrayList<ISequenceValidator>();
-
-    // init reader
-    this.reader = reader;
-
-    // init writer
-    this.writer = writer;
   }
 
   public File getSequenceFile() {
