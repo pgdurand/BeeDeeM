@@ -7,14 +7,6 @@
 # User manual:
 #   https://pgdurand.gitbooks.io/beedeem/
 # -------------------------------------------------------------------
-# The program can be used to delete a databank. It takes two arguments:
-# -code <bank-code>: index code of the bank to delete. Such a code can 
-#                    be obtained using the 'info' tool (use 'code' format).
-# -info: display bank directory to be deleted WITHOUT deleting it!
-#
-# See manual for more information: 
-# https://pgdurand.gitbooks.io/beedeem/
-#
 # In addition, some parameters can be passed to the JVM for special 
 # configuration purposes:<br>
 # -DKL_DEBUG=true ; if true, if set, log will be in debug mode<br>

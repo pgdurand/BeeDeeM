@@ -6,19 +6,6 @@ rem -------------------------------------------------------------------
 rem User manual:
 rem   https://pgdurand.gitbooks.io/beedeem/
 rem -------------------------------------------------------------------
-rem This is the program to use to query the databanks managed with 
-rem DBMS. The program takes 3 argument, in this order:
-rem
-rem     <database> <seqid> <format>
-rem
-rem Accepted values for 'database' is: dico, nucleotide or protein.
-rem 
-rem Accepted value for 'seqid' is a sequence identifier. 
-rem
-rem Accepted value for 'format' is: txt (default), html, 
-rem insd, fas or finsd. 
-rem
-rem 
 rem In addition, some parameters can be passed to the JVM for special 
 rem configuration purposes:<br>
 rem -DKL_DEBUG=true ; if true, if set, log will be in debug mode<br>
@@ -55,4 +42,4 @@ rem echo ""
 
 rem *** Start application
 cd %CUR_DIR%
-"%KL_JAVA_VM%" %KL_JAVA_ARGS% -classpath "%FILES%" bzh.plealog.dbmirror.main.CmdLineQuery -d %1 -i %2 -f %3
+"%KL_JAVA_VM%" %KL_JAVA_ARGS% -classpath "%FILES%" bzh.plealog.dbmirror.main.CmdLineQuery %*

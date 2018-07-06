@@ -6,18 +6,6 @@
 # User manual:
 #   https://pgdurand.gitbooks.io/beedeem/
 # -------------------------------------------------------------------
-# This class can be used to annotate Blast results. 
-# Command line takes three arguments, in this order:
-#
-#   <blast_result> <output_file> <type>
-#
-# <blast_result>: an existing Blast file, legacy XML format (absolute path)
-# <output_file>:  output file that will contain the annotated 
-#                 Blast result (absolute path)
-# <type>:         type of annotation to retrieve. 
-#                 Options: bco or full. Use bco to only retrieve
-#                 biological classifications information. Use full 
-#                 to retrieve full feature tables.
 # In addition, some parameters can be passed to the JVM for special 
 # configuration purposes:
 # -DKL_DEBUG=true ; if true, if set, log will be in debug mode
@@ -46,5 +34,5 @@ KL_JAR_LIST=`echo $KL_JAR_LIST_TMP | sed 's/ /:/g'`
 
 # *** start application
 KL_APP_MAIN_CLASS=bzh.plealog.dbmirror.main.Annotate
-$KL_JAVA_VM $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS -i $1 -o $2 -type $3 -writer zml
+$KL_JAVA_VM $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS $@
 

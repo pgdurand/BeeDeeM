@@ -7,12 +7,6 @@
 # User manual:
 #   https://pgdurand.gitbooks.io/beedeem/
 # -------------------------------------------------------------------
-# The program can be used to check DSC files. It takes one argument:
-# -dsc <bank-code>: descriptor name(s) to check (comma separated). 
-#                   Use 'all' to check all descriptors.
-#
-# See manual for more information: 
-# https://pgdurand.gitbooks.io/beedeem/
 #
 # In addition, some parameters can be passed to the JVM for special 
 # configuration purposes:<br>

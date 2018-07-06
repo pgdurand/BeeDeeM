@@ -6,18 +6,6 @@ rem -------------------------------------------------------------------
 rem User manual:
 rem   https://pgdurand.gitbooks.io/beedeem/
 rem -------------------------------------------------------------------
-rem This class can be used to annotate Blast results. 
-rem Command line takes three arguments, in this order:
-rem
-rem   <blast_result> <output_file> <type>
-rem
-rem <blast_result>: an existing Blast file, legacy XML format (absolute path)
-rem <output_file>:  output file that will contain the annotated 
-rem                 Blast result (absolute path)
-rem <type>:         type of annotation to retrieve. 
-rem                 Options: bco or full. Use bco to only retrieve
-rem                 biological classifications information. Use full 
-rem                 to retrieve full feature tables.
 rem In addition, some parameters can be passed to the JVM for special 
 rem configuration purposes:
 rem -DKL_DEBUG=true ; if true, if set, log will be in debug mode
@@ -50,5 +38,5 @@ for /F %%f in ('dir /b *.jar') do set FILES=!FILES!;%KL_APP_HOME%\\bin\\%%f
 
 rem *** Start application
 cd %CUR_DIR%
-"%KL_JAVA_VM%" %KL_JAVA_ARGS% -classpath "%FILES%" bzh.plealog.dbmirror.main.Annotate -i %1 -o %2 -type %3 -writer zml
+"%KL_JAVA_VM%" %KL_JAVA_ARGS% -classpath "%FILES%" bzh.plealog.dbmirror.main.Annotate %*
 

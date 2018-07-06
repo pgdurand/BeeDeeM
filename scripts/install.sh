@@ -7,13 +7,6 @@
 # User manual:
 #   https://pgdurand.gitbooks.io/beedeem/
 # -------------------------------------------------------------------
-# The program can be used to install some databanks. It takes a 
-# single argument which is a global descriptor file
-# that has to be located within the conf directory of the application. 
-# Pass in the descriptor file without its '.gd' extension. See manual 
-# for more information: 
-# https://pgdurand.gitbooks.io/beedeem/
-#
 # In addition, some parameters can be passed to the JVM for special 
 # configuration purposes:<br>
 # -DKL_DEBUG=true ; if true, if set, log will be in debug mode<br>

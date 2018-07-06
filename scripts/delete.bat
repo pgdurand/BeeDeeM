@@ -8,14 +8,6 @@ rem -------------------------------------------------------------------
 rem User manual:
 rem   https://pgdurand.gitbooks.io/beedeem/
 rem -------------------------------------------------------------------
-rem The program can be used to delete a databank. It takes two arguments:
-rem -code <bank-code>: index code of the bank to delete. Such a code can 
-rem                    be obtained using the 'info' tool (use 'code' format).
-rem -info: display bank directory to be deleted WITHOUT deleting it!
-rem
-rem See manual for more information: 
-rem https://pgdurand.gitbooks.io/beedeem/
-rem
 rem In addition, some parameters can be passed to the JVM for special 
 rem configuration purposes:<br>
 rem -DKL_DEBUG=true ; if true, if set, log will be in debug mode<br>

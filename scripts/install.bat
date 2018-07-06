@@ -7,15 +7,6 @@ rem -------------------------------------------------------------------
 rem User manual:
 rem   https://pgdurand.gitbooks.io/beedeem/
 rem -------------------------------------------------------------------
-rem
-rem The program can be used to install some databanks. It takes a 
-rem single argument which is a global descriptor file
-rem that has to be located within the conf directory of the application. 
-rem Pass in the descriptor file without its '.gd' extension. See manual 
-rem for more information: 
-rem
-rem https://pgdurand.gitbooks.io/beedeem/
-rem
 rem In addition, some parameters can be passed to the JVM for special 
 rem configuration purposes:<br>
 rem -DKL_DEBUG=true ; if true, if set, log will be in debug mode<br>
