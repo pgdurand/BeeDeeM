@@ -43,6 +43,8 @@ import org.apache.commons.logging.LogFactory;
 import bzh.plealog.dbmirror.indexer.DBEntry;
 import bzh.plealog.dbmirror.indexer.LuceneUtils;
 import bzh.plealog.dbmirror.lucenedico.DicoTerm;
+import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
+import bzh.plealog.dbmirror.lucenedico.Dicos;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
@@ -188,40 +190,46 @@ public class PQueryMirrorBase {
     return line;
   }
 
-  private void handleDicoIds(Writer w, String dbKey, String mirrorPath,
-      List<String> idxNames, String[] ids) {
-    DicoTerm[] terms;
-    DicoTerm term;
-    int i;
-
-    if (mirrorPath != null)
-      terms = LuceneUtils.getTerms(mirrorPath, ids);
-    else
-      terms = LuceneUtils.getTerms(idxNames, ids);
-    if (terms != null) {
-      try {
-        for (i = 0; i < ids.length; i++) {
-          w.write(ids[i]);
-          w.write("\t");
-          term = terms[i];
-          if (term != null) {
-            w.write(term.getDataField());
-          }
-          w.write("\n");
-        }
-      } catch (IOException e) {
-        LOGGER.debug("unable to write result: " + e);
-      }
-    } else {
-      String errMsg = "error: terms not found in index (" + dbKey + ")";
-      LOGGER.debug(errMsg);
-      try {
-        w.write(errMsg);
-        w.write("\n");
-      } catch (IOException e) {
-      }
+	private void handleDicoIds(Writer w, String dbKey, String mirrorPath, List<String> idxNames, String[] ids) {
+		DicoTerm term;
+		int i;
+		
+		// connect to Dictionnary Lucene Indexes
+		DicoTermQuerySystem dicoConnector;
+		dicoConnector = DicoTermQuerySystem.getDicoTermQuerySystem(_dbMirrorConfig);
+		
+		// if "dico", we expect having dico type provided int he form: "dico:type"
+		// where type is one of Dicos.XXX.xrefId string
+		i = dbKey.indexOf(':');
+    if (i!=-1) {
+      dbKey = dbKey.substring(i+1);
     }
-  }
+    else {
+      dbKey = Dicos.NCBI_TAXONOMY.xrefId;
+    }
+		try {
+		  //for now, only Taxonomy is available for querying
+			if (dbKey.toLowerCase().startsWith(Dicos.NCBI_TAXONOMY.xrefId.toLowerCase())) {
+				for (i = 0; i < ids.length; i++) {
+				  //get NCBI Taxonomy Term given a texID
+					term = dicoConnector.getTerm(Dicos.NCBI_TAXONOMY, ids[i]);
+          //dump simplified taxo, i.e. path containing only official ranks (kingdom, order, etc)
+					//missing ranks are tagged with "unknown" to always produce tax-path of same size
+					w.write(ids[i]);
+          w.write("\t");
+					if (term != null) {
+						w.write(dicoConnector.getTaxPath(ids[i], true, true, true));
+					}
+					else {
+					  w.write("unknown");
+					}
+          w.write("\n");
+				}
+			}
+		} catch (IOException e) {
+			LOGGER.debug("unable to write result: " + e);
+		}
+	}
 
   private String[] getIDs(String id) {
     ArrayList<String> idsList;
@@ -525,7 +533,7 @@ public class PQueryMirrorBase {
     val = data.get(ADJUSTKEY);
     adjust = "true".equalsIgnoreCase(val);
 
-    if (!dbKey.equals(DBMirrorConfig.DICO_IDX)) {
+    if (!dbKey.startsWith((DBMirrorConfig.DICO_IDX))) {
       // nuc/prot index
       formatter = new PFormatter();
       formatter.startPrologue(w, format);
@@ -622,7 +630,10 @@ public class PQueryMirrorBase {
     }
     formatter = new PFormatter();
     // process query
-    if (!DBMirrorConfig.DICO_IDX.equals(dbKey)) {
+    if (dbKey==null) {
+      dbKey="";
+    }
+    if (!dbKey.startsWith(DBMirrorConfig.DICO_IDX)) {
       PSequence seq = handleSingleID(outWriter, formatter, mirrorPath, null,
           id, format, "", "", 0, 0, false);
       result = new PSequence[1];

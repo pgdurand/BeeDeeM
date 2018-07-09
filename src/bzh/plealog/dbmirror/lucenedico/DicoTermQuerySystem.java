@@ -280,25 +280,54 @@ public class DicoTermQuerySystem {
    * not found.
    */
   public String getTaxPath(String id) {
-    return getTaxPath(id, true);
+    return getTaxPath(id, true, false, false);
   }
 
   public String getTaxPath(String id, boolean simplified) {
+    return getTaxPath(id, simplified, false, false);
+  }
+  
+  public String getTaxPath(String id, boolean simplified, boolean includeOrganism, boolean tagMissingRank) {
     StringBuffer ids = new StringBuffer();
 
     OrderedMap taxonPath = getTaxPath(id, simplified, null);
 
     if (taxonPath != null) {
-      for (Object o : taxonPath.keySet()) {
-        if (o instanceof DicoTerm) {
-          DicoTerm term = (DicoTerm) o;
-          String termId = term.getId().substring(1);
-          if (termId.equals(id))
-            break; // skip this id: the organism
-          ids.append(((TaxonomyRank) taxonPath.get(term)).getLevelCode());
-          ids.append(this.storages.get(Dicos.NCBI_TAXONOMY)
-              .getTerm(DicoUtils.TAX_ID_NAME_PREFIX + termId).getDataField());
+      TaxonomyRank[] taxRanks = TaxonomyRank.values();
+      if (tagMissingRank) {
+        DicoTerm term;
+        term = (DicoTerm) taxonPath.firstKey();
+        TaxonomyRank rank = (TaxonomyRank) taxonPath.get(term);
+        for(TaxonomyRank taxRank : taxRanks) {
+          if (rank.getLevel()==taxRank.getLevel()) {
+            String termId = term.getId().substring(1);
+            if (termId.equals(id) && !includeOrganism)
+              break; // skip this id: the organism
+            ids.append(rank.getLevelCode());
+            ids.append(this.storages.get(Dicos.NCBI_TAXONOMY)
+                .getTerm(DicoUtils.TAX_ID_NAME_PREFIX + termId).getDataField());
+            term = (DicoTerm) taxonPath.nextKey(term);
+            rank = (TaxonomyRank) taxonPath.get(term);
+          }
+          else {
+            ids.append(taxRank.getLevelCode());
+            ids.append("unknown");
+          }
           ids.append(";");
+        }
+      }
+      else {
+        for (Object o : taxonPath.keySet()) {
+          if (o instanceof DicoTerm) {
+            DicoTerm term = (DicoTerm) o;
+            String termId = term.getId().substring(1);
+            if (termId.equals(id) && !includeOrganism)
+              break; // skip this id: the organism
+            ids.append(((TaxonomyRank) taxonPath.get(term)).getLevelCode());
+            ids.append(this.storages.get(Dicos.NCBI_TAXONOMY)
+                .getTerm(DicoUtils.TAX_ID_NAME_PREFIX + termId).getDataField());
+            ids.append(";");
+          }
         }
       }
     }
@@ -317,10 +346,13 @@ public class DicoTermQuerySystem {
     return getTaxPathIds(id, true);
   }
 
+  public String getTaxPathIds(String id, boolean simplified) {
+    return getTaxPathIds(id, true, false);
+  }
   /**
    * Same as getTaxPath but returns a path made of taxon ID.
    */
-  public String getTaxPathIds(String id, boolean simplified) {
+  public String getTaxPathIds(String id, boolean simplified, boolean includeOrganism) {
     StringBuffer ids = new StringBuffer();
 
     OrderedMap taxonPath = getTaxPath(id, simplified, null);
@@ -330,7 +362,7 @@ public class DicoTermQuerySystem {
         if (o instanceof DicoTerm) {
           DicoTerm term = (DicoTerm) o;
           String termId = term.getId().substring(1);
-          if (termId.equals(id))
+          if (termId.equals(id) && !includeOrganism)
             break; // skip this id: the organism
 
           ids.append(DicoUtils.TAX_ID_NAME_PREFIX + termId);
