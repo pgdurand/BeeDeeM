@@ -18,7 +18,9 @@ package bzh.plealog.dbmirror.lucenedico;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import org.apache.commons.collections.OrderedMap;
@@ -28,9 +30,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import bzh.plealog.dbmirror.lucenedico.go.GeneOntologyGenerateTree;
+import bzh.plealog.dbmirror.lucenedico.go.GeneOntologyGenerateTree.Path;
 import bzh.plealog.dbmirror.lucenedico.go.GeneOntologyTerm;
 import bzh.plealog.dbmirror.lucenedico.go.GeneOntologyTermRelationship;
-import bzh.plealog.dbmirror.lucenedico.go.GeneOntologyGenerateTree.Path;
 import bzh.plealog.dbmirror.lucenedico.tax.TaxonomyRank;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
@@ -79,6 +81,45 @@ public class DicoTermQuerySystem {
     _goTree = new GeneOntologyGenerateTree();
   }
 
+  private DicoTermQuerySystem(Map<String, String> dicos) {
+    Iterator<String> readers = dicos.keySet().iterator();
+    while(readers.hasNext()) {
+      // reader: one of DicoUtils.READER_xxx
+      String reader = readers.next();
+      Dicos dico = Dicos.getAssociatedDico(reader);
+      if (dico != null) {
+        storages.put(dico, dico.getDicoQuery(dicos.get(reader)));
+      }
+      else {
+        LoggerCentral.warn(LOGGER, "unable to find reader: "+reader);
+      }
+    }
+    _goTree = new GeneOntologyGenerateTree();
+  }
+
+  /**
+   * Instantiate a fresh DicoTermQuerySystem.
+   * 
+   * @param dicos map where keys are reader types for dictionary and values are absolute paths
+   * to corresponding Lucene index. Readers must be one of DicoUtils.READER_xxx constants targetting
+   * dicos: GO, Enzyme, etc.
+   */
+  public static DicoTermQuerySystem getDicoTermQuerySystem(
+      Map<String, String> dicos) {
+    synchronized (SEM) {
+      if ((_dicoSystem == null) || (_dicoSystem.isClosed)
+          || (_dicoSystem.storages.size() == 0)) {
+        _dicoSystem = new DicoTermQuerySystem(dicos);
+      }
+      return _dicoSystem;
+    }
+  }
+
+  /**
+   * Instantiate a fresh DicoTermQuerySystem.
+   * 
+   * @param mirrorCfg a DBMirrorConfig object containing BeeDeeM configuration
+   */
   public static DicoTermQuerySystem getDicoTermQuerySystem(
       DBMirrorConfig mirrorCfg) {
     synchronized (SEM) {
@@ -299,7 +340,7 @@ public class DicoTermQuerySystem {
         term = (DicoTerm) taxonPath.firstKey();
         TaxonomyRank rank = (TaxonomyRank) taxonPath.get(term);
         for(TaxonomyRank taxRank : taxRanks) {
-          if (rank.getLevel()==taxRank.getLevel()) {
+          if (rank != null && rank.getLevel()==taxRank.getLevel()) {
             String termId = term.getId().substring(1);
             if (termId.equals(id) && !includeOrganism)
               break; // skip this id: the organism
