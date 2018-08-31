@@ -8,4 +8,5 @@
 *.ldx
 **/ifremer*
 *.bak
+tests/logs.txt
 
