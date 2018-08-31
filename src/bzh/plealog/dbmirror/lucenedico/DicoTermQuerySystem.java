@@ -388,7 +388,7 @@ public class DicoTermQuerySystem {
   }
 
   public String getTaxPathIds(String id, boolean simplified) {
-    return getTaxPathIds(id, true, false);
+    return getTaxPathIds(id, simplified, false);
   }
   /**
    * Same as getTaxPath but returns a path made of taxon ID.
