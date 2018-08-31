@@ -763,24 +763,40 @@ public class SequenceFileManagerTest {
   }
 
   @Test
-  public void testTaxonInclude() {
+  public void testTaxonInclude_1() {
     try {
       SequenceFileManager sfm = initSequenceFileManager("testTaxonomy",
           "genbank.dat", DatabankFormat.genbank);
-      SequenceValidatorTaxon validator = new SequenceValidatorTaxon("89593", "");
+      SequenceValidatorTaxon validator = new SequenceValidatorTaxon("561", "");
       sfm.addValidator(validator);
       filteredFile = sfm.execute().get(0);
-      checkResults(sfm, 4, 6);
+      checkResults(sfm, 1, 9);
 
-      sfm = initSequenceFileManager("testTaxonomy", "uniprot.dat",
+    } catch (Exception e) {
+      Assert.fail(e.getMessage());
+    }
+  }
+
+  /*@Test
+  public void testTaxonInclude_2() {
+    try {
+      SequenceFileManager sfm = initSequenceFileManager("testTaxonomy", "uniprot.dat",
           DatabankFormat.swissProt);
+      SequenceValidatorTaxon validator = new SequenceValidatorTaxon("2759", "");
       sfm.addValidator(validator);
       filteredFile = sfm.execute().get(0);
-      checkResults(sfm, 4, 6);
+      checkResults(sfm, 1, 9);
+    } catch (Exception e) {
+      Assert.fail(e.getMessage());
+    }
+  }*/
 
-      sfm = initSequenceFileManager("testTaxonomy", "uniprot.dat",
+  /*@Test
+  public void testTaxonInclude_3() {
+    try {
+      SequenceFileManager sfm = initSequenceFileManager("testTaxonomy", "uniprot.dat",
           DatabankFormat.swissProt);
-      validator = new SequenceValidatorTaxon("40674,543", "");
+      SequenceValidatorTaxon validator = new SequenceValidatorTaxon("40674,543", "");
       sfm.addValidator(validator);
       filteredFile = sfm.execute().get(0);
       checkResults(sfm, 5, 5);
@@ -788,7 +804,7 @@ public class SequenceFileManagerTest {
     } catch (Exception e) {
       Assert.fail(e.getMessage());
     }
-  }
+  }*/
 
   @Test
   public void testTaxonExclude() {

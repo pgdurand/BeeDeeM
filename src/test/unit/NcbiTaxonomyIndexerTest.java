@@ -150,7 +150,7 @@ public class NcbiTaxonomyIndexerTest {
 	public void testQuerySystem() {
 
 		// full path (ids)
-		String value = dicoSystem.getTaxPathIds("9606", false);
+		String value = dicoSystem.getTaxPathIds("9606", false, false);
 		Assert.assertEquals(
 				"n1;n131567;n2759;n33154;n33208;n6072;n33213;n33511;n7711;n89593;n7742;n7776;n117570;n117571;n8287;n1338369;n32523;n32524;n40674;n32525;n9347;n1437010;n314146;n9443;n376913;n314293;n9526;n314295;n9604;n207598;n9605;",
 				value);
