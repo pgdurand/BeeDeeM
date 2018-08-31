@@ -109,7 +109,7 @@ public class BlastCmd {
 		monitor = new InfoMonitor();
 		runner = new DBMSExecNativeCommand(monitor);
 		Map<String, CommandArgument> param = prepareParams(dbAliasPath);
-		LOGGER.debug("Parameters are: "+param.toString());
+		LOGGER.debug(DEF_PRG_NAME + " parameters are: "+param.toString());
 		runner.executeAndWait(getBlastCmdPath(), param);
 		
 		return monitor.nbSequences;
@@ -146,7 +146,7 @@ public class BlastCmd {
 
 		@Override
 		public void info(String msg) {
-		  LOGGER.debug(msg);
+		  LOGGER.info(msg);
 		  NumberFormat nf = NumberFormat.getInstance(Locale.US);
 			if (  msg.contains("sequences;") && 
 			      (msg.contains("total residues")||msg.contains("total bases")) 
@@ -154,9 +154,8 @@ public class BlastCmd {
 				try {
 					nbSequences = nf.parse(getFirstWord(msg)).intValue();
 				} catch (ParseException e) {
-					// should not happen. However, if it does happen, do not fail
-					// and simply set nbSequences to -1.
-					nbSequences=-1;
+				  LoggerCentral.warn(LOGGER, e.toString());
+				  nbSequences=-1;
 				}
 			}
 		}
