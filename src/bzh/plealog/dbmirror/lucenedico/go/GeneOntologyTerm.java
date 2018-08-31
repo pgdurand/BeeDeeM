@@ -174,6 +174,24 @@ public class GeneOntologyTerm implements Serializable {
     return _node_ontology;
   }
 
+  public String get_node_ontology_code() {
+    if (_node_ontology.charAt(0)=='c') {
+      // component
+      return "C";
+    }
+    else if (_node_ontology.charAt(0)=='m') {
+      // molecular_function
+      return "F";
+    }
+    else if (_node_ontology.charAt(0)=='b') {
+      // biological_process
+      return "P";
+    }
+    else {
+      return "?";
+    }
+  }
+  
   public void set_node_ontology(String _node_ontology) {
     String[] ontologySplited;
 
