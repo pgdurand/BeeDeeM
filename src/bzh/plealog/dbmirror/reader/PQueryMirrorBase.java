@@ -45,6 +45,7 @@ import bzh.plealog.dbmirror.indexer.LuceneUtils;
 import bzh.plealog.dbmirror.lucenedico.DicoTerm;
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
 import bzh.plealog.dbmirror.lucenedico.Dicos;
+import bzh.plealog.dbmirror.lucenedico.go.GeneOntologyTerm;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
@@ -79,6 +80,8 @@ public class PQueryMirrorBase {
   public static final String       ADJUSTKEY = "adjust";
   public static final String       FOMRATKEY = "format";
 
+  private static final String UNK = "unknown";
+  
   protected static HashSet<String> KEYS      = new HashSet<String>();
 
   static {
@@ -202,16 +205,17 @@ public class PQueryMirrorBase {
 		// where type is one of Dicos.XXX.xrefId string
 		i = dbKey.indexOf(':');
     if (i!=-1) {
+      // get dico type to query
       dbKey = dbKey.substring(i+1);
     }
     else {
+      // default will be NCBI taxonomy
       dbKey = Dicos.NCBI_TAXONOMY.xrefId;
     }
 		try {
-		  //for now, only Taxonomy is available for querying
 			if (dbKey.toLowerCase().startsWith(Dicos.NCBI_TAXONOMY.xrefId.toLowerCase())) {
 				for (i = 0; i < ids.length; i++) {
-				  //get NCBI Taxonomy Term given a texID
+				  //get NCBI Taxonomy Term given a taxID
 					term = dicoConnector.getTerm(Dicos.NCBI_TAXONOMY, ids[i]);
           //dump simplified taxo, i.e. path containing only official ranks (kingdom, order, etc)
 					//missing ranks are tagged with "unknown" to always produce tax-path of same size
@@ -221,11 +225,61 @@ public class PQueryMirrorBase {
 						w.write(dicoConnector.getTaxPath(ids[i], true, true, true));
 					}
 					else {
-					  w.write("unknown");
+					  w.write(UNK);
 					}
           w.write("\n");
 				}
 			}
+			else if (dbKey.toLowerCase().startsWith(Dicos.GENE_ONTOLOGY.xrefId.toLowerCase())) {
+			  for (i = 0; i < ids.length; i++) {
+			    //get GO term given a GO-ID
+          term = dicoConnector.getTerm(Dicos.GENE_ONTOLOGY, Dicos.GENE_ONTOLOGY.xrefId+":"+ids[i]);
+          w.write(ids[i]);
+          w.write("\t");
+          if (term != null) {
+            GeneOntologyTerm goTerm = (GeneOntologyTerm) term.get_dataObject();
+            w.write(goTerm.get_node_ontology_code());
+            w.write(":");
+            w.write(goTerm.get_node_name());
+            //w.write("\t");
+            //w.write(dicoConnector.getGoPath(Dicos.GENE_ONTOLOGY.xrefId+":"+ids[i]).toString());
+          }
+          else {
+            w.write(UNK);
+          }
+          w.write("\n");
+  			}
+			}
+      else if (dbKey.toLowerCase().startsWith(Dicos.INTERPRO.xrefId.toLowerCase())) {
+        for (i = 0; i < ids.length; i++) {
+          //get InterPro term given a IPR-ID
+          term = dicoConnector.getTerm(Dicos.INTERPRO, ids[i]);
+          w.write(ids[i]);
+          w.write("\t");
+          if (term != null) {
+            w.write(term.getDataField().toString());
+          }
+          else {
+            w.write(UNK);
+          }
+          w.write("\n");
+        }
+      }
+      else if (dbKey.toLowerCase().startsWith(Dicos.ENZYME.xrefId.toLowerCase())) {
+        for (i = 0; i < ids.length; i++) {
+          //get Enzyme term given a EC-ID
+          term = dicoConnector.getTerm(Dicos.ENZYME, ids[i]);
+          w.write(ids[i]);
+          w.write("\t");
+          if (term != null) {
+            w.write(term.getDataField().toString());
+          }
+          else {
+            w.write(UNK);
+          }
+          w.write("\n");
+        }
+      }
 		} catch (IOException e) {
 			LOGGER.debug("unable to write result: " + e);
 		}
