@@ -34,8 +34,8 @@ import org.apache.commons.logging.LogFactory;
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
 import bzh.plealog.dbmirror.task.PTaskEngineAbortException;
 import bzh.plealog.dbmirror.task.PTaskFormatDB;
+import bzh.plealog.dbmirror.task.PTaskMakeBlastAlias;
 import bzh.plealog.dbmirror.util.Utils;
-import bzh.plealog.dbmirror.util.ant.PAntTasks;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
 import bzh.plealog.dbmirror.util.sequence.SeqIOUtils;
@@ -187,6 +187,7 @@ public class FormatDBRunner extends Thread {
     File f;
     PrintWriter writer = null;
     String fName, parentDir;
+    List<String> lines;
     boolean bRet = false;
     int i, pos;
 
@@ -195,8 +196,19 @@ public class FormatDBRunner extends Thread {
 
     try {
       parentDir = new File(path).getParent();
-      PAntTasks.deleteFiles(parentDir, "*" + fExt2);
-      writer = new PrintWriter(path + BLAST_ALIAS_TAG + fExt2);
+      fName = path + BLAST_ALIAS_TAG + fExt2;
+      //delete old alias before creating it
+      f = new File(fName);
+      if (f.exists()) {
+        f.delete();
+      }
+      //get content of NCBI-based BLAST alias file if any found
+      //(this may happen when installing native NCBI BLAST bank)
+      //this has to be done BEFORE creating new alias file!!!
+      lines = PTaskMakeBlastAlias.getDataFromNativeAliasFile(parentDir, fExt2);
+
+      //create new alias file
+      writer = new PrintWriter(fName);
       writer.print("TITLE ");
       writer.println(dbName);
       writer.print("DBLIST ");
@@ -212,6 +224,12 @@ public class FormatDBRunner extends Thread {
         }
       }
       writer.println();
+      //write additional content of native BLAST alias file if any
+      if (lines!=null) {
+        for (String str : lines) {
+          writer.println(str);
+        }
+      }
       writer.flush();
       writer.close();
       bRet = true;
