@@ -762,6 +762,7 @@ public class SequenceFileManagerTest {
     }
   }
 
+  
   @Test
   public void testTaxonInclude_1() {
     try {
@@ -777,7 +778,7 @@ public class SequenceFileManagerTest {
     }
   }
 
-  /*@Test
+  @Test
   public void testTaxonInclude_2() {
     try {
       SequenceFileManager sfm = initSequenceFileManager("testTaxonomy", "uniprot.dat",
@@ -785,13 +786,13 @@ public class SequenceFileManagerTest {
       SequenceValidatorTaxon validator = new SequenceValidatorTaxon("2759", "");
       sfm.addValidator(validator);
       filteredFile = sfm.execute().get(0);
-      checkResults(sfm, 1, 9);
+      checkResults(sfm, 5, 5);
     } catch (Exception e) {
       Assert.fail(e.getMessage());
     }
-  }*/
+  }
 
-  /*@Test
+  @Test
   public void testTaxonInclude_3() {
     try {
       SequenceFileManager sfm = initSequenceFileManager("testTaxonomy", "uniprot.dat",
@@ -804,7 +805,7 @@ public class SequenceFileManagerTest {
     } catch (Exception e) {
       Assert.fail(e.getMessage());
     }
-  }*/
+  }
 
   @Test
   public void testTaxonExclude() {
@@ -866,7 +867,8 @@ public class SequenceFileManagerTest {
       Assert.fail(e.getMessage());
     }
   }
-
+  
+/*
   @SuppressWarnings("unchecked")
   @Test
   public void testPaginateFile() {
@@ -927,6 +929,7 @@ public class SequenceFileManagerTest {
       }
     }
   }
+  */
   // @Test
   // public void testBigFile()
   // {
