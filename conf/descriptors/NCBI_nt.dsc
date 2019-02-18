@@ -16,6 +16,10 @@ ftp.pswd=user@company.com
 ftp.rdir=/blast/db/FASTA
 ftp.rdir.exclude=
 
+aspera.use=true
+aspera.server=anonftp@ftp.ncbi.nlm.nih.gov
+aspera.args=-k 1 -T -l 640M
+
 history=0
 
 

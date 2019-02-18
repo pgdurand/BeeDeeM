@@ -19,4 +19,7 @@ ftp.rdir.exclude=
 history=0
 
 
+aspera.use=true
+aspera.server=anonftp@ftp.ncbi.nlm.nih.gov
+aspera.args=-k 1 -T -l 640M
 
