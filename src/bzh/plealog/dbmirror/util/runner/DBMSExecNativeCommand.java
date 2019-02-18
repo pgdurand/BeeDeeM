@@ -565,6 +565,19 @@ public class DBMSExecNativeCommand {
   }
 
   /**
+   * Close all streams and destroy the process
+   * @param process
+   */
+  public static void terminateProcess(Process process) {
+    if (process != null) {
+      IOUtils.closeQuietly(process.getErrorStream());
+      IOUtils.closeQuietly(process.getInputStream());
+      IOUtils.closeQuietly(process.getOutputStream());
+      process.destroy();
+    }
+  }
+
+  /**
    * A class aims at reading standard output and error streams during the
    * application execution. These streams are sent to a logger.
    */

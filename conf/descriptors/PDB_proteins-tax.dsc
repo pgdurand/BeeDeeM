@@ -1,18 +1,28 @@
 #PDB_proteins
-#Fri Sep 15 13:47:28 CEST 2017
+
+db.name=PDB_proteins
+db.desc=PDB Protein databank with taxonomy
+db.type=p
+db.ldir=${mirrordir}|p|PDB_proteins
+
 db.files.include=pdbaa.tar.gz
+db.files.exclude=
+
 tasks.global.post=delgz,makealias
 tasks.unit.post=gunzip,untar
-ftp.pswd=user@institute.org
+
 ftp.uname=anonymous
-depends=
-ftp.port=21
+ftp.pswd=user@institute.org
 ftp.server=ftp.ncbi.nih.gov
-db.name=PDB_proteins
-db.ldir=${mirrordir}|p|PDB_proteins
-ftp.rdir.exclude=
+ftp.port=21
 ftp.rdir=/blast/db/
+ftp.rdir.exclude=
+
+depends=
+
 history=0
-db.desc=PDB Protein databank with taxonomy
-db.files.exclude=
-db.type=p
+
+aspera.use=true
+aspera.server=anonftp@ftp.ncbi.nlm.nih.gov
+aspera.args=-k 1 -T -l 640M
+

@@ -123,10 +123,15 @@ public class PFTPLoaderEngine extends LoaderEngine {
       DataShuttle file;
       FTPClient ftp;
       String fName;
-      int retry, nFiles, bRet;
+      int retry, nFiles, bRet=0;
 
-      bRet = 0;
-      _loader = new PFTPLoader(_id);
+      if (get_dbsc().useAspera()) {
+        _loader = new PAsperaLoader(_id);
+      }
+      else {
+        _loader = new PFTPLoader(_id);
+      }
+      
       _loader.setUserProcessingMonitor(_userMonitor);
       nFiles = _files.size();
       while ((file = nextFtpFile()) != null) {

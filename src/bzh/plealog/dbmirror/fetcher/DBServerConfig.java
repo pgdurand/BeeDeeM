@@ -81,6 +81,10 @@ public class DBServerConfig {
   private static final String   FTPRDIR_KEY          = "ftp.rdir";
   private static final String   FTPRDIR_EXCL_KEY     = "ftp.rdir.exclude";
 
+  private static final String   ASPERAUSE_KEY        = "aspera.use";
+  private static final String   ASPERASERVER_KEY     = "aspera.server";
+  private static final String   ASPERAARGS_KEY       = "aspera.args";
+
   private static final String   LOCALRDIR_KEY        = "local.rdir";
   private static final String   LOCALRDIR_EXCL_KEY   = "local.rdir.exclude";
 
@@ -111,7 +115,8 @@ public class DBServerConfig {
       DBDESC_KEY, DBTYPE_KEY, DBLDIR_KEY, DBINCFILES_KEY, DBEXCFILES_KEY,
       DBDTFROM_KEY, DBDTTO_KEY, TASKS_U_POST, TASKS_G_POST, FTPSERVER_KEY,
       FTPPORT_KEY, FTPUNAME_KEY, FTPPSWD_KEY, FTPRDIR_KEY, FTPRDIR_EXCL_KEY,
-      LOCALRDIR_KEY, LOCALRDIR_EXCL_KEY, KEEP_HISTORY_KEY, DB_DEPENDS };
+      LOCALRDIR_KEY, LOCALRDIR_EXCL_KEY, ASPERAUSE_KEY, ASPERASERVER_KEY,
+      ASPERAARGS_KEY, KEEP_HISTORY_KEY, DB_DEPENDS };
 
   public DBServerConfig() {
     super();
@@ -545,6 +550,26 @@ public class DBServerConfig {
     return null;
   }
 
+  
+  /**
+   * Returns the Aspera server address. Format must be user@server.
+   */
+  public String getAsperaAddress() {
+    return _properties.getProperty(ASPERASERVER_KEY);
+  }
+  /**
+   * Do we have to bypass FTP server and use Aspera instead?
+   */
+  public boolean useAspera() {
+    return Boolean.TRUE.toString().equalsIgnoreCase(_properties.getProperty(ASPERAUSE_KEY));
+  }
+  /**
+   * Returns arguments to use with the Aspera CLI tool ascp.
+   */
+  public String getAsperaArguments() {
+    return _properties.getProperty(ASPERAARGS_KEY);
+  }
+  
   /**
    * Returns the remote system Internet address.
    */

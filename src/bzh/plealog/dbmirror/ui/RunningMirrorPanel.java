@@ -44,7 +44,12 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
+import com.plealog.genericapp.api.EZEnvironment;
+
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
+import bzh.plealog.dbmirror.fetcher.PAsperaLoader;
 import bzh.plealog.dbmirror.fetcher.PFTPLoader;
 import bzh.plealog.dbmirror.fetcher.PFTPLoaderDescriptor;
 import bzh.plealog.dbmirror.fetcher.PFTPLoaderSystem;
@@ -63,10 +68,6 @@ import bzh.plealog.dbmirror.util.descriptor.DescriptorEntry;
 import bzh.plealog.dbmirror.util.event.DBMirrorEvent;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
 import bzh.plealog.dbmirror.util.log.LoggerCentralGateway;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-import com.plealog.genericapp.api.EZEnvironment;
 
 /**
  * This class is used to display the monitoring of databanks installation.
@@ -492,7 +493,8 @@ public class RunningMirrorPanel extends JPanel {
           || workerId.equals(PLocalLoader.WORKER_ID)) {
         workerLabels.put(workerId, _ftpLblMsg[0]);
         lbl = _ftpLblMsg[0];
-      } else if (workerId.startsWith(PFTPLoader.WORKER_ID)) {
+      } else if (workerId.startsWith(PFTPLoader.FTP_WORKER) ||
+    		  workerId.startsWith(PAsperaLoader.ASPC_WORKER)) {
         int pos = workerId.indexOf('-');
         String value = workerId.substring(pos + 1);
         int idx = Integer.valueOf(value);
@@ -514,7 +516,8 @@ public class RunningMirrorPanel extends JPanel {
           || workerId.equals(PLocalLoader.WORKER_ID)) {
         workerProgresess.put(workerId, _ftpProgress[0]);
         lbl = _ftpProgress[0];
-      } else if (workerId.startsWith(PFTPLoader.WORKER_ID)) {
+      } else if (workerId.startsWith(PFTPLoader.FTP_WORKER) ||
+    		  workerId.startsWith(PAsperaLoader.ASPC_WORKER)) {
         int idx = Integer
             .valueOf(workerId.substring(workerId.indexOf('-') + 1));
         lbl = _ftpProgress[idx >= DBMSAbstractConfig.getFileCopyWorkers() ? 0

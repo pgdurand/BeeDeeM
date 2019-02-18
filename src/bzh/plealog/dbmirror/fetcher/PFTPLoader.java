@@ -56,7 +56,7 @@ public class PFTPLoader {
   protected static final String CANCEL_MSG   = "job cancelled";
   protected static final String CONN_ERR_MSG = "Server does not answer. Retry...";
 
-  public static final String    WORKER_ID    = "FTPLoader";
+  public static final String    FTP_WORKER    = "FTPLoader";
 
   //
   // http://www.informit.com/guides/content.aspx?g=java&seqNum=40&rl=1
@@ -75,13 +75,16 @@ public class PFTPLoader {
   }
 
   public PFTPLoader(int id) {
-    _loaderId = WORKER_ID + "-" + id;
+    _loaderId = getWorkerBaseName() + "-" + id;
   }
 
   public String getLoaderId() {
     return _loaderId;
   }
 
+  public String getWorkerBaseName() {
+	  return FTP_WORKER;
+  }
   /**
    * Returns the latest error message. Returns null if no error msg was emitted.
    * This method should be used in cooperation with
@@ -108,52 +111,118 @@ public class PFTPLoader {
 
   public FTPClient openConnection(DBServerConfig fsc) {
     FTPClient ftp;
-    int reply;
 
     ftp = new FTPClient();
-    try {
-      ftp.setDataTimeout(_timeout);
-      ftp.setDefaultTimeout(_timeout);
-
-      // no longer available in commons-net 3
-      // ftp.setReaderThread(false);
-
-      // according to
-      // http://www.coderanch.com/t/207085/sockets/java/FTP-connection-Proxy
-      // the following line should be used when using proxy... need checking
-      // cf aussi: http://wiki.apache.org/commons/Net/FrequentlyAskedQuestions
-      // ftp.setRemoteVerificationEnabled(false);
-
-      // Connect and logon to FTP Server
-      ftp.connect(fsc.getAddress());
-      ftp.login(fsc.getUserName(), fsc.getPassWord());
-
-      // Check the reply
-      reply = ftp.getReplyCode();
-      LoggerCentral.info(LOGGER,
-          _loaderId + ": connected to " + fsc.getAddress() + ": " + reply);
-      if (!FTPReply.isPositiveCompletion(reply)) {
-        throw new Exception(_loaderId + ": FTP server refused connection.");
-      }
-
-      // configure session
-      ftp.setFileType(FTP.BINARY_FILE_TYPE);
-      ftp.enterLocalPassiveMode();
-    } catch (Exception ex) {
-      if (ftp.isConnected()) {// if exception comes after connection is
-                              // established, close it
-        try {
-          ftp.disconnect();
-        } catch (IOException ioe) {
-          // do nothing
-        }
-      }
-      ftp = null;
+    if(!configureFtpClient(ftp, fsc)) {
+    	ftp = null;
     }
     return ftp;
   }
 
+  protected boolean configureFtpClient(FTPClient ftp, DBServerConfig fsc) {
+	  int reply;  
+	  boolean bRet = true;
+	  try {
+        ftp.setDataTimeout(_timeout);
+        ftp.setDefaultTimeout(_timeout);
+
+        // no longer available in commons-net 3
+        // ftp.setReaderThread(false);
+
+        // according to
+        // http://www.coderanch.com/t/207085/sockets/java/FTP-connection-Proxy
+        // the following line should be used when using proxy... need checking
+        // cf aussi: http://wiki.apache.org/commons/Net/FrequentlyAskedQuestions
+        // ftp.setRemoteVerificationEnabled(false);
+
+        // Connect and logon to FTP Server
+        ftp.connect(fsc.getAddress());
+        ftp.login(fsc.getUserName(), fsc.getPassWord());
+
+        // Check the reply
+        reply = ftp.getReplyCode();
+        LoggerCentral.info(LOGGER,
+            getLoaderId() + ": connected to " + fsc.getAddress() + ": " + reply);
+        if (!FTPReply.isPositiveCompletion(reply)) {
+          throw new Exception(getLoaderId() + ": FTP server refused connection.");
+        }
+
+        // configure session
+        ftp.setFileType(FTP.BINARY_FILE_TYPE);
+        ftp.enterLocalPassiveMode();
+      } catch (Exception ex) {
+        if (ftp.isConnected()) {// if exception comes after connection is
+                                // established, close it
+          try {
+            ftp.disconnect();
+          } catch (IOException ioe) {
+            // do nothing
+          }
+        }
+        bRet = false;
+        
+      }
+	  return bRet;
+  }
   /**
+   * Download a file from remote server.
+   * 
+   * @param ftp the ftp client
+   * @param fsc bank descriptor
+   * @param rFile remote file descriptor
+   * @param file local file path
+   * 
+   * @return 1 if success, 0 if failure, 2 if skip (file already loaded ; when
+   *         resuming from a previous work) and 3 if aborted.
+   * */
+	protected int downloadFile(FTPClient ftp, DBServerConfig fsc, DBMSFtpFile rFile, File file) {
+		FileOutputStream fos = null;
+		InputStream ftpIS = null;
+		String remoteFName;
+		long remoteFSize;
+		Date remoteFDate;
+		int bRet = 1;
+		
+		remoteFName = rFile.getFtpFile().getName();
+		remoteFDate = rFile.getFtpFile().getTimestamp().getTime();
+		remoteFSize = rFile.getFtpFile().getSize();
+		try {
+			// enter remote directory
+			if (ftp.changeWorkingDirectory(rFile.getRemoteDir())) {
+				// download file
+				LoggerCentral.info(LOGGER, "  " + getLoaderId() + ": download: " + rFile.getRemoteDir() + remoteFName);
+				fos = new FileOutputStream(file);
+				ftpIS = ftp.retrieveFileStream(remoteFName);
+				if (ftpIS == null) {
+					throw new Exception(getLoaderId() + ": unable to open remote input stream: " + ftp.getReplyString());
+				}
+				Util.copyStream(ftpIS, fos, Util.DEFAULT_COPY_BUFFER_SIZE, remoteFSize,
+						new MyCopyStreamListener(getLoaderId(), _userMonitor, fsc.getName(), remoteFName, remoteFSize));
+				IOUtils.closeQuietly(ftpIS);
+				fos.flush();
+				IOUtils.closeQuietly(fos);
+				if (ftp.completePendingCommand()) {
+					file.setLastModified(remoteFDate.getTime());
+				} else {
+					throw new Exception(getLoaderId() + ": unable to download full file.");
+				}
+			} else {
+				throw new Exception(getLoaderId() + ": unable to enter remote dir: " + rFile.getRemoteDir());
+			}
+		} catch (MyCopyInteruptException ex) {
+			_errMsg = ex.getMessage();
+			bRet = 3;
+		} catch (Exception e) {
+			_errMsg = "Error during FTP download: " + e.getMessage();
+			bRet = 0;
+		} finally {
+			IOUtils.closeQuietly(ftpIS);
+			IOUtils.closeQuietly(fos);
+		}
+		return bRet;
+	}
+
+	  /**
    * Download a single file from an FTP server. This method has been designed to
    * be called successively several times in case of failure. When the method
    * fails, it returns false and an error message can be retrieved (immediately
@@ -176,19 +245,15 @@ public class PFTPLoader {
    */
   public int downloadFile(FTPClient ftp, DBServerConfig fsc, DBMSFtpFile rFile,
       int fileNum, int totFiles) {
-    FileOutputStream fos = null;
-    InputStream ftpIS = null;
-    File file, filegz;
+	  File file, filegz, tmpDir;
     String remoteFName, name, msg;
-    Date remoteFDate;
     long remoteFSize, lclFSize;
-    int bRet;
-
+    int iRet;
+    
     _errMsg = null;
-    bRet = 1;
     // check whether remote file already exists locally
     remoteFName = rFile.getFtpFile().getName();
-    remoteFDate = rFile.getFtpFile().getTimestamp().getTime();
+    //remoteFDate = rFile.getFtpFile().getTimestamp().getTime();
     remoteFSize = rFile.getFtpFile().getSize();
     file = new File(fsc.getLocalTmpFolder() + remoteFName);
     lclFSize = file.length();
@@ -196,9 +261,9 @@ public class PFTPLoader {
       msg = "Skipping already loaded file "
           + (fileNum + 1) + "/" + totFiles + ": ";
       LoggerCentral.info(LOGGER,
-          _loaderId + msg + file.getAbsolutePath());
+          getLoaderId() + msg + file.getAbsolutePath());
       if (_userMonitor != null) {
-        _userMonitor.processingMessage(_loaderId, fsc.getName(),
+        _userMonitor.processingMessage(getLoaderId(), fsc.getName(),
             UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
             UserProcessingMonitor.MSG_TYPE.OK, msg + remoteFName);
       }
@@ -212,10 +277,10 @@ public class PFTPLoader {
         if (filegz.exists()) {
           msg = "Skipping already loaded file " + (fileNum + 1) + "/"
               + totFiles + ": ";
-          LoggerCentral.info(LOGGER, _loaderId + ": " + msg
+          LoggerCentral.info(LOGGER, getLoaderId() + ": " + msg
               + file.getAbsolutePath() + ": gunzipped version already here.");
           if (_userMonitor != null) {
-            _userMonitor.processingMessage(_loaderId, fsc.getName(),
+            _userMonitor.processingMessage(getLoaderId(), fsc.getName(),
                 UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
                 UserProcessingMonitor.MSG_TYPE.OK,
                 msg + remoteFName);
@@ -224,69 +289,32 @@ public class PFTPLoader {
         }
       }
     }
+    
+    // need to manage directory creation
+    tmpDir = new File(fsc.getLocalTmpFolder());
+    if (!tmpDir.exists()) {
+      LoggerCentral.info(LOGGER, "  " + getLoaderId() + ": create local dir: " + fsc.getLocalTmpFolder());
+      tmpDir.mkdirs();
+    }
+
     // if not: start download
     msg = "loading file " + (fileNum + 1) + "/" + totFiles + ": " + remoteFName
         + " (" + Utils.getBytes(remoteFSize) + ")";
-    LoggerCentral.info(LOGGER, _loaderId + ": " + msg);
+    LoggerCentral.info(LOGGER, getLoaderId() + ": " + msg);
     if (_userMonitor != null) {
-      _userMonitor.processingMessage(_loaderId, fsc.getName(),
+      _userMonitor.processingMessage(getLoaderId(), fsc.getName(),
           UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
           UserProcessingMonitor.MSG_TYPE.OK,
           msg);
     }
-    try {
-      // enter remote directory
-      if (ftp.changeWorkingDirectory(rFile.getRemoteDir())) {
-        file = new File(fsc.getLocalTmpFolder());
-        if (!file.exists()) {
-          LoggerCentral.info(LOGGER, "  " + _loaderId + ": create local dir: "
-              + fsc.getLocalTmpFolder());
-          file.mkdirs();
-        }
-        // download file
-        LoggerCentral.info(LOGGER,
-            "  " + _loaderId + ": download: " + rFile.getRemoteDir()
-                + remoteFName);
-        file = new File(fsc.getLocalTmpFolder() + remoteFName);
-        fos = new FileOutputStream(file);
-        ftpIS = ftp.retrieveFileStream(remoteFName);
-        if (ftpIS == null) {
-          throw new Exception(_loaderId
-              + ": unable to open remote input stream: " + ftp.getReplyString());
-        }
-        Util.copyStream(ftpIS, fos, Util.DEFAULT_COPY_BUFFER_SIZE, remoteFSize,
-            new MyCopyStreamListener(_loaderId, _userMonitor, fsc.getName(),
-                remoteFName, remoteFSize));
-        IOUtils.closeQuietly(ftpIS);
-        fos.flush();
-        IOUtils.closeQuietly(fos);
-        if (ftp.completePendingCommand()) {
-          file.setLastModified(remoteFDate.getTime());
-        } else {
-          throw new Exception(_loaderId + ": unable to download full file.");
-        }
-      } else {
-        throw new Exception(_loaderId + ": unable to enter remote dir: "
-            + rFile.getRemoteDir());
-      }
-    } catch (MyCopyInteruptException ex) {
-      _errMsg = ex.getMessage();
-      bRet = 3;
-    } catch (Exception e) {
-      _errMsg = "Error during FTP download: " + e.getMessage();
-      bRet = 0;
-    } finally {
-      if (_userMonitor != null) {
-        _userMonitor.processingMessage(_loaderId, fsc.getName(),
-            UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
-            bRet == 1 ? UserProcessingMonitor.MSG_TYPE.OK
-                : UserProcessingMonitor.MSG_TYPE.ERROR, "done loading "
-                + remoteFName);
-      }
-      IOUtils.closeQuietly(ftpIS);
-      IOUtils.closeQuietly(fos);
+    iRet = downloadFile(ftp, fsc, rFile, file);
+    if (_userMonitor != null) {
+      _userMonitor.processingMessage(getLoaderId(), fsc.getName(), 
+          UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
+          iRet == 1 ? UserProcessingMonitor.MSG_TYPE.OK : UserProcessingMonitor.MSG_TYPE.ERROR,
+          "done loading " + remoteFName);
     }
-    return bRet;
+    return iRet;
   }
 
   private void dumpFileListInLog(DBServerConfig fsc, List<DBMSFtpFile> fNames) {
@@ -309,7 +337,7 @@ public class PFTPLoader {
     }
     LoggerCentral.info(LOGGER, "Total bytes to download: " + Utils.getBytes(totBytes));
     if (_userMonitor != null) {
-      _userMonitor.fileTransferInfo(_loaderId, fsc, nFiles, totBytes);
+      _userMonitor.fileTransferInfo(getLoaderId(), fsc, nFiles, totBytes);
     }
   }
 

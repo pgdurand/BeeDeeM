@@ -27,8 +27,11 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
+	/*
+	 * DO NOT add AsperaCmdTest to this test suite: will fail on TravisCI
+	 * since Aspera software is not installed.
+	 */
   CmdLineOptionsTest.class,
-  // BlastCmdTest.class,
   CddParserTest.class, 
   DBXrefInstancesManagerTest.class, 
   DefaultLoaderMonitorTest.class,

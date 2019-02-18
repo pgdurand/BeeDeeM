@@ -16,4 +16,8 @@ ftp.pswd=
 ftp.rdir=
 ftp.rdir.exclude=
 
+aspera.use=
+aspera.server=
+aspera.args=
+
 history=1
