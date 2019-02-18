@@ -10,7 +10,7 @@ It provides a suite of command-line and UI softwares to install and use major se
 
 *BeeDeeM* automatically performs:
 
-* the download of the database files from remote sites \(via FTP\),
+* the download of the database files from remote sites \(via FTP, Aspera\),
 * the decompression of the files \(gzip files\),
 * the un-archiving of the files \(tar files\),
 * the conversion of native sequence banks \(e.g. Genbank\) to FASTA files,
@@ -73,4 +73,4 @@ Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downl
 It depends on several thrid-party libraries as stated in the NOTICE.txt file provided with this project.
 
 --
-(c) 2007-2017 - Patrick G. Durand and Ludovic Antin
+(c) 2007-2019 - Patrick G. Durand and Ludovic Antin
