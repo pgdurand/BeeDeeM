@@ -37,6 +37,24 @@ public class SeqIOUtilsTest {
   public void setUp() {
     // UtilsTest.configureApp();
   }
+  @Test
+  public void test_accession_1() {
+    String id="lcl|XP_021350314.1";
+    String acc = SeqIOUtils.getAccessionFromId(id);
+    Assert.assertEquals(acc, "XP_021350314.1");
+  }
+  @Test
+  public void test_accession_2() {
+    String id="gi|1207922646|ref|XP_021350314.1|";
+    String acc = SeqIOUtils.getAccessionFromId(id);
+    Assert.assertEquals(acc, "XP_021350314.1");
+  }
+  @Test
+  public void test_accession_3() {
+    String id="XP_021350314";
+    String acc = SeqIOUtils.getAccessionFromId(id);
+    Assert.assertEquals(acc, "XP_021350314");
+  }
 
   @Test
   public void testFileFormat() {

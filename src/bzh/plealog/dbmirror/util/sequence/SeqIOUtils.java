@@ -57,6 +57,7 @@ import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
 import bzh.plealog.dbmirror.lucenedico.Dicos;
 import bzh.plealog.dbmirror.reader.DBUtils;
 import bzh.plealog.dbmirror.util.Formatters;
+import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.descriptor.DatabankFormat;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
@@ -409,6 +410,21 @@ public class SeqIOUtils {
     return line.substring(0, j);
   }
 
+  /**
+   * Return an accession ID given a sequence ID. Usually, the latter contains
+   * several strings separated by a pipe character. This method returns the last
+   * such string. Example: return XP_021350314.1 from gi|1207922646|ref|XP_021350314.1|
+   */
+  public static String getAccessionFromId(String id) {
+    String[] tokens = Utils.tokenize(id, "|");
+    if (tokens.length!=0) {
+      return(tokens[tokens.length-1]);
+    }
+    else {
+      return(id);
+    }
+  }
+  
   /**
    * Converts a sequence data file into a Fasta one. Please note that this
    * method does not check the fileIn type. In the worst case the method could
