@@ -81,6 +81,15 @@ public class RunningMirrorPanelTest {
         PFTPLoaderDescriptor.MAINTASK_DOWNLOAD);
   }
 
+  public static void installLocalClassification() {
+    List<DescriptorEntry> entries = new ArrayList<DescriptorEntry>();
+    entries.add(getEntry("localEnzyme.dsc", false, "RunningMirrorPanel", "databanks"));
+    entries.add(getEntry("localTaxonomy.dsc", false, "RunningMirrorPanel", "databanks"));
+    entries.add(getEntry("localGeneOntology.dsc", false, "RunningMirrorPanel", "databanks"));
+    installerPanel.startLoadingEntries(entries,
+        PFTPLoaderDescriptor.MAINTASK_DOWNLOAD);
+  }
+
   public static DescriptorEntry getEntry(String fileName, boolean copyToConf,
       String dir1, String dir2) {
     DescriptorEntry result = null;
