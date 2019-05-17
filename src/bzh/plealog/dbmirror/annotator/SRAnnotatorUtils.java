@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2019 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -17,22 +17,33 @@
 package bzh.plealog.dbmirror.annotator;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
+import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
 import bzh.plealog.bioinfo.api.data.feature.Feature;
 import bzh.plealog.bioinfo.api.data.feature.FeatureTable;
 import bzh.plealog.bioinfo.api.data.feature.utils.FeatureTableFactory;
+import bzh.plealog.bioinfo.api.data.searchresult.SRCTerm;
+import bzh.plealog.bioinfo.api.data.searchresult.SRClassification;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHit;
 import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.api.data.sequence.BankSequenceInfo;
+import bzh.plealog.bioinfo.io.searchresult.csv.AnnotationDataModel;
+import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
+import bzh.plealog.bioinfo.util.CoreUtil;
 import bzh.plealog.dbmirror.lucenedico.DicoTerm;
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
+import bzh.plealog.dbmirror.lucenedico.DicoUtils;
 import bzh.plealog.dbmirror.lucenedico.Dicos;
+import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.xref.DBXrefInstancesManager;
 
 public class SRAnnotatorUtils {
@@ -67,6 +78,146 @@ public class SRAnnotatorUtils {
     return taxons;
   }
 
+  private static void collectAdditionalIds(SRClassification classif, SRClassification classif2, 
+      String idpath, DicoTermQuerySystem dico, Dicos dicoType) {
+    String[] taxIds = CoreUtil.tokenize(idpath, ";");
+    String id;
+    int length = taxIds.length-1;
+    SRCTerm term;
+    DicoTerm dTerm;
+    for(int i=0 ; i<length ; i++) {
+      id = taxIds[i];
+      if (classif.getTerm(id)==null && classif2.getTerm(id)==null) {
+        term = classif2.addTerm(id);
+        dTerm = dico.getTerm(dicoType, id);
+        if (dTerm!=null) {
+          term.setDescription(dTerm.getDataField());
+          term.setPath("-");//no need of path here
+          term.setType(SRCTerm.FAKE_TERM);
+        }
+      }
+    }
+  }
+  
+  private static String collectAdditionalIds(SRClassification classif, SRClassification classif2, 
+      List<String> gopaths, DicoTermQuerySystem dico, Dicos dicoType) {
+    StringBuffer buf = new StringBuffer();
+    
+    for(String gopath : gopaths) {
+      String[] taxIds = CoreUtil.tokenize(gopath, ";");
+      String id;
+      int length = taxIds.length-1;
+      SRCTerm term;
+      DicoTerm dTerm;
+      for(int i=0 ; i<length ; i++) {
+        id = taxIds[i];
+        buf.append(id);
+        if (i<length-1) {
+          buf.append(";");
+        }
+        if (classif.getTerm(id)==null && classif2.getTerm(id)==null) {
+          term = classif2.addTerm(id);
+          dTerm = dico.getTerm(dicoType, id);
+          if (dTerm!=null) {
+            term.setDescription(DicoUtils.getSimpleGoString(dTerm));
+            term.setPath("-");//no need of path here
+            term.setType(SRCTerm.FAKE_TERM);
+          }
+        }
+      }
+      buf.append(",");
+    }    
+    return buf.toString();
+  }
+  
+  public static SRClassification prepareClassification(SROutput bo, DicoTermQuerySystem dico) {
+    TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap = 
+        new TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>>();
+    TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary = 
+        new TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>>();
+
+    // Extract Bio Classification (IPR, EC, GO and TAX) for all hits
+    ExtractAnnotation.buildAnnotatedHitDataSet(bo, 0, annotatedHitsHashMap, annotationDictionary);
+
+    // Collect unique set of Bio Classification IDs
+    SRClassification classif = ExtractAnnotation.buildClassificationDataSet(annotationDictionary);
+   
+    if (classif.size()==0) {
+      return classif;
+    }
+
+    // Collect additional information: description and path, where available
+    Enumeration<String> termIds = classif.getTermIDs();
+    ArrayList<String> gopaths;
+    String id, idpath;
+    SRCTerm term;
+    DicoTerm dTerm;
+    int decal = AnnotationDataModelConstants.CATEGORY_CODE_SEPARATOR.length();
+
+    // Will be used to collect additional IDs coming from paths
+    SRClassification classif2 = CoreSystemConfigurator.getSRFactory().creationBClassification();
+
+    while(termIds.hasMoreElements()) {
+      id = termIds.nextElement();
+      term = classif.getTerm(id);
+      term.setDescription("-");
+      term.setPath("-");
+      //NCBI Taxonomy
+      if(id.startsWith(AnnotationDataModelConstants.ANNOTATION_CATEGORY.TAX.name())){
+        id = id.substring(id.indexOf(AnnotationDataModelConstants.CATEGORY_CODE_SEPARATOR)+decal);
+        dTerm = dico.getTerm(Dicos.NCBI_TAXONOMY, id);
+        if (dTerm!=null) {
+          term.setDescription(dTerm.getDataField());
+          idpath = dico.getTaxPathIds(id, true, true);
+          if (idpath!=null) {
+            idpath = Utils.replaceAll(idpath, "n", "");
+            term.setPath(idpath);
+            collectAdditionalIds(classif, classif2, idpath, dico, Dicos.NCBI_TAXONOMY);
+          }
+        }
+      }
+      //Enzyme
+      else if (id.startsWith(AnnotationDataModelConstants.ANNOTATION_CATEGORY.EC.name())) {
+        id = id.substring(id.indexOf(AnnotationDataModelConstants.CATEGORY_CODE_SEPARATOR)+decal);
+        dTerm = dico.getTerm(Dicos.ENZYME, id);
+        if (dTerm!=null) {
+          term.setDescription(dTerm.getDataField());
+          idpath = dico.getEnzymePathIds(id, true);
+          if (idpath!=null) {
+            term.setPath(idpath);
+            collectAdditionalIds(classif, classif2, idpath, dico, Dicos.ENZYME);
+          }
+        }
+      }
+      //GeneOntology
+      else if (id.startsWith(AnnotationDataModelConstants.ANNOTATION_CATEGORY.GO.name())) {
+        dTerm = dico.getTerm(Dicos.GENE_ONTOLOGY, id);
+        if (dTerm!=null) {
+          term.setDescription(DicoUtils.getSimpleGoString(dTerm));
+          gopaths = dico.getGoPathId(id);
+          if(!gopaths.isEmpty()) {
+            idpath = collectAdditionalIds(classif, classif2, gopaths, dico, Dicos.GENE_ONTOLOGY);
+            term.setPath(idpath);
+          }
+        }
+      }
+      //InterPro
+      else if (id.startsWith(AnnotationDataModelConstants.ANNOTATION_CATEGORY.IPR.name())) {
+        dTerm = dico.getTerm(Dicos.INTERPRO, id);
+        if (dTerm!=null) {
+          term.setDescription(dTerm.getDataField());
+        }
+      }
+    }
+    //transfer additional data
+    termIds = classif2.getTermIDs();
+    while(termIds.hasMoreElements()) {
+      id = termIds.nextElement();
+      classif.addTerm(id, classif2.getTerm(id));
+    }
+    return classif;
+  }
+  
   public static boolean extractDbXrefFromHitDefline(SROutput bo,
       DicoTermQuerySystem dico) {
     Hashtable<String, BankSequenceInfo> taxons;

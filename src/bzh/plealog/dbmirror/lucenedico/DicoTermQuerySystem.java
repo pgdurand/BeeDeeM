@@ -271,6 +271,47 @@ public class DicoTermQuerySystem {
     return pathsFormated;
   }
 
+  public String getEnzymePathIds(String id, boolean includeId) {
+    DicoTerm term = null;
+    try {
+      term = this.getTerm(Dicos.ENZYME, id);
+    } catch (DicoStorageSystemException ex) {
+      LoggerCentral.warn(LOGGER, "Unable to get enzyme term for '" + id
+          + "' : " + ex.getMessage());
+      return null;
+    }
+    if (term != null) {
+      // it is a real enzyme term formatted like a.b.c.d
+      // so now, get all terms for each part
+      // a.b.c then a.b then a
+      StringBuilder result = new StringBuilder();
+      if (includeId) {
+        result.append(term.getId().trim());
+      }
+      int indexDot = id.lastIndexOf(".");
+      while (indexDot > 0) {
+        id = id.substring(0, indexDot);
+
+        try {
+          term = this.getTerm(Dicos.ENZYME, id);
+        } catch (DicoStorageSystemException ex) {
+          LoggerCentral.warn(LOGGER, "Unable to get enzyme term for '" + id
+              + "' : " + ex.getMessage());
+          return null;
+        }
+        if (term != null) {
+          // insert a new 'node' at the beginning of the path
+          result.insert(0, DicoUtils.ENZYME_NODE_SEPARATOR);
+          result.insert(0, term.getId().trim());
+        }
+        indexDot = id.lastIndexOf(".");
+      }
+      return result.toString();
+    } else {
+      return null;
+    }
+  }
+
   public String getEnzymePath(String id) {
     DicoTerm term = null;
     try {

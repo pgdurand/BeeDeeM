@@ -50,7 +50,8 @@ public class SROutputAnnotator {
   private DBMirrorConfig      _config;
   private String              _confFile;
   private boolean             _annotatorOk;
-
+  private boolean             _includeBC;
+  
   protected static final Log  LOGGER = LogFactory
                                          .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                              + ".SROutputAnnotator");
@@ -59,8 +60,16 @@ public class SROutputAnnotator {
    * Constructor.
    */
   public SROutputAnnotator() {
-    initialize();
+    this(false);
   }
+
+  /**
+   * Constructor.
+   */
+  public SROutputAnnotator(boolean includeBC) {
+    initialize(includeBC);
+  }
+
 
   public SROutputAnnotator(DBMirrorConfig conf) {
     _config = conf;
@@ -76,13 +85,14 @@ public class SROutputAnnotator {
     DicoTermQuerySystem.closeDicoTermQuerySystem();
   }
 
-  private void initialize() {
+  private void initialize(boolean includeBC) {
     FileInputStream fis = null;
     DBMirrorConfig conf;
     File f;
 
     _annotatorOk = false;
-
+    _includeBC = includeBC;
+    
     // factories for Sequence package
     CoreSystemConfigurator.initializeSystem();
 
@@ -117,11 +127,16 @@ public class SROutputAnnotator {
    * 
    */
   public boolean doClassificationAnnotation(SROutput output) {
-    if (_annotatorOk == false)
+    if (_annotatorOk == false) {
       return false;
-    else
-      return SRAnnotatorUtils.extractDbXrefFromHitDefline(output,
-          _dicoConnector);
+    }
+    else {
+      boolean bRet = SRAnnotatorUtils.extractDbXrefFromHitDefline(output, _dicoConnector);
+      if (bRet && _includeBC) {
+        output.setClassification(SRAnnotatorUtils.prepareClassification(output, _dicoConnector));
+      }
+      return bRet;
+    }
   }
 
   /**
@@ -265,6 +280,9 @@ public class SROutputAnnotator {
       }// end Hit loop
     }// end Iteration loop
 
+    if (_includeBC) {
+      output.setClassification(SRAnnotatorUtils.prepareClassification(output, _dicoConnector));
+    }
     return true;
 
   }

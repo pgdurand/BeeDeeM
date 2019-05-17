@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2019 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -32,7 +32,10 @@ import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
  * biological classifications information. Use full to retrieve full feature tables.<br>
  * -writer    Type of writer. Options: xml or zml. Use xml to write NCBI XML data file (not
  * suitable to store full feature tables). Use zml to store BlastViewer native data format (suitable
- * to store feature tables data).<br><br>
+ * to store feature tables data and Biological Classification data, see -incbc argument).
+ * -incbc     figure out whether or not full Biological Classification data has to be included 
+ * in resulting file. Use either true or false (default).
+ * <br><br>
  * In addition, some parameters can be passed to the JVM for special configuration purposes:<br>
  * -DKL_HOME=an_absolute_path ; the absolute path to the DBMS installation home dir. If not set, use user.dir java property.
  * -DKL_DEBUG=true ; if true, if set, log will be in debug mode<br>
@@ -75,12 +78,18 @@ public class Annotate {
         .isRequired()
         .withDescription( DBMSMessages.getString("Tool.Annotate.arg4.desc") )
         .create(PAnnotateBlastResult.writer_type);
+    Option includeBC = OptionBuilder
+        .withArgName( DBMSMessages.getString("Tool.Annotate.arg5.lbl") )
+        .hasArg()
+        .withDescription( DBMSMessages.getString("Tool.Annotate.arg5.desc") )
+        .create(PAnnotateBlastResult.include_bco);
 
     opts = new Options();
     opts.addOption(type);
     opts.addOption(in);
     opts.addOption(out);
     opts.addOption(format);
+    opts.addOption(includeBC);
     CmdLineUtils.setConfDirOption(opts);
     return opts;
   }
@@ -89,6 +98,7 @@ public class Annotate {
     PAnnotateBlastResult annotator;
     CommandLine cmdLine;
     String input, output, writer, type;
+    boolean includeBC=false;
     Options options;
     String toolName = DBMSMessages.getString("Tool.Annotate.name");
 
@@ -104,10 +114,11 @@ public class Annotate {
     output = cmdLine.getOptionValue(PAnnotateBlastResult.output_file);
     writer = cmdLine.getOptionValue(PAnnotateBlastResult.writer_type);
     type = cmdLine.getOptionValue(PAnnotateBlastResult.annot_type);
-    
+    includeBC = "true".equalsIgnoreCase(cmdLine.getOptionValue(PAnnotateBlastResult.include_bco));
+
     annotator = new PAnnotateBlastResult();
     
-    return annotator.annotate(input, output, writer, type);
+    return annotator.annotate(input, output, writer, type, includeBC);
   }
 
   public static void main(String[] args) {
