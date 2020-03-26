@@ -1,6 +1,6 @@
 # *BeeDeeM*: the Bioinformatics Databank Manager System 
 
-[![License AGPL](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt)  [![Build Status](https://travis-ci.org/pgdurand/BeeDeeM.svg?branch=master)](https://travis-ci.org/pgdurand/BeeDeeM)  [![](https://tokei.rs/b1/github/pgdurand/BeeDeeM?category=code)](https://github.com/pgdurand/BeeDeeM) [![](https://img.shields.io/badge/platform-Java--1.7+-yellow.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) [![](https://img.shields.io/badge/run_on-Linux--Mac_OSX--Windows-yellowgreen.svg)]()
+[![License AGPL](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt)  [![Build Status](https://travis-ci.org/pgdurand/BeeDeeM.svg?branch=master)](https://travis-ci.org/pgdurand/BeeDeeM)  [![](https://tokei.rs/b1/github/pgdurand/BeeDeeM?category=code)](https://github.com/pgdurand/BeeDeeM) [![](https://img.shields.io/badge/platform-Java--1.8+-yellow.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) [![](https://img.shields.io/badge/run_on-Linux--macOS--Windows-yellowgreen.svg)]()
 
 *BeeDeeM* is a general purpose **B**ioinformatics **D**atabank **M**anager. 
 
@@ -33,6 +33,44 @@ It provides a suite of command-line and UI softwares to install and use major se
 
 [More](https://pgdurand.gitbooks.io/beedeem/).
 
+### Use BeeDeeM from the command line
+
+Here is an example of a script to start Genbank_CoreNucleotide installation on Ifremer's [DATARMOR supercomputer](https://www.top500.org/system/178981):
+
+```
+#!/usr/bin/env bash
+#PBS -q web
+#PBS -l mem=64gb
+#PBS -l ncpus=8
+#PBS -l walltime=72:00:00
+
+# Release of BeeDeeM to use
+BDM_HOME=$SOFT/bioinfo/beedeem
+BDM_VER=latest
+
+# Load BeeDeeM environment
+module load java/1.8.0_121
+
+# Configure BeeDeeM install tool
+TASK_ARGS="-task download"
+GLOBAL_ARGS="--ftp-delay 5000 --ftp-retry 3 --task-delay 1000"
+MAILING_ARGS="--mail-smtp-host xxx --sender-mail yyy --recipient-mail zzz"
+
+# prefix of '.dsc' file that must exist in $BDM_HOME/conf/descriptor
+DESCRIPTOR="Genbank_CoreNucleotide"
+export KL_LOG_FILE=${DESCRIPTOR}.log
+$BDM_HOME/$BDM_VER/install.sh \
+   ${TASK_ARGS} ${GLOBAL_ARGS} ${MAILING_ARGS} \
+   -desc ${DESCRIPTOR} \
+   >& "$HOME/beedeem/logs/${DESCRIPTOR}-pbs.out"
+```
+
+You can easily automate bank installation using such BeeDeeM based scripts with Unix cron scheduler.
+
+### Use BeeDeeM UI
+
+Here is a screenshot of BeeDeeM user friendly interface:
+
 ![UiManager](doc/dbms_ui.png)
 
 ## Practical use cases
@@ -57,7 +95,7 @@ Among others, these databanks can be used to:
 
 ## Requirements
 
-Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downloads/index.html) 1.7 (or above) from Oracle. 
+Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downloads/index.html) 1.8 (or above) from Oracle. 
 
 *Not tested with any other JVM providers but Oracle... so there is no guarantee that the software will work as expected if not using Oracle's JVM.* [More](https://pgdurand.gitbooks.io/beedeem/) about *BeeDeeM* requirements.
 
