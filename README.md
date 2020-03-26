@@ -111,4 +111,4 @@ Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downl
 It depends on several thrid-party libraries as stated in the NOTICE.txt file provided with this project.
 
 --
-(c) 2007-2019 - Patrick G. Durand and Ludovic Antin
+(c) 2007-2020 - Patrick G. Durand and Ludovic Antin
