@@ -15,7 +15,7 @@ jdk:
 #  - sleep 3 # give xvfb some time to start
 
 script:
-  ant ut
+  ant makejar 
 
 after_script:
   if [ -f /home/travis/build/pgdurand/BeeDeeM/distrib/tests-result/TEST-test.unit.AllTests.txt ]; then cat /home/travis/build/pgdurand/BeeDeeM/distrib/tests-result/TEST-test.unit.AllTests.txt; fi
