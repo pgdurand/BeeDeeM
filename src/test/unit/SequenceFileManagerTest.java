@@ -22,10 +22,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -38,7 +36,6 @@ import bzh.plealog.dbmirror.util.descriptor.DatabankFormat;
 import bzh.plealog.dbmirror.util.sequence.SequenceFileManager;
 import bzh.plealog.dbmirror.util.sequence.SequenceValidatorCutFile;
 import bzh.plealog.dbmirror.util.sequence.SequenceValidatorDescription;
-import bzh.plealog.dbmirror.util.sequence.SequenceValidatorPaginate;
 import bzh.plealog.dbmirror.util.sequence.SequenceValidatorRenamer;
 import bzh.plealog.dbmirror.util.sequence.SequenceValidatorSize;
 import bzh.plealog.dbmirror.util.sequence.SequenceValidatorTaxon;
