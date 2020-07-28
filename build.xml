@@ -60,6 +60,15 @@
 		<pathelement location="${distrib}/lib" />
 	</path>
 
+	<path id="class.path.test">
+	    <fileset dir="${jar}" includes="junit*.jar" />
+	</path>
+
+	<taskdef name="junit"
+	  classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
+	  <classpath refid="class.path.test"/>
+	</taskdef>
+	
 	<!-- ============================================================= -->
 	<target name="help">
 		<echo>This is the Ant's project file to manage BeeDeeM.</echo>
