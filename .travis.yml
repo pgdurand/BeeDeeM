@@ -4,7 +4,7 @@ os:
   - linux
 
 jdk:
-  - oraclejdk8
+  - oraclejdk9
 
 # BeeDeeM uses graphical layers from Java/Swing. So, to enable
 # GUI app to run on Travis CI, we have to add these lines:
