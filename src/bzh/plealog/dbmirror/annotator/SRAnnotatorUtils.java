@@ -18,11 +18,9 @@ package bzh.plealog.dbmirror.annotator;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.TreeMap;
 
 import bzh.plealog.bioinfo.api.core.config.CoreSystemConfigurator;
 import bzh.plealog.bioinfo.api.data.feature.AnnotationDataModelConstants;
@@ -36,7 +34,6 @@ import bzh.plealog.bioinfo.api.data.searchresult.SRHsp;
 import bzh.plealog.bioinfo.api.data.searchresult.SRIteration;
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.api.data.sequence.BankSequenceInfo;
-import bzh.plealog.bioinfo.io.searchresult.csv.AnnotationDataModel;
 import bzh.plealog.bioinfo.io.searchresult.csv.ExtractAnnotation;
 import bzh.plealog.bioinfo.util.CoreUtil;
 import bzh.plealog.dbmirror.lucenedico.DicoTerm;
@@ -131,16 +128,10 @@ public class SRAnnotatorUtils {
   }
   
   public static SRClassification prepareClassification(SROutput bo, DicoTermQuerySystem dico) {
-    TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>> annotatedHitsHashMap = 
-        new TreeMap<String, TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, HashMap<String, AnnotationDataModel>>>();
-    TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>> annotationDictionary = 
-        new TreeMap<AnnotationDataModelConstants.ANNOTATION_CATEGORY, TreeMap<String, AnnotationDataModel>>();
 
     // Extract Bio Classification (IPR, EC, GO and TAX) for all hits
-    ExtractAnnotation.buildAnnotatedHitDataSet(bo, 0, annotatedHitsHashMap, annotationDictionary);
-
-    // Collect unique set of Bio Classification IDs
-    SRClassification classif = ExtractAnnotation.buildClassificationDataSet(annotationDictionary);
+    // and collect unique set of Bio Classification IDs
+    SRClassification classif = ExtractAnnotation.getClassificationdata(bo);
    
     if (classif.size()==0) {
       return classif;
