@@ -35,6 +35,10 @@ fi
 # *** Java VM 
 KL_JAVA_ARGS="@JAVA_ARGS@ -DKL_HOME=$KL_APP_HOME -DKL_WORKING_DIR=$KL_WORKING_DIR -DKL_CONF_DIR=$KL_CONF_DIR"
 
+if [  ! -z "$KL_LOG_FILE"  ]; then
+  KL_JAVA_ARGS+=" -DKL_LOG_FILE=$KL_LOG_FILE"
+fi
+
 # *** JARs section
 KL_JAR_LIST_TMP=`\ls $KL_APP_HOME/bin/*.jar`
 KL_JAR_LIST=`echo $KL_JAR_LIST_TMP | sed 's/ /:/g'`
