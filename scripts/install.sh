@@ -20,22 +20,20 @@
 # Proxy configuration: update configuration file: ${beedeemHome}/conf/system/network.config.
 
 # *** Application home
-KL_APP_HOME=@KL_INSTALL_DIR@
+KL_APP_HOME=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
 
 # *** Working directory
 if [  ! "$KL_WORKING_DIR"  ]; then
   KL_WORKING_DIR=@KL_WORKING_DIR@
 fi
 
-# *** Standard configuration directory
+# *** DATARMOR: configuration directory
 if [  ! "$KL_CONF_DIR"  ]; then
   KL_CONF_DIR=$KL_APP_HOME/conf
 fi
 
 # *** Java VM 
-JAVA_HOME=@JAVA_ROOT_DIR@
-KL_JAVA_VM=$JAVA_HOME/bin/java
-KL_JAVA_ARGS="@JAVA_ARGS@ -DKL_HOME=$KL_APP_HOME -DKL_WORKING_DIR=$KL_WORKING_DIR"
+KL_JAVA_ARGS="@JAVA_ARGS@ -DKL_HOME=$KL_APP_HOME -DKL_WORKING_DIR=$KL_WORKING_DIR -DKL_CONF_DIR=$KL_CONF_DIR"
 
 if [  ! -z "$KL_LOG_FILE"  ]; then
   KL_JAVA_ARGS+=" -DKL_LOG_FILE=$KL_LOG_FILE"
@@ -47,6 +45,5 @@ KL_JAR_LIST=`echo $KL_JAR_LIST_TMP | sed 's/ /:/g'`
 
 # *** start application
 KL_APP_MAIN_CLASS=bzh.plealog.dbmirror.main.CmdLineInstaller
-$KL_JAVA_VM $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS $@
+java $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS $@
 
-# chmod -R ugo+rX @BIOBASE_ROOTDIR@
