@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # DBMS program to annotate Blast results ; for Mac/Linux
-# Copyright (c) - Patrick G. Durand, 2007-2017
+# Copyright (c) - Patrick G. Durand, 2007-2020
 # -------------------------------------------------------------------
 # User manual:
 #   https://pgdurand.gitbooks.io/beedeem/
@@ -16,6 +16,10 @@
 # -DKL_CONF_DIR=an_absolute_path ; the absolute path to a home-made  
 #  conf directory. If not set, use ${user.dir}/conf.
 #
+#  KL_WORKING_DIR, KL_CONF_DIR and KL_LOG_FILE can be defined using
+#  env variables before calling this script. Additional JRE arguments
+#  can also be passed in to this script using env variable KL_JRE_ARGS.
+#
 
 # *** Application home
 KL_APP_HOME=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
@@ -25,14 +29,20 @@ if [  ! "$KL_WORKING_DIR"  ]; then
   KL_WORKING_DIR=@KL_WORKING_DIR@
 fi
 
-# *** DATARMOR: configuration directory
+# *** Configuration directory
 if [  ! "$KL_CONF_DIR"  ]; then
   KL_CONF_DIR=$KL_APP_HOME/conf
 fi
 
-# *** Java VM 
-KL_JAVA_ARGS="@JAVA_ARGS@ -DKL_HOME=$KL_APP_HOME -DKL_WORKING_DIR=$KL_WORKING_DIR -DKL_CONF_DIR=$KL_CONF_DIR"
+# *** Optional JRE arguments
+if [  ! "$KL_JRE_ARGS"  ]; then
+  KL_JRE_ARGS="@JAVA_ARGS@"
+fi
 
+# *** Java VM 
+KL_JAVA_ARGS="$KL_JRE_ARGS -DKL_HOME=$KL_APP_HOME -DKL_WORKING_DIR=$KL_WORKING_DIR -DKL_CONF_DIR=$KL_CONF_DIR"
+
+# *** Optional redefinition of log file
 if [  ! -z "$KL_LOG_FILE"  ]; then
   KL_JAVA_ARGS+=" -DKL_LOG_FILE=$KL_LOG_FILE"
 fi
