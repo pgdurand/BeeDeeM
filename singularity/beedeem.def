@@ -50,7 +50,7 @@
 #
 #  Here is a working example (adapt --bind to your host configuration):
 #
-#    singularity exec \
+#    singularity run \
 #       --bind /opt/tools:/software \
 #       --bind $SCRATCH/beedeem/bdm-wk:/beedeem-wk \
 #       --bind $SCRATCH/beedeem/bdm-conf:/beedeem-conf \
@@ -94,5 +94,6 @@ From: platten/alpine-oracle-jre8-docker
 
 %runscript
 	echo "BeeDeeM container"
+	/opt/beedeem/$@
 
 	
