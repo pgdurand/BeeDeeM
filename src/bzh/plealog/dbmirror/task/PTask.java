@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2020 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -34,7 +34,8 @@ public interface PTask {
   public static final String TASK_U_NOG_IDX          = "idxnog";
   public static final String TASK_U_CONVSPB          = "convspb";
   public static final String TASK_U_BOLD2GB          = "bold2gb";
-
+  public static final String TASK_U_EXTSCRIPT        = "script";
+  
   // global tasks
   public static final String TASK_G_FORMATDB         = "formatdb";
   public static final String TASK_G_DELETEGZ         = "delgz";
@@ -44,6 +45,7 @@ public interface PTask {
   public static final String TASK_G_NOTINSTALLINPROD = "noiip";
   public static final String TASK_G_NOG_PREPARE      = "eggnog";
   public static final String TASK_G_RELDATE          = "reldate";
+  public static final String TASK_G_EXTSCRIPT        = "script";
   
   // special common arguments
   public static final String TAX_INCLUDE             = "taxinc";
