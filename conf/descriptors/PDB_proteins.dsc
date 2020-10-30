@@ -13,6 +13,6 @@ db.ldir=${mirrordir}|p|PDB_proteins
 ftp.rdir.exclude=
 ftp.rdir=/blast/db/FASTA/
 history=0
-db.desc=PDB Protein databank\: sequences from 3D protein structures (no annotations).
+db.desc=PDB Protein databank (no taxonomy).
 db.files.exclude=
 db.type=p

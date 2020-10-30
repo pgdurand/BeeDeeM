@@ -2,7 +2,7 @@
 #Fri Sep 15 13:47:28 CEST 2017
 
 db.name=PDB_proteins
-db.desc=PDB Protein databank with taxonomy
+db.desc=PDB Protein databank (Blast v4 db format)
 db.type=p
 db.ldir=${mirrordir}|p|PDB_proteins
 
