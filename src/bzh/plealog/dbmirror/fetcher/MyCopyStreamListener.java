@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2020 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -48,6 +48,7 @@ public class MyCopyStreamListener implements CopyStreamListener {
   private long                  stepSize;
   private long                  step            = 1;
   private long                  stepPlastRunner = 1;
+  private long                  restartOffset   = 0;
   private Date                  start           = null;
   private int                   waitDelay       = 3;                    // unit:
                                                                         // seconds
@@ -56,11 +57,17 @@ public class MyCopyStreamListener implements CopyStreamListener {
   public MyCopyStreamListener(String workerID,
       UserProcessingMonitor userMonitor, String dbConfName, String fName,
       long streamSize) {
+    this(workerID, userMonitor, dbConfName, fName, streamSize, 0l);
+  }
+  public MyCopyStreamListener(String workerID,
+      UserProcessingMonitor userMonitor, String dbConfName, String fName,
+      long streamSize, long restartOffset) {
     _userMonitor = userMonitor;
     this.dbConfName = dbConfName;
     this.fName = fName;
     this.workerID = workerID;
     this.stepSize = streamSize / 100l;// 20l;
+    this.restartOffset = restartOffset;
     if (this.stepSize < Util.DEFAULT_COPY_BUFFER_SIZE)
       this.stepSize = Util.DEFAULT_COPY_BUFFER_SIZE;
     // set the wait delay depending on the streamSize
@@ -87,21 +94,22 @@ public class MyCopyStreamListener implements CopyStreamListener {
   public void bytesTransferred(long totalBytesTransferred,
       int bytesTransferred, long streamSize) {
 
+    long tbr = restartOffset + totalBytesTransferred;
     // keep this log for Plastrunner
-    if (totalBytesTransferred >= (stepPlastRunner * stepSize * 10)
-        || totalBytesTransferred == streamSize) {
+    if (tbr >= (stepPlastRunner * stepSize * 10)
+        || tbr == streamSize) {
       LoggerCentral.info(LOGGER, this.fName + " - download in progress: "
-          + (totalBytesTransferred * 100 / streamSize) + " %");
+          + (tbr * 100 / streamSize) + " %");
       stepPlastRunner++;
     }
 
     // avoid too many messages
-    if (totalBytesTransferred >= (step * stepSize)
-        || totalBytesTransferred == streamSize) {
+    if (tbr >= (step * stepSize)
+        || tbr == streamSize) {
       if (_userMonitor != null) {
         _userMonitor.processingFile(workerID, dbConfName,
             UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING, fName,
-            totalBytesTransferred, streamSize);
+            tbr, streamSize);
       }
 
       step++;
@@ -111,15 +119,15 @@ public class MyCopyStreamListener implements CopyStreamListener {
           if (_userMonitor != null) {
             // msg to display in the label
             StringBuffer msg = new StringBuffer(
-                bzh.plealog.dbmirror.util.Utils.getBytes(totalBytesTransferred)
+                bzh.plealog.dbmirror.util.Utils.getBytes(tbr)
                     + "/"
                     + bzh.plealog.dbmirror.util.Utils.getBytes(streamSize));
             // debit calcul
             long seconds = (new Date().getTime() - this.start.getTime()) / 1000;
-            long koPerSeconds = (totalBytesTransferred / 1024) / seconds;
+            long koPerSeconds = (tbr / 1024) / seconds;
             // msg += " - " + koPerSeconds + " Ko/s";
             // estimate end
-            long totalSecondsToEnd = ((streamSize - totalBytesTransferred) / 1024)
+            long totalSecondsToEnd = ((streamSize - tbr) / 1024)
                 / koPerSeconds;
             long hoursToEnd = TimeUnit.SECONDS.toHours(totalSecondsToEnd);
             long minutesToEnd = TimeUnit.SECONDS.toMinutes(totalSecondsToEnd)
