@@ -60,6 +60,7 @@ public class DBMSAbstractConfig {
   private static String                  _logAppFileName;
   private static String                  _logAppFile;
   private static String                  _workingTmpPath;
+  private static String                  _filterWorkingTmpPath;
   private static String                  _externalBinPath;
   private static String                  _confPath;
   private static String                  _startDate;
@@ -87,15 +88,15 @@ public class DBMSAbstractConfig {
   public static final String             CONF_PATH_NAME               = "conf";
   public static final String             EXT_PATH_NAME                = "external";
   public static final String             BIN_PATH_NAME                = "bin";
-  private static final String            APP_HOME_PROP_KEY            = "KL_HOME";
-  private static final String            APP_WORKING_DIR_PROP_KEY     = "KL_WORKING_DIR";
-  private static final String            APP_CONF_DIR_PROP_KEY        = "KL_CONF_DIR";
-  public  static final String            APP_DEBUG_MODE_PROP_KEY      = "KL_DEBUG";
-  private static final String            APP_LOG_FILE_PROP_KEY        = "KL_LOG_FILE";
-  private static final String            LCL_MIRROR_PROP_KEY          = "MIRROR_HOME";
+  public static final String             APP_KEY_PREFIX               = "KL_";
+  private static final String            APP_HOME_PROP_KEY            = APP_KEY_PREFIX+"HOME";
+  private static final String            APP_WORKING_DIR_PROP_KEY     = APP_KEY_PREFIX+"WORKING_DIR";
+  private static final String            APP_CONF_DIR_PROP_KEY        = APP_KEY_PREFIX+"CONF_DIR";
+  public  static final String            APP_DEBUG_MODE_PROP_KEY      = APP_KEY_PREFIX+"DEBUG";
+  private static final String            APP_LOG_FILE_PROP_KEY        = APP_KEY_PREFIX+"LOG_FILE";
   private static final String            USER_DIR_PROP_KEY            = "user.dir";
 
-  private static final String            DEF_DB_PATH                  = "biobanks";
+  private static final String            DEF_DB_PATH                  = "beedeem_banks_repository";
 
   // file containing the DB_XREFs definition
   public static final String             DB_XREF_CONF_FILE            = "dbxrefsForFasta.config";
@@ -167,7 +168,7 @@ public class DBMSAbstractConfig {
 
     if (_localMirrorPath != null)
       return _localMirrorPath;
-    String path = pruneQuotes(System.getProperty(LCL_MIRROR_PROP_KEY));
+    String path = pruneQuotes(System.getProperty(APP_KEY_PREFIX+DBMSConfigurator.MIRROR_PATH));
     if (path != null) {
       _localMirrorPath = path;
     } else {
@@ -278,11 +279,27 @@ public class DBMSAbstractConfig {
     return _workingTmpPath;
   }
 
-  public static void setWorkingPath(String path) {
-    _workingTmpPath = Utils.terminatePath(path);
-    LOGGER.debug("working path: " + _workingTmpPath);
+  public static String getWorkingFilterPath() {
+    if (_filterWorkingTmpPath != null)
+      return _filterWorkingTmpPath;
+    _filterWorkingTmpPath = Utils.terminatePath(getWorkingPath()+"filter");
+    File f = new File(_filterWorkingTmpPath);
+    if (!f.exists()) {
+      f.mkdirs();
+    } else {
+      try {
+        FileUtils.cleanDirectory(f);
+      } catch (IOException e) {
+        // do not throw exception for this
+        LoggerCentral.warn(
+            LOGGER,
+            "Unable to manage the tmp filter directory in '"
+                + _filterWorkingTmpPath + "' : "
+                + e.getMessage());
+      }
+    }
+    return _filterWorkingTmpPath;
   }
-
   /**
    * Returns the path pointing to external binaries. The path specifically
    * points to the OS localized dir (linux, windows or macos).
@@ -501,31 +518,7 @@ public class DBMSAbstractConfig {
       LoggerCentral.info(LOGGER, "*** START APPLICATION *** " + new Date());
       LoggerCentral.info(LOGGER, "Configuration:");
       _configurator.dumpContent(LOGGER);
-
-      // manage the tmp filter directory
-      try {
-        DBMSConfigurator.TMP_FILTER_DIRECTORY = DBMSExecNativeCommand
-            .formatNativePath(
-                (Utils.terminatePath(DBMSAbstractConfig.getLocalMirrorPath()) + "tmp")
-                    .replace(File.separatorChar, '|'), false, false).replace(
-                '|', File.separatorChar);
-        File tmpFilterDirectory = new File(
-            DBMSConfigurator.TMP_FILTER_DIRECTORY);
-        if (!tmpFilterDirectory.exists()) {
-          tmpFilterDirectory.mkdirs();
-        } else {
-          FileUtils.cleanDirectory(tmpFilterDirectory);
-        }
-      } catch (IOException e) {
-        // do not throw exception for this
-        LoggerCentral.warn(
-            LOGGER,
-            "Unable to manage the tmp filter directory in '"
-                + DBMSConfigurator.TMP_FILTER_DIRECTORY + "' : "
-                + e.getMessage());
-      }
     }
-
   }
 
   /**

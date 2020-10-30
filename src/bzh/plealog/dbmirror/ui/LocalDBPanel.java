@@ -80,6 +80,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
+import com.plealog.genericapp.api.EZEnvironment;
+import com.plealog.genericapp.api.file.EZFileManager;
+
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
 import bzh.plealog.dbmirror.fetcher.PFTPLoaderDescriptor;
 import bzh.plealog.dbmirror.fetcher.PLocalLoader;
@@ -90,7 +95,6 @@ import bzh.plealog.dbmirror.reader.DBUtils;
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
-import bzh.plealog.dbmirror.util.conf.DBMSConfigurator;
 import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptor;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
@@ -102,11 +106,6 @@ import bzh.plealog.dbmirror.util.sequence.SeqIOUtils;
 import bzh.plealog.dbmirror.util.sequence.SequenceFileManager;
 import bzh.plealog.dbmirror.util.sequence.SequenceValidatorTaxon;
 import bzh.plealog.dbmirror.util.sequence.TaxonMatcherHelper;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-import com.plealog.genericapp.api.EZEnvironment;
-import com.plealog.genericapp.api.file.EZFileManager;
 
 /**
  * This class implements a panel enabling a user to use the KDMS Lucene Indexer
@@ -1351,7 +1350,7 @@ public class LocalDBPanel extends JPanel {
           // In case of a previous filter, takes the filtered files
 
           final File current = new File(file);
-          foundFiles = new File(DBMSConfigurator.TMP_FILTER_DIRECTORY)
+          foundFiles = new File(DBMSAbstractConfig.getWorkingFilterPath())
               .list(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
@@ -1359,7 +1358,7 @@ public class LocalDBPanel extends JPanel {
                 }
               });
           if ((foundFiles != null) && (foundFiles.length == 1)) {
-            databankFiles.add(new File(DBMSConfigurator.TMP_FILTER_DIRECTORY,
+            databankFiles.add(new File(DBMSAbstractConfig.getWorkingFilterPath(),
                 foundFiles[0]));
 
           } else {

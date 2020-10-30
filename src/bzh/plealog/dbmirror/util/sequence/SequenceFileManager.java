@@ -35,7 +35,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 
 import bzh.plealog.dbmirror.util.Utils;
-import bzh.plealog.dbmirror.util.conf.DBMSConfigurator;
+import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.descriptor.DatabankFormat;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
@@ -108,7 +108,7 @@ public class SequenceFileManager {
   public SequenceFileManager(String sequenceFilepath,
       DatabankFormat databankFormat, Log logger, JProgressBar progressBar)
       throws IOException {
-    setTmpFileDirectory(DBMSConfigurator.TMP_FILTER_DIRECTORY);
+    setTmpFileDirectory(DBMSAbstractConfig.getWorkingFilterPath());
     this.sequenceFile = new File(sequenceFilepath);
     this.databankFormat = databankFormat;
     this.progressBar = progressBar;
@@ -142,7 +142,7 @@ public class SequenceFileManager {
    */
   public SequenceFileManager(BufferedReader reader, BufferedWriter writer,
       DatabankFormat databankFormat, Log logger) {
-    setTmpFileDirectory(DBMSConfigurator.TMP_FILTER_DIRECTORY);
+    setTmpFileDirectory(DBMSAbstractConfig.getWorkingFilterPath());
     this.databankFormat = databankFormat;
     this.logger = logger;
     this.validators = new ArrayList<ISequenceValidator>();
