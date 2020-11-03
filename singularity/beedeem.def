@@ -45,18 +45,43 @@
 #  folders on your host system.
 #
 #  Calling a BeeDeeM tool command is then as easy as:
-#   install.sh -task download --ftp-delay 5000 --ftp-retry 3 --task-delay 1000 -desc PDB_proteins
+#   install.sh -desc PDB_proteins
 #   (standard BeeDeeM command to install PDB_proteins bank)
 #
 #  Here is a working example (adapt --bind to your host configuration):
 #
 #    singularity run \
-#       --bind /opt/tools:/software \
-#       --bind $SCRATCH/beedeem/bdm-wk:/beedeem-wk \
-#       --bind $SCRATCH/beedeem/bdm-conf:/beedeem-conf \
-#       --bind $SCRATCH/beedeem/bdm-db:/beedeem-db \
-#       beedeem.sif \
-#       install.sh -task download --ftp-delay 5000 --ftp-retry 3 --task-delay 1000 -desc PDB_proteins 
+#       --bind /opt/tools:/software                    # To access Aspera binary \
+#       --bind $SCRATCH/beedeem/bdm-wk:/beedeem-wk     # BeeDeeM working directory \
+#       --bind $SCRATCH/beedeem/bdm-conf:/beedeem-conf # BeeDeeM conf directory \
+#       --bind $SCRATCH/beedeem/bdm-db:/beedeem-db     # Where to install banks \
+#       beedeem.sif                                    # beedeem Singularity image\
+#       install.sh -desc PDB_proteins                  # install PDB_proteins bank (1)
+#
+#     (1) targets file $SCRATCH/beedeem/bdm-conf/descriptors/PDB_proteins.dsc
+#
+#  Before calling above command, you may setup KL_JRE_ARGS to control resources used 
+#  by install.sh as follows:
+#
+#    export KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=/beedeem-wk"
+#
+#  In a similar way, let install.sh be silent (no log):
+#
+#   export KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=/beedeem-wk -DKL_LOG_TYPE=none"
+#
+#  ... or redirect everything to console (no log file, which is default mode):
+# 
+#   export KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=/beedeem-wk -DKL_LOG_TYPE=console"
+#
+#  When using default log file mode, set YOUR log file name as follows:
+#
+#   export KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=/beedeem-wk -DKL_LOG_FILE=myfile.log"
+#
+#   (log file is always written in beedeem working directory).
+#
+#  Finally, you can turn on DEBUG log mode as follows:
+#
+#   export KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=/beedeem-wk -DKL_DEBUG=true"
 #
 # #############################################################################
 
@@ -90,7 +115,6 @@ From: platten/alpine-oracle-jre8-docker
         export PATH="/opt/beedeem:$PATH"
 	export KL_WORKING_DIR=/beedeem-wk
 	export KL_CONF_DIR=/beedeem-conf
-	export KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=/beedeem-wk"
 
 %runscript
 	echo "BeeDeeM container"
