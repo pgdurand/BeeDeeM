@@ -1,3 +1,19 @@
+/* Copyright (C) 2007-2020 Patrick G. Durand
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  You may obtain a copy of the License at
+ *
+ *     https://www.gnu.org/licenses/agpl-3.0.txt
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ */
 package bzh.plealog.dbmirror.main;
 
 import java.util.Properties;
@@ -36,9 +52,15 @@ public class CmdLineUtils {
   private static String getFooter() {
     Properties props = StarterUtils.getVersionProperties();
     StringBuffer buf = new StringBuffer("\n");
+    String logFile = DBMSAbstractConfig.getLogAppFileName();
     buf.append("Default log file: ");
-    buf.append(DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName());
-    buf.append("\n  (to redirect Log file, use JRE args: -DKL_WORKING_DIR=/my-path -DKL_LOG_FILE=my-file.log)\n");
+    buf.append(logFile==null?"none":DBMSAbstractConfig.getLogAppPath()+logFile);
+    buf.append("\n");
+    buf.append("--\n");
+    buf.append("To control Log, use JRE args:\n");
+    buf.append("   -DKL_WORKING_DIR=/my-path\n");
+    buf.append("   -DKL_LOG_FILE=my-file.log\n");
+    buf.append("   -DKL_LOG_TYPE=none|console|file(default)\n");
     buf.append("--\n");
     buf.append(props.getProperty("prg.app.name"));
     buf.append(" ");
