@@ -27,6 +27,7 @@
 #  name within KL_WORKING_DIR<br><br>
 # -DKL_CONF_DIR=an_absolute_path ; the absolute path to a home-made  
 #  conf directory. If not set, use ${user.dir}/conf.
+# -DKL_LOG_TYPE=none|console|file(default)
 #
 #  KL_WORKING_DIR, KL_CONF_DIR and KL_LOG_FILE can be defined using
 #  env variables before calling this script. Additional JRE arguments

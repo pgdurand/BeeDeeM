@@ -58,7 +58,7 @@ Step 3 - install BeeDeeM
  Step 4 - test BeeDeeM
  ---------------------
  
- Read this: https://pgdurand.gitbooks.io/databank-manager-system/test_install.html
- 
+ Read this: 
+            https://pgdurand.gitbook.io/beedeem/installation/test_install 
  
  

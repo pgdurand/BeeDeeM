@@ -18,6 +18,7 @@ rem -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that
 rem  name within KL_WORKING_DIR
 rem -DKL_CONF_DIR=an_absolute_path ; the absolute path to a home-made  
 rem  conf directory. If not set, use ${user.dir}/conf.
+rem -DKL_LOG_TYPE=none|console|file(default)
 
 set CUR_DIR=%cd%
 
