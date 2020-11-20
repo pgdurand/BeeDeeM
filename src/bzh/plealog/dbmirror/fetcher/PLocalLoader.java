@@ -233,18 +233,22 @@ public class PLocalLoader {
         path = path.trim() + "/";
       }
       currentFile = new File(path);
-
-      // List the files in the directory
-      remoteFiles = currentFile.listFiles();
-
-      for (File rFile : remoteFiles) {
-        if (rFile == null || !(rFile.isDirectory())) {
-          continue;
+      if (currentFile.exists()) {
+        // List the files in the directory
+        remoteFiles = currentFile.listFiles();
+  
+        for (File rFile : remoteFiles) {
+          if (rFile == null || !(rFile.isDirectory())) {
+            continue;
+          }
+          fName = rFile.getName();
+          if (nMatcher.match(fName)) {
+            newList.add(path + fName);
+          }
         }
-        fName = rFile.getName();
-        if (nMatcher.match(fName)) {
-          newList.add(path + fName);
-        }
+      }
+      else {
+        LoggerCentral.warn(LOGGER, "Path not found: "+currentFile.getAbsolutePath());
       }
     }
     return exploreLocalDirectory(newList, tokenizer, exclude);
