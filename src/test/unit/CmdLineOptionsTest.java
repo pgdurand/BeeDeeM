@@ -59,16 +59,11 @@ public class CmdLineOptionsTest {
 
   private static final String[] TEST_2_ANSWERS = {
     "db.list","PDB",
-    "db.main.task","null",
-    "force.delete","null",
-    "task.delay","null",
-    "ftp.delay","null",
-    "ftp.retry","null",
-    "mail.smtp.host","null",
-    "mail.smtp.port","null",
-    "mail.smtp.sender.mail","null",
-    "mail.smtp.sender.pswd","null",
-    "mail.smtp.recipient.mail","null"
+    "db.main.task","download",
+    "force.delete","false",
+    "task.delay","1000",
+    "ftp.delay","5000",
+    "ftp.retry","3",
     };
 
   private static final String[] TEST_3_ANSWERS = {
@@ -150,7 +145,7 @@ public class CmdLineOptionsTest {
       "db.list","SwissProt_human.dsc",
       // -END
       "db.main.task","download",
-      "force.delete","true",
+      "force.delete","false",
       "task.delay","1000",
       "ftp.delay","5000",
       "ftp.retry","3",
