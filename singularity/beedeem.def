@@ -90,6 +90,7 @@ Bootstrap : docker
 From: platten/alpine-oracle-jre8-docker
 
 %post
+	BDM_VERSION=4.5.0
 	apk update
 	# libbz2 libidn are required by blast tools included in BeeDeeM
 	apk add --no-cache wget libbz2 libidn
@@ -97,11 +98,11 @@ From: platten/alpine-oracle-jre8-docker
 	# Get BeeDeeM from latest release
 	mkdir -p /opt/beedeem/tmp-install
 	cd /opt/beedeem/tmp-install
-	wget https://github.com/pgdurand/BeeDeeM/releases/download/v4.5.0/beedeem-4.5.0-distrib.zip
+	wget https://github.com/pgdurand/BeeDeeM/releases/download/v${BDM_VERSION}/beedeem-${BDM_VERSION}-distrib.zip
 	
 	# Unpack BeeDeeM to /opt/beedeem
-	unzip beedeem-4.5.0-distrib.zip
-	tar -zxf beedeem-4.5.0.tar.gz -C /opt/beedeem
+	unzip beedeem-${BDM_VERSION}-distrib.zip
+	tar -zxf beedeem-${BDM_VERSION}.tar.gz -C /opt/beedeem
 	cd ..
 	rm -rf tmp-install
 	
