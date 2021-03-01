@@ -77,11 +77,6 @@ public class DBMSConfigurator {
 		  LONG_FILE_NAME, FDB_PRG_NAME, FDB_PATH_NAME, UI_SHOW_PATH, COPY_WORKERS,
 		  FASTA_VOLSIZE, LUCENE_FS, LUCENE_LOCK, ASPERA_KEY, ASPERA_BIN};
   
-  public static String              TMP_FILTER_DIRECTORY = Utils
-                                                             .terminatePath(DBMSAbstractConfig
-                                                                 .getLocalMirrorPath())
-                                                             + "tmp";
-
   public DBMSConfigurator() {
     try {
       _pConfig = new PropertiesConfiguration();
@@ -153,7 +148,9 @@ public class DBMSConfigurator {
    * @see java.util.Properties#getProperty(java.lang.String)
    */
   public String getProperty(String key) {
-    return _pConfig.getString(key);
+    //this was added to enable overriding config file properties using java -D arguments.
+    String value = DBMSAbstractConfig.pruneQuotes(System.getProperty(DBMSAbstractConfig.APP_KEY_PREFIX+key));
+    return value !=null ? value : _pConfig.getString(key);
   }
 
   /**

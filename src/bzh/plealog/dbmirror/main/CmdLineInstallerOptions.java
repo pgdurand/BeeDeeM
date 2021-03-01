@@ -1,8 +1,7 @@
 package bzh.plealog.dbmirror.main;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
@@ -18,21 +17,26 @@ import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
  * @author Patrick G. Durand
  * */
 public class CmdLineInstallerOptions {
+  
+  public static final String CMD_LINE = "CmdLine";
+  
+  private static final String DESC_OPT = "desc";
   /** Provide a correspondence between cmdline options and descriptor keys.
    * These keys are defined in bzh.plealog.dbmirror.fetcher.PFTPLoaderDescriptor.*/
-  private static final String[] ARGUMENTS = {
-      "desc", "db.list", 
-      "task", "db.main.task",
-      "force", "force.delete",
-      "td", "task.delay",
-      "fd","ftp.delay",
-      "fr", "ftp.retry",
-      "host","mail.smtp.host",
-      "port","mail.smtp.port",
-      "sender","mail.smtp.sender.mail",
-      "pswd","mail.smtp.sender.pswd",
-      "recipient","mail.smtp.recipient.mail"
-      };
+  @SuppressWarnings("serial")
+  private static final Hashtable<String, String> ARGUMENTS = new Hashtable<String, String>(){{
+      put(DESC_OPT, "db.list"); 
+      put("task", "db.main.task");
+      put("force", "force.delete");
+      put("td", "task.delay");
+      put("fd","ftp.delay");
+      put("fr", "ftp.retry");
+      put("host","mail.smtp.host");
+      put("port","mail.smtp.port");
+      put("sender","mail.smtp.sender.mail");
+      put("pswd","mail.smtp.sender.pswd");
+      put("recipient","mail.smtp.recipient.mail");
+      }};
   private static Options OPTIONS = null;
 
   /**
@@ -62,7 +66,7 @@ public class CmdLineInstallerOptions {
         .withArgName( DBMSMessages.getString("Tool.Install.arg2.lbl") )
         .hasArg()
         .withDescription( DBMSMessages.getString("Tool.Install.arg2.desc") )
-        .create( "desc" );
+        .create( DESC_OPT );
 
     Option task = OptionBuilder
         .withArgName( DBMSMessages.getString("Tool.Install.arg3.lbl") )
@@ -183,24 +187,26 @@ public class CmdLineInstallerOptions {
    * @return a PFTPLoaderDescriptor instance or null if nothing set.
    * */
   public static PFTPLoaderDescriptor getDescriptorFromOptions(CommandLine cmdline){
-    PFTPLoaderDescriptor descriptor;
+    PFTPLoaderDescriptor descriptor= new PFTPLoaderDescriptor(CMD_LINE);
     String               argName, keyName;
+    boolean              userProvidedArgs=false;
     
-    descriptor = new PFTPLoaderDescriptor("CmdLine");
-    
-    List<String> argList = Arrays.asList(ARGUMENTS);
-    Iterator<String> argIter = argList.iterator();
-    while(argIter.hasNext()){
-      argName = argIter.next();
+
+    Enumeration<String> argIter = ARGUMENTS.keys();
+    while(argIter.hasMoreElements()){
+      argName = argIter.nextElement();
       if (cmdline.hasOption(argName)){
-        keyName = argIter.next();
-        descriptor.setProperty(keyName, cmdline.getOptionValue(argName));
+        userProvidedArgs=true;
+        keyName = ARGUMENTS.get(argName);
+        String value = cmdline.getOptionValue(argName);
+        descriptor.setProperty(keyName, value);
+        if (argName.equals(DESC_OPT)) {
+          descriptor.setDescriptorName(value);
+        }
       }
     }
-    if (descriptor.getProperties().isEmpty()){
-      descriptor = null;
-    }
-    return descriptor;
+
+    return userProvidedArgs ? descriptor : null;
   }
   
   public static CommandLine handleArguments(String[] args){

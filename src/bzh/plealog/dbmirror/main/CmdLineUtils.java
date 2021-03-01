@@ -1,24 +1,32 @@
+/* Copyright (C) 2007-2020 Patrick G. Durand
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  You may obtain a copy of the License at
+ *
+ *     https://www.gnu.org/licenses/agpl-3.0.txt
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ */
 package bzh.plealog.dbmirror.main;
 
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
-
-import com.plealog.genericapp.api.EZEnvironment;
 
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 
 public class CmdLineUtils {
-  private static final String HELP_KEY = "help";
-  private static final String H_KEY    = "h";
   private static final String CONFDIR_KEY = "conf-dir";
   
   /**
@@ -38,21 +46,21 @@ public class CmdLineUtils {
    * Prepare an option to deal with help.
    */
   public static void setHelpOption(Options opts){
-    String msg = DBMSMessages.getString("Tool.Utils.info.msg1" );
-    opts.addOption(new Option( HELP_KEY, msg ));
-    opts.addOption(new Option( H_KEY, msg ));
+    bzh.plealog.bioinfo.util.CmdLineUtils.setHelpOption(opts);
   }
 
-  /**
-   * Handle the help message.
-   */
-  public static void printUsage(String toolName, Options opt) {
-    // Get version info
+  private static String getFooter() {
     Properties props = StarterUtils.getVersionProperties();
     StringBuffer buf = new StringBuffer("\n");
+    String logFile = DBMSAbstractConfig.getLogAppFileName();
     buf.append("Default log file: ");
-    buf.append(DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName());
-    buf.append("\n  (to redirect Log file, use JRE args: -DKL_WORKING_DIR=/my-path -DKL_LOG_FILE=my-file.log)\n");
+    buf.append(logFile==null?"none":DBMSAbstractConfig.getLogAppPath()+logFile);
+    buf.append("\n");
+    buf.append("--\n");
+    buf.append("To control Log, use JRE args:\n");
+    buf.append("   -DKL_WORKING_DIR=/my-path\n");
+    buf.append("   -DKL_LOG_FILE=my-file.log\n");
+    buf.append("   -DKL_LOG_TYPE=none|console|file(default)\n");
     buf.append("--\n");
     buf.append(props.getProperty("prg.app.name"));
     buf.append(" ");
@@ -65,15 +73,8 @@ public class CmdLineUtils {
     buf.append(props.getProperty("prg.app.name"));
     buf.append(" manual: ");
     buf.append(props.getProperty("prg.man.url"));
-    
-    HelpFormatter formatter = new HelpFormatter();
-    formatter.printHelp(
-        props.getProperty("prg.app.name")+" "+toolName,
-        "tool [options]", 
-        opt, 
-        buf.toString());
+    return buf.toString();
   }
-
   /**
    * Convert command-line options to a Apache Commons CLI object.
    * 
@@ -83,53 +84,11 @@ public class CmdLineUtils {
    * -h or -help is requested, or args parsing failed.
    */
   public static CommandLine handleArguments(String[] args, Options options, String toolName) {
-    GnuParser parser;
-    CommandLine line = null;
-
-    try {
-      parser = new GnuParser();
-      line = parser.parse(options, args, true);
-    } catch (Exception exp) {
-      System.err.println(exp.getMessage());
-      printUsage(toolName, options);
-      line = null;
-    }
-    
-    if(line!=null){ 
-      //--conf-dir is a shortcut to JVM argument -DKL_CONF_DIR=a-path
-      if (line.hasOption( CONFDIR_KEY ) ){
-        DBMSAbstractConfig.setConfPath(DBMSAbstractConfig.pruneQuotes(line.getOptionValue(CONFDIR_KEY)));
-      }
-      if ( line.hasOption( HELP_KEY ) ||  line.hasOption( H_KEY ) || 
-          ( line.getArgList().isEmpty() && line.getOptions().length==0 ) ){
-        // Initialize the member variable
-        printUsage(toolName, options);
-        line = null;
-      }
-    }
-    return line;
-  }
-  /**
-   * Replace environment variable names by their values.
-   * 
-   * @param text a file path that may contain env var, e.g. $HOME/my-file.txt
-   * 
-   * @return an update file path, e.g. /Users/pgdurand/my-file.txt
-   */
-  public static String expandEnvVars(String text) {
-    Map<String, String> envMap = System.getenv();
-    for (Entry<String, String> entry : envMap.entrySet()) {
-      String key = entry.getKey();
-      String value = entry.getValue();
-      if (EZEnvironment.getOSType()==EZEnvironment.WINDOWS_OS) {
-        text = text.replaceAll("\\%" + key + "\\%", value);
-      }
-      else {
-        text = text.replaceAll("\\$\\{" + key + "\\}", value);
-        text = text.replaceAll("\\$" + key + "", value);
-      }
-    }
-    return text;
-  }
+    return bzh.plealog.bioinfo.util.CmdLineUtils.handleArguments(
+        args, 
+        options, 
+        StarterUtils.getVersionProperties().getProperty("prg.app.name")+" "+toolName, 
+        getFooter());
+   }
 
 }

@@ -15,6 +15,7 @@ rem -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that
 rem  name within KL_WORKING_DIR
 rem -DKL_CONF_DIR=an_absolute_path ; the absolute path to a home-made  
 rem  conf directory. If not set, use ${user.dir}/conf.
+rem -DKL_LOG_TYPE=none|console|file(default)
 
 set CUR_DIR=%cd%
 
@@ -25,8 +26,6 @@ rem *** Working directory
 set KL_WORKING_DIR=@KL_WORKING_DIR@
 
 rem *** Java VM 
-set JAVA_HOME=@JAVA_ROOT_DIR@
-set KL_JAVA_VM=%JAVA_HOME%\bin\java
 set KL_JAVA_ARGS=-Xms128M -Xmx1024M -DKL_HOME="%KL_APP_HOME%" -DKL_WORKING_DIR="%KL_WORKING_DIR%"
 
 rem *** Create classpath
@@ -38,5 +37,5 @@ for /F %%f in ('dir /b *.jar') do set FILES=!FILES!;%KL_APP_HOME%\\bin\\%%f
 
 rem *** Start application
 cd %CUR_DIR%
-"%KL_JAVA_VM%" %KL_JAVA_ARGS% -classpath "%FILES%" bzh.plealog.dbmirror.main.Annotate %*
+java.exe %KL_JAVA_ARGS% -classpath "%FILES%" bzh.plealog.dbmirror.main.Annotate %*
 

@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2020 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -69,10 +69,6 @@ import bzh.plealog.dbmirror.util.mail.PMailer;
  * @author Patrick G. Durand
  */
 public class CmdLineInstaller {
-
-  private static final Log LOGGER = LogFactory
-                     .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                         + ".PMirror");
 
   private File prepareListOfBanks(String bankListFormat){
     File f=null;
@@ -151,32 +147,40 @@ public class CmdLineInstaller {
     }
   }
   
-  private void dumpStarterMessage(){
-    Properties props = StarterUtils.getVersionProperties();
-    StringBuffer buf = new StringBuffer("\n");
-    buf.append(props.getProperty("prg.app.name"));
-    buf.append(" ");
-    buf.append(props.getProperty("prg.version"));
-    buf.append(".\n");
-    System.out.println(buf.toString());
-    
-    
-    String msg = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg2")).format(
-        new Object[]{DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName()});
-    System.out.println(msg);
-  }
-  private void startApplication(String descriptorName, PFTPLoaderDescriptor fDescCmd, String bankListFormat) {
+  private boolean startApplication(String descriptorName, PFTPLoaderDescriptor fDescCmd, String bankListFormat) {
     PFTPLoaderSystem lSystem;
     PFTPLoaderDescriptor fDesc;
     String descriptor, gdfile;
+    boolean silentMode = DBMSAbstractConfig.isSilentMode();
+    
+    if (!silentMode) {
+      Properties props = StarterUtils.getVersionProperties();
+      StringBuffer buf = new StringBuffer("\n");
+      buf.append(props.getProperty("prg.app.name"));
+      buf.append(" ");
+      buf.append(props.getProperty("prg.version"));
+      buf.append(".\n");
+      System.out.println(buf.toString());;
+    }
 
     StarterUtils.configureApplication(null,
         DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + "-" + descriptorName, true,
         false, true);
-    dumpStarterMessage();
-    
+
+    if (!silentMode) {
+      String logFile = DBMSAbstractConfig.getLogAppFileName();
+      if(logFile!=null) {
+        String msg = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg2")).format(
+            new Object[]{DBMSAbstractConfig.getLogAppPath()+logFile});
+        System.out.println(msg);
+      }
+    }    
     descriptor = descriptorName + DBMSAbstractConfig.FEXT_GD;
 
+    Log LOGGER = LogFactory
+        .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+            + ".PMirror");
+    
     try {
       LoggerCentral.reset();
       fDesc = new PFTPLoaderDescriptor(descriptor);
@@ -203,10 +207,16 @@ public class CmdLineInstaller {
       LoggerCentral.error(LOGGER, DBMSMessages.getString("Tool.Install.error.msg4") + e);
     }
     if (LoggerCentral.errorMsgEmitted()){
-      System.err.println(DBMSMessages.getString("Tool.Install.error.msg1"));
+      if (!silentMode) {
+        System.err.println("\n"+DBMSMessages.getString("Tool.Install.error.msg1"));
+      }
+      return false;
     }
     else{
-      System.out.println(DBMSMessages.getString("Tool.Install.info.msg1"));
+      if (!silentMode) {
+        System.out.println("\n"+DBMSMessages.getString("Tool.Install.info.msg1"));
+      }
+      return true;
     }
   }
 
@@ -237,11 +247,13 @@ public class CmdLineInstaller {
     
     // do we have a global descriptor name? (first and second cases described above)
     String globalDesc = CmdLineInstallerOptions.getDescriptorName(cmd);
-    globalDesc = (globalDesc==null?"CmdLine":globalDesc);
+    globalDesc = (globalDesc==null?CmdLineInstallerOptions.CMD_LINE:globalDesc);
     
     // do we have options? (second and third cases described above)
     PFTPLoaderDescriptor fDescCmd = CmdLineInstallerOptions.getDescriptorFromOptions(cmd);
-    
+    if (fDescCmd != null && globalDesc.equals(CmdLineInstallerOptions.CMD_LINE)) {
+      globalDesc = fDescCmd.getDescriptorName();
+    }
     // default format for report: txt (this report is only created when
     // email stuffs are used)
     String bankListFormat = "txt";
@@ -250,7 +262,9 @@ public class CmdLineInstaller {
     }
     //go, go, go...
     CmdLineInstaller mirror = new CmdLineInstaller();
-    mirror.startApplication(globalDesc, fDescCmd, bankListFormat);
+    if (!mirror.startApplication(globalDesc, fDescCmd, bankListFormat)) {
+      System.exit(1);
+    }
   }
 
 }

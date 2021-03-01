@@ -56,14 +56,17 @@ public class PAsperaLoader extends PFTPLoader {
 		super(id);
 	}
 
+  @Override
 	public String getWorkerBaseName() {
 		return ASPC_WORKER;
 	}
 
+  @Override
 	public void closeConnection(FTPClient ftp) {
 	  //nothing to do
 	}
 
+  @Override
 	protected boolean configureFtpClient(FTPClient ftp, DBServerConfig fsc) {
 	  boolean bRet=true;
 	  //check we have Aspera configuration
@@ -96,7 +99,8 @@ public class PAsperaLoader extends PFTPLoader {
     return bRet;
 	}
 
-	protected int downloadFile(FTPClient ftp, DBServerConfig fsc, DBMSFtpFile rFile, File file) {
+	@Override
+	protected int downloadFile(FTPClient ftp, DBServerConfig fsc, DBMSFtpFile rFile, File file, long lclFSize) {
 		int iRet = 0;
 		
 		//no apsera cmd object: may happen if wrong configuration

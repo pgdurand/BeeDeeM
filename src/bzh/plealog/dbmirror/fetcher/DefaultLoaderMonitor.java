@@ -33,6 +33,7 @@ import bzh.plealog.dbmirror.task.PTaskDeleteFiles;
 import bzh.plealog.dbmirror.task.PTaskEggNogIndexer;
 import bzh.plealog.dbmirror.task.PTaskEndProcessing;
 import bzh.plealog.dbmirror.task.PTaskEngine;
+import bzh.plealog.dbmirror.task.PTaskExecScript;
 import bzh.plealog.dbmirror.task.PTaskFastaRenamer;
 import bzh.plealog.dbmirror.task.PTaskFormatDB;
 import bzh.plealog.dbmirror.task.PTaskGunzip;
@@ -182,6 +183,15 @@ public class DefaultLoaderMonitor implements LoaderMonitor {
       fTask.setParameters(getTaskParameters(tasks, PTask.TASK_G_FORMATDB));
       _taskEngine.addTask(fTask, _dbConf.getName());
     }
+    
+    // user provided external script
+    if (tasks.indexOf(PTask.TASK_G_EXTSCRIPT) >= 0) {
+      PTaskExecScript execTask = new PTaskExecScript(_dbConf.getLocalTmpFolder(), null);
+      execTask.setParameters(getTaskParameters(tasks, PTask.TASK_G_EXTSCRIPT));
+      _taskEngine.addTask(execTask, _dbConf.getName());
+    }
+
+    //cleaning tasks is any are required
     if (tasks.indexOf(PTask.TASK_G_DELETEGZ) >= 0) {
       _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
           "*.gz"), _dbConf.getName());
@@ -202,6 +212,7 @@ public class DefaultLoaderMonitor implements LoaderMonitor {
       mkTask.setParameters(getTaskParameters(tasks, PTask.TASK_G_MAKEALIAS));
       _taskEngine.addTask(mkTask, _dbConf.getName());
     }
+    
     /*
      * str = _dbConf.getHistoryToKeep(); if (str!=null){ _taskEngine.addTask(new
      * KLTaskHandleHistory( _dbConf.getLocalFolder(), Integer.valueOf(str)),
@@ -466,6 +477,15 @@ public class DefaultLoaderMonitor implements LoaderMonitor {
       addForFormatDb(gTasks, aName);
     }
 
+    // user provided external script
+    else if (unitTask.contains(PTask.TASK_U_EXTSCRIPT)) {
+      String dicoPath = _dbConf.getLocalTmpFolder();
+      aName = getTaskFilepath(unitTask, fName, false);
+      PTaskExecScript execTask = new PTaskExecScript(dicoPath, aName);
+      execTask.setParameters(getTaskParameters(unitTask, PTask.TASK_U_DICO_IDX));
+      addTaskToEngine(execTask);
+    }
+    
     // no unit task
     else if (unitTask.trim().equals("")) {
       addForFormatDb(gTasks, getTaskFilepath(unitTask, fName, false));

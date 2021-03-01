@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2020 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -67,23 +67,32 @@ public class PFTPLoaderDescriptor {
   private String [] KEYS = {DBLIST_KEY,FORCE_KEY,MAINTASK_KEY,TASK_DELAY_KEY,FTP_DELAY_KEY,FTP_RETRY_KEY,MAILER_HOST,MAILER_PORT,
       MAILER_SENDER,MAILER_PSWD,MAILER_RECP};
   
-  private static final Log       LOGGER    = LogFactory
-          .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY+".LoaderDescriptor");
-
+  /**
+   * Create a new PFTPLoaderDescriptor.
+   * 
+   * Set default values as follows db.list="", force.delete=false,
+   * db.main.task=download, task.delay=1000, ftp.delay=5000, 
+   * ftp.retry=3.*/
   public PFTPLoaderDescriptor(String descriptorName) {
     super();
     _descriptor = descriptorName;
     _makeAbsolutePath = true;
+    initDefaults(_properties);
   }
 
+  private static void initDefaults(Properties props) {
+    props.setProperty(PFTPLoaderDescriptor.DBLIST_KEY, "");
+    props.setProperty(PFTPLoaderDescriptor.FORCE_KEY, "false");
+    props.setProperty(PFTPLoaderDescriptor.MAINTASK_KEY, MAINTASK_DOWNLOAD);
+    props.setProperty(PFTPLoaderDescriptor.FTP_DELAY_KEY, "5000");
+    props.setProperty(PFTPLoaderDescriptor.FTP_RETRY_KEY, "3");
+    props.setProperty(PFTPLoaderDescriptor.TASK_DELAY_KEY, "1000");
+  }
+  
   public static PFTPLoaderDescriptor create(String force, String workerMode) {
     PFTPLoaderDescriptor loaderDesc = new PFTPLoaderDescriptor("mirror");
-    loaderDesc.setProperty(PFTPLoaderDescriptor.DBLIST_KEY, "");
     loaderDesc.setProperty(PFTPLoaderDescriptor.FORCE_KEY, force);
     loaderDesc.setProperty(PFTPLoaderDescriptor.MAINTASK_KEY, workerMode);
-    loaderDesc.setProperty(PFTPLoaderDescriptor.FTP_DELAY_KEY, "5000");
-    loaderDesc.setProperty(PFTPLoaderDescriptor.FTP_RETRY_KEY, "3");
-    loaderDesc.setProperty(PFTPLoaderDescriptor.TASK_DELAY_KEY, "1000");
     return loaderDesc;
   }
 
@@ -203,6 +212,10 @@ public class PFTPLoaderDescriptor {
     return _descriptor;
   }
   
+  public void setDescriptorName(String name) {
+    _descriptor = name;
+  }
+  
   /**
    * Update the content of this descriptor with values from parameter.
    */
@@ -211,7 +224,7 @@ public class PFTPLoaderDescriptor {
     for(String key : KEYS){
       value = desc.getProperty(key);
       // key is not defined in "desc"
-      if (value==null){
+      if (value==null || value.isEmpty()){
         continue;
       }
       // we want to reset a value
@@ -232,6 +245,8 @@ public class PFTPLoaderDescriptor {
   }
   
   public void dumpContent() {
+    Log LOGGER = LogFactory
+        .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY+".LoaderDescriptor");
 	  LoggerCentral.info(LOGGER, String.format("Content of global descriptor: %s",_descriptor));
 	  for(String key : KEYS){
 		  LoggerCentral.info(LOGGER, String.format("%s=%s",key, _properties.getProperty(key)));

@@ -60,6 +60,15 @@
 		<pathelement location="${distrib}/lib" />
 	</path>
 
+	<path id="class.path.test">
+	    <fileset dir="${jar}" includes="junit*.jar" />
+	</path>
+
+	<taskdef name="junit"
+	  classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
+	  <classpath refid="class.path.test"/>
+	</taskdef>
+	
 	<!-- ============================================================= -->
 	<target name="help">
 		<echo>This is the Ant's project file to manage BeeDeeM.</echo>
@@ -68,6 +77,9 @@
 		<echo>        makejar: only compile and package beedem jar</echo>
 		<echo>    makedistrib: prepare the full release file</echo>
 		<echo>             ut: compile beedeem and run unit tests</echo>
+	  <echo/>
+	  <echo>  Ant version: ${ant.version}</echo>
+	  <echo>  Java version: ${ant.java.version}</echo>
 		<echo />
 	</target>
 	
@@ -101,6 +113,10 @@
 	<!-- ============================================================= -->
 	<!-- Prepare directory structure used to compile and package sof   -->
 	<target name="prepare" depends="checkversion">
+	  <echo/>
+	  <echo>  Ant version: ${ant.version}</echo>
+	  <echo>  Java version: ${ant.java.version}</echo>
+    <echo/>
 		<!-- Prepare the distrib directory tree -->
 		<delete dir="${distrib}" />
 		<mkdir dir="${Dsrc}" />
@@ -110,6 +126,37 @@
 		<mkdir dir="${Dscripts}" />
 		<mkdir dir="${Ddoc}" />
 		<mkdir dir="${Dexternal}" />
+	</target>
+
+	<!-- ============================================================= -->
+	<target name="is-java-eight">
+	  <condition property="java.eight">
+	      <equals arg1="${ant.java.version}" arg2="1.8"/>
+	  </condition>
+	</target>
+
+	<target name="javac8" depends="is-java-eight" if="java.eight">
+	  <javac srcdir="${Dsrc}"
+	         destdir="${Dlib}"
+	         classpathref="class.path"
+	         debug="${distribClass.path}"
+	         optimize="${compile.optimize}"
+	  	     deprecation="${compile.deprecation}"
+	         >
+	  </javac>
+	</target>
+
+	<!-- added for TravisCI -->
+	<target name="javac9" depends="is-java-eight" unless="java.eight">
+	  <javac srcdir="${Dsrc}"
+	         destdir="${Dlib}"
+	         classpathref="distribClass.path"
+	         debug="${compile.debug}"
+	         optimize="${compile.optimize}"
+	  	     deprecation="${compile.deprecation}"
+	         >
+	    <compilerarg line="--add-modules java.se.ee"/>
+	  </javac>
 	</target>
 
   <!-- ============================================================= -->
@@ -146,13 +193,8 @@
 			</fileset>
 		</copy>
 		<!-- Compile source code ready for distribution-->
-		<javac srcdir="${Dsrc}" 
-	           destdir="${Dlib}" 
-	           classpathref="distribClass.path" 
-	           debug="${compile.debug}" 
-	           optimize="${compile.optimize}" 
-	           deprecation="${compile.deprecation}">
-		</javac>
+	  <antcall target="javac8"/>
+	  <antcall target="javac9"/>
 		<copy todir="${Dlib}">
 			<fileset dir="${src}">
 				<include name="**/*.png" />
@@ -308,13 +350,8 @@
 			<fileset dir="${src}" />
 		</copy>
 		<!-- Compile source code ready for distribution-->
-		<javac srcdir="${Dsrc}" 
-             destdir="${Dlib}" 
-             classpathref="distribClass.path" 
-             debug="on" 
-             optimize="off" 
-             deprecation="off">
-		</javac>
+	  <antcall target="javac8"/>
+	  <antcall target="javac9"/>
 		<!-- Copy resource files -->
 		<copy todir="${Dlib}">
 			<fileset dir="${src}">

@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2020 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -175,7 +175,7 @@ public class PFTPLoader {
    * @return 1 if success, 0 if failure, 2 if skip (file already loaded ; when
    *         resuming from a previous work) and 3 if aborted.
    * */
-	protected int downloadFile(FTPClient ftp, DBServerConfig fsc, DBMSFtpFile rFile, File file) {
+	protected int downloadFile(FTPClient ftp, DBServerConfig fsc, DBMSFtpFile rFile, File file, long lclFSize) {
 		FileOutputStream fos = null;
 		InputStream ftpIS = null;
 		String remoteFName;
@@ -191,13 +191,21 @@ public class PFTPLoader {
 			if (ftp.changeWorkingDirectory(rFile.getRemoteDir())) {
 				// download file
 				LoggerCentral.info(LOGGER, "  " + getLoaderId() + ": download: " + rFile.getRemoteDir() + remoteFName);
-				fos = new FileOutputStream(file);
+				
+				if (lclFSize!=0) {
+				  fos = new FileOutputStream(file, true);
+				  ftp.setRestartOffset(lclFSize);
+				}
+				else {
+          fos = new FileOutputStream(file);  
+          ftp.setRestartOffset(0l);
+				}
 				ftpIS = ftp.retrieveFileStream(remoteFName);
 				if (ftpIS == null) {
 					throw new Exception(getLoaderId() + ": unable to open remote input stream: " + ftp.getReplyString());
 				}
 				Util.copyStream(ftpIS, fos, Util.DEFAULT_COPY_BUFFER_SIZE, remoteFSize,
-						new MyCopyStreamListener(getLoaderId(), _userMonitor, fsc.getName(), remoteFName, remoteFSize));
+						new MyCopyStreamListener(getLoaderId(), _userMonitor, fsc.getName(), remoteFName, remoteFSize, lclFSize));
 				IOUtils.closeQuietly(ftpIS);
 				fos.flush();
 				IOUtils.closeQuietly(fos);
@@ -307,7 +315,7 @@ public class PFTPLoader {
           UserProcessingMonitor.MSG_TYPE.OK,
           msg);
     }
-    iRet = downloadFile(ftp, fsc, rFile, file);
+    iRet = downloadFile(ftp, fsc, rFile, file, lclFSize<remoteFSize?lclFSize:0);
     if (_userMonitor != null) {
       _userMonitor.processingMessage(getLoaderId(), fsc.getName(), 
           UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,

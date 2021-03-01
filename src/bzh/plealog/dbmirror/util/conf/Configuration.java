@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2020 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -25,7 +25,8 @@ package bzh.plealog.dbmirror.util.conf;
 public enum Configuration {
   ROOT(""),
   SYSTEM ("system"),
-  DESCRIPTOR("descriptors");
+  DESCRIPTOR("descriptors"),
+  SCRIPTS("scripts");
   
   private final String directory_name;
 

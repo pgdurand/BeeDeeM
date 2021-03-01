@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2020 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
 
 import org.apache.commons.configuration.event.ConfigurationEvent;
 import org.apache.commons.configuration.event.ConfigurationListener;
@@ -37,6 +38,7 @@ import org.apache.log4j.DailyRollingFileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+import org.apache.log4j.PropertyConfigurator;
 
 import bzh.plealog.dbmirror.fetcher.PProxyConfig;
 import bzh.plealog.dbmirror.util.Utils;
@@ -60,6 +62,7 @@ public class DBMSAbstractConfig {
   private static String                  _logAppFileName;
   private static String                  _logAppFile;
   private static String                  _workingTmpPath;
+  private static String                  _filterWorkingTmpPath;
   private static String                  _externalBinPath;
   private static String                  _confPath;
   private static String                  _startDate;
@@ -87,15 +90,16 @@ public class DBMSAbstractConfig {
   public static final String             CONF_PATH_NAME               = "conf";
   public static final String             EXT_PATH_NAME                = "external";
   public static final String             BIN_PATH_NAME                = "bin";
-  private static final String            APP_HOME_PROP_KEY            = "KL_HOME";
-  private static final String            APP_WORKING_DIR_PROP_KEY     = "KL_WORKING_DIR";
-  private static final String            APP_CONF_DIR_PROP_KEY        = "KL_CONF_DIR";
-  public  static final String            APP_DEBUG_MODE_PROP_KEY      = "KL_DEBUG";
-  private static final String            APP_LOG_FILE_PROP_KEY        = "KL_LOG_FILE";
-  private static final String            LCL_MIRROR_PROP_KEY          = "MIRROR_HOME";
+  public static final String             APP_KEY_PREFIX               = "KL_";
+  private static final String            APP_HOME_PROP_KEY            = APP_KEY_PREFIX+"HOME";
+  private static final String            APP_WORKING_DIR_PROP_KEY     = APP_KEY_PREFIX+"WORKING_DIR";
+  private static final String            APP_CONF_DIR_PROP_KEY        = APP_KEY_PREFIX+"CONF_DIR";
+  public  static final String            APP_DEBUG_MODE_PROP_KEY      = APP_KEY_PREFIX+"DEBUG";
+  private static final String            APP_LOG_FILE_PROP_KEY        = APP_KEY_PREFIX+"LOG_FILE";
+  private static final String            APP_LOG_TYPE_PROP_KEY        = APP_KEY_PREFIX+"LOG_TYPE";
   private static final String            USER_DIR_PROP_KEY            = "user.dir";
 
-  private static final String            DEF_DB_PATH                  = "biobanks";
+  private static final String            DEF_DB_PATH                  = "beedeem_banks_repository";
 
   // file containing the DB_XREFs definition
   public static final String             DB_XREF_CONF_FILE            = "dbxrefsForFasta.config";
@@ -124,6 +128,8 @@ public class DBMSAbstractConfig {
   
   private static MyConfigurationListener CONF_LISTENER                = new MyConfigurationListener();
 
+  private static enum APP_LOG_TYPE {file, console, none};
+  
   /**
    * Returns the path where the application is installed.
    */
@@ -167,7 +173,7 @@ public class DBMSAbstractConfig {
 
     if (_localMirrorPath != null)
       return _localMirrorPath;
-    String path = pruneQuotes(System.getProperty(LCL_MIRROR_PROP_KEY));
+    String path = pruneQuotes(System.getProperty(APP_KEY_PREFIX+DBMSConfigurator.MIRROR_PATH));
     if (path != null) {
       _localMirrorPath = path;
     } else {
@@ -221,7 +227,6 @@ public class DBMSAbstractConfig {
     else
       _logAppPath = Utils.terminatePath(pruneQuotes(System
           .getProperty("java.io.tmpdir")));
-    LOGGER.debug("log path: " + _logAppPath);
     return _logAppPath;
   }
 
@@ -278,11 +283,27 @@ public class DBMSAbstractConfig {
     return _workingTmpPath;
   }
 
-  public static void setWorkingPath(String path) {
-    _workingTmpPath = Utils.terminatePath(path);
-    LOGGER.debug("working path: " + _workingTmpPath);
+  public static String getWorkingFilterPath() {
+    if (_filterWorkingTmpPath != null)
+      return _filterWorkingTmpPath;
+    _filterWorkingTmpPath = Utils.terminatePath(getWorkingPath()+"filter");
+    File f = new File(_filterWorkingTmpPath);
+    if (!f.exists()) {
+      f.mkdirs();
+    } else {
+      try {
+        FileUtils.cleanDirectory(f);
+      } catch (IOException e) {
+        // do not throw exception for this
+        LoggerCentral.warn(
+            LOGGER,
+            "Unable to manage the tmp filter directory in '"
+                + _filterWorkingTmpPath + "' : "
+                + e.getMessage());
+      }
+    }
+    return _filterWorkingTmpPath;
   }
-
   /**
    * Returns the path pointing to external binaries. The path specifically
    * points to the OS localized dir (linux, windows or macos).
@@ -335,41 +356,12 @@ public class DBMSAbstractConfig {
     return (Utils.terminatePath(_confPath+confType.getDirectoryName()));
   }
 
-  /*
-   * To setup two loggers: http://www.jguru.com/faq/view.jsp?EID=1311014 # The
-   * default root appender log4j.rootLogger=A1
-   * 
-   * # A1 is set to be a ConsoleAppender which outputs to System.out.
-   * log4j.appender.A1=org.apache.log4j.ConsoleAppender
-   * log4j.appender.A1.layout=org.apache.log4j.PatternLayout
-   * log4j.appender.A1.layout.ConversionPattern=%-22d{dd/MMM/yyyy HH:mm:ss} %-8p
-   * %c [%t] - %m (%l)%n
-   * 
-   * # An extra category to a log file log4j.category.AppLogging=A2
-   * log4j.additivity.AppLogging=false
-   * 
-   * # A3 is set to be a FileAppender which will log all actions in the
-   * application. log4j.appender.A3=org.apache.log4j.FileAppender
-   * log4j.appender.A3.layout=org.apache.log4j.PatternLayout
-   * log4j.appender.A3.layout.ConversionPattern=%-22d{dd/MMM/yyyy HH:mm:ss} -
-   * %m%n log4j.appender.A3.file=application.log
-   * 
-   * Now in your code if you want a Logger for the root appender you use:
-   * 
-   * Logger logger = Logger.getLogger(MyClass.class.getName());
-   * 
-   * And if you want to log to the alternate category:
-   * 
-   * Logger appLogger = Logger.getLogger("AppLogging");
-   */
   public static void setupLoggers(String logName) {
     setupLoggers(logName, true);
   }
 
   public static void setupLoggers(String logName, boolean updateLogLevel) {
     DailyRollingFileAppender drfa;
-    // FileAppender fa;
-    // Logger logger;
     String userPath, szLogFileName, lvl, sysLogName;
 
     Category cat = Logger.getInstance(KDMS_ROOTLOG_CATEGORY);
@@ -410,16 +402,18 @@ public class DBMSAbstractConfig {
     drfa.setDatePattern("yyyy-MM-dd");
     drfa.activateOptions();
 
-    /*
-     * fa = new FileAppender(); fa.setFile(szLogFileName); fa.setAppend(false);
-     * fa.setLayout(new
-     * PatternLayout("%d{dd-MM-yyyy HH:mm:ss} [%t] %-5p %c %x | %m%n"));
-     * fa.activateOptions();
-     */
-
     cat.addAppender(drfa);
   }
 
+  public static boolean isSilentMode() {
+    String logType = pruneQuotes(System.getProperty(APP_LOG_TYPE_PROP_KEY));
+    
+    if (logType==null) {
+      logType = APP_LOG_TYPE.file.toString();
+    }
+    
+    return logType.equalsIgnoreCase(APP_LOG_TYPE.none.toString());
+  }
   /**
    * Configure the logging system. To configure path where to locate the log
    * file, you may call setLogAppPath(). Do not call if the Log4J logger system
@@ -427,8 +421,40 @@ public class DBMSAbstractConfig {
    */
   public static void configureLog4J(String logName) {
     BasicConfigurator.configure();
+    
+    String logType = pruneQuotes(System.getProperty(APP_LOG_TYPE_PROP_KEY));
+    
+    if (logType==null) {
+      logType = APP_LOG_TYPE.file.toString();
+    }
 
-    setupLoggers(logName);
+    if (logType.equalsIgnoreCase(APP_LOG_TYPE.console.toString())) {
+      Properties props = new Properties();
+      String lvl = pruneQuotes(System.getProperty(APP_DEBUG_MODE_PROP_KEY));
+      if ("true".equals(lvl)) {
+        lvl="debug";
+      } else {
+        lvl="info";
+      }
+      props.put("log4j.rootCategory",lvl+",console");
+      props.put("log4j.logger.bzh.plealog",lvl+",console");
+      props.put("log4j.additivity.com.demo.package","false");
+      props.put("log4j.appender.console","org.apache.log4j.ConsoleAppender");
+      props.put("log4j.appender.console.target","System.out");
+      props.put("log4j.appender.console.immediateFlush","true");
+      props.put("log4j.appender.console.encoding","UTF-8");
+      props.put("log4j.appender.console.threshold",lvl);
+            
+      props.put("log4j.appender.console.layout","org.apache.log4j.PatternLayout");
+      props.put("log4j.appender.console.layout.conversionPattern","%d{dd-MM-yyyy HH:mm:ss} [%t] %-5p %c %x | %m%n");
+      PropertyConfigurator.configure(props); 
+    }
+    else if (logType.equalsIgnoreCase(APP_LOG_TYPE.file.toString())) {
+      setupLoggers(logName);
+    }
+    else {
+      Logger.getRootLogger().setLevel(Level.OFF);
+    }
   }
 
   /**
@@ -500,32 +526,9 @@ public class DBMSAbstractConfig {
       _configurator.addConfigurationListener(CONF_LISTENER);
       LoggerCentral.info(LOGGER, "*** START APPLICATION *** " + new Date());
       LoggerCentral.info(LOGGER, "Configuration:");
+      LoggerCentral.info(LOGGER, "file: "+kdmsConfFile);
       _configurator.dumpContent(LOGGER);
-
-      // manage the tmp filter directory
-      try {
-        DBMSConfigurator.TMP_FILTER_DIRECTORY = DBMSExecNativeCommand
-            .formatNativePath(
-                (Utils.terminatePath(DBMSAbstractConfig.getLocalMirrorPath()) + "tmp")
-                    .replace(File.separatorChar, '|'), false, false).replace(
-                '|', File.separatorChar);
-        File tmpFilterDirectory = new File(
-            DBMSConfigurator.TMP_FILTER_DIRECTORY);
-        if (!tmpFilterDirectory.exists()) {
-          tmpFilterDirectory.mkdirs();
-        } else {
-          FileUtils.cleanDirectory(tmpFilterDirectory);
-        }
-      } catch (IOException e) {
-        // do not throw exception for this
-        LoggerCentral.warn(
-            LOGGER,
-            "Unable to manage the tmp filter directory in '"
-                + DBMSConfigurator.TMP_FILTER_DIRECTORY + "' : "
-                + e.getMessage());
-      }
     }
-
   }
 
   /**
