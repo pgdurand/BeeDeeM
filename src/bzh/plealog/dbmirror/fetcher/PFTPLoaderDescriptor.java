@@ -224,7 +224,7 @@ public class PFTPLoaderDescriptor {
     for(String key : KEYS){
       value = desc.getProperty(key);
       // key is not defined in "desc"
-      if (value==null){
+      if (value==null || value.isEmpty()){
         continue;
       }
       // we want to reset a value
