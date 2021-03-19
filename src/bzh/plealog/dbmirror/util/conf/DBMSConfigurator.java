@@ -148,8 +148,13 @@ public class DBMSConfigurator {
    * @see java.util.Properties#getProperty(java.lang.String)
    */
   public String getProperty(String key) {
-    //this was added to enable overriding config file properties using java -D arguments.
-    String value = DBMSAbstractConfig.pruneQuotes(System.getProperty(DBMSAbstractConfig.APP_KEY_PREFIX+key));
+    //this was added to enable overriding config file properties using java -D arguments or standard 
+    //environment variables.
+    String pkey = DBMSAbstractConfig.APP_KEY_PREFIX+key; 
+    String value = DBMSAbstractConfig.pruneQuotes(System.getProperty(pkey));
+    if (value==null) {
+      value = DBMSAbstractConfig.pruneQuotes(System.getenv(pkey));
+    }
     return value !=null ? value : _pConfig.getString(key);
   }
 
