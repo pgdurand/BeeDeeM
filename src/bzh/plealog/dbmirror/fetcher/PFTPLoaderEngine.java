@@ -22,6 +22,7 @@ import java.util.List;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.net.ftp.FTPClient;
 
+import bzh.plealog.dbmirror.util.aspera.AsperaUtils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
@@ -125,7 +126,7 @@ public class PFTPLoaderEngine extends LoaderEngine {
       String fName;
       int retry, nFiles, bRet=0;
 
-      if (get_dbsc().useAspera()) {
+      if (AsperaUtils.asperaAvailable() && get_dbsc().useAspera()) {
         _loader = new PAsperaLoader(_id);
       }
       else {

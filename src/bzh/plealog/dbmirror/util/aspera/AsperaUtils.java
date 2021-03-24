@@ -82,6 +82,15 @@ public class AsperaUtils {
 	}
 
 	/**
+	 * Figures out whether or not Apsera is available.
+	 * 
+	 * @return true if Aspera binary and openssh key have been setup properly, false otherwise.
+	 */
+	public static boolean asperaAvailable() {
+	  return getASCPCmdPath()!=null && getASCPKeyPath()!=null;
+	}
+	
+	/**
 	 * Converts command-line arguments to a convenient object.
 	 * */
 	public static Map<String, CommandArgument> handleArguments(String argsLine) {
