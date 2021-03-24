@@ -153,7 +153,9 @@ public class DBMSConfigurator {
     String pkey = DBMSAbstractConfig.APP_KEY_PREFIX+key; 
     String value = DBMSAbstractConfig.pruneQuotes(System.getProperty(pkey));
     if (value==null) {
-      value = DBMSAbstractConfig.pruneQuotes(System.getenv(pkey));
+      //added to get config from environment variables
+      //note: using '.' is not allowed for shell variables names, so use "__" instead
+      value = DBMSAbstractConfig.pruneQuotes(System.getenv(pkey.replaceAll("\\.", "__")));
     }
     return value !=null ? value : _pConfig.getString(key);
   }
