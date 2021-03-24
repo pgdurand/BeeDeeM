@@ -16,6 +16,7 @@
  */
 package bzh.plealog.dbmirror.fetcher;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -139,7 +140,7 @@ public class PFTPLoaderDescriptor {
 
   private String prepareDBList(String desc){
     StringBuffer buf;
-    String fName;
+    String fName, dbName;
     String[] dbNames;
     // when loading a conf file, db descriptor could be relative : make absolute
     // file name
@@ -148,12 +149,18 @@ public class PFTPLoaderDescriptor {
       return null;
     buf = new StringBuffer();
     for (int i = 0; i < dbNames.length; i++) {
-      if (_makeAbsolutePath)
-        fName = DBMSAbstractConfig.getConfPath(Configuration.DESCRIPTOR) + dbNames[i];
-      else
-        fName = DBMSExecNativeCommand.formatNativePath(dbNames[i], false, true);
-      fName += DBMSAbstractConfig.FEXT_DD;
-      buf.append(fName);
+      dbName = dbNames[i];
+      if(new File(dbName).exists()) {
+        buf.append(dbName);
+      }
+      else {
+        if (_makeAbsolutePath)
+          fName = DBMSAbstractConfig.getConfPath(Configuration.DESCRIPTOR) + dbName;
+        else
+          fName = DBMSExecNativeCommand.formatNativePath(dbName, false, true);
+        fName += DBMSAbstractConfig.FEXT_DD;
+        buf.append(fName);
+      }
       if ((i + 1 < dbNames.length)) {
         buf.append(",");
       }
