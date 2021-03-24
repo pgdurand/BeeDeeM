@@ -96,14 +96,14 @@
 #  -------------------------
 #
 #  Aspera tool cannot be distributed as part of BeeDeeM due to IBM license restrictions.
-#  Let's suppose you have installed Aspera in that directory on your host system:
+#  Let us suppose you have installed Aspera in that directory on your host system:
 #
 #    /opt/tools/aspera-linux 
 #
 #  Before running BeeDeeM Singularity container, setup these two variables:
 #
-#    export KL_aspera.bin.path=/software/aspera-linux/cli/bin/ascp
-#    export KL_aspera.key.path=/software/aspera-linux/cli/etc/asperaweb_id_dsa.openssh
+#    export KL_aspera__bin__path=/software/aspera-linux/cli/bin/ascp
+#    export KL_aspera__key__path=/software/aspera-linux/cli/etc/asperaweb_id_dsa.openssh
 #
 #  Then, add that "--bind" argument in your singularity run command:
 #
@@ -116,7 +116,7 @@ Bootstrap : docker
 From: platten/alpine-oracle-jre8-docker
 
 %post
-	BDM_VERSION=4.6.2
+	BDM_VERSION=4.6.1
 	apk update
 	# libbz2 libidn are required by blast tools included in BeeDeeM
 	apk add --no-cache wget libbz2 libidn
@@ -141,7 +141,9 @@ From: platten/alpine-oracle-jre8-docker
 %environment
   export PATH="/opt/beedeem:$PATH"
 	export KL_WORKING_DIR=/beedeem-wk
-	export KL_mirror.path=/beedeem-db
+	# shell variable name does not allowed use of '.'
+	# (mirror__path == mirror.path)
+	export KL_mirror__path=/beedeem-db
 
 %runscript
 	echo "BeeDeeM container"
