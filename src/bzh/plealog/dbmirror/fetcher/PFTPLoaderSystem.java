@@ -48,7 +48,8 @@ public class PFTPLoaderSystem {
   private PTaskEngine           _taskEngine;
   private PFTPLoaderDescriptor[] _fDescriptors;
   private UserProcessingMonitor  _userMonitor;
-
+  private String                 _fileOfFiles;
+  
   private static final Log       LOGGER    = LogFactory
                                                .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY+".PFTPLoaderSystem");
 
@@ -63,6 +64,13 @@ public class PFTPLoaderSystem {
     _userMonitor = userMonitor;
   }
 
+  /**
+   * Set a path to a file. When using Install Tool with info task-name,
+   * list of files to download will be written in such a file.
+   */
+  public void setFileOfFiles(String fof) {
+    _fileOfFiles = fof;
+  }
   /**
    * Transforms a string into an integer. Returns either the integer
    * representation of the string or 0 (zero) in case of failure.
@@ -166,6 +174,7 @@ public class PFTPLoaderSystem {
 
       ftpLoader = new PFTPLoader(0);
       ftpLoader.setUserProcessingMonitor(_userMonitor);
+      ftpLoader.setFileOfFiles(_fileOfFiles);
       _taskEngine = new PTaskEngine(taskDelay);
       _taskEngine.setUserProcessingMonitor(_userMonitor);
       maintask = descriptor.getProperty(PFTPLoaderDescriptor.MAINTASK_KEY);

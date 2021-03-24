@@ -16,10 +16,14 @@
  */
 package bzh.plealog.dbmirror.fetcher;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,7 +56,8 @@ public class PFTPLoader {
   private String                _errMsg;
   private String                _loaderId;
   private int                   _timeout     = 50000;
-
+  private String                _fileOfFiles;
+  
   protected static final String CANCEL_MSG   = "job cancelled";
   protected static final String CONN_ERR_MSG = "Server does not answer. Retry...";
 
@@ -98,7 +103,13 @@ public class PFTPLoader {
   public void setUserProcessingMonitor(UserProcessingMonitor userMonitor) {
     _userMonitor = userMonitor;
   }
-
+  /**
+   * Set a path to a file. When using Install Tool with info task-name,
+   * list of files to download will be written in such a file.
+   */
+  public void setFileOfFiles(String fof) {
+    _fileOfFiles = fof;
+  }
   public void closeConnection(FTPClient ftp) {
     // Logout from the FTP Server and disconnect
     // for unknown reasons, sometimes got a Connection Reset SocketException.
@@ -349,6 +360,32 @@ public class PFTPLoader {
     }
   }
 
+  private void dumpFileListInFof(DBServerConfig fsc, List<DBMSFtpFile> fNames) {
+    if (_fileOfFiles==null) {
+      return;
+    }
+    
+    Path   path    = Paths.get(_fileOfFiles);
+    String header  = "ftp://", 
+           newLine = System.getProperty("line.separator");
+    
+    header += fsc.getAddress();
+
+    try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+      for (DBMSFtpFile rFile : fNames) {
+        writer.write(header);
+        writer.write(rFile.getRemoteDir());
+        writer.write(rFile.getFtpFile().getName());
+        writer.write(newLine);
+      }
+      writer.flush();
+    } catch (IOException e) {
+      LoggerCentral.error(LOGGER,"Unable to write list of files in: "+_fileOfFiles);
+      LoggerCentral.error(LOGGER,e.toString());
+    }
+    
+  }
+  
   /**
    * Retrieves a files list from an FTP server. This method has been designed to
    * be called successively several times in case of failure. When the method
@@ -472,6 +509,8 @@ public class PFTPLoader {
       }
 
       dumpFileListInLog(fsc, validNames);
+      dumpFileListInFof(fsc, validNames);
+      
       // Logout from the FTP Server and disconnect
       // for unknown reasons, sometimes got a Connection Reset SocketException.
       // do nothing in that case

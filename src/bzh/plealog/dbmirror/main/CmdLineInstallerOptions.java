@@ -20,7 +20,10 @@ public class CmdLineInstallerOptions {
   
   public static final String CMD_LINE = "CmdLine";
   
+  protected static final String FOF_OPT = "fof";
+  
   private static final String DESC_OPT = "desc";
+  
   /** Provide a correspondence between cmdline options and descriptor keys.
    * These keys are defined in bzh.plealog.dbmirror.fetcher.PFTPLoaderDescriptor.*/
   @SuppressWarnings("serial")
@@ -143,6 +146,12 @@ public class CmdLineInstallerOptions {
         .withDescription( DBMSMessages.getString("Tool.Install.arg13.desc") )
         .create( DumpBankList.FT_ARG );
 
+    Option fof = OptionBuilder
+        .withArgName( DBMSMessages.getString("Tool.Install.arg14.lbl") )
+        .hasArg()
+        .withDescription( DBMSMessages.getString("Tool.Install.arg14.desc") )
+        .create( FOF_OPT );
+
     Options options = new Options();
     options.addOption(dbList);
     options.addOption(task);
@@ -156,6 +165,7 @@ public class CmdLineInstallerOptions {
     options.addOption(mssp);
     options.addOption(recipient);
     options.addOption(eformat);
+    options.addOption(fof);
     CmdLineUtils.setConfDirOption(options);
     CmdLineUtils.setHelpOption(options);
     return options;

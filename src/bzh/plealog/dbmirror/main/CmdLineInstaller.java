@@ -147,7 +147,10 @@ public class CmdLineInstaller {
     }
   }
   
-  private boolean startApplication(String descriptorName, PFTPLoaderDescriptor fDescCmd, String bankListFormat) {
+  private boolean startApplication(
+      String descriptorName, PFTPLoaderDescriptor fDescCmd, 
+      String bankListFormat, String fof) {
+    
     PFTPLoaderSystem lSystem;
     PFTPLoaderDescriptor fDesc;
     String descriptor, gdfile;
@@ -196,6 +199,7 @@ public class CmdLineInstaller {
       }
       // start job
       lSystem = new PFTPLoaderSystem(new PFTPLoaderDescriptor[] { fDesc });
+      lSystem.setFileOfFiles(fof);
       lSystem.runProcessing();
       // send email to administrator if needed
       sendTerminationMail(fDesc, bankListFormat);
@@ -260,9 +264,15 @@ public class CmdLineInstaller {
     if (cmd.hasOption(DumpBankList.FT_ARG)){
       bankListFormat = cmd.getOptionValue(DumpBankList.FT_ARG);
     }
+    //when using info task-name, do we have to dump list of files
+    //to download into a file 
+    String fof = null;
+    if (cmd.hasOption(CmdLineInstallerOptions.FOF_OPT)){
+      fof = cmd.getOptionValue(CmdLineInstallerOptions.FOF_OPT);
+    }
     //go, go, go...
     CmdLineInstaller mirror = new CmdLineInstaller();
-    if (!mirror.startApplication(globalDesc, fDescCmd, bankListFormat)) {
+    if (!mirror.startApplication(globalDesc, fDescCmd, bankListFormat, fof)) {
       System.exit(1);
     }
   }
