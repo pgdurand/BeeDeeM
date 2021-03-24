@@ -221,7 +221,9 @@ public class DBMSAbstractConfig {
 
     if (_logAppPath != null)
       return _logAppPath;
-    path = pruneQuotes(System.getProperty(APP_WORKING_DIR_PROP_KEY));
+    path = pruneQuotes(System.getenv(APP_WORKING_DIR_PROP_KEY));
+    if (path==null)
+       path = pruneQuotes(System.getProperty(APP_WORKING_DIR_PROP_KEY));
     if (path != null)
       _logAppPath = Utils.terminatePath(path);
     else
@@ -273,7 +275,9 @@ public class DBMSAbstractConfig {
 
     if (_workingTmpPath != null)
       return _workingTmpPath;
-    path = pruneQuotes(System.getProperty(APP_WORKING_DIR_PROP_KEY));
+    path = pruneQuotes(System.getenv(APP_WORKING_DIR_PROP_KEY));
+    if (path==null)
+       path = pruneQuotes(System.getProperty(APP_WORKING_DIR_PROP_KEY));
     if (path != null)
       _workingTmpPath = Utils.terminatePath(path);
     else
@@ -346,7 +350,9 @@ public class DBMSAbstractConfig {
     if (_confPath != null)
       return Utils.terminatePath(_confPath+confType.getDirectoryName());
     
-    String path = pruneQuotes(System.getProperty(APP_CONF_DIR_PROP_KEY));
+    String path = pruneQuotes(System.getenv(APP_CONF_DIR_PROP_KEY));
+    if (path==null)
+       pruneQuotes(System.getProperty(APP_CONF_DIR_PROP_KEY));
     if (path != null) {
       _confPath = Utils.terminatePath(path);
     } else {
@@ -368,7 +374,9 @@ public class DBMSAbstractConfig {
     cat.setAdditivity(false);
 
     if (updateLogLevel) {
-      lvl = pruneQuotes(System.getProperty(APP_DEBUG_MODE_PROP_KEY));
+      lvl = pruneQuotes(System.getenv(APP_DEBUG_MODE_PROP_KEY));
+      if (lvl==null)
+        lvl = pruneQuotes(System.getProperty(APP_DEBUG_MODE_PROP_KEY));
       if ("true".equals(lvl)) {
         cat.setLevel(Level.DEBUG);
         Logger.getRootLogger().setLevel(Level.DEBUG);
@@ -378,7 +386,9 @@ public class DBMSAbstractConfig {
       }
     }
 
-    sysLogName = pruneQuotes(System.getProperty(APP_LOG_FILE_PROP_KEY));
+    sysLogName = pruneQuotes(System.getenv(APP_LOG_FILE_PROP_KEY));
+    if (sysLogName==null)
+      sysLogName = pruneQuotes(System.getProperty(APP_LOG_FILE_PROP_KEY));
     if (sysLogName != null)
       _logAppFile = sysLogName;
     else
@@ -406,7 +416,9 @@ public class DBMSAbstractConfig {
   }
 
   public static boolean isSilentMode() {
-    String logType = pruneQuotes(System.getProperty(APP_LOG_TYPE_PROP_KEY));
+    String logType = pruneQuotes(System.getenv(APP_LOG_TYPE_PROP_KEY));
+    if (logType==null)
+      logType = pruneQuotes(System.getProperty(APP_LOG_TYPE_PROP_KEY));   
     
     if (logType==null) {
       logType = APP_LOG_TYPE.file.toString();
@@ -422,7 +434,9 @@ public class DBMSAbstractConfig {
   public static void configureLog4J(String logName) {
     BasicConfigurator.configure();
     
-    String logType = pruneQuotes(System.getProperty(APP_LOG_TYPE_PROP_KEY));
+    String logType = pruneQuotes(System.getenv(APP_LOG_TYPE_PROP_KEY));
+    if (logType==null)
+      logType = pruneQuotes(System.getProperty(APP_LOG_TYPE_PROP_KEY)); 
     
     if (logType==null) {
       logType = APP_LOG_TYPE.file.toString();
@@ -430,7 +444,9 @@ public class DBMSAbstractConfig {
 
     if (logType.equalsIgnoreCase(APP_LOG_TYPE.console.toString())) {
       Properties props = new Properties();
-      String lvl = pruneQuotes(System.getProperty(APP_DEBUG_MODE_PROP_KEY));
+      String lvl = pruneQuotes(System.getenv(APP_DEBUG_MODE_PROP_KEY));
+      if(lvl==null)
+        lvl = pruneQuotes(System.getProperty(APP_DEBUG_MODE_PROP_KEY));
       if ("true".equals(lvl)) {
         lvl="debug";
       } else {
