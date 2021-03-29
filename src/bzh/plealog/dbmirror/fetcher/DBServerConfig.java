@@ -80,7 +80,9 @@ public class DBServerConfig {
   private static final String   FTPPSWD_KEY          = "ftp.pswd";
   private static final String   FTPRDIR_KEY          = "ftp.rdir";
   private static final String   FTPRDIR_EXCL_KEY     = "ftp.rdir.exclude";
+  private static final String   FTPALT_PROTOCOL_KEY  = "ftp.alt.protocol";
 
+  
   private static final String   ASPERAUSE_KEY        = "aspera.use";
   private static final String   ASPERASERVER_KEY     = "aspera.server";
   private static final String   ASPERAARGS_KEY       = "aspera.args";
@@ -115,6 +117,7 @@ public class DBServerConfig {
       DBDESC_KEY, DBTYPE_KEY, DBLDIR_KEY, DBINCFILES_KEY, DBEXCFILES_KEY,
       DBDTFROM_KEY, DBDTTO_KEY, TASKS_U_POST, TASKS_G_POST, FTPSERVER_KEY,
       FTPPORT_KEY, FTPUNAME_KEY, FTPPSWD_KEY, FTPRDIR_KEY, FTPRDIR_EXCL_KEY,
+      FTPALT_PROTOCOL_KEY,
       LOCALRDIR_KEY, LOCALRDIR_EXCL_KEY, ASPERAUSE_KEY, ASPERASERVER_KEY,
       ASPERAARGS_KEY, KEEP_HISTORY_KEY, DB_DEPENDS };
 
@@ -610,6 +613,13 @@ public class DBServerConfig {
    */
   public String getRemotePatternsToExclude() {
     return _properties.getProperty(FTPRDIR_EXCL_KEY);
+  }
+  
+  /**
+   * Returns protocol to use as an alternative to FTP.
+   */
+  public String getFTPAternativeProtocol() {
+    return _properties.getProperty(FTPALT_PROTOCOL_KEY);
   }
   
   private String getNotNullProperty(String key) {
