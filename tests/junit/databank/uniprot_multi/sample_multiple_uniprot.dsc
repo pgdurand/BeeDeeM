@@ -9,11 +9,11 @@ tasks.unit.post=idxsw
 
 tasks.global.post=formatdb(lclid=false;check=true;nr=true)
 
-ftp.server=192.168.1.18
+ftp.server=ftp.ifremer.fr
 ftp.port=21
 ftp.uname=anonymous
 ftp.pswd=user@company.com
-ftp.rdir=/unittests/uniprot_multi
+ftp.rdir=/ifremer/dataref/bioinfo/sebimer/devel/beedeem/unit-tests/uniprot_multi
 ftp.rdir.exclude=
 
 history=0

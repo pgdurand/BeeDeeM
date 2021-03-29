@@ -46,6 +46,7 @@ import org.junit.runners.Suite.SuiteClasses;
   UtilsTest.class,
   PAnnotateBlastResultTest.class,
   CmdLineQueryTest.class,
+  PFTPLoaderTest.class
   })
 public class AllTests {
 

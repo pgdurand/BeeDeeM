@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Ludovic Antin
+/* Copyright (C) 2007-2021 Ludovic Antin, Patrick Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -42,12 +42,12 @@ public class PFTPLoaderTest {
     _dbConf = new DBServerConfig();
   }
 
-  private DBMSFtpFile createFtpFileToDownload(String filename) {
+  private DBMSFtpFile createFtpFileToDownload(String filename, String remoteDir, long size) {
     FTPFile ftpFile = new FTPFile();
     ftpFile.setName(filename);
     ftpFile.setTimestamp(Calendar.getInstance());
-    ftpFile.setSize(10000);
-    return new DBMSFtpFile("databank/uniprot_multi/", ftpFile);
+    ftpFile.setSize(size);
+    return new DBMSFtpFile(remoteDir, ftpFile);
   }
 
   @Test
@@ -63,8 +63,7 @@ public class PFTPLoaderTest {
     }
 
     File first = new File(_dbConf.getLocalTmpFolder(), "uniprot-aquaporine.dat");
-    File second = new File(_dbConf.getLocalTmpFolder(),
-        "uniprot-glucuronidase.dat");
+    File second = new File(_dbConf.getLocalTmpFolder(), "uniprot-glucuronidase.dat");
     File third = new File(_dbConf.getLocalTmpFolder(), "uniprot-kinase.dat");
 
     first.delete();
@@ -72,9 +71,9 @@ public class PFTPLoaderTest {
     third.delete();
 
     ArrayList<DBMSFtpFile> validNames = new ArrayList<DBMSFtpFile>();
-    validNames.add(createFtpFileToDownload(first.getName()));
-    validNames.add(createFtpFileToDownload(second.getName()));
-    validNames.add(createFtpFileToDownload(third.getName()));
+    validNames.add(createFtpFileToDownload(first.getName(), _dbConf.getRemoteFolders(), 4478l));
+    validNames.add(createFtpFileToDownload(second.getName(), _dbConf.getRemoteFolders(), 421780l));
+    validNames.add(createFtpFileToDownload(third.getName(), _dbConf.getRemoteFolders(), 85948l));
     PFTPLoaderEngine loaderEngine = new PFTPLoaderEngine(_dbConf, null,
         validNames);
     ((PFTPLoaderEngine) loaderEngine).setScheduleTime(1000);

@@ -1,4 +1,4 @@
-/* Copyright (C) 2019 Patrick G. Durand
+/* Copyright (C) 2019-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -52,7 +52,7 @@ public class AsperaCmdTest {
   //convenient way to bypass download tests (use only during debugging)
   private static boolean doDownload = true;
   private static boolean doDownloadNCBI = true;
-  private static boolean doDownloadEBI = true;
+  private static boolean doDownloadEBI = false;
   
   private static final Log           LOGGER                   = LogFactory
 			.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
