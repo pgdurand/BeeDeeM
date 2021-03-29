@@ -20,7 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.net.ftp.FTPClient;
 
 import bzh.plealog.dbmirror.util.aspera.AsperaUtils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -104,7 +103,6 @@ public class PFTPLoaderEngine extends LoaderEngine {
   }
 
   private class LoadWorker extends Thread {
-    private FTPClient  _ftp = null;
     private PFTPLoader _loader;
     private int        _id;
 
@@ -112,22 +110,16 @@ public class PFTPLoaderEngine extends LoaderEngine {
       _id = id;
     }
 
-    private FTPClient getFtpClient() {
-      if (_ftp != null && _ftp.isConnected()) {
-        return _ftp;
-      }
-      _ftp = _loader.openConnection(get_dbsc());
-      return _ftp;
-    }
-
     public void run() {
       DataShuttle file;
-      FTPClient ftp;
       String fName;
       int retry, nFiles, bRet=0;
 
       if (AsperaUtils.asperaAvailable() && get_dbsc().useAspera()) {
         _loader = new PAsperaLoader(_id);
+      }
+      else if (get_dbsc().getFTPAternativeProtocol()!=null) {
+        _loader = new PHTTPLoader(_id);
       }
       else {
         _loader = new PFTPLoader(_id);
@@ -141,10 +133,8 @@ public class PFTPLoaderEngine extends LoaderEngine {
           _monitor.beginLoading(fName);
         // try to get a ftp connection
         retry = 0;
-        ftp = null;
         while (retry < _retry) {
-          ftp = getFtpClient();
-          if (ftp != null)
+          if (_loader.prepareLoader(get_dbsc()))
             break;
           retry++;
           LoggerCentral.info(
@@ -156,11 +146,11 @@ public class PFTPLoaderEngine extends LoaderEngine {
           } catch (InterruptedException e) {
           }
         }
-        if (ftp != null) {
+        if (_loader.readyToDownload()) {
           // start loading
           retry = 0;
           while (retry < _retry) {
-            bRet = _loader.downloadFile(ftp, get_dbsc(), file.getFile(),
+            bRet = _loader.downloadFile(get_dbsc(), file.getFile(),
                 file.getFileNum(), nFiles);
             if (bRet != 0)
               break;

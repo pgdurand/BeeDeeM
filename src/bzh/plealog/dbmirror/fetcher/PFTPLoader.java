@@ -57,6 +57,7 @@ public class PFTPLoader {
   private String                _loaderId;
   private int                   _timeout     = 50000;
   private String                _fileOfFiles;
+  private FTPClient             _ftp = null;
   
   protected static final String CANCEL_MSG   = "job cancelled";
   protected static final String CONN_ERR_MSG = "Server does not answer. Retry...";
@@ -110,27 +111,33 @@ public class PFTPLoader {
   public void setFileOfFiles(String fof) {
     _fileOfFiles = fof;
   }
-  public void closeConnection(FTPClient ftp) {
+  public void closeLoader() {
     // Logout from the FTP Server and disconnect
     // for unknown reasons, sometimes got a Connection Reset SocketException.
     // do nothing in that case
     try {
-      ftp.logout();
+      _ftp.logout();
     } catch (Exception e) {
     }
   }
 
-  public FTPClient openConnection(DBServerConfig fsc) {
-    FTPClient ftp;
+  public boolean readyToDownload() {
+    return (_ftp != null && _ftp.isConnected());
+  }
+  
+  public boolean prepareLoader(DBServerConfig fsc) {
+    FTPClient ftp = null;
 
     ftp = new FTPClient();
     if(!configureFtpClient(ftp, fsc)) {
-    	ftp = null;
+    	return false;
     }
-    return ftp;
+    
+    _ftp = ftp;
+    return true;
   }
 
-  protected boolean configureFtpClient(FTPClient ftp, DBServerConfig fsc) {
+  private boolean configureFtpClient(FTPClient ftp, DBServerConfig fsc) {
 	  int reply;  
 	  boolean bRet = true;
 	  try {
@@ -178,7 +185,6 @@ public class PFTPLoader {
   /**
    * Download a file from remote server.
    * 
-   * @param ftp the ftp client
    * @param fsc bank descriptor
    * @param rFile remote file descriptor
    * @param file local file path
@@ -186,7 +192,7 @@ public class PFTPLoader {
    * @return 1 if success, 0 if failure, 2 if skip (file already loaded ; when
    *         resuming from a previous work) and 3 if aborted.
    * */
-	protected int downloadFile(FTPClient ftp, DBServerConfig fsc, DBMSFtpFile rFile, File file, long lclFSize) {
+	protected int downloadFile(DBServerConfig fsc, DBMSFtpFile rFile, File file, long lclFSize) {
 		FileOutputStream fos = null;
 		InputStream ftpIS = null;
 		String remoteFName;
@@ -199,28 +205,28 @@ public class PFTPLoader {
 		remoteFSize = rFile.getFtpFile().getSize();
 		try {
 			// enter remote directory
-			if (ftp.changeWorkingDirectory(rFile.getRemoteDir())) {
+			if (_ftp.changeWorkingDirectory(rFile.getRemoteDir())) {
 				// download file
 				LoggerCentral.info(LOGGER, "  " + getLoaderId() + ": download: " + rFile.getRemoteDir() + remoteFName);
 				
 				if (lclFSize!=0) {
 				  fos = new FileOutputStream(file, true);
-				  ftp.setRestartOffset(lclFSize);
+				  _ftp.setRestartOffset(lclFSize);
 				}
 				else {
           fos = new FileOutputStream(file);  
-          ftp.setRestartOffset(0l);
+          _ftp.setRestartOffset(0l);
 				}
-				ftpIS = ftp.retrieveFileStream(remoteFName);
+				ftpIS = _ftp.retrieveFileStream(remoteFName);
 				if (ftpIS == null) {
-					throw new Exception(getLoaderId() + ": unable to open remote input stream: " + ftp.getReplyString());
+					throw new Exception(getLoaderId() + ": unable to open remote input stream: " + _ftp.getReplyString());
 				}
 				Util.copyStream(ftpIS, fos, Util.DEFAULT_COPY_BUFFER_SIZE, remoteFSize,
 						new MyCopyStreamListener(getLoaderId(), _userMonitor, fsc.getName(), remoteFName, remoteFSize, lclFSize));
 				IOUtils.closeQuietly(ftpIS);
 				fos.flush();
 				IOUtils.closeQuietly(fos);
-				if (ftp.completePendingCommand()) {
+				if (_ftp.completePendingCommand()) {
 					file.setLastModified(remoteFDate.getTime());
 				} else {
 					throw new Exception(getLoaderId() + ": unable to download full file.");
@@ -262,7 +268,7 @@ public class PFTPLoader {
    * @return 1 if success, 0 if failure, 2 if skip (file already loaded ; when
    *         resuming from a previous work) and 3 if aborted.
    */
-  public int downloadFile(FTPClient ftp, DBServerConfig fsc, DBMSFtpFile rFile,
+  public int downloadFile(DBServerConfig fsc, DBMSFtpFile rFile,
       int fileNum, int totFiles) {
 	  File file, filegz, tmpDir;
     String remoteFName, name, msg;
@@ -326,7 +332,7 @@ public class PFTPLoader {
           UserProcessingMonitor.MSG_TYPE.OK,
           msg);
     }
-    iRet = downloadFile(ftp, fsc, rFile, file, lclFSize<remoteFSize?lclFSize:0);
+    iRet = downloadFile(fsc, rFile, file, lclFSize<remoteFSize?lclFSize:0);
     if (_userMonitor != null) {
       _userMonitor.processingMessage(getLoaderId(), fsc.getName(), 
           UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,

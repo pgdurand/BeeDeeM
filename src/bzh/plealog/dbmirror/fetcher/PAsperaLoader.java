@@ -23,7 +23,6 @@ import java.util.TimerTask;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.net.ftp.FTPClient;
 
 import bzh.plealog.dbmirror.util.aspera.AsperaCmd;
 import bzh.plealog.dbmirror.util.aspera.AsperaUtils;
@@ -62,12 +61,17 @@ public class PAsperaLoader extends PFTPLoader {
 	}
 
   @Override
-	public void closeConnection(FTPClient ftp) {
+	public void closeLoader() {
 	  //nothing to do
 	}
 
   @Override
-	protected boolean configureFtpClient(FTPClient ftp, DBServerConfig fsc) {
+  public boolean readyToDownload() {
+    return true;
+  }
+  
+  @Override
+  public boolean prepareLoader(DBServerConfig fsc) {
 	  boolean bRet=true;
 	  //check we have Aspera configuration
 	  //Aspera bin and ssh certificate are located in global config file
@@ -100,7 +104,7 @@ public class PAsperaLoader extends PFTPLoader {
 	}
 
 	@Override
-	protected int downloadFile(FTPClient ftp, DBServerConfig fsc, DBMSFtpFile rFile, File file, long lclFSize) {
+	protected int downloadFile(DBServerConfig fsc, DBMSFtpFile rFile, File file, long lclFSize) {
 		int iRet = 0;
 		
 		//no apsera cmd object: may happen if wrong configuration
