@@ -98,7 +98,7 @@ public class PHTTPLoader extends PFTPLoader {
       //do not raise warn or error here, handled by LoaderEngine
       LoggerCentral.info(LOGGER, e1.getMessage() + " (" + e1.getHttpCode() + ")");
     }
-    if (_userMonitor.jobCancelled()) {
+    if (_userMonitor!=null && _userMonitor.jobCancelled()) {
       iRet=3;
     }
 		return iRet;
