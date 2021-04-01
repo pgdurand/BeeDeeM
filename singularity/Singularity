@@ -25,12 +25,12 @@ From: platten/alpine-oracle-jre8-docker
 	
 	# Do a little configuration
 	cp scripts/*.sh .
-  chmod +x *.sh
+	chmod +x *.sh
 	chmod +x /opt/beedeem/external/bin/linux/*
 	cd /opt/beedeem/external/bin && rm -rf macos windows
 
 %environment
-  export PATH="/opt/beedeem:$PATH"
+	export PATH="/opt/beedeem:$PATH"
 	export KL_WORKING_DIR=/beedeem-wk
 	# shell variable name does not allowed use of '.'
 	# (mirror__path == mirror.path)
