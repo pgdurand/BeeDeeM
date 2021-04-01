@@ -8,8 +8,10 @@ How to build?
 How to configure?
 -----------------
 
-By default you have nothing to do but binding paths called /beedeem-wk and 
-/beedeem-db (see next section, "How to run?").
+By default you have nothing to do but:
+
+* setting KL_JRE_ARGS environment varibale to setup the java configuration for BeeDeeM
+* binding paths called /beedeem-wk and /beedeem-db (see next section, "How to run?").
 
 In such a case, BeeDeeM will use its internal "conf" directory to locate
 bank descriptors. So, if you install banks for which descriptors (.dsc files)
@@ -52,12 +54,13 @@ Otherwise, if you want to use your own bank descriptors, proceed as follows.
   use '--bind' argument accordingly to attach these mount points to appropriate
   folders on your host system.
 
-  Calling a BeeDeeM tool command is then as easy as:
-      
-      install.sh -desc PDB_proteins
-      (standard BeeDeeM command to install PDB_proteins bank)
-
-  Here is a working example (adapt --bind to your host configuration):
+  Then, setup KL_JRE_ARGS environment variable to configure amount of RAM and
+  access to standard TMP directory for the Java Virtual Machine. A basic 
+  configuration can be:
+  
+     export KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=/beedeem-wk"
+     
+  Finally, to run BeeDeeM, use such a command (adapt --bind to your host configuration):
 
     singularity run \
        --bind $SCRATCH/beedeem/bdm-wk:/beedeem-wk     # BeeDeeM working directory \
@@ -67,12 +70,13 @@ Otherwise, if you want to use your own bank descriptors, proceed as follows.
 
      (1) targets container file /opt/beedeem/conf/descriptors/PDB_proteins.dsc
 
-  Before calling above command, you may setup KL_JRE_ARGS to control resources used 
-  by install.sh as follows:
+  Fine tuning BeeDeeM at rutime
+  -----------------------------
 
-    export KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=/beedeem-wk"
-
-  In a similar way, let install.sh be silent (no log):
+  Before running BeeDeeM install.sh tool, you can setup some environment variables
+  to tune it.
+  
+  Let install.sh be silent (no log):
 
     export KL_LOG_TYPE=none
 
