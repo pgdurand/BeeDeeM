@@ -3,7 +3,7 @@
 How to build?
 -------------
  
-    singularity build -f beedeem.sif beedeem.def
+    singularity build -f beedeem.sif Singularity
 
 How to configure?
 -----------------
