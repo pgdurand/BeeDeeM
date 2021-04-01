@@ -25,6 +25,7 @@ From: platten/alpine-oracle-jre8-docker
 	
 	# Do a little configuration
 	cp scripts/*.sh .
+	cp scripts/dbms.config conf
 	chmod +x *.sh
 	chmod +x /opt/beedeem/external/bin/linux/*
 	cd /opt/beedeem/external/bin && rm -rf macos windows
