@@ -10,7 +10,7 @@ From: platten/alpine-oracle-jre8-docker
 	BDM_VERSION=4.6.1
 	apk update
 	# libbz2 libidn are required by blast tools included in BeeDeeM
-	apk add --no-cache wget libbz2 libidn
+	apk add --no-cache bash wget libbz2 libidn
 
 	# Get BeeDeeM from latest release
 	mkdir -p /opt/beedeem/tmp-install
