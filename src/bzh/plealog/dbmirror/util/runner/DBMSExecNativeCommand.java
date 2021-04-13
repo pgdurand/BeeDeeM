@@ -53,6 +53,7 @@ public class DBMSExecNativeCommand {
   public static final String   MIRRORPREPADIR_VAR_NAME = "${mirrorprepadir}";
   public static final String   APPDIR_VAR_NAME         = "${appdir}";
   public static final String   JTMPDIR_VAR_NAME        = "${javaTempDir}";
+  public static final String   WORKDIR_VAR_NAME        = "${workdir}";
   public static final int      EXEC_INTERRUPTED        = -2;
 
   /** Access this string array using the xxx_OS constants defined here */
@@ -168,12 +169,14 @@ public class DBMSExecNativeCommand {
       } else if (token.equalsIgnoreCase(JTMPDIR_VAR_NAME)){
         String tempDir = System.getProperty("java.io.tmpdir");
         szBuf.append(Utils.terminatePath(tempDir));
-      }else if (token.equalsIgnoreCase(APPDIR_VAR_NAME)) {
+      } else if (token.equalsIgnoreCase(APPDIR_VAR_NAME)) {
         szBuf.append(DBMSAbstractConfig.getInstallAppPath());
       } else if (token.equalsIgnoreCase(MIRRORDIR_VAR_NAME)) {
         szBuf.append(DBMSAbstractConfig.getLocalMirrorPath());
       } else if (token.equalsIgnoreCase(MIRRORPREPADIR_VAR_NAME)) {
         szBuf.append(DBMSAbstractConfig.getLocalMirrorPrepaPath());
+      } else if (token.equalsIgnoreCase(WORKDIR_VAR_NAME)) {
+        szBuf.append(DBMSAbstractConfig.getWorkingPath());
       } else if (token.equalsIgnoreCase("${os}")) {
         szBuf.append(getOSName());
         szBuf.append(File.separator);
