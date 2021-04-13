@@ -15,6 +15,7 @@ ftp.uname=anonymous
 ftp.pswd=user@company.com
 ftp.rdir=/pub/taxonomy
 ftp.rdir.exclude=
+ftp.alt.protocol=https
 
 history=0
 
