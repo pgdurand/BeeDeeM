@@ -9,7 +9,9 @@ db.ldir=${mirrordir}|p|PDB_proteins
 db.files.include=pdbaa_v4.tar.gz
 db.files.exclude=
 
+tasks.global.pre=script(name=WaitALittle;path=wait_a_little.sh)
 tasks.global.post=makealias,delgz,deltar,script(name=HelloWorld;path=hello_world.sh)
+
 tasks.unit.post=gunzip,untar,script(name=HelloWorld;path=hello_world.sh)
 
 ftp.uname=anonymous

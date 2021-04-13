@@ -165,7 +165,7 @@ public class PTaskEngine {
     _exeInProgress = val;
   }
 
-  private synchronized boolean isExeInProgress() {
+  protected synchronized boolean isExeInProgress() {
     return _exeInProgress;
   }
 

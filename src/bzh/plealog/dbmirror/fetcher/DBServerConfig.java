@@ -74,6 +74,8 @@ public class DBServerConfig {
   private static final String   TASKS_U_POST         = "tasks.unit.post";
   private static final String   TASKS_G_POST         = "tasks.global.post";
 
+  private static final String   TASKS_G_PRE          = "tasks.global.pre";
+
   private static final String   FTPSERVER_KEY        = "ftp.server";
   private static final String   FTPPORT_KEY          = "ftp.port";
   private static final String   FTPUNAME_KEY         = "ftp.uname";
@@ -115,7 +117,8 @@ public class DBServerConfig {
 
   private static final String[] KEYS                 = { DBNAME_KEY,
       DBDESC_KEY, DBTYPE_KEY, DBLDIR_KEY, DBINCFILES_KEY, DBEXCFILES_KEY,
-      DBDTFROM_KEY, DBDTTO_KEY, TASKS_U_POST, TASKS_G_POST, FTPSERVER_KEY,
+      DBDTFROM_KEY, DBDTTO_KEY, TASKS_U_POST, TASKS_G_POST, TASKS_G_PRE,
+      FTPSERVER_KEY,
       FTPPORT_KEY, FTPUNAME_KEY, FTPPSWD_KEY, FTPRDIR_KEY, FTPRDIR_EXCL_KEY,
       FTPALT_PROTOCOL_KEY,
       LOCALRDIR_KEY, LOCALRDIR_EXCL_KEY, ASPERAUSE_KEY, ASPERASERVER_KEY,
@@ -646,6 +649,14 @@ public class DBServerConfig {
     _properties.setProperty(TASKS_G_POST, tasks);
   }
 
+  public String getGlobalPreTasks() {
+    return getNotNullProperty(TASKS_G_PRE);
+  }
+
+  public void setGlobalPreTasks(String tasks) {
+    _properties.setProperty(TASKS_G_PRE, tasks);
+  }
+
   public String getHistoryToKeep() {
     return _properties.getProperty(KEEP_HISTORY_KEY);
   }
@@ -707,6 +718,7 @@ public class DBServerConfig {
     result.setProperty(DBServerConfig.DBINCFILES_KEY, "");
     result.setUnitPostTasks("");
     result.setGlobalPostTasks("");
+    result.setGlobalPreTasks("");
     // keep all previous tasks for install in prod
     result.setProperty(DBServerConfig.INSTALL_IN_PROD_DATA,
         this.getUnitPostTasks() + "," + this.getGlobalPostTasks());

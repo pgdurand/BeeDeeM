@@ -29,6 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import bzh.plealog.dbmirror.task.PPreTaskProcessor;
 import bzh.plealog.dbmirror.task.PTaskEngine;
 import bzh.plealog.dbmirror.task.PTaskHandleHistory;
 import bzh.plealog.dbmirror.task.PTaskInstallInProduction;
@@ -104,7 +105,8 @@ public class PFTPLoaderSystem {
     int i, ftpRetry;
     long taskDelay, ftpDelay;
     boolean isFTP;
-
+    PPreTaskProcessor preTaskProcessor;
+    
     LoggerCentral.info(LOGGER, "*** START PROCESSING *** " + new Date());
 
     if (LoggerCentral.isRunning()) {
@@ -214,7 +216,17 @@ public class PFTPLoaderSystem {
             && StringUtils.isBlank(dbConf.getGlobalPostTasks())) {
           processedDB.add(dbConf);
         } else {
-
+          //Handle pre-processing task before any other things
+          preTaskProcessor = new PPreTaskProcessor(dbConf, _taskEngine, ftpDelay);
+          preTaskProcessor.setUserProcessingMonitor(_userMonitor);
+          preTaskProcessor.start();
+          try {
+            preTaskProcessor.join();
+          } catch (InterruptedException e1) {
+            //not bad
+          }
+          
+          // FTP or Local installaiton?
           if (dbConf.getAddress() != null && !dbConf.getAddress().equals("")) {
             LoggerCentral.info(LOGGER, "FTP descriptor file: " + fName);
             isFTP = true;
