@@ -54,9 +54,8 @@ filename="go-basic.obo"
 
 echo "Getting $filename"
 if [ -x "$(which wget)" ] ; then
-    CMD="wget -q $url -O $filename"
+    CMD="wget --continue -q $url -O $filename"
 elif [ -x "$(which curl)" ]; then
-    #CMD="curl -o $filename -sfL $url"
     CMD="curl -sL -o $filename -C - $url"
 else
     echo "Could not find curl or wget, please install one." >&2
@@ -65,4 +64,3 @@ fi
 
 echo $CMD
 eval $CMD
-    
