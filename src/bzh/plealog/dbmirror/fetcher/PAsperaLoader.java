@@ -141,7 +141,7 @@ public class PAsperaLoader extends PFTPLoader {
         apseraRunning = true;
       }
       try {
-        Thread.sleep(500);
+        Thread.sleep(DBMSExecNativeCommand.DEFAULT_TIME_SLICE);
       } catch (InterruptedException e) {
       }
     }
