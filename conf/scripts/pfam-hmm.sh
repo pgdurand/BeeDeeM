@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 # As a reminder, a BeeDeeM Post processing script is called
-# with up to two arguments:  -d <path> -f <path>
+# with up to three arguments: -w <path> -d <path> -f <path>
 #
+#  -w <path>: <path> is the working directory path.
+#             provided for both unit and global tasks.
 #  -d <path>: <path> is the bank installation path.
 #             provided for both unit and global tasks.
 #  -f <path>: <path> is the path to file under unit task processing

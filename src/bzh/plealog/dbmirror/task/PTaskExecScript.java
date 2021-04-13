@@ -50,6 +50,7 @@ public class PTaskExecScript extends PAbstractTask {
   private static final String SCRIPT_NAME = "name";
   private static final String SCRIPT_CMD_PATH = "path";
   //arguments passed in to the calling script
+  private static final String WORK_DIR_ARG = "-w"; //path to BeeDeeM working dir
   private static final String INST_DIR_ARG = "-d"; //path to bank installation (unit and global tasks)
   private static final String INST_FILE_ARG = "-f"; // path to file (unit task only)
   
@@ -149,6 +150,7 @@ public class PTaskExecScript extends PAbstractTask {
     DBMSExecNativeCommand executor = new DBMSExecNativeCommand(new MyMonitor());
     LinkedHashMap<String, CommandArgument> params;
     params = new LinkedHashMap<String, CommandArgument>();
+    params.put(WORK_DIR_ARG, new CommandArgument(DBMSAbstractConfig.getWorkingPath(), true));
     params.put(INST_DIR_ARG, new CommandArgument(_dbInstallationPath, true));
     if (_curFile!=null) {
       params.put(INST_FILE_ARG, new CommandArgument(_curFile, true));

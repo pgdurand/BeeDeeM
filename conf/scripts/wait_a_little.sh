@@ -16,7 +16,10 @@
 #  -f <path>: <path> is the path to file under unit task processing
 #             only provided with unit task.
 
-echo "Executing an external script"
+echo "Executing a pre-processing script"
 echo "Arguments coming from BeeDeeM are:"
 echo $@
 
+date
+sleep 20
+date
