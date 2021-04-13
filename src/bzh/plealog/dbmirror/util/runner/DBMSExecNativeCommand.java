@@ -21,8 +21,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
@@ -43,7 +46,9 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
 public class DBMSExecNativeCommand {
   private int                  exitCode_               = -1;
   private ExecMonitor          monitor_;
-
+  
+  private static HashSet<Process>     runningProcesses_ = new HashSet<>();
+  
   public static final int      WINDOWS_OS              = 0;
   public static final int      MAC_OS                  = 1;
   public static final int      LINUX_OS                = 2;
@@ -55,7 +60,8 @@ public class DBMSExecNativeCommand {
   public static final String   JTMPDIR_VAR_NAME        = "${javaTempDir}";
   public static final String   WORKDIR_VAR_NAME        = "${workdir}";
   public static final int      EXEC_INTERRUPTED        = -2;
-
+  public static final long     DEFAULT_TIME_SLICE      = 2000; //milliseconds
+  
   /** Access this string array using the xxx_OS constants defined here */
   public static final String[] OS_NAMES                = { "windows", "macos",
       "linux", "unknown"                              };
@@ -231,6 +237,8 @@ public class DBMSExecNativeCommand {
       info("Start execution of: " + cmd);
       proc = rtime.exec(cmd);
 
+      runningProcesses_.add(proc);
+      
       processOut = proc.getInputStream();
       processErr = proc.getErrorStream();
 
@@ -257,6 +265,8 @@ public class DBMSExecNativeCommand {
         } catch (Exception e) {
           LOGGER.debug("Unable to destroy process : " + e.getMessage());
         }
+        
+        runningProcesses_.remove(proc);
       }
     }
   }
@@ -341,7 +351,9 @@ public class DBMSExecNativeCommand {
         info("Start execution of: " + getCmdLineAsString(cmd));
       proc = Runtime.getRuntime().exec(cmd, null,
           workDir != null ? new File(workDir) : null);
-
+      
+      runningProcesses_.add(proc);
+      
       processOut = proc.getInputStream();
       processErr = proc.getErrorStream();
       thread = new MonitorInputStreamThread(processOut, logInfo, logError);
@@ -368,6 +380,7 @@ public class DBMSExecNativeCommand {
         } catch (Exception e) {
           LOGGER.debug("Unable to destroy process : " + e.getMessage());
         }
+        runningProcesses_.remove(proc);
       }
     }
   }
@@ -396,6 +409,8 @@ public class DBMSExecNativeCommand {
       proc = Runtime.getRuntime().exec(cmd, null,
           workDir != null ? new File(workDir) : null);
 
+      runningProcesses_.add(proc);
+      
       thread = new MonitorInputStreamThread(proc.getInputStream(), logInfo,
           logError);
       thread.start();
@@ -577,9 +592,24 @@ public class DBMSExecNativeCommand {
       IOUtils.closeQuietly(process.getInputStream());
       IOUtils.closeQuietly(process.getOutputStream());
       process.destroy();
+      runningProcesses_.remove(process);
     }
   }
 
+  /**
+   * For internal use.
+   */
+  public static void terminateAllProcesses() {
+    List<Process> processes = new ArrayList<Process>(runningProcesses_);
+    for (Process process : processes) {
+      LoggerCentral.info(LOGGER, 
+          String.format("Killing Process PID: %d", getProcessID(process)));
+      if (process.isAlive()) {
+        terminateProcess(process);
+      }
+    }
+  }
+  
   /**
    * A class aims at reading standard output and error streams during the
    * application execution. These streams are sent to a logger.
@@ -622,6 +652,44 @@ public class DBMSExecNativeCommand {
     }
   }
 
+  /**
+   * Return a PID of a Process.
+   * 
+   * @param p a process
+   * 
+   * @return a PID on Unix, a Handle on Windows, -1 if neither can be obtained
+   * */
+  public static long getProcessID(Process p){
+      long result = -1;
+      try{
+          //for windows
+          if (p.getClass().getName().equals("java.lang.Win32Process") ||
+                 p.getClass().getName().equals("java.lang.ProcessImpl")) {
+              Field f = p.getClass().getDeclaredField("handle");
+              f.setAccessible(true); 
+              result = f.getLong(p);
+              /* requires JNA...
+              long handl = f.getLong(p);
+              Kernel32 kernel = Kernel32.INSTANCE;
+              WinNT.HANDLE hand = new WinNT.HANDLE();
+              hand.setPointer(Pointer.createConstant(handl));
+              result = kernel.GetProcessId(hand);*/
+              f.setAccessible(false);
+          }
+          //for unix based operating systems
+          else if (p.getClass().getName().equals("java.lang.UNIXProcess")){
+              Field f = p.getClass().getDeclaredField("pid");
+              f.setAccessible(true);
+              result = f.getLong(p);
+              f.setAccessible(false);
+          }
+      }
+      catch(Exception ex){
+          result = -1;
+      }
+      return result;
+  }
+  
   private class MyMonitor implements ExecMonitor {
     public void warn(String msg) {
       LoggerCentral.error(LOGGER, msg);
