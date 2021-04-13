@@ -25,10 +25,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import bzh.plealog.dbmirror.fetcher.PProxyConfig;
+import bzh.plealog.dbmirror.indexer.LuceneUtils;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.Configuration;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
+import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
 
 /**
  * This class contains common code to start standalone programs.
@@ -114,7 +116,10 @@ public class StarterUtils {
       DBMSAbstractConfig.initializeConfigurator(confPath
           + DBMSAbstractConfig.MASTER_CONF_FILE);
     }
+    
     LoggerCentral.reset();
+    
+    Runtime.getRuntime().addShutdownHook(new AppFinisher());
   }
 
   public static void configureApplication(String appHome, String nameLogger,
@@ -152,4 +157,10 @@ public class StarterUtils {
 
   }
 
+  private static class AppFinisher extends Thread {
+    public void run() {
+      LuceneUtils.closeStorages();
+      DBMSExecNativeCommand.terminateAllProcesses();
+    }
+  }
 }

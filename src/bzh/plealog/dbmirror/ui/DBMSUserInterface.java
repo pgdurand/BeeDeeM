@@ -16,8 +16,6 @@
  */
 package bzh.plealog.dbmirror.ui;
 
-import bzh.plealog.dbmirror.indexer.LuceneUtils;
-
 /**
  * This class can be used to create and interact with the KDMS UserInterface.
  * 
@@ -37,7 +35,7 @@ public class DBMSUserInterface {
       throws RuntimeException {
     if (_panel == null) {
       _panel = new DBMSPanel(dscPath, showBtnText);
-      Runtime.getRuntime().addShutdownHook(new AppFinisher());
+      
     }
 
     return _panel;
@@ -79,9 +77,5 @@ public class DBMSUserInterface {
     return false;
   }
 
-  private static class AppFinisher extends Thread {
-    public void run() {
-      LuceneUtils.closeStorages();
-    }
-  }
+  
 }
