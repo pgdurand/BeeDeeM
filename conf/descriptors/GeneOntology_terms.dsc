@@ -9,7 +9,7 @@ db.files.exclude=
 tasks.global.pre=script(name=GetGO;path=get_gene_ontology.sh)
 
 tasks.unit.post=idxdico(type=go)
-tasks.global.post=deltmpidx
+tasks.global.post=deltmpidx,script(name=GetGO;path=get_go_release.sh)
 
 local.rdir=${workdir}|GeneOntology_terms
 local.rdir.exclude=

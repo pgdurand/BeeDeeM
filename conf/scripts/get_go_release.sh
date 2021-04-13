@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# This is a BeeDeeM external task script aims at downloading
-# GeneOntology using HTTP protocol.
+# This is a BeeDeeM external task script aims at getting
+# GeneOntology release number.
 #
 # This script is used in bank descriptor:
 #   ../descriptors/GeneOntology_terms.dsc
@@ -42,25 +42,8 @@ echo "Install dir: $INST_DIR"
 echo "Processed file: $PROCESSED_FILE"
 echo "----"
 
-WK_DIR=${WK_DIR}/GeneOntology_terms
-echo "Creating $WK_DIR"
-mkdir -p $WK_DIR
-echo "Changing dir to $WK_DIR"
-cd $WK_DIR
-
-url="http://current.geneontology.org/ontology/go-basic.obo"
-filename="go-basic.obo"
-
-echo "Getting $filename"
-if [ -x "$(which wget)" ] ; then
-    CMD="wget --continue -q $url -O $filename"
-elif [ -x "$(which curl)" ]; then
-    CMD="curl -sL -o $filename -C - $url"
-else
-    echo "Could not find curl or wget, please install one." >&2
-    exit 1
-fi
-
-echo $CMD
-eval $CMD
+#Get GO official release number
+FNAME=${INST_DIR}/go-basic.obo
+RELEASE=$(head -n 10 $FNAME | grep "data-version:" | cut -d'/' -f 2)
+echo "release.time.stamp=$RELEASE" > ${INST_DIR}/release-date.txt
 
