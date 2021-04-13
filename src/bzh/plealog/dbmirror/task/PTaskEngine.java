@@ -208,6 +208,9 @@ public class PTaskEngine {
       if (_task instanceof PTaskLuceneDirMerge) {
         ((PTaskLuceneDirMerge) _task).setUserProcessingMonitor(_userMonitor);
       }
+      else if (_task instanceof PTaskExecScript) {
+        ((PTaskExecScript) _task).setUserProcessingMonitor(_userMonitor);
+      }
       boolean bOk = true;
       try {
         // this has been added to secure code when running KDMS UI

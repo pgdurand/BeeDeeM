@@ -24,6 +24,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import bzh.plealog.dbmirror.fetcher.UserProcessingMonitor;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.Configuration;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -38,7 +39,7 @@ import bzh.plealog.dbmirror.util.runner.ExecMonitor;
  * @author Patrick G. Durand
  */
 public class PTaskExecScript extends PAbstractTask {
-
+  private UserProcessingMonitor _userMonitor;
   private String                _scriptName;
   private String                _scriptCmd;
   private String                _dbInstallationPath;
@@ -91,6 +92,15 @@ public class PTaskExecScript extends PAbstractTask {
     }
   }
 
+  /**
+   * Set a user monitor. 
+   * 
+   * @param userMonitor user monitor
+   * */
+  public void setUserProcessingMonitor(UserProcessingMonitor userMonitor) {
+    _userMonitor = userMonitor;
+  }
+  
   /**
    * Implementation of KLTask interface.
    */
@@ -155,9 +165,30 @@ public class PTaskExecScript extends PAbstractTask {
     if (_curFile!=null) {
       params.put(INST_FILE_ARG, new CommandArgument(_curFile, true));
     }
-    executor.executeAndWait(_scriptCmd, params);
     
-    return executor.getExitCode()==0;
+    Process proc = executor.executeAndReturn(_scriptCmd, params);
+    
+    int exitCode=0;
+    boolean scriptRunning = true;
+    
+    //monitor process to detect interruption (UIinstaller)
+    while (scriptRunning && (!(_userMonitor != null && _userMonitor.jobCancelled()))) {
+      scriptRunning = false;
+      try {
+        exitCode = proc.exitValue();
+      } catch (IllegalThreadStateException ex) {
+        scriptRunning = true;
+      }
+      try {
+        Thread.sleep(DBMSExecNativeCommand.DEFAULT_TIME_SLICE);
+      } catch (InterruptedException e) {
+      }
+    }
+    
+    //properly close process (I/O streams)
+    DBMSExecNativeCommand.terminateProcess(proc);
+    
+    return exitCode==0;
   }
 
   
