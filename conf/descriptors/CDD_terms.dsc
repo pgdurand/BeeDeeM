@@ -7,7 +7,7 @@ db.files.include=^cddid.tbl.gz$
 db.files.exclude=
 
 tasks.unit.post=gunzip,untar,idxdico(type=cdd)
-tasks.global.post=deltmpidx
+tasks.global.post=deltmpidx,script(name=GetCDD;path=get_cdd_release)
 
 ftp.server=ftp.ncbi.nih.gov
 ftp.port=21

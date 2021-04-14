@@ -7,9 +7,9 @@ db.files.include=^cddmasters.fa.gz$
 db.files.exclude=
 
 tasks.unit.post=gunzip,idxfas
-tasks.global.post=delgz,deltmpidx,formatdb(lclid\=false;check\=true;nr\=true;cdd\=true)
+tasks.global.post=delgz,deltmpidx,formatdb(lclid\=false;check\=true;nr\=true;cdd\=true),script(name=GetCDD;path=get_cdd_release)
 
-depends=CDD_terms.dsc
+depends=CDD_terms
 
 ftp.server=ftp.ncbi.nih.gov
 ftp.port=21
