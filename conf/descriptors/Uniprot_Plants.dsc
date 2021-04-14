@@ -7,7 +7,7 @@ db.files.exclude=
 
 tasks.unit.post=gunzip,idxsw
 
-tasks.global.post=delgz,deltmpidx,formatdb(lclid=false;check=true;nr=true)
+tasks.global.post=delgz,deltmpidx,formatdb(lclid=false;check=true;nr=true),script(name=GetUP;path=get_up_release.sh)
 
 ftp.server=ftp.expasy.org
 ftp.port=21
