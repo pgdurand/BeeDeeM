@@ -16,7 +16,7 @@
 #  -f <path>: <path> is the path to file under unit task processing
 #             only provided with unit task.
 
-echo "Getting Gene Ontology"
+echo "Getting Genbank release number"
 echo "Arguments coming from BeeDeeM are:"
 echo $@
 echo "----"
