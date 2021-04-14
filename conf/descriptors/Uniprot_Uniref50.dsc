@@ -7,7 +7,7 @@ db.files.include=uniref50.fasta.gz
 db.files.exclude=
 
 tasks.unit.post=gunzip,idxfas
-tasks.global.post=delgz,deltmpidx,formatdb(lclid=false;check=true;nr=true),script(name=GetUP;path=get_up_release.sh)
+tasks.global.post=delgz,deltmpidx,formatdb(lclid=false;check=true;nr=true),script(name=GetUP;path=get_up_release)
 
 ftp.server=ftp.expasy.org
 ftp.port=21

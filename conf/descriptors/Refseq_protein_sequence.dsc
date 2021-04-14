@@ -7,7 +7,7 @@ db.files.include=^complete.*\\d+\\.protein.faa.gz$,^complete.nonredundant_protei
 db.files.exclude=
 
 tasks.unit.post=gunzip,idxfas
-tasks.global.post=delgz,deltmpidx,formatdb(lclid\=false;check\=true;nr\=true)
+tasks.global.post=delgz,deltmpidx,formatdb(lclid\=false;check\=true;nr\=true),script(name=GetREF;path=get_ref_release)
 
 ftp.server=ftp.ncbi.nih.gov
 ftp.port=21

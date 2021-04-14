@@ -7,7 +7,7 @@ db.files.include=viral\\.\\d+\\.genomic.gbff.gz
 db.files.exclude=
 
 tasks.unit.post=gunzip,idxgb
-tasks.global.post=delgz,deltmpidx,formatdb(lclid\=false;check\=true;nr\=true)
+tasks.global.post=delgz,deltmpidx,formatdb(lclid\=false;check\=true;nr\=true),script(name=GetREF;path=get_ref_release)
 
 ftp.server=ftp.ncbi.nih.gov
 ftp.port=21

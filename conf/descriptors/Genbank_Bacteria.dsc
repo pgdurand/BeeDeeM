@@ -8,7 +8,7 @@ db.files.exclude=
 
 tasks.unit.post=gunzip,idxgb
 
-tasks.global.post=delgz,deltmpidx,formatdb(lclid=false;check=true;nr=true),script(name=GetGB;path=get_gb_release.sh)
+tasks.global.post=delgz,deltmpidx,formatdb(lclid=false;check=true;nr=true),script(name=GetGB;path=get_gb_release)
 
 ftp.server=ftp.ncbi.nih.gov
 ftp.port=21

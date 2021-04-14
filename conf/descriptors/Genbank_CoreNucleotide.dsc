@@ -11,7 +11,7 @@ db.files.include=^gb.*\\.seq.gz$
 db.files.exclude=^gbest.*\\.seq.gz$,^gbgss.*\\.seq.gz$,^gbhtg.*\\.seq.gz$,^gbhtc.*\\.seq.gz$,^gbsts.*\\.seq.gz$,^gbcon.*\\.seq.gz$,^gbenv.*\\.seq.gz$
 
 tasks.unit.post=gunzip,idxgb
-tasks.global.post=delgz,deltmpidx,formatdb(lclid=false;check=true;nr=true),script(name=GetGB;path=get_gb_release.sh)
+tasks.global.post=delgz,deltmpidx,formatdb(lclid=false;check=true;nr=true),script(name=GetGB;path=get_gb_release)
 
 ftp.server=ftp.ncbi.nih.gov
 ftp.port=21

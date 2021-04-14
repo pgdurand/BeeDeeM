@@ -5,7 +5,7 @@ db.ldir=${mirrordir}|d|InterPro_terms
 db.files.include=names.dat
 db.files.exclude=
 
-tasks.unit.post=idxdico(type=ipr),script(name=GetIP;path=get_ip_release.sh)
+tasks.unit.post=idxdico(type=ipr),script(name=GetIP;path=get_ip_release)
 
 tasks.global.post=deltmpidx
 

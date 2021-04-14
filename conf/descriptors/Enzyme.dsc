@@ -7,7 +7,7 @@ db.files.include=enzyme.dat,enzclass.txt
 db.files.exclude=
 
 tasks.unit.post=
-tasks.global.post=idxdico(type=ecc;file=enzclass.txt),idxdico(type=ec;file=enzyme.dat),deltmpidx,script(name=GetEZ;path=get_enz_release.sh)
+tasks.global.post=idxdico(type=ecc;file=enzclass.txt),idxdico(type=ec;file=enzyme.dat),deltmpidx,script(name=GetEZ;path=get_enz_release)
 
 ftp.server=ftp.expasy.org
 ftp.port=21
