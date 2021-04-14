@@ -30,8 +30,19 @@ From: platten/alpine-oracle-jre8-docker
 	chmod +x /opt/beedeem/external/bin/linux/*
 	cd /opt/beedeem/external/bin && rm -rf macos windows
 
+	BDMT_VERSION=2.0.1
+        cd /opt
+        mkdir beedeem-tools
+        cd beedeem-tools
+        wget https://github.com/ifremer-bioinformatics/BeeDeeM-Tools/releases/download/v2.0.1/beedeem-tools-${BDMT_VERSION}.tar.gz
+        gunzip beedeem-tools-${BDMT_VERSION}.tar.gz
+        tar -xf beedeem-tools-${BDMT_VERSION}.tar
+        rm beedeem-tools-${BDMT_VERSION}.tar
+        chmod +x *.sh
+
+
 %environment
-	export PATH="/opt/beedeem:$PATH"
+	export PATH="/opt/beedeem:/opt/beedeem-tools:$PATH"
 	export KL_WORKING_DIR=/beedeem-wk
 	# shell variable name does not allowed use of '.'
 	# (mirror__path == mirror.path)
@@ -39,6 +50,5 @@ From: platten/alpine-oracle-jre8-docker
 
 %runscript
 	echo "BeeDeeM container"
-	/opt/beedeem/$@
 
 	
