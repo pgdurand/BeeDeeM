@@ -51,9 +51,12 @@ public class PTaskExecScript extends PAbstractTask {
   private static final String SCRIPT_NAME = "name";
   private static final String SCRIPT_CMD_PATH = "path";
   //arguments passed in to the calling script
-  private static final String WORK_DIR_ARG = "-w"; //path to BeeDeeM working dir
-  private static final String INST_DIR_ARG = "-d"; //path to bank installation (unit and global tasks)
-  private static final String INST_FILE_ARG = "-f"; // path to file (unit task only)
+  public static final String WORK_DIR_ARG = "-w"; //path to BeeDeeM working dir
+  public static final String INST_DIR_ARG = "-d"; //path to bank installation (unit and global tasks)
+  public static final String INST_FILE_ARG = "-f"; // path to file (unit task only)
+  
+  public static final String UNIX_FILE_EXT = ".sh";
+  public static final String WIN_FILE_EXT = ".bat";
   
   private static final Log LOGGER     = LogFactory
                                           .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
@@ -80,7 +83,15 @@ public class PTaskExecScript extends PAbstractTask {
     else {
       _args = Utils.getTaskArguments(params);
       _scriptName = _args.get(SCRIPT_NAME);
+      //to ensure using software on all OS, script is passed in without
+      //file extension. Its added here according to OS.
       _scriptCmd = _args.get(SCRIPT_CMD_PATH);
+      if (DBMSExecNativeCommand.getOSType()==DBMSExecNativeCommand.WINDOWS_OS) {
+        _scriptCmd += WIN_FILE_EXT;
+      }
+      else {
+        _scriptCmd += UNIX_FILE_EXT;
+      }
     }
     if (_dbInstallationPath!=null) {
       _args.put(INST_DIR_ARG, _dbInstallationPath);
