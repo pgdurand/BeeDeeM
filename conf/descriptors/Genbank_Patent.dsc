@@ -7,7 +7,7 @@ db.files.include=^gbpat.*\\.seq.gz$
 db.files.exclude=
 
 tasks.unit.post=gunzip,idxgb
-tasks.global.post=delgz,deltmpidx,formatdb(lclid=false;check=true;nr=true)
+tasks.global.post=delgz,deltmpidx,formatdb(lclid=false;check=true;nr=true),script(name=GetGB;path=get_gb_release.sh)
 
 ftp.server=ftp.ncbi.nih.gov
 ftp.port=21
