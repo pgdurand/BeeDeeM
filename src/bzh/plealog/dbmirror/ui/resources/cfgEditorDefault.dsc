@@ -9,12 +9,15 @@ tasks.unit.post=
 
 tasks.global.post=
 
+tasks.global.pre=
+
 ftp.server=
 ftp.port=
 ftp.uname=
 ftp.pswd=
 ftp.rdir=
 ftp.rdir.exclude=
+ftp.alt.protocol=
 
 aspera.use=
 aspera.server=
