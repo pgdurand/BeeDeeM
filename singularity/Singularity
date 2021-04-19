@@ -34,7 +34,7 @@ From: platten/alpine-oracle-jre8-docker
         cd /opt
         mkdir beedeem-tools
         cd beedeem-tools
-        wget https://github.com/ifremer-bioinformatics/BeeDeeM-Tools/releases/download/v2.0.1/beedeem-tools-${BDMT_VERSION}.tar.gz
+        wget https://github.com/ifremer-bioinformatics/BeeDeeM-Tools/releases/download/v${BDMT_VERSION}/beedeem-tools-${BDMT_VERSION}.tar.gz
         gunzip beedeem-tools-${BDMT_VERSION}.tar.gz
         tar -xf beedeem-tools-${BDMT_VERSION}.tar
         rm beedeem-tools-${BDMT_VERSION}.tar
