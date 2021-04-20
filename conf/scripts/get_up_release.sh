@@ -50,7 +50,7 @@ filename="uniprot_relnotes.txt"
 
 echo "Getting $filename"
 if [ -x "$(which wget)" ] ; then
-    CMD="wget --continue -q $url -O $filename"
+    CMD="wget -c -q $url -O $filename"
 elif [ -x "$(which curl)" ]; then
     CMD="curl -sL -o $filename -C - $url"
 else
