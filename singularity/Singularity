@@ -9,8 +9,12 @@ From: platten/alpine-oracle-jre8-docker
 %post
 	BDM_VERSION=4.6.1
 	apk update
-	# libbz2 libidn are required by blast tools included in BeeDeeM
-	apk add --no-cache bash wget libbz2 libidn bash
+        # libbz2 libidn are required by blast tools included in BeeDeeM.
+        # libxext libxrender libxtst libxi are required by Bioinformatics-Core-API included 
+        #    in BeeDeeM and BeeDeeM-Tools.
+        # bash is required when running this image by Nextflow pipelines.
+        # wget is required to install some banks (e.g. GeneOntology).
+        apk add --no-cache libbz2 libidn bash wget libxext libxrender libxtst libxi
 
 	# Get BeeDeeM from latest release
 	mkdir -p /opt/beedeem/tmp-install
@@ -50,6 +54,6 @@ From: platten/alpine-oracle-jre8-docker
 	export KL_mirror__path=/beedeem-db
 
 %runscript
-	echo "BeeDeeM container"
+	echo "Running BeeDeeM container"
 	$@
 	
