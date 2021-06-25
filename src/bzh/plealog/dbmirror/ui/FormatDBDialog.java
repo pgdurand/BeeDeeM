@@ -24,6 +24,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -39,6 +41,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.text.JTextComponent;
+
+import org.apache.commons.io.FileUtils;
 
 import com.plealog.genericapp.api.EZEnvironment;
 
@@ -335,8 +339,12 @@ public class FormatDBDialog extends JDialog {
       dbPath = getDBPath();
       // create the time stamp
       int totSeq = getTotalSequences();
-      DBStampProperties.writeDBStamp(dbPath, new int[] { -1,
-          totSeq == 0 ? -1 : totSeq });
+      long bankSize = FileUtils.sizeOfDirectory(new File(dbPath));
+      Date now = Calendar.getInstance().getTime();
+      String installDate = DBStampProperties.BANK_DATE_FORMATTER.format(now); 
+      String releaseDate = DBStampProperties.readReleaseDate(dbPath);
+      DBStampProperties.writeDBStamp(dbPath, installDate, releaseDate, 
+          new int[] { -1, totSeq == 0 ? -1 : totSeq }, bankSize);
       dbPath = Utils.terminatePath(getDBPath()) + getDBName()
           + FormatDBRunner.BLAST_ALIAS_TAG;
       if (isProteic()) {

@@ -23,9 +23,12 @@ import java.io.FilenameFilter;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -38,6 +41,7 @@ import bzh.plealog.dbmirror.lucenedico.task.PTaskDicoIndexer;
 import bzh.plealog.dbmirror.util.BlastCmd;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.ant.PAntTasks;
+import bzh.plealog.dbmirror.util.conf.BankJsonDescriptor;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
@@ -61,6 +65,8 @@ public class PTaskInstallInProduction extends PAbstractTask {
                                              .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                  + ".PTaskEngine");
 
+  private static final String NOT_APPLICABLE = "n/a";
+  
   public PTaskInstallInProduction(List<DBServerConfig> dbs) {
     _dbs = new HashSet<DBServerConfig>();
     for (DBServerConfig db : dbs) {
@@ -191,7 +197,58 @@ public class PTaskInstallInProduction extends PAbstractTask {
       }
     }
   }
-
+  
+  private String getLuceneIndexPath(DBServerConfig db, String dbDownloadPath, String dbInstallPath) {
+    String luceneIndex=NOT_APPLICABLE;
+    
+    dbInstallPath = dbInstallPath + File.separator + db.getName() + LuceneUtils.IDX_OK_FEXT;
+    dbDownloadPath = dbDownloadPath + File.separator + db.getName() + LuceneUtils.IDX_OK_FEXT;
+    
+    if (new File(dbDownloadPath).exists()) {
+      luceneIndex = dbInstallPath;
+    }
+    return luceneIndex;
+  }
+  
+  private String getBlastIndexPath(DBServerConfig db, String dbDownloadPath, String dbInstallPath) {
+    boolean hasFormatDB, hasMakeAlias;
+    String tasks, blastIndex=NOT_APPLICABLE;
+    
+    tasks = db.getUnitPostTasks() + "," + db.getGlobalPostTasks() + ","
+        + db.getInstallInProdData();
+    hasFormatDB = tasks.indexOf(PTask.TASK_G_FORMATDB) != -1;
+    hasMakeAlias = tasks.indexOf(PTask.TASK_G_MAKEALIAS) != -1;
+    
+    dbInstallPath = dbInstallPath + File.separator + db.getName();
+    dbDownloadPath = dbDownloadPath + File.separator + db.getName();
+    
+    // do we have a formatted blast mirror in addition to the data index ?
+    if (hasFormatDB || hasMakeAlias) {
+      if (db.isNucleic()) {
+        if (hasFormatDB)
+          dbInstallPath += FormatDBRunner.BLAST_ALIAS_TAG;
+        dbInstallPath += FormatDBRunner.NUCLEIC_ALIAS_EXT;
+        if (hasFormatDB)
+          dbDownloadPath += FormatDBRunner.BLAST_ALIAS_TAG;
+        dbDownloadPath += FormatDBRunner.NUCLEIC_ALIAS_EXT;
+      } else if (db.isProteic()) {
+        if (hasFormatDB)
+          dbInstallPath += FormatDBRunner.BLAST_ALIAS_TAG;
+        dbInstallPath += FormatDBRunner.PROTEIN_ALIAS_EXT;
+        if (hasFormatDB)
+          dbDownloadPath += FormatDBRunner.BLAST_ALIAS_TAG;
+        dbDownloadPath += FormatDBRunner.PROTEIN_ALIAS_EXT;
+      } else {
+        dbInstallPath = null;
+        dbDownloadPath = null;
+      }
+    }
+    if (new File(dbDownloadPath).exists()) {
+      blastIndex = dbInstallPath;
+    }
+    return blastIndex;
+  }
+  
   private int readEntries(File f) {
     BufferedReader reader = null;
     int nEntries = -1;
@@ -357,18 +414,35 @@ public class PTaskInstallInProduction extends PAbstractTask {
         dbPathInstalled = Utils.terminatePath(dbPathCur) + db.getName();
 
         // create the time stamp
-        if (!DBStampProperties.writeDBStamp(dbPathDownload, dbSizes)) {
+        long bankSize = FileUtils.sizeOfDirectory(new File(dbPathDownload));
+        Date now = Calendar.getInstance().getTime();
+        String installDate = DBStampProperties.BANK_DATE_FORMATTER.format(now); 
+        String releaseDate = DBStampProperties.readReleaseDate(dbPathDownload);
+        if (!DBStampProperties.writeDBStamp(dbPathDownload, installDate, releaseDate, dbSizes, bankSize)) {
           throw new Exception("unable to write time stamp file");
         }
         // save the new installed mirror within the central configuration
-        if (mirrorConfig != null)
+        if (mirrorConfig != null) {
           updateMirror(mirrorDescriptors, db, dbPathDownload, dbPathInstalled);
+        }
+        //added on June 2021: write DB stats in a JSON file
+        BankJsonDescriptor descriptor = new BankJsonDescriptor(
+            db.getName(), 
+            db.getDescription(), 
+            installDate, 
+            releaseDate, 
+            db.getTypeCode(), 
+            db.getProvider(), 
+            getBlastIndexPath(db, dbPathDownload, dbPathInstalled), 
+            getLuceneIndexPath(db, dbPathDownload, dbPathInstalled), 
+            bankSize, 
+            dbSizes[0]);
+        descriptor.write(new File(Utils.terminatePath(dbPathDownload)+BankJsonDescriptor.DEFAULT_DESCRIPTOR_FNAME));
         // rename tmp dir to become the Production one
         if (!PAntTasks.movefile(dbPathDStamp, dbPathCur)) {
           throw new Exception("unable to rename " + dbPathDStamp + " to "
               + dbPathCur);
         }
-        // compute total number of entries
         LoggerCentral.info(LOGGER, dbPathDStamp
             + " has been installed in production");
       }
@@ -390,7 +464,6 @@ public class PTaskInstallInProduction extends PAbstractTask {
 
     return true;
   }
-
   /**
    * Implementation of KLTask interface.
    */

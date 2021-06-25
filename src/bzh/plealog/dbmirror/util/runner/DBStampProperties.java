@@ -20,11 +20,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -103,28 +101,29 @@ public class DBStampProperties {
    * 
    * @param dbPath
    *          the mirror path (parent of mirror current dir)
+   * @param installDate installation date of bank
+   * @param releaseDate release date of bank as obtained by provider         
    * @param entries
    *          an array of two integers: nb. of entries (Lucene index) and nb. of
    *          sequences (Blast formatdb)
+   * @param bankSize bytes size of bank
    */
-  public static boolean writeDBStamp(String dbPath, int[] entries) {
-    File dbFile = new File(dbPath);
+  public static boolean writeDBStamp(String dbPath, String installDate, String releaseDate,
+      int[] entries, long bankSize) {
     String fName;
     Properties props;
-    Date now = Calendar.getInstance().getTime();
     
     boolean bRet = false;
 
     fName = Utils.terminatePath(dbPath) + DBStampProperties.TIME_STAMP_FNAME;
     try (FileOutputStream writer = new FileOutputStream(fName)) {
       props = new Properties();
-      props.put(DBStampProperties.TIME_STAMP, DBStampProperties.BANK_DATE_FORMATTER.format(now));
-      props.put(DBStampProperties.RELEASE_TIME_STAMP, DBStampProperties.readReleaseDate(dbPath));
+      props.put(DBStampProperties.TIME_STAMP, installDate);
+      props.put(DBStampProperties.RELEASE_TIME_STAMP, releaseDate);
       props.put(DBStampProperties.NB_ENTRIES, String.valueOf(entries[0]));
       props.put(DBStampProperties.NB_SEQUENCES, String.valueOf(entries[1]));
 
-      props.put(DBStampProperties.DB_SIZE,
-          String.valueOf(FileUtils.sizeOfDirectory(dbFile)));
+      props.put(DBStampProperties.DB_SIZE, String.valueOf(bankSize));
       props.store(writer, "");
       writer.flush();
       bRet = true;

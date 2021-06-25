@@ -90,7 +90,7 @@ public class BankJsonTest {
         2000310261569l, 
         95538504);
     
-    assertTrue(BankJsonDescriptor.write(f, desc));
+    assertTrue(desc.write(f));
     f.delete();
   }
 }

@@ -44,15 +44,16 @@ public class BankJsonDescriptor {
           + ".BankJsonDescriptor");
 
   public static final String BLAST_INDEX = "blast";
-  public static final String LUCENE_INDEX = "lucene";
+  public static final String LUCENE_INDEX = "bdm-annot";
   public static final String EDAM_GENOMICS = "genomics";
   public static final String EDAM_PROTEOMIS = "proteomics";
-  public static final String TYPE_NUCL = "nucl";
-  public static final String TYPE_PROT = "prot";
+  public static final String TYPE_NUCL = "nucleotide";
+  public static final String TYPE_PROT = "protein";
   public static final String TYPE_ONTO = "ontology";
 
+  public static final String DEFAULT_DESCRIPTOR_FNAME = "databank.json";
+  
   public BankJsonDescriptor() {
-    // TODO Auto-generated constructor stub
   }
 
   /**
@@ -71,8 +72,8 @@ public class BankJsonDescriptor {
    * @param entries size of bank in number of sequences or entries (ontology)
    * */
   @SuppressWarnings("serial")
-  public BankJsonDescriptor(String name, String description,
-      String installDate, String release,
+  public BankJsonDescriptor(
+      String name, String description, String installDate, String release,
       String type, String provider, String blastPath, String lucenePath,
       long bytes, int entries) {
 
@@ -150,12 +151,13 @@ public class BankJsonDescriptor {
    * 
    * @return true if file writing is ok, false otherwise. Error is logged.
    */
-  public static boolean write(File f, BankJsonDescriptor data) {
+  public boolean write(File f) {
     ObjectMapper mapper = new ObjectMapper();
     boolean bRet = false;
+    //https://github.com/FasterXML/jackson-databind/wiki/JacksonFeatures
     mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
     try {
-      mapper.writeValue(f, data);
+      mapper.writeValue(f, this);
       bRet = true;
     } catch (Exception e) {
       LoggerCentral.warn(LOGGER, e.toString());
