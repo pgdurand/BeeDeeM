@@ -9,11 +9,11 @@
     "PROVIDER" : [ "NCBI" ],
     "INSTALL_DATE" : "24/04/2021",
     "RELEASE" : "242",
-    "TYPE" : [ "nucl" ],
+    "TYPE" : [ "nucleotide" ],
     "OMICS" : [ "genomics" ],
     "OWNER" : "BeeDeeM",
     "INDEX" : {
-      "lucene" : "/biobank/n/Genbank_CoreNucleotide/current/Genbank_CoreNucleotide/seqIds.ldx",
+      "bdm-annot" : "/biobank/n/Genbank_CoreNucleotide/current/Genbank_CoreNucleotide/seqIds.ldx",
       "blast" : "/biobank/n/Genbank_CoreNucleotide/current/Genbank_CoreNucleotide/Genbank_CoreNucleotideM.nal"
     }
   }
