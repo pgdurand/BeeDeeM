@@ -5,7 +5,7 @@
 
 *BeeDeeM* is a general purpose **B**ioinformatics **D**atabank **M**anager. 
 
-It provides a suite of command-line and UI softwares to install and use major sequence databanks and biological classifications. It is the ideal companion of the [NCBI BLAST suite of softwares](https://pgdurand.gitbooks.io/beedeem/test_install.html#run-a-blast-search).
+It provides a suite of command-line and UI softwares to install and use major sequence databanks and biological classifications. It is the ideal companion of the [NCBI BLAST suite of softwares](https://pgdurand.gitbooks.io/beedeem/test_install.html#run-a-blast-search) and [PLAST](https://plast.inria.fr/).
 
 ## Main features
 
@@ -16,8 +16,8 @@ It provides a suite of command-line and UI softwares to install and use major se
 * the un-archiving of the files \(tar files\),
 * the conversion of native sequence banks \(e.g. Genbank\) to FASTA files,
 * the preparation of databases in BLAST format from native sequence bank formats,
-* the indexing of Genbank, Refseq, Embl, Genpept, Swissprot, TrEmbl, Fasta, Silva and BOLD files allowing their efficient querying by way of sequence identifiers,
-* the indexing of sequence features and ontologies data (NCBI Taxonomy, Gene Ontology, Enzyme Commission and Intepro domains),
+* the indexing of Genbank, Refseq, Embl, Genpept, Swissprot, TrEmbl and Fasta files allowing their efficient querying by way of sequence identifiers,
+* the indexing of sequence features and ontologies data (NCBI Taxonomy, Gene Ontology, Enzyme Commission, Intepro domains and PFAM domains),
 * the preparation of taxonomic subsets out of annotated sequence banks,
 * the filtering of sequence banks with user-defined constraints.
 
@@ -41,27 +41,21 @@ Here is an example of a script to start Genbank_CoreNucleotide installation on I
 ```
 #!/usr/bin/env bash
 #PBS -q web
-#PBS -l mem=64gb
+#PBS -l mem=4gb
 #PBS -l ncpus=8
 #PBS -l walltime=72:00:00
 
 # Release of BeeDeeM to use
-BDM_HOME=$SOFT/bioinfo/beedeem
-BDM_VER=latest
+BDM_HOME="$SOFT/bioinfo/beedeem"
+BDM_VER="5.5.1"
 
 # Load BeeDeeM environment
 module load java/1.8.0_121
-
-# Configure BeeDeeM install tool
-TASK_ARGS="-task download"
-GLOBAL_ARGS="--ftp-delay 5000 --ftp-retry 3 --task-delay 1000"
-MAILING_ARGS="--mail-smtp-host xxx --sender-mail yyy --recipient-mail zzz"
 
 # prefix of '.dsc' file that must exist in $BDM_HOME/conf/descriptor
 DESCRIPTOR="Genbank_CoreNucleotide"
 export KL_LOG_FILE=${DESCRIPTOR}.log
 $BDM_HOME/$BDM_VER/install.sh \
-   ${TASK_ARGS} ${GLOBAL_ARGS} ${MAILING_ARGS} \
    -desc ${DESCRIPTOR} \
    >& "$HOME/beedeem/logs/${DESCRIPTOR}-pbs.out"
 ```
@@ -86,6 +80,7 @@ Among others, these databanks can be used to:
 
 *BeeDeeM* features and data are accessible from:
 
+* [ORSON nextflow pipeline](https://github.com/ifremer-bioinformatics/orson)
 * [BioDocument Viewer](https://github.com/pgdurand/BioDocumentViewer)
 * [BLAST Viewer](https://github.com/pgdurand/BlastViewer)
 * [BLAST Filter Tool](https://github.com/pgdurand/BLAST-Filter-Tool)
@@ -103,7 +98,6 @@ Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downl
 ## Software installation, use and configuration
 
 * [BeeDeeM manual on GitBook](https://pgdurand.gitbooks.io/beedeem/)
-* BeeDeeM manual on GitHub: [Introduction](https://github.com/pgdurand/BeeDeeM-User-Manual/blob/master/README.md) and [Table of Content](https://github.com/pgdurand/BeeDeeM-User-Manual/blob/master/SUMMARY.md).
 
 ## License and dependencies
 
