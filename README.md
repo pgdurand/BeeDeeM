@@ -41,7 +41,7 @@ Here is an example of a script to start Genbank_CoreNucleotide installation on I
 ```
 #!/usr/bin/env bash
 #PBS -q web
-#PBS -l mem=64gb
+#PBS -l mem=4gb
 #PBS -l ncpus=8
 #PBS -l walltime=72:00:00
 
