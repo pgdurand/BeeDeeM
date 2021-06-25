@@ -62,7 +62,8 @@ public class DBServerConfig {
 
   private static final String   DBNAME_KEY           = "db.name";
   private static final String   DBDESC_KEY           = "db.desc";
-  // p(rotein), n(nudcleic) or d(ictionary)
+  private static final String   DBPROVIDER_KEY       = "db.provider";
+  // p(rotein), n(nucleic) or d(ictionary)
   private static final String   DBTYPE_KEY           = "db.type";
   private static final String   DBLDIR_KEY           = "db.ldir";
   private static final String   DBINCFILES_KEY       = "db.files.include";
@@ -116,7 +117,7 @@ public class DBServerConfig {
   public static final String    CENTRAl_CONF         = "central";
 
   private static final String[] KEYS                 = { DBNAME_KEY,
-      DBDESC_KEY, DBTYPE_KEY, DBLDIR_KEY, DBINCFILES_KEY, DBEXCFILES_KEY,
+      DBDESC_KEY, DBPROVIDER_KEY, DBTYPE_KEY, DBLDIR_KEY, DBINCFILES_KEY, DBEXCFILES_KEY,
       DBDTFROM_KEY, DBDTTO_KEY, TASKS_U_POST, TASKS_G_POST, TASKS_G_PRE,
       FTPSERVER_KEY,
       FTPPORT_KEY, FTPUNAME_KEY, FTPPSWD_KEY, FTPRDIR_KEY, FTPRDIR_EXCL_KEY,
@@ -401,9 +402,24 @@ public class DBServerConfig {
     if (desc == null || desc.length() == 0)
       return;
     _properties.setProperty(DBDESC_KEY, desc);
-
   }
 
+  /**
+   * Returns a provider.
+   */
+  public String getProvider() {
+    //added on June 2021, ensure backward compatibility
+    String prov = _properties.getProperty(DBPROVIDER_KEY);
+    return prov!=null?prov:"n/a";
+  }
+
+  public void setProvider(String prov) {
+    if (prov == null || prov.length() == 0)
+      return;
+    _properties.setProperty(DBPROVIDER_KEY, prov);
+  }
+
+  
   /**
    * Return the databank to install before this one. If there is no depends db,
    * an empty List is returned (never null).
