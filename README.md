@@ -80,6 +80,7 @@ Among others, these databanks can be used to:
 
 *BeeDeeM* features and data are accessible from:
 
+* [ORSON nextflow pipeline](https://github.com/ifremer-bioinformatics/orson)
 * [BioDocument Viewer](https://github.com/pgdurand/BioDocumentViewer)
 * [BLAST Viewer](https://github.com/pgdurand/BlastViewer)
 * [BLAST Filter Tool](https://github.com/pgdurand/BLAST-Filter-Tool)
