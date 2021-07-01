@@ -41,6 +41,8 @@ import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
 import bzh.plealog.dbmirror.lucenedico.DicoUtils;
 import bzh.plealog.dbmirror.lucenedico.Dicos;
 import bzh.plealog.dbmirror.util.Utils;
+import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.conf.DBMSConfigurator;
 import bzh.plealog.dbmirror.util.xref.DBXrefInstancesManager;
 
 public class SRAnnotatorUtils {
@@ -127,6 +129,15 @@ public class SRAnnotatorUtils {
     return buf.toString();
   }
   
+  private static boolean getDataPath(String confKey) {
+    DBMSConfigurator conf;
+    conf = DBMSAbstractConfig.getConfigurator();
+    if (conf == null) {
+      return false;
+    }
+    return "true".equalsIgnoreCase(conf.getProperty(confKey));
+  }
+
   public static SRClassification prepareClassification(SROutput bo, DicoTermQuerySystem dico) {
 
     // Extract Bio Classification (IPR, EC, GO and TAX) for all hits
@@ -159,11 +170,13 @@ public class SRAnnotatorUtils {
         dTerm = dico.getTerm(Dicos.NCBI_TAXONOMY, id);
         if (dTerm!=null) {
           term.setDescription(dTerm.getDataField());
-          idpath = dico.getTaxPathIds(id, true, true);
-          if (idpath!=null) {
-            idpath = Utils.replaceAll(idpath, "n", "");
-            term.setPath(idpath);
-            collectAdditionalIds(classif, classif2, idpath, dico, Dicos.NCBI_TAXONOMY);
+          if (getDataPath(DBMSConfigurator.ANNOT_GET_TAX_PATH)) {
+            idpath = dico.getTaxPathIds(id, true, true);
+            if (idpath!=null) {
+              idpath = Utils.replaceAll(idpath, "n", "");
+              term.setPath(idpath);
+              collectAdditionalIds(classif, classif2, idpath, dico, Dicos.NCBI_TAXONOMY);
+            }
           }
         }
       }
@@ -173,10 +186,12 @@ public class SRAnnotatorUtils {
         dTerm = dico.getTerm(Dicos.ENZYME, id);
         if (dTerm!=null) {
           term.setDescription(dTerm.getDataField());
-          idpath = dico.getEnzymePathIds(id, true);
-          if (idpath!=null) {
-            term.setPath(idpath);
-            collectAdditionalIds(classif, classif2, idpath, dico, Dicos.ENZYME);
+          if (getDataPath(DBMSConfigurator.ANNOT_GET_ENZ_PATH)) {
+            idpath = dico.getEnzymePathIds(id, true);
+            if (idpath!=null) {
+              term.setPath(idpath);
+              collectAdditionalIds(classif, classif2, idpath, dico, Dicos.ENZYME);
+            }
           }
         }
       }
@@ -185,10 +200,12 @@ public class SRAnnotatorUtils {
         dTerm = dico.getTerm(Dicos.GENE_ONTOLOGY, id);
         if (dTerm!=null) {
           term.setDescription(DicoUtils.getSimpleGoString(dTerm));
-          gopaths = dico.getGoPathId(id);
-          if(!gopaths.isEmpty()) {
-            idpath = collectAdditionalIds(classif, classif2, gopaths, dico, Dicos.GENE_ONTOLOGY);
-            term.setPath(idpath);
+          if (getDataPath(DBMSConfigurator.ANNOT_GET_GO_PATH)) {
+            gopaths = dico.getGoPathId(id);
+            if(!gopaths.isEmpty()) {
+              idpath = collectAdditionalIds(classif, classif2, gopaths, dico, Dicos.GENE_ONTOLOGY);
+              term.setPath(idpath);
+            }
           }
         }
       }
