@@ -44,7 +44,7 @@ echo "----"
 
 cd $INST_DIR
 
-url="http://ftp.ebi.ac.uk/pub/databases/interpro/release_notes.txt"
+url="ftp://ftp.ebi.ac.uk/pub/databases/interpro/release_notes.txt"
 filename="ipr_relnotes.txt"
 
 echo "Getting $filename"
