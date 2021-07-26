@@ -34,12 +34,28 @@ Use this command:
 
 ### Sample use cases
  
-1/ install a bank:
+1/ install a simple bank:
  
       docker run .../... beedeem_machine install.sh -desc PDB_proteins
  
 Will invoke 'install.sh' BeeDeeM script. See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.html\#install-a-bank) for more details. 
 
+2/ install an annotated bank:
+ 
+      docker run .../... beedeem_machine install.sh -desc SwissProt_human
+
+3/ get list of installed banks:
+ 
+      docker run .../... beedeem_machine info.sh -d all -f txt
+
+4/ query a bank to fetch an entry:
+ 
+      docker run .../... beedeem_machine query.sh -d protein -i P31946 -f txt
+
+If it fails, just try this form:
+
+      docker run .../... beedeem_machine query.sh protein P31946 txt
+      
 
 ### Monitor BeeDeeM
    
