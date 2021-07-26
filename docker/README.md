@@ -21,14 +21,14 @@ Use this command:
 ## Run the container
 
      docker run --name beedeem_machine -i -t --rm \
-                -v /path/to/bank/installation:/biobase \  <-- (1)
-                -v /path/to/work/dir:/var/beedeem \       <-- (2)
-                beedeem_machine <command-line>            <-- (3)
+                -v /path/to/bank/installation:/beedeem-db \  <-- (1)
+                -v /path/to/work/dir:/beedeem-wk \           <-- (2)
+                beedeem_machine <command-line>               <-- (3)
       
       (1) where to install banks. Update '/path/to/...' to target your local system. 
-          DO NOT MODIFY '/biobase'.
+          DO NOT MODIFY '/beedeem-db'.
       (2) where to put BeeDeeM logs. Update '/path/to/...' to target your local system. 
-          DO NOT MODIFY '/var/beedeem'.
+          DO NOT MODIFY '/beedeem-wk'.
       (3) what to do. See 'Sample use cases', below.
 
 
@@ -36,21 +36,10 @@ Use this command:
  
 1/ install a bank:
  
-      docker run .../... beedeem_machine -c install swiss
+      docker run .../... beedeem_machine install.sh -desc PDB_proteins
  
 Will invoke 'install.sh' BeeDeeM script. See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.html\#install-a-bank) for more details. 
 
-2/ query a bank: 
- 
-      docker run .../... beedeem_machine -c query protein 1433S_HUMAN txt
- 
-Will invoke 'query.sh' BeeDeeM script. See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.html\#query-the-beedeem-bank-repository) for more details. 
-
-3/ annotate a BLAST result: 
- 
-      docker run .../... beedeem_machine -c annotate 1433S_HUMAN.blastp 1433S_HUMAN.zml full
- 
-Will invoke 'annotate.sh' BeeDeeM script.See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.html\#run-a-blast-search) for more details. 
 
 ### Monitor BeeDeeM
    
@@ -58,16 +47,23 @@ In all cases, consult BeeDeeM working directory to check out log files in case c
  
 This working directory is specified by this 'docker run' argument:
 
-           -v /path/to/work/dir:/var/beedeem
+           -v /path/to/work/dir:/beedeem-wk
 
-Which means that BeeDeeM log files can be located on your system within '/path/to/work/dir'.
+Which means that BeeDeeM log files can be located on your system within '/path/to/work/dir'. 
+
+If needeed, you can tell BeeDeeM to dump logs directly on the console using this command:
+
+      docker run .../... -e "KL_LOG_TYPE=console" beedeem_machine install.sh -desc PDB_proteins
+
 
 ### Here is a working command on my OSX computer:
 
 1. I created these directories:
 
-         /Users/pdurand/tmp/beedeem/biobase  (1)
-         /Users/pdurand/tmp/beedeem/log      (2)
+docker run --name beedeem_machine -i -t --rm -v /Users/pgdurand/biobanks:/beedeem-db -v /Users/pgdurand/biobanks/tmp:/beedeem-wk -e "KL_LOG_TYPE=console" beedeem_machine install.sh -desc PDB_proteins
+
+         /Users/pgdurand/biobanks  (1)
+         /Users/pgdurand/biobanks/log      (2)
 
            (1) will host my banks on my computer
            (2) will host BeeDeeM log files on my computer
@@ -75,40 +71,18 @@ Which means that BeeDeeM log files can be located on your system within '/path/t
 2. Then I can install a bank as follows:
 
          docker run --name beedeem_machine -i -t --rm \
-                    -v /Users/pdurand/tmp/beedeem/biobase:/biobase \
-                    -v /Users/pdurand/tmp/beedeem/log:/var/beedeem \
+                    -v /Users/pgdurand/biobanks:/beedeem-db \
+                    -v /Users/pgdurand/biobanks/log:/beedeem-wk \
                     beedeem_machine \
-                    -c install swiss
+                    install.sh -desc PDB_proteins
 
-In that case, BeeDeeM installs bank within directory '/biobase', which actually targets '/Users/pdurand/tmp/beedeem/biobase' through the Docker container. In a similar way, BeeDeeM creates a log file within '/var/beedeem', which is actually '/Users/pdurand/tmp/beedeem/log'.
-
-## Test the container
-
-Try a "docker run" using "-c install swiss":
-
-        docker run --name beedeem_machine -i -t --rm \
-        -v /Users/pdurand/tmp/beedeem/biobase:/biobase \
-        -v /Users/pdurand/tmp/beedeem/log:/var/beedeem \
-        beedeem_machine -c install swiss
-
-*Important notice:* in the above command, adapt values of '-v' directives to target **YOUR** local directories.
-
-After having installed that bank, you can try to query the bank as follows:
-
-        docker run --name beedeem_machine -i -t --rm \
-        -v /Users/pdurand/tmp/beedeem/biobase:/biobase \
-        -v /Users/pdurand/tmp/beedeem/log:/var/beedeem \
-        beedeem_machine -c query protein 1433S_HUMAN txt
-
-*Important notice:* in the above command, dapt values of '-v' directives to target **YOUR** local directories.
+In that case, BeeDeeM installs bank within directory '/beedeem-db', which actually targets '/Users/pgdurand/biobanks' through the Docker container. In a similar way, BeeDeeM creates a log file within '/beedeem-wk', which is actually '/Users/pgdurand/biobanks/log'.
 
 ## Additional notes
  
 ### Root access inside the container
 
-First of all, comment out "ENTRYPOINT" at the end of the Dockerfile, then run a "docker build". 
-
-Now, you'll be able to enter into the container, as follows:
+You'll be able to enter into the container, as follows:
 
      - if running: docker exec -it beedeem_machine bash
 

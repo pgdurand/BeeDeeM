@@ -2,7 +2,7 @@
 #
 # Dockerfile to use BeeDeem through a Docker container.
 #
-# Copyright (c) 2017, Patrick G. Durand
+# Copyright (c) 2017-21, Patrick G. Durand
 #
 #######################################################################################
 
@@ -12,7 +12,7 @@
 #     We use Alpine-Oracle JDK 8 pre-build Docker Image.
 #     See https://hub.docker.com/r/frolvlad/alpine-oraclejdk8/
 #
-FROM frolvlad/alpine-oraclejdk8:slim
+FROM platten/alpine-oracle-jre8-docker
 
 # Maintainer of BeeDeeM
 MAINTAINER Patrick G. Durand
@@ -21,53 +21,47 @@ MAINTAINER Patrick G. Durand
 # Install curl: to download BeeDeeM from Github
 # Install libbz2, libidn: NCBI's makeblastdb dependencies
 # mkdir: where to install BeeDeeM tmp stuff
-RUN apk add --no-cache curl bash libbz2 libidn && \
-    mkdir -p /tmp/bdm
+RUN apk update 
+RUN apk add --no-cache libbz2 libidn bash wget libxext libxrender libxtst libxi
 
 # ###
 #    Configuring BeeDeeM release. Always the latest one.
 #
-ENV BDM_VERSION=4.1.0
-
-# ###
-#     BeeDeeM configuration.
-#
-COPY config.properties.d deploy.xml.d /tmp/bdm/
-COPY run_bdm.sh /usr/local/bin/
+ENV BDM_VERSION=4.7.0
 
 # ###
 #     BeeDeeM download, installation and cleaning.
 #     We get an official release bundle from Github.
 #
 RUN \
-  cd /tmp/bdm && \
-  export BDM_FILE=beedeem-${BDM_VERSION}-distrib.zip && \
-  export BDM_URL=https://github.com/pgdurand/BeeDeeM/releases/download/v${BDM_VERSION}/${BDM_FILE} && \
-  curl -ksL ${BDM_URL} -o ${BDM_FILE} && unzip ${BDM_FILE} && \
-  cd ant && unzip ant-1.9.4.zip && cd .. && \
-  export JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre && \
-  export ANT_HOME=/tmp/bdm/ant && \
-  export PATH=$JAVA_HOME/bin:$ANT_HOME/bin:$PATH && \
-  rm -f config.properties deploy.xml && mv config.properties.d config.properties && mv deploy.xml.d deploy.xml && \
-  ant -f deploy.xml install  && \
-  cd /tmp && rm -rf bdm && cd /opt/beedeem/external/bin && rm -rf macos windows
+  mkdir -p /opt/beedeem/tmp-install && \
+  cd /opt/beedeem/tmp-install && \
+  wget https://github.com/pgdurand/BeeDeeM/releases/download/v${BDM_VERSION}/beedeem-${BDM_VERSION}-distrib.zip && \
+  unzip beedeem-${BDM_VERSION}-distrib.zip && \
+  tar -zxf beedeem-${BDM_VERSION}.tar.gz -C /opt/beedeem && \
+  cd .. && \
+  rm -rf tmp-install
+
+RUN \
+  cd /opt/beedeem && \
+  cp scripts/*.sh . && \
+  cp scripts/dbms.config conf && \
+  sed -i 's/@BIOBASE_ROOTDIR@/\/beedeem-db/g' conf/dbms.config && \
+  chmod +x *.sh && \
+  chmod +x /opt/beedeem/external/bin/linux/* && \
+  cd /opt/beedeem/external/bin && rm -rf macos windows
 
 # ###
-#     Add/update bank descriptors.
+#     BeeDeeM runtime environment variables.
 #
-#     If you want to update existing bank descriptors, or to add new
-#     ones, simply update the following COPY line accordingly, then
-#     uncomment it and re-run the 'docker build'.
-#
-#     DO NOT modify '/opt/beedeem/conf/descriptors/': this is the place
-#     where bank descriptors MUST BE located within the container to
-#     enable BeeDeeM to use them.
-#
-#     Using COPY: https://docs.docker.com/engine/reference/builder/#copy
-#
-#COPY mytest.gd mybank.dsc /opt/beedeem/conf/descriptors/
+ENV PATH=/opt/beedeem:$PATH
+ENV KL_WORKING_DIR=/beedeem-wk
+# shell variable name does not allowed use of '.'
+# (mirror__path == mirror.path)
+ENV KL_mirror__path=/beedeem-db
+ENV KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=/beedeem-wk"
 
 # ###
 #     Start BeeDeeM. 
 #
-ENTRYPOINT ["/usr/local/bin/run_bdm.sh"]
+#ENTRYPOINT ["/usr/local/bin/run_bdm.sh"]
