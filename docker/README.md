@@ -55,7 +55,7 @@ If needeed, you can tell BeeDeeM to dump logs directly on the console using this
 
       docker run .../... -e "KL_LOG_TYPE=console" beedeem_machine install.sh -desc PDB_proteins
 
-### Monitor BeeDeeM
+### Default JRE memory usage
 
 Java is pre-configured to use up to 2 Gb RAM. You can change this by adding such an argument to your docker run command:
 
