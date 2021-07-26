@@ -9,17 +9,21 @@
 # ###
 #     Base commands.
 #
-#     We use Alpine-Oracle JDK 8 pre-build Docker Image.
-#     See https://hub.docker.com/r/frolvlad/alpine-oraclejdk8/
+#     We use Alpine-Oracle JRE 8 pre-build Docker Image.
+#     See https://github.com/platten/alpine-oracle-jre8-docker
 #
 FROM platten/alpine-oracle-jre8-docker
 
 # Maintainer of BeeDeeM
 MAINTAINER Patrick G. Durand
 
-# Install bash: BeeDeeM scripts dependency
-# Install curl: to download BeeDeeM from Github
-# Install libbz2, libidn: NCBI's makeblastdb dependencies
+# ###
+# Install dependencies.
+# libbz2 libidn are required by blast tools included in BeeDeeM.
+# libxext libxrender libxtst libxi are required by Bioinformatics-Core-API included 
+#    in BeeDeeM and BeeDeeM-Tools.
+# bash is required when running this image by Nextflow pipelines.
+# wget is required to install some banks (e.g. GeneOntology).
 RUN apk update 
 RUN apk add --no-cache libbz2 libidn bash wget libxext libxrender libxtst libxi
 
