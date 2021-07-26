@@ -8,7 +8,7 @@ Of course, you need to have [Docker](https://docs.docker.com/engine/installation
 
 We also suppose that you are familiar with [docker build](https://docs.docker.com/engine/reference/commandline/build/) and [docker run](https://docs.docker.com/engine/reference/commandline/run/) commands.
 
-Note: this BeeDeeM's *Dockerfile* was made and tested using *Docker version 17* on *Mac OSX El Capitan*. 
+Note: this BeeDeeM's *Dockerfile* was made and tested using *Docker version 20* on *macOS Catalina*. 
 
 ## Build the container
 
