@@ -50,10 +50,25 @@ RUN \
   chmod +x /opt/beedeem/external/bin/linux/* && \
   cd /opt/beedeem/external/bin && rm -rf macos windows
 
+
+# ###
+#    Add BeeDeeM-tools. Always the latest one.
+#
+ENV BDMT_VERSION=2.0.1
+RUN \
+  cd /opt && \
+  mkdir beedeem-tools && \
+  cd beedeem-tools && \
+  wget https://github.com/ifremer-bioinformatics/BeeDeeM-Tools/releases/download/v${BDMT_VERSION}/beedeem-tools-${BDMT_VERSION}.tar.gz && \
+  gunzip beedeem-tools-${BDMT_VERSION}.tar.gz && \
+  tar -xf beedeem-tools-${BDMT_VERSION}.tar && \
+  rm beedeem-tools-${BDMT_VERSION}.tar && \
+  chmod +x *.sh
+
 # ###
 #     BeeDeeM runtime environment variables.
 #
-ENV PATH=/opt/beedeem:$PATH
+ENV PATH=/opt/beedeem:/opt/beedeem-tools:$PATH
 ENV KL_WORKING_DIR=/beedeem-wk
 # shell variable name does not allowed use of '.'
 # (mirror__path == mirror.path)

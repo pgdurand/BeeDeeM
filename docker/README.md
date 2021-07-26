@@ -55,6 +55,13 @@ If needeed, you can tell BeeDeeM to dump logs directly on the console using this
 
       docker run .../... -e "KL_LOG_TYPE=console" beedeem_machine install.sh -desc PDB_proteins
 
+### Monitor BeeDeeM
+
+Java is pre-configured to use up to 2 Gb RAM. You can change this by adding such an argument to your docker run command:
+
+      docker run .../... -e "KL_JRE_ARGS=-Xms128M -Xmx1G -Djava.io.tmpdir=/beedeem-wk" beedeem_machine install.sh -desc PDB_proteins
+
+Tips: ALWAYS redirect appropriately JRE tmp directory to somewhere outside the container! This is the reason why you see a -Djava.io.tmpdir directive in the previous command.
 
 ### Here is a working command on my OSX computer:
 
