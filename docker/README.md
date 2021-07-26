@@ -67,8 +67,6 @@ Tips: ALWAYS redirect appropriately JRE tmp directory to somewhere outside the c
 
 1. I created these directories:
 
-docker run --name beedeem_machine -i -t --rm -v /Users/pgdurand/biobanks:/beedeem-db -v /Users/pgdurand/biobanks/tmp:/beedeem-wk -e "KL_LOG_TYPE=console" beedeem_machine install.sh -desc PDB_proteins
-
          /Users/pgdurand/biobanks  (1)
          /Users/pgdurand/biobanks/log      (2)
 
