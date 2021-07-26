@@ -20,7 +20,6 @@ MAINTAINER Patrick G. Durand
 # Install bash: BeeDeeM scripts dependency
 # Install curl: to download BeeDeeM from Github
 # Install libbz2, libidn: NCBI's makeblastdb dependencies
-# mkdir: where to install BeeDeeM tmp stuff
 RUN apk update 
 RUN apk add --no-cache libbz2 libidn bash wget libxext libxrender libxtst libxi
 
@@ -59,9 +58,6 @@ ENV KL_WORKING_DIR=/beedeem-wk
 # shell variable name does not allowed use of '.'
 # (mirror__path == mirror.path)
 ENV KL_mirror__path=/beedeem-db
+# You can override the following at runtime by using Docker "-e" argument.
 ENV KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=/beedeem-wk"
 
-# ###
-#     Start BeeDeeM. 
-#
-#ENTRYPOINT ["/usr/local/bin/run_bdm.sh"]
