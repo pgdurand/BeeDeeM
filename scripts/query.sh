@@ -7,16 +7,7 @@
 #   https://pgdurand.gitbooks.io/beedeem/
 # -------------------------------------------------------------------
 # This is the program to use to query the databanks managed with 
-# DBMS. The program takes 3 arguments, in this order:
-#
-#    <database> <seqid> <format>
-#
-# Accepted values for 'database' is: dico, nucleotide or protein.
-# 
-# Accepted value for 'seqid' is a sequence identifier. 
-#
-# Accepted value for 'format' is: txt (default), html, 
-# insd, fas or finsd. 
+# DBMS. 
 #
 # In addition, some parameters can be passed to the JVM for special 
 # configuration purposes:<br>
@@ -65,4 +56,5 @@ KL_JAR_LIST=`echo $KL_JAR_LIST_TMP | sed 's/ /:/g'`
 
 # *** start application
 KL_APP_MAIN_CLASS=bzh.plealog.dbmirror.main.CmdLineQuery
-java $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS -d $1 -i $2 -f $3
+java $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS $@
+
