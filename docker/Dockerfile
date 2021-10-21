@@ -59,7 +59,7 @@ RUN \
 # ###
 #    Add BeeDeeM-tools. Always the latest one.
 #
-ENV BDMT_VERSION=2.0.1
+ENV BDMT_VERSION=2.1.0
 RUN \
   cd /opt && \
   mkdir beedeem-tools && \

@@ -36,15 +36,15 @@ From: platten/alpine-oracle-jre8-docker
 	chmod +x /opt/beedeem/conf/scripts/*.sh
 	cd /opt/beedeem/external/bin && rm -rf macos windows
 
-	BDMT_VERSION=2.0.1
-        cd /opt
-        mkdir beedeem-tools
-        cd beedeem-tools
-        wget https://github.com/ifremer-bioinformatics/BeeDeeM-Tools/releases/download/v${BDMT_VERSION}/beedeem-tools-${BDMT_VERSION}.tar.gz
-        gunzip beedeem-tools-${BDMT_VERSION}.tar.gz
-        tar -xf beedeem-tools-${BDMT_VERSION}.tar
-        rm beedeem-tools-${BDMT_VERSION}.tar
-        chmod +x *.sh
+	BDMT_VERSION=2.1.0
+  cd /opt
+  mkdir beedeem-tools
+  cd beedeem-tools
+  wget https://github.com/ifremer-bioinformatics/BeeDeeM-Tools/releases/download/v${BDMT_VERSION}/beedeem-tools-${BDMT_VERSION}.tar.gz
+  gunzip beedeem-tools-${BDMT_VERSION}.tar.gz
+  tar -xf beedeem-tools-${BDMT_VERSION}.tar
+  rm beedeem-tools-${BDMT_VERSION}.tar
+  chmod +x *.sh
 
 
 %environment
