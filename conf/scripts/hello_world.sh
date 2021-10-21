@@ -20,3 +20,25 @@ echo "Executing an external script"
 echo "Arguments coming from BeeDeeM are:"
 echo $@
 
+echo "----"
+# Prepare arguments for processing
+WK_DIR=
+INST_DIR=
+PROCESSED_FILE=
+while getopts w:d:f: opt
+do
+    case "$opt" in
+      w)  WK_DIR="$OPTARG";;
+      d)  INST_DIR="$OPTARG";;
+      f)  PROCESSED_FILE="$OPTARG";;
+    esac
+done
+shift `expr $OPTIND - 1`
+# remaining arguments, if any, are stored here
+MORE_ARGS=$@
+
+echo "Working dir: $WK_DIR"
+echo "Install dir: $INST_DIR"
+echo "Processed file: $PROCESSED_FILE"
+echo "----"
+ 
