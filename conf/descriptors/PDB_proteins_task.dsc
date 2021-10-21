@@ -9,10 +9,10 @@ db.ldir=${mirrordir}|p|PDB_proteins
 db.files.include=pdbaa_v4.tar.gz
 db.files.exclude=
 
-tasks.global.pre=script(name=WaitALittle;path=wait_a_little.sh)
-tasks.global.post=makealias,delgz,deltar,script(name=HelloWorld;path=hello_world.sh)
+tasks.global.pre=script(name=WaitALittle;path=wait_a_little)
+tasks.global.post=makealias,delgz,deltar,script(name=HelloWorld;path=hello_world)
 
-tasks.unit.post=gunzip,untar,script(name=HelloWorld;path=hello_world.sh)
+tasks.unit.post=gunzip,untar,script(name=HelloWorld;path=hello_world)
 
 ftp.uname=anonymous
 ftp.pswd=user@institute.org
