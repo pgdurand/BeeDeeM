@@ -18,7 +18,7 @@ package bzh.plealog.dbmirror.util.conf;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -51,6 +51,11 @@ public class BankJsonDescriptor {
   public static final String TYPE_PROT = "protein";
   public static final String TYPE_ONTO = "ontology";
 
+  public static final String OTHER_INDEX_FEXT = ".idx";
+  public static final String OTHER_INDEX_PROPS = "index.properties";
+  public static final String OTHER_INDEX_PROP_LBL = "label";
+  public static final String OTHER_INDEX_PROP_KEY = "key";
+  
   public static final String DEFAULT_DESCRIPTOR_FNAME = "databank.json";
   
   public BankJsonDescriptor() {
@@ -66,15 +71,14 @@ public class BankJsonDescriptor {
    * @param type use one of DBServerConfig.PROTEIN_TYPE, DBServerConfig.NUCLEIC_TYPE
    * or DBServerConfig.DICO_TYPE
    * @param provider provider of the bank
-   * @param blastPath path to blast bank if any
-   * @param lucenePath path to lucene index if any
+   * @param index a map of index if any (blast, lucene, bowtie indexes, etc)
    * @param bytes size of bank in bytes
    * @param entries size of bank in number of sequences or entries (ontology)
    * */
   @SuppressWarnings("serial")
   public BankJsonDescriptor(
       String name, String description, String installDate, String release,
-      String type, String provider, String blastPath, String lucenePath,
+      String type, String provider, Map<String, String> index,
       long bytes, int entries) {
 
     BankJsonMainSectionDescriptor mainJ = new BankJsonMainSectionDescriptor();
@@ -100,13 +104,7 @@ public class BankJsonDescriptor {
     }
     mainJ.setProvider(new ArrayList<String>() {{add(provider);}});
     mainJ.setOwner(EZApplicationBranding.getAppName());
-    HashMap<String, String> index = new HashMap<>();
-    if (blastPath!=null) {
-      index.put(BLAST_INDEX, blastPath);
-    }
-    if (lucenePath!=null) {
-      index.put(LUCENE_INDEX, lucenePath);
-    }
+    
     mainJ.setIndex(index);
 
     sizeJ.setBytes(bytes);

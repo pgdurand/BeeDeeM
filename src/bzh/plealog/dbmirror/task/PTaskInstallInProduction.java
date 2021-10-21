@@ -19,14 +19,22 @@ package bzh.plealog.dbmirror.task;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -195,6 +203,47 @@ public class PTaskInstallInProduction extends PAbstractTask {
         throw new RuntimeException("unable to locate Blast databank for "
             + db.getName());
       }
+    }
+  }
+  private void scanForOtherIndexes(DBServerConfig db, Map<String, String> index, 
+      String dbPathDownload, String dbPathInstalled){
+    List<File> files;
+    //within installation directory, look for all sub-dir terminating with .idx
+    try {
+      files = Files.list(Paths.get(dbPathDownload))
+          .filter(Files::isDirectory)
+          .filter(path -> path.toString().endsWith(BankJsonDescriptor.OTHER_INDEX_FEXT))
+          .map(Path::toFile)
+          .collect(Collectors.toList());
+    } catch (IOException e) {
+      LOGGER.warn("Unable to list additional indexes: "+e.toString());
+      return;
+    }
+    // then, process additional indexes if any (bowtie, diamond, etc)
+    for(File idxDirectory : files) {
+      //Do we have a dedicated an index.properties file?
+      File propFile = new File(Utils.terminatePath(idxDirectory.getAbsolutePath())
+          +BankJsonDescriptor.OTHER_INDEX_PROPS);
+      if (propFile.exists()){
+        Properties props = new Properties();
+        try (FileReader fr = new FileReader(propFile)){
+          props.load(fr);
+          index.put(
+              props.getProperty(BankJsonDescriptor.OTHER_INDEX_PROP_KEY),
+              Utils.terminatePath(dbPathInstalled)+idxDirectory.getName());
+        } catch (Exception e) {
+          LOGGER.warn("Unable to read property file: "+propFile+": "+e.toString());
+        }
+      }
+      //otherwise, use directory name has index key
+      else {
+        String fName = idxDirectory.getName();
+        int idx = fName.lastIndexOf('.');
+        index.put(
+            fName.substring(0, idx),
+            Utils.terminatePath(dbPathInstalled)+fName);
+      }
+      
     }
   }
   
@@ -426,6 +475,10 @@ public class PTaskInstallInProduction extends PAbstractTask {
           updateMirror(mirrorDescriptors, db, dbPathDownload, dbPathInstalled);
         }
         //added on June 2021: write DB stats in a JSON file
+        HashMap<String, String> index = new HashMap<>();
+        index.put(BankJsonDescriptor.BLAST_INDEX, getBlastIndexPath(db, dbPathDownload, dbPathInstalled));
+        index.put(BankJsonDescriptor.LUCENE_INDEX, getLuceneIndexPath(db, dbPathDownload, dbPathInstalled));
+        scanForOtherIndexes(db, index, dbPathDownload, dbPathInstalled);
         BankJsonDescriptor descriptor = new BankJsonDescriptor(
             db.getName(), 
             db.getDescription(), 
@@ -433,8 +486,7 @@ public class PTaskInstallInProduction extends PAbstractTask {
             releaseDate, 
             db.getTypeCode(), 
             db.getProvider(), 
-            getBlastIndexPath(db, dbPathDownload, dbPathInstalled), 
-            getLuceneIndexPath(db, dbPathDownload, dbPathInstalled), 
+            index, 
             bankSize, 
             dbSizes[0]);
         descriptor.write(new File(Utils.terminatePath(dbPathDownload)+BankJsonDescriptor.DEFAULT_DESCRIPTOR_FNAME));

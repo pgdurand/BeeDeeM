@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.util.HashMap;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -78,6 +79,9 @@ public class BankJsonTest {
   @Test
   public void testBankWriter() {
     File f = new File("databank_w.json");
+    HashMap<String, String> index = new HashMap<>();
+    index.put(BankJsonDescriptor.BLAST_INDEX, "/path/to/gbcore.nal");
+    index.put(BankJsonDescriptor.LUCENE_INDEX, "/path/to/gbcore.ldx");
     BankJsonDescriptor desc = new BankJsonDescriptor(
         "Genbank_CoreNucleotide", 
         "Genbank_CoreNucleotide databank",
@@ -85,8 +89,7 @@ public class BankJsonTest {
         "242",
         DBServerConfig.NUCLEIC_TYPE, 
         "NCBI", 
-        "/path/to/gbcore.nal", 
-        "/path/to/gbcore.ldx",
+        index,
         2000310261569l, 
         95538504);
     
