@@ -1,12 +1,19 @@
 #!/usr/bin/env bash
 
 # As a reminder, a BeeDeeM Post processing script is called
-# with up to two arguments:  -d <path> -f <path>
+# with with these arguments: -w <path> -d <path> -f <path> -n <name> -t <type>
 #
+#  -w <path>: <path> is the working directory path.
+#             provided for both unit and global tasks.
 #  -d <path>: <path> is the bank installation path.
 #             provided for both unit and global tasks.
 #  -f <path>: <path> is the path to file under unit task processing
 #             only provided with unit task.
+#  -n <name>: <name> is the bank name.
+#  -t <type>: <path> is the bank type. One of p, n or d.
+#             p: protein
+#             n: nucleotide
+#             d: dictionary or ontology
 
 echo "Running script: $0"
 echo "     arguments: $@"
@@ -15,12 +22,14 @@ DB_PATH=
 DBFILE=
 
 # So, we handle that here...
-while getopts d:f:w: opt
+while getopts w:d:f:n:t: opt
 do
     case "$opt" in
-      d)  DB_PATH="$OPTARG";;
-      f)  DB_FILE="$OPTARG";;
-      w) ;;
+      w)  WK_DIR="$OPTARG";;
+      d)  INST_DIR="$OPTARG";;
+      f)  PROCESSED_FILE="$OPTARG";;
+      n)  BANK_NAME="$OPTARG";;
+      t)  BANK_TYPE="$OPTARG";;
     esac
 done
 shift `expr $OPTIND - 1`
@@ -42,3 +51,4 @@ echo "Deactivating Conda env"
 . /appli/bioinfo/hmmer/3.3/delenv.sh
 
 exit $RET_CODE
+

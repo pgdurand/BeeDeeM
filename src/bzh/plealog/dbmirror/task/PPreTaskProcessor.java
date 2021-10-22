@@ -15,6 +15,8 @@
  *  GNU Affero General Public License for more details.
  */package bzh.plealog.dbmirror.task;
 
+import java.util.StringTokenizer;
+
 import org.apache.commons.logging.LogFactory;
 
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
@@ -86,10 +88,15 @@ public class PPreTaskProcessor extends Thread {
    */
   private void stackTasks() {
     String tasks = _dbsc.getGlobalPreTasks();
-    if (tasks.indexOf(PTask.TASK_G_EXTSCRIPT) >= 0) {
-      PTaskExecScript execTask = new PTaskExecScript(_dbsc.getLocalTmpFolder(), null);
-      execTask.setParameters(getTaskParameters(tasks, PTask.TASK_G_EXTSCRIPT));
-      _taskEngine.addTask(execTask, _dbsc.getName());
+    StringTokenizer tokenizer = new StringTokenizer(tasks, ",");
+    while (tokenizer.hasMoreTokens()) {
+      String task = tokenizer.nextToken();
+      if (task.indexOf(PTask.TASK_G_EXTSCRIPT) >= 0) {
+        PTaskExecScript execTask = new PTaskExecScript(_dbsc.getLocalTmpFolder(), null,
+            _dbsc.getName(), _dbsc.getTypeCode());
+        execTask.setParameters(getTaskParameters(task, PTask.TASK_G_EXTSCRIPT));
+        _taskEngine.addTask(execTask, _dbsc.getName());
+      }
     }
   }
   

@@ -164,60 +164,65 @@ public class DefaultLoaderMonitor implements LoaderMonitor {
           _dbConf.getName());
     }
 
-    // eggnog
-    if (tasks.contains(PTask.TASK_G_NOG_PREPARE)) {
-      PTaskPrepareEggNog eggNogTask = new PTaskPrepareEggNog(_dbConf);
-      eggNogTask.setParameters(getTaskParameters(tasks,
-          PTask.TASK_G_NOG_PREPARE));
-      _taskEngine.addTask(eggNogTask, _dbConf.getName());
+    // Handle all other tasks
+    tokenizer = new StringTokenizer(tasks, ",");
+    while (tokenizer.hasMoreTokens()) {
+      task = tokenizer.nextToken();
+      // eggnog
+      if (task.contains(PTask.TASK_G_NOG_PREPARE)) {
+        PTaskPrepareEggNog eggNogTask = new PTaskPrepareEggNog(_dbConf);
+        eggNogTask.setParameters(getTaskParameters(task,
+            PTask.TASK_G_NOG_PREPARE));
+        _taskEngine.addTask(eggNogTask, _dbConf.getName());
+      }
+      else if (task.indexOf(PTask.TASK_G_FORMATDB) >= 0) {
+        // note: to figure out if we have to save total entries during
+        // formatdb task
+        // we rely on Lucene indexes: if some have been created, then we
+        // already have
+        // that information
+        PTaskFormatDB fTask = new PTaskFormatDB(_formatDBfiles,
+            getFullDBPathName(), _dbConf.isNucleic());
+        fTask.setParameters(getTaskParameters(task, PTask.TASK_G_FORMATDB));
+        _taskEngine.addTask(fTask, _dbConf.getName());
+      }
+      
+      // user provided external script
+      else if (task.indexOf(PTask.TASK_G_EXTSCRIPT) >= 0) {
+        PTaskExecScript execTask = new PTaskExecScript(
+            _dbConf.getLocalTmpFolder(), null, _dbConf.getName(), _dbConf.getTypeCode());
+        execTask.setParameters(getTaskParameters(task, PTask.TASK_G_EXTSCRIPT));
+        _taskEngine.addTask(execTask, _dbConf.getName());
+      }
+  
+      //cleaning tasks if any are required
+      else if (task.indexOf(PTask.TASK_G_DELETEGZ) >= 0) {
+        _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
+            "*.gz"), _dbConf.getName());
+        _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
+            "*.zip"), _dbConf.getName());
+      }
+      else if (task.indexOf(PTask.TASK_G_DELETETAR) >= 0) {
+        _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
+            "*.tar"), _dbConf.getName());
+      }
+      else if (task.indexOf(PTask.TASK_G_DELETETMPIDX) >= 0) {
+        _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
+            "*" + LuceneUtils.DIR_OK_FEXT + "/**"), _dbConf.getName());
+      }
+      else if (task.indexOf(PTask.TASK_G_MAKEALIAS) >= 0) {
+        PTaskMakeBlastAlias mkTask = new PTaskMakeBlastAlias(
+            getFullDBPathName(), _dbConf.isNucleic());
+        mkTask.setParameters(getTaskParameters(task, PTask.TASK_G_MAKEALIAS));
+        _taskEngine.addTask(mkTask, _dbConf.getName());
+      }
+      
+      /*
+       * str = _dbConf.getHistoryToKeep(); if (str!=null){ _taskEngine.addTask(new
+       * KLTaskHandleHistory( _dbConf.getLocalFolder(), Integer.valueOf(str)),
+       * _dbConf.getName()); }
+       */
     }
-
-    if (tasks.indexOf(PTask.TASK_G_FORMATDB) >= 0) {
-      // note: to figure out if we have to save total entries during
-      // formatdb task
-      // we rely on Lucene indexes: if some have been created, then we
-      // already have
-      // that information
-      PTaskFormatDB fTask = new PTaskFormatDB(_formatDBfiles,
-          getFullDBPathName(), _dbConf.isNucleic());
-      fTask.setParameters(getTaskParameters(tasks, PTask.TASK_G_FORMATDB));
-      _taskEngine.addTask(fTask, _dbConf.getName());
-    }
-    
-    // user provided external script
-    if (tasks.indexOf(PTask.TASK_G_EXTSCRIPT) >= 0) {
-      PTaskExecScript execTask = new PTaskExecScript(_dbConf.getLocalTmpFolder(), null);
-      execTask.setParameters(getTaskParameters(tasks, PTask.TASK_G_EXTSCRIPT));
-      _taskEngine.addTask(execTask, _dbConf.getName());
-    }
-
-    //cleaning tasks is any are required
-    if (tasks.indexOf(PTask.TASK_G_DELETEGZ) >= 0) {
-      _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
-          "*.gz"), _dbConf.getName());
-      _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
-          "*.zip"), _dbConf.getName());
-    }
-    if (tasks.indexOf(PTask.TASK_G_DELETETAR) >= 0) {
-      _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
-          "*.tar"), _dbConf.getName());
-    }
-    if (tasks.indexOf(PTask.TASK_G_DELETETMPIDX) >= 0) {
-      _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
-          "*" + LuceneUtils.DIR_OK_FEXT + "/**"), _dbConf.getName());
-    }
-    if (tasks.indexOf(PTask.TASK_G_MAKEALIAS) >= 0) {
-      PTaskMakeBlastAlias mkTask = new PTaskMakeBlastAlias(
-          getFullDBPathName(), _dbConf.isNucleic());
-      mkTask.setParameters(getTaskParameters(tasks, PTask.TASK_G_MAKEALIAS));
-      _taskEngine.addTask(mkTask, _dbConf.getName());
-    }
-    
-    /*
-     * str = _dbConf.getHistoryToKeep(); if (str!=null){ _taskEngine.addTask(new
-     * KLTaskHandleHistory( _dbConf.getLocalFolder(), Integer.valueOf(str)),
-     * _dbConf.getName()); }
-     */
   }
 
   /**
@@ -481,7 +486,8 @@ public class DefaultLoaderMonitor implements LoaderMonitor {
     else if (unitTask.contains(PTask.TASK_U_EXTSCRIPT)) {
       String dicoPath = _dbConf.getLocalTmpFolder();
       aName = getTaskFilepath(unitTask, fName, false);
-      PTaskExecScript execTask = new PTaskExecScript(dicoPath, aName);
+      PTaskExecScript execTask = new PTaskExecScript(dicoPath, aName,
+          _dbConf.getName(), _dbConf.getTypeCode());
       execTask.setParameters(getTaskParameters(unitTask, PTask.TASK_U_DICO_IDX));
       addTaskToEngine(execTask);
     }

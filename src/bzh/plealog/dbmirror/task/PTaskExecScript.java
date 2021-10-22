@@ -45,15 +45,19 @@ public class PTaskExecScript extends PAbstractTask {
   private String                _dbInstallationPath;
   private String                _curFile;
   private String                _errMsg;
+  private String                _bankName;
+  private String                _bankType;
   protected Map<String, String> _args;
   
   //mandatory arguments user has to provide in 'script()' task
   private static final String SCRIPT_NAME = "name";
   private static final String SCRIPT_CMD_PATH = "path";
   //arguments passed in to the calling script
-  public static final String WORK_DIR_ARG = "-w"; //path to BeeDeeM working dir
-  public static final String INST_DIR_ARG = "-d"; //path to bank installation (unit and global tasks)
+  public static final String WORK_DIR_ARG = "-w";  // path to BeeDeeM working dir
+  public static final String INST_DIR_ARG = "-d";  // path to bank installation (unit and global tasks)
   public static final String INST_FILE_ARG = "-f"; // path to file (unit task only)
+  public static final String BANK_NAME_ARG = "-n"; // bank name
+  public static final String BANK_TYPE_ARG = "-t"; // bank type (p,n,d)
   
   public static final String UNIX_FILE_EXT = ".sh";
   public static final String WIN_FILE_EXT = ".bat";
@@ -67,10 +71,14 @@ public class PTaskExecScript extends PAbstractTask {
    * 
    * @param dbPath path to bank installation (unit and global tasks)
    * @param currentFile path to file (unit task only)
+   * @param bankName bank name
+   * @param bankType bank type, one of p, n, d
    */
-  public PTaskExecScript(String dbPath, String currentFile) {
+  public PTaskExecScript(String dbPath, String currentFile, String bankName, String bankType) {
     _dbInstallationPath = dbPath;
     _curFile = currentFile;
+    _bankName = bankName;
+    _bankType = bankType;
   }
 
   /**
@@ -176,6 +184,8 @@ public class PTaskExecScript extends PAbstractTask {
     if (_curFile!=null) {
       params.put(INST_FILE_ARG, new CommandArgument(_curFile, true));
     }
+    params.put(BANK_NAME_ARG, new CommandArgument(_bankName, false));
+    params.put(BANK_TYPE_ARG, new CommandArgument(_bankType, false));
     
     Process proc = executor.executeAndReturn(_scriptCmd, params);
     
