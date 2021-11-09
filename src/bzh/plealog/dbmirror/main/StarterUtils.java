@@ -99,7 +99,7 @@ public class StarterUtils {
     }
   }
 
-  private static void configureApplication(String appHome, String nameLogger,
+  public static void configureApplication(String appHome, String nameLogger,
       boolean standalone, boolean useUI, boolean configureLogger, boolean initConfig) {
 
     if (standalone) {
