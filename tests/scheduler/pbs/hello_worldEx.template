@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#PBS -q QUEUE
+#PBS -l mem=1g
+#PBS -l ncpus=2
+#PBS -l walltime=00:10:00
+#PBS -j oe
+#PBS -N HelloWorld
+#PBS -o LOG_DIR
+#PBS -e LOG_DIR
+
+echo "Hello world on QUEUE queue"
+
