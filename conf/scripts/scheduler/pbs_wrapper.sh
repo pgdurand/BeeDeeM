@@ -51,9 +51,9 @@ function errorMsg(){
 #  return: 0 if success
 function submit(){
   if [ "$#" -eq 2 ]; then
-    CMD="$QSUB_CMD -S \"/bin/bash\" -j oe -o $2 -e $2 $1"
+    CMD="$QSUB_CMD -V -S \"/bin/bash\" -j oe -o $2 -e $2 $1"
   else
-    CMD="$QSUB_CMD -S \"/bin/bash\" $1"
+    CMD="$QSUB_CMD -V -S \"/bin/bash\" $1"
   fi
   ANSWER=$(eval $CMD)
   RET_CODE=$?
@@ -78,7 +78,7 @@ function submit(){
 #  arg7: path to script to submit to PBS
 #  return: 0 if success
 function submitEx(){
-  CMD="$QSUB_CMD -q $1 -l mem=$2 -l ncpus=$3 -l walltime=$4 -N $5 -m n -j oe -S \"/bin/bash\" -o $6 -e $6 $7"
+  CMD="$QSUB_CMD -V -q $1 -l mem=$2 -l ncpus=$3 -l walltime=$4 -N $5 -m n -j oe -S \"/bin/bash\" -o $6 -e $6 $7"
   ANSWER=$(eval $CMD)
   RET_CODE=$?
   if [ $RET_CODE -eq 0 ];then
