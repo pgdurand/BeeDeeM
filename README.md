@@ -1,21 +1,22 @@
 # *BeeDeeM*: the Bioinformatics Databank Manager System 
 
-[![License AGPL](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt)  [![Build Status](https://travis-ci.org/pgdurand/BeeDeeM.svg?branch=master)](https://travis-ci.org/pgdurand/BeeDeeM)  [![](https://tokei.rs/b1/github/pgdurand/BeeDeeM?category=code)](https://github.com/pgdurand/BeeDeeM) [![](https://img.shields.io/badge/platform-Java--1.8+-yellow.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) [![](https://img.shields.io/badge/run_on-Linux--macOS--Windows-yellowgreen.svg)]() 
+[![License AGPL](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt)   [![](https://tokei.rs/b1/github/pgdurand/BeeDeeM?category=code)](https://github.com/pgdurand/BeeDeeM) [![](https://img.shields.io/badge/platform-Java--1.8+-yellow.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) [![](https://img.shields.io/badge/run_on-Linux--macOS--Windows-yellowgreen.svg)]() 
 
 
 *BeeDeeM* is a general purpose **B**ioinformatics **D**atabank **M**anager. 
 
-It provides a suite of command-line and UI softwares to install and use major sequence databanks and biological classifications. It is the ideal companion of the [NCBI BLAST suite of softwares](https://pgdurand.gitbooks.io/beedeem/test_install.html#run-a-blast-search) and [PLAST](https://plast.inria.fr/).
+It provides a suite of command-line and UI softwares to install and use major sequence databanks and biological classifications. It is the ideal companion of the [NCBI BLAST suite of softwares](https://pgdurand.gitbooks.io/beedeem/test_install.html#run-a-blast-search) and [PLAST](https://plast.inria.fr/), as well as tools such as [ORSON](https://github.com/ifremer-bioinformatics/orson) annotation pipeline, [BLAST Viewer](https://github.com/pgdurand/BlastViewer) platform.
 
 ## Main features
 
 *BeeDeeM* automatically performs:
 
-* the download of the database files from remote sites \(via FTP, Aspera\),
+* the download of the database files from remote sites \(via FTP, HTTP or Aspera\),
 * the decompression of the files \(gzip files\),
 * the un-archiving of the files \(tar files\),
 * the conversion of native sequence banks \(e.g. Genbank\) to FASTA files,
 * the preparation of databases in BLAST format from native sequence bank formats,
+° the preparation of other indexes such as Diamond, Bowtie, Hisat, etc.
 * the indexing of Genbank, Refseq, Embl, Genpept, Swissprot, TrEmbl and Fasta files allowing their efficient querying by way of sequence identifiers,
 * the indexing of sequence features and ontologies data (NCBI Taxonomy, Gene Ontology, Enzyme Commission, Intepro domains and PFAM domains),
 * the preparation of taxonomic subsets out of annotated sequence banks,
@@ -47,7 +48,7 @@ Here is an example of a script to start Genbank_CoreNucleotide installation on I
 
 # Release of BeeDeeM to use
 BDM_HOME="$SOFT/bioinfo/beedeem"
-BDM_VER="5.5.1"
+BDM_VER="4.7.1"
 
 # Load BeeDeeM environment
 module load java/1.8.0_121
@@ -73,8 +74,8 @@ Here is a screenshot of BeeDeeM user friendly interface:
 Among others, these databanks can be used to:
 
 * prepare and maintain up-to-date local copy of usefull data
-* run BLAST sequence comparison jobs
-* annotate BLAST results with sequence features and ontologies
+* run BLAST, Diamond or PLAST sequence comparison jobs
+* annotate BLAST, Diamond or PLAST results with sequence features and ontologies
 
 ## Companion tools
 
