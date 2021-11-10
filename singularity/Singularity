@@ -7,7 +7,7 @@ Bootstrap : docker
 From: platten/alpine-oracle-jre8-docker
 
 %post
-	BDM_VERSION=4.7.0
+	BDM_VERSION=4.7.1
 	apk update
         # libbz2 libidn are required by blast tools included in BeeDeeM.
         # libxext libxrender libxtst libxi are required by Bioinformatics-Core-API included 

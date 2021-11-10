@@ -30,7 +30,7 @@ RUN apk add --no-cache libbz2 libidn bash wget libxext libxrender libxtst libxi
 # ###
 #    Configuring BeeDeeM release. Always the latest one.
 #
-ENV BDM_VERSION=4.7.0
+ENV BDM_VERSION=4.7.1
 
 # ###
 #     BeeDeeM download, installation and cleaning.
