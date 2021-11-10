@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# This is a BeeDeeM external task script aims at making 
+# FASTA file out of a BLAST bank.
+#
+# Such a BeeDeeM script is called by the task engine and
+# with these arguments: -d <path> -n <name> 
+#
+#  -d <path>: <path> is the bank installation path.
+#             provided for both unit and global tasks.
+#  -n <name>: <name> is the bank name.
+
+echo "Making FASTA file from BLAST bank"
+echo "Arguments coming from BeeDeeM are:"
+echo $@
+echo "----"
+# Prepare arguments for processing
+INST_DIR=
+BANK_NAME=
+while getopts d:n: opt
+do
+    case "$opt" in
+      d)  INST_DIR="$OPTARG";;
+      n)  BANK_NAME="$OPTARG";;
+    esac
+done
+shift `expr $OPTIND - 1`
+# remaining arguments, if any, are stored here
+MORE_ARGS=$@
+
+echo "Install dir: $INST_DIR"
+echo "Bank name: $BANK_NAME"
+echo "----"
+
+# Run tool
+SOFT_NAME=blast
+SOFT_VER=2.9.0
+. /appli/bioinfo/$SOFT_NAME/$SOFT_VER/env.sh
+cd $INST_DIR
+CMD="blastdbcmd -entry all -db ${BANK_NAME} -out ${BANK_NAME}00"
+echo $CMD
+eval $CMD
+RET_CODE=$?
+chmod 644 ${BANK_NAME}00
+. /appli/bioinfo/$SOFT_NAME/$SOFT_VER/delenv.sh
+exit $RET_CODE
+
