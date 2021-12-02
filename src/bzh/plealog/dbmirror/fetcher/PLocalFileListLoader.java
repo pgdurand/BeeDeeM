@@ -16,7 +16,6 @@
  */
 package bzh.plealog.dbmirror.fetcher;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import org.apache.commons.logging.LogFactory;
@@ -33,8 +32,8 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
  */
 public class PLocalFileListLoader extends FileListLoader {
 
-  private PLocalLoader    _kLoader;
-  private ArrayList<File> _file;
+  private PLocalLoader           _kLoader;
+  private ArrayList<DBMSFile> _file;
 
   /**
    * Constructor of the class
@@ -44,7 +43,7 @@ public class PLocalFileListLoader extends FileListLoader {
    * @param files
    *          the list of the files which has been found in the directories
    */
-  public PLocalFileListLoader(DBServerConfig dbsc, ArrayList<File> files) {
+  public PLocalFileListLoader(DBServerConfig dbsc, ArrayList<DBMSFile> files) {
     super(dbsc);
     _kLoader = new PLocalLoader(dbsc);
     _file = files;
@@ -95,7 +94,7 @@ public class PLocalFileListLoader extends FileListLoader {
    * 
    * @return the list used to store files found in the directory
    */
-  protected ArrayList<File> get_file() {
+  protected ArrayList<DBMSFile> get_file() {
     return _file;
   }
 
@@ -105,7 +104,7 @@ public class PLocalFileListLoader extends FileListLoader {
    * @param file
    *          the list used to store files found in the directory
    */
-  protected void set_file(ArrayList<File> file) {
+  protected void set_file(ArrayList<DBMSFile> file) {
     this._file = file;
   }
 }

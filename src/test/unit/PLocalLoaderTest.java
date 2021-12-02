@@ -28,9 +28,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import bzh.plealog.dbmirror.fetcher.DBMSFile;
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
-import bzh.plealog.dbmirror.fetcher.PLocalLoader;
 import bzh.plealog.dbmirror.fetcher.NameMatcher;
+import bzh.plealog.dbmirror.fetcher.PLocalLoader;
 import bzh.plealog.dbmirror.util.Utils;
 
 public class PLocalLoaderTest {
@@ -56,7 +57,7 @@ public class PLocalLoaderTest {
   public void testLoadLocalFiles() {
     TestConfig config = new TestConfig();
     PLocalLoader loader = new PLocalLoader(config);
-    List<File> result = new ArrayList<File>();
+    List<DBMSFile> result = new ArrayList<DBMSFile>();
 
     if (!loader.initFilesList(result)) {
       Assert.fail("Unable to get files");

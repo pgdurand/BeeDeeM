@@ -192,7 +192,7 @@ public class PFTPLoader {
    * @return 1 if success, 0 if failure, 2 if skip (file already loaded ; when
    *         resuming from a previous work) and 3 if aborted.
    * */
-	protected int downloadFile(DBServerConfig fsc, DBMSFtpFile rFile, File file, long lclFSize) {
+	protected int downloadFile(DBServerConfig fsc, DBMSFile rFile, File file, long lclFSize) {
 		FileOutputStream fos = null;
 		InputStream ftpIS = null;
 		String remoteFName;
@@ -200,9 +200,9 @@ public class PFTPLoader {
 		Date remoteFDate;
 		int bRet = 1;
 		
-		remoteFName = rFile.getFtpFile().getName();
-		remoteFDate = rFile.getFtpFile().getTimestamp().getTime();
-		remoteFSize = rFile.getFtpFile().getSize();
+		remoteFName = rFile.getName();
+		remoteFDate = rFile.getDateStamp();
+		remoteFSize = rFile.getSize();
 		try {
 			// enter remote directory
 			if (_ftp.changeWorkingDirectory(rFile.getRemoteDir())) {
@@ -268,7 +268,7 @@ public class PFTPLoader {
    * @return 1 if success, 0 if failure, 2 if skip (file already loaded ; when
    *         resuming from a previous work) and 3 if aborted.
    */
-  public int downloadFile(DBServerConfig fsc, DBMSFtpFile rFile,
+  public int downloadFile(DBServerConfig fsc, DBMSFile rFile,
       int fileNum, int totFiles) {
 	  File file, filegz, tmpDir;
     String remoteFName, name, msg;
@@ -277,9 +277,9 @@ public class PFTPLoader {
     
     _errMsg = null;
     // check whether remote file already exists locally
-    remoteFName = rFile.getFtpFile().getName();
+    remoteFName = rFile.getName();
     //remoteFDate = rFile.getFtpFile().getTimestamp().getTime();
-    remoteFSize = rFile.getFtpFile().getSize();
+    remoteFSize = rFile.getSize();
     file = new File(fsc.getLocalTmpFolder() + remoteFName);
     lclFSize = file.length();
     if (file.exists() && lclFSize == remoteFSize) {
@@ -342,7 +342,7 @@ public class PFTPLoader {
     return iRet;
   }
 
-  private void dumpFileListInLog(DBServerConfig fsc, List<DBMSFtpFile> fNames) {
+  private void dumpFileListInLog(DBServerConfig fsc, List<DBMSFile> fNames) {
     long val, totBytes = 0;
     int nFiles;
     String curPath = "";
@@ -350,13 +350,13 @@ public class PFTPLoader {
 
     LoggerCentral.info(LOGGER, "Files matching constraints : " + nFiles);
 
-    for (DBMSFtpFile rFile : fNames) {
+    for (DBMSFile rFile : fNames) {
       if (curPath.equals(rFile.getRemoteDir()) == false) {
         LoggerCentral.info(LOGGER, "  Files in: " + rFile.getRemoteDir());
         curPath = rFile.getRemoteDir();
       }
-      val = rFile.getFtpFile().getSize();
-      LoggerCentral.info(LOGGER, "    " + rFile.getFtpFile().getName() + ": "
+      val = rFile.getSize();
+      LoggerCentral.info(LOGGER, "    " + rFile.getName() + ": "
           + Utils.getBytes(val));
       totBytes += val;
     }
@@ -366,7 +366,7 @@ public class PFTPLoader {
     }
   }
 
-  private void dumpFileListInFof(DBServerConfig fsc, List<DBMSFtpFile> fNames) {
+  private void dumpFileListInFof(DBServerConfig fsc, List<DBMSFile> fNames) {
     if (_fileOfFiles==null) {
       return;
     }
@@ -378,10 +378,10 @@ public class PFTPLoader {
     header += fsc.getAddress();
 
     try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-      for (DBMSFtpFile rFile : fNames) {
+      for (DBMSFile rFile : fNames) {
         writer.write(header);
-        writer.write(rFile.getRemoteDir());
-        writer.write(rFile.getFtpFile().getName());
+        writer.write("\t");
+        rFile.write(writer);
         writer.write(newLine);
       }
       writer.flush();
@@ -409,7 +409,7 @@ public class PFTPLoader {
    * 
    * @return 1 if success, 0 if failure and 3 if aborted.
    */
-  public int initFilesList(DBServerConfig fsc, List<DBMSFtpFile> validNames) {
+  public int initFilesList(DBServerConfig fsc, List<DBMSFile> validNames) {
     CalendarMatcher cMatcher;
     NameMatcher nMatcher;
     FTPClient ftp;
@@ -502,7 +502,7 @@ public class PFTPLoader {
                 bDownload = nMatcher.match(rFile.getName());
               }
               if (bDownload) {
-                validNames.add(new DBMSFtpFile(rPath, rFile));
+                validNames.add(new DBMSFile(rPath, rFile));
               }
               if (_userMonitor != null && _userMonitor.jobCancelled()) {
                 throw new MyCopyInteruptException();

@@ -104,7 +104,7 @@ public class PAsperaLoader extends PFTPLoader {
 	}
 
 	@Override
-	protected int downloadFile(DBServerConfig fsc, DBMSFtpFile rFile, File file, long lclFSize) {
+	protected int downloadFile(DBServerConfig fsc, DBMSFile rFile, File file, long lclFSize) {
 		int iRet = 0;
 		
 		//no apsera cmd object: may happen if wrong configuration
@@ -113,7 +113,7 @@ public class PAsperaLoader extends PFTPLoader {
 		}
 		
 		//prepare the server side file to retrieve
-		String fileToRetrive = rFile.getRemoteDir()+rFile.getFtpFile().getName();
+		String fileToRetrive = rFile.getRemoteDir()+rFile.getName();
 
     LoggerCentral.info(LOGGER, "  " + getLoaderId() + ": download: " + fileToRetrive);
 		
@@ -177,11 +177,11 @@ public class PAsperaLoader extends PFTPLoader {
 	  long streamSize;
 	  boolean bInterrupted=false;
 
-	  private ControlFileLoadingTask(File f, DBServerConfig fsc, DBMSFtpFile rFile){
+	  private ControlFileLoadingTask(File f, DBServerConfig fsc, DBMSFile rFile){
 	    fileToMonitor = f;
-	    streamSize = rFile.getFtpFile().getSize();
+	    streamSize = rFile.getSize();
 	    monitor = new MyCopyStreamListener(getLoaderId(), _userMonitor, fsc.getName(), 
-	        rFile.getFtpFile().getName(), streamSize);
+	        rFile.getName(), streamSize);
 	  }
 	  
 	  private boolean interrupted() {

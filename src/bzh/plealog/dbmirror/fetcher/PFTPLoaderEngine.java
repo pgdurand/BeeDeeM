@@ -32,8 +32,8 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
  * @author Patrick G. Durand
  */
 public class PFTPLoaderEngine extends LoaderEngine {
-  private List<DBMSFtpFile>     _files;
-  private Iterator<DBMSFtpFile> _iterator;
+  private List<DBMSFile>     _files;
+  private Iterator<DBMSFile> _iterator;
   private UserProcessingMonitor _userMonitor;
 
   private long                  _scheduleTime = 5000;
@@ -51,7 +51,7 @@ public class PFTPLoaderEngine extends LoaderEngine {
    *          the list of files to retrieve.
    */
   public PFTPLoaderEngine(DBServerConfig fsc, LoaderMonitor monitor,
-      List<DBMSFtpFile> files) {
+      List<DBMSFile> files) {
     super(fsc, monitor);
     _files = files;
     _iterator = _files.iterator();
@@ -128,7 +128,7 @@ public class PFTPLoaderEngine extends LoaderEngine {
       _loader.setUserProcessingMonitor(_userMonitor);
       nFiles = _files.size();
       while ((file = nextFtpFile()) != null) {
-        fName = file.getFile().getFtpFile().getName();
+        fName = file.getFile().getName();
         if (_monitor != null)
           _monitor.beginLoading(fName);
         // try to get a ftp connection
@@ -192,16 +192,16 @@ public class PFTPLoaderEngine extends LoaderEngine {
   }
 
   private class DataShuttle {
-    private DBMSFtpFile file;
+    private DBMSFile file;
     private int         fileNum;
 
-    public DataShuttle(DBMSFtpFile file, int fileNum) {
+    public DataShuttle(DBMSFile file, int fileNum) {
       super();
       this.file = file;
       this.fileNum = fileNum;
     }
 
-    public DBMSFtpFile getFile() {
+    public DBMSFile getFile() {
       return file;
     }
 

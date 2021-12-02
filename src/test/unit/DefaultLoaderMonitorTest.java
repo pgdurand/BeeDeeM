@@ -46,6 +46,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import bzh.plealog.dbmirror.fetcher.DBMSFile;
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
 import bzh.plealog.dbmirror.fetcher.DefaultLoaderMonitor;
 import bzh.plealog.dbmirror.fetcher.LoaderMonitor;
@@ -174,7 +175,7 @@ public class DefaultLoaderMonitorTest {
     // load data
     _taskEngine = new PTaskEngine(false);
     // databank files
-    ArrayList<File> databankFiles = new ArrayList<File>();
+    ArrayList<DBMSFile> databankFiles = new ArrayList<DBMSFile>();
     if (_dbConf.getIncludeFileList().contains("*")) {
       File srcDir = new File(getTestDatabankFilePath(repositoryName, ""));
       String foundFiles[] = srcDir.list(new FilenameFilter() {
@@ -184,7 +185,7 @@ public class DefaultLoaderMonitorTest {
         }
       });
       for (String fileName : foundFiles) {
-        databankFiles.add(new File(fileName));
+        databankFiles.add(new DBMSFile(new File(fileName)));
       }
     } else {
 

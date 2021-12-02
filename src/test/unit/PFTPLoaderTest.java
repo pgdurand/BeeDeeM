@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
-import bzh.plealog.dbmirror.fetcher.DBMSFtpFile;
+import bzh.plealog.dbmirror.fetcher.DBMSFile;
 import bzh.plealog.dbmirror.fetcher.PFTPLoaderEngine;
 
 public class PFTPLoaderTest {
@@ -42,12 +42,12 @@ public class PFTPLoaderTest {
     _dbConf = new DBServerConfig();
   }
 
-  private DBMSFtpFile createFtpFileToDownload(String filename, String remoteDir, long size) {
+  private DBMSFile createFtpFileToDownload(String filename, String remoteDir, long size) {
     FTPFile ftpFile = new FTPFile();
     ftpFile.setName(filename);
     ftpFile.setTimestamp(Calendar.getInstance());
     ftpFile.setSize(size);
-    return new DBMSFtpFile(remoteDir, ftpFile);
+    return new DBMSFile(remoteDir, ftpFile);
   }
 
   @Test
@@ -70,7 +70,7 @@ public class PFTPLoaderTest {
     second.delete();
     third.delete();
 
-    ArrayList<DBMSFtpFile> validNames = new ArrayList<DBMSFtpFile>();
+    ArrayList<DBMSFile> validNames = new ArrayList<DBMSFile>();
     validNames.add(createFtpFileToDownload(first.getName(), _dbConf.getRemoteFolders(), 4478l));
     validNames.add(createFtpFileToDownload(second.getName(), _dbConf.getRemoteFolders(), 421780l));
     validNames.add(createFtpFileToDownload(third.getName(), _dbConf.getRemoteFolders(), 85948l));

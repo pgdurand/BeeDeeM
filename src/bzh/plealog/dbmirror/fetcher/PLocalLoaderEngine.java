@@ -16,7 +16,6 @@
  */
 package bzh.plealog.dbmirror.fetcher;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
@@ -30,9 +29,9 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
  */
 public class PLocalLoaderEngine extends LoaderEngine {
 
-  private String          _destDir;
-  private ArrayList<File> _files;
-  private PLocalLoader    _kloader;
+  private String                 _destDir;
+  private ArrayList<DBMSFile> _files;
+  private PLocalLoader           _kloader;
 
   /**
    * The constructor
@@ -46,7 +45,7 @@ public class PLocalLoaderEngine extends LoaderEngine {
    * @param monitor
    *          the task monitor
    */
-  public PLocalLoaderEngine(DBServerConfig dbsc, ArrayList<File> files,
+  public PLocalLoaderEngine(DBServerConfig dbsc, ArrayList<DBMSFile> files,
       String destDir, LoaderMonitor monitor) {
     super(dbsc, monitor);
     _kloader = new PLocalLoader(dbsc);
@@ -59,7 +58,7 @@ public class PLocalLoaderEngine extends LoaderEngine {
   }
 
   /**
-   * Effected the copy
+   * Execute the copy of files
    */
   public void run() {
     int ret;

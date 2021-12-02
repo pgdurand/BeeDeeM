@@ -93,8 +93,7 @@ public class PFTPLoaderSystem {
     PFTPLoader ftpLoader;
     DBServerConfig dbConf;
     String fName, maintask, str;
-    ArrayList<DBMSFtpFile> validNames = null;
-    ArrayList<File> validNamesFile = null;
+    ArrayList<DBMSFile> validNames = null;
     List<DBServerConfig> processedDB;
     boolean proceed;
     LoaderEngine loaderEngine;
@@ -226,16 +225,15 @@ public class PFTPLoaderSystem {
             //not bad
           }
           
-          // FTP or Local installaiton?
+          // FTP or Local installation?
           if (dbConf.getAddress() != null && !dbConf.getAddress().equals("")) {
             LoggerCentral.info(LOGGER, "FTP descriptor file: " + fName);
             isFTP = true;
-            validNames = new ArrayList<DBMSFtpFile>();
           } else {
             LoggerCentral.info(LOGGER, "Local descriptor file: " + fName);
             isFTP = false;
-            validNamesFile = new ArrayList<File>();
           }
+          validNames = new ArrayList<DBMSFile>();
           // the following has been added to help support (we usually do not
           // have user's
           // descriptors, so we dump the content here)
@@ -272,7 +270,7 @@ public class PFTPLoaderSystem {
 
           } else {
             LoggerCentral.info(LOGGER, "Loading db files list (local). ");
-            fll = new PLocalFileListLoader(dbConf, validNamesFile);
+            fll = new PLocalFileListLoader(dbConf, validNames);
             ((PLocalFileListLoader) fll).setUserProcessingMonitor(_userMonitor);
           }
 
@@ -290,9 +288,8 @@ public class PFTPLoaderSystem {
                     UserProcessingMonitor.MSG_TYPE.ERROR, "nothing to load");
               }
               LoggerCentral.error(LOGGER, "Nothing to load.");
-            } else if (validNamesFile != null && validNamesFile.isEmpty()) {
-              LoggerCentral.error(LOGGER, "Nothing to load.");
-            } else {
+            } 
+            else {
               if (PFTPLoaderDescriptor.MAINTASK_INFO.equals(maintask)) {
                 // just dump the list of files to retrieve
                 // already done by FTPLoader task, so does nothing here
@@ -310,7 +307,7 @@ public class PFTPLoaderSystem {
                   String newDate = DBStampProperties.BANK_DATE_FORMATTER.format(
                       (validNames==null||validNames.isEmpty()) ? 
                           Calendar.getInstance().getTime() :
-                          validNames.get(0).getFtpFile().getTimestamp().getTime());
+                          validNames.get(0).getDateStamp());
                   updateBank = !curDate.equalsIgnoreCase(newDate);
                 }
                 //do we have to install new release of bank?
@@ -349,8 +346,8 @@ public class PFTPLoaderSystem {
                   } else {
                     String destPath = dbConf.getLocalTmpFolder();
                     monitor = new DefaultLoaderMonitor(_taskEngine, dbConf,
-                        validNamesFile.size());
-                    loaderEngine = new PLocalLoaderEngine(dbConf, validNamesFile,
+                        validNames.size());
+                    loaderEngine = new PLocalLoaderEngine(dbConf, validNames,
                         destPath, monitor);
                     ((PLocalLoaderEngine) loaderEngine)
                         .setUserProcessingMonitor(_userMonitor);
@@ -459,12 +456,12 @@ public class PFTPLoaderSystem {
    */
   private class FTPFileListLoader extends FileListLoader {
     private PFTPLoader             _ftpLoader;
-    private ArrayList<DBMSFtpFile> _files;
+    private ArrayList<DBMSFile> _files;
     private long                   _delay;
     private int                    _retry;
 
     public FTPFileListLoader(DBServerConfig fsc, PFTPLoader ftpLoader,
-        ArrayList<DBMSFtpFile> files, long delay, int ftpRetry) {
+        ArrayList<DBMSFile> files, long delay, int ftpRetry) {
 
       super(fsc);
       _ftpLoader = ftpLoader;

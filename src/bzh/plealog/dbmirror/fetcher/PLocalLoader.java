@@ -69,7 +69,7 @@ public class PLocalLoader {
    * 
    * @return 1 if success, 0 if failure.
    */
-  public boolean initFilesList(List<File> validNames) {
+  public boolean initFilesList(List<DBMSFile> validNames) {
     NameMatcher nMatcher;
     StringTokenizer remoteLocalFolders;
     String confFolders, rlFolder, excludeStr;
@@ -101,7 +101,7 @@ public class PLocalLoader {
         size = aFile.length();
         totSize+=size;
         LoggerCentral.info(LOGGER, "  " + aFile.getAbsolutePath() + " (" + Utils.getBytes(size) + ")");
-        validNames.add(aFile);
+        validNames.add(new DBMSFile(aFile));
       }
     } else {
       confFolders = DBMSExecNativeCommand.formatNativePath(confFolders, false,
@@ -159,7 +159,7 @@ public class PLocalLoader {
                 bDownload = nMatcher.match(rFile.getName());
               }
               if (bDownload) {
-                validNames.add(rFile);
+                validNames.add(new DBMSFile(rFile));
                 size = rFile.length();
                 totSize+=size;
                 LoggerCentral.info(LOGGER, "  " + rFile.getAbsolutePath() + " (" + Utils.getBytes(size) + ")");
@@ -267,7 +267,7 @@ public class PLocalLoader {
    * 
    * @return 1 if success, 0 if failure, 3 if aborted
    */
-  public int copyFiles(List<File> files, String destDir, LoaderMonitor monitor) {
+  public int copyFiles(List<DBMSFile> files, String destDir, LoaderMonitor monitor) {
     InputStream input = null;
     OutputStream output = null;
     String fName = null, msg;
@@ -286,7 +286,7 @@ public class PLocalLoader {
 
     fileNum = 0;
     nFiles = files.size();
-    for (File file : files) {
+    for (DBMSFile file : files) {
       try {
         fileNum++;
         fName = file.getName();
@@ -306,13 +306,13 @@ public class PLocalLoader {
         
         // does not copy file if already done
         File dFile = new File(destDir + file.getName());
-        if (dFile.exists() && dFile.length()==file.length()){
+        if (dFile.exists() && dFile.length()==file.getSize()){
           msg = "Skip already copyied file: " + fName;
         }
         else{
-          input = new FileInputStream(file);
+          input = new FileInputStream(file.getFile());
           output = new FileOutputStream(destDir + file.getName());
-          fSize = file.length();
+          fSize = file.getSize();
           Util.copyStream(input, output, Util.DEFAULT_COPY_BUFFER_SIZE, fSize,
               new MyCopyStreamListener(WORKER_ID, _userMonitor, file.getName(),
                   file.getName(), fSize));
@@ -336,7 +336,7 @@ public class PLocalLoader {
       } catch (Exception e) {
         result = 0;
         LoggerCentral.error(LOGGER,
-            e.getMessage() + ": " + file.getAbsolutePath());
+            e.getMessage() + ": " + file.getFile().getAbsolutePath());
         if (monitor != null)
           monitor.doneLoading(fName, LoaderMonitor.STATUS_FAILURE);
         if (_userMonitor != null) {

@@ -71,12 +71,12 @@ public class PHTTPLoader extends PFTPLoader {
 	}
 
 	@Override
-	protected int downloadFile(DBServerConfig fsc, DBMSFtpFile rFile, File file, long lclFSize) {
+	protected int downloadFile(DBServerConfig fsc, DBMSFile rFile, File file, long lclFSize) {
 		int iRet = 0;
 		Map<String, String> header_attrs=null;
 		
 		//prepare the server side file to retrieve
-		String fileToRetrive = url_base + "/" + rFile.getRemoteDir()+rFile.getFtpFile().getName();
+		String fileToRetrive = url_base + "/" + rFile.getRemoteDir()+rFile.getName();
 
     LoggerCentral.info(LOGGER, "  " + getLoaderId() + ": download: " + fileToRetrive);
 
@@ -92,7 +92,7 @@ public class PHTTPLoader extends PFTPLoader {
     try {
       HTTPBasicEngine.doGet(fileToRetrive, header_attrs, file,
           new MyCopyStreamListener(getLoaderId(), _userMonitor, 
-              fsc.getName(), rFile.getFtpFile().getName(), rFile.getFtpFile().getSize(), 0));
+              fsc.getName(), rFile.getName(), rFile.getSize(), 0));
       iRet = 1;
     } catch (HTTPEngineException e1) {
       //do not raise warn or error here, handled by LoaderEngine
