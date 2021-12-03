@@ -131,7 +131,7 @@ public class SeqIOUtils {
                                                                    * +
                                                                    */
                                                                   "\"DE\" , \"EC\"         , \"=\" , \";\" , \"EC\"       , \"$\"\n"
-                                                                  + "\"OX\" , \"NCBI_TaxID\" , \"=\" , \";\" , \"taxon\"    , \"$\"\n"
+                                                                  + "\"OX\" , \"NCBI_TaxID\" , \"=\" , \"};\" , \"taxon\"    , \"$\"\n"
                                                                   + "\"/db_xref=\",\"taxon\", \":\", \"\"\", \"taxon\", \"$\"\n";
 
   public static DBXrefTagManager XREF_MANAGER                 = new DBXrefTagManager(

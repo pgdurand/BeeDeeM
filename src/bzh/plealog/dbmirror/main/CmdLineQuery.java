@@ -31,7 +31,7 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
  * This is the class to use to query the databanks managed with BeeDeeM.
  * Command line is as follows:<br>
  * -d   input Blast file to annotate (absolute path)<br>
- * -i   output file containing the annotated Blast result (absolute path)<br>
+ * -i   comma-separated list of sequence IDs<br>
  * -f   format. One of: txt, fas, html, insd, finsd.<br>
  * <br>
  * In addition, some parameters can be passed to the JVM for special

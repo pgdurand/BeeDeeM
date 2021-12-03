@@ -75,11 +75,16 @@ public class DBXrefSplitter {
 
   public String getXRef(String dataLine) {
     String str;
-    int idx, idx2;
+    int i, idx, idx2;
 
     if ((idx = dataLine.indexOf(keyb)) != -1) {
       str = dataLine.substring(idx + keyb.length());
-      idx = str.indexOf(end);
+      for (i=0;i<end.length();i++) {
+        idx = str.indexOf(end.charAt(i));
+        if (idx!=-1) {
+          break;
+        }
+      }
       if (idx == -1) {
         return null;
       } else {
