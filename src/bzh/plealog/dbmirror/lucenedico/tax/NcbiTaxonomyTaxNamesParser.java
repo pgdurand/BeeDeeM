@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -30,6 +30,7 @@ import bzh.plealog.dbmirror.lucenedico.DicoParsable;
 import bzh.plealog.dbmirror.lucenedico.DicoParserException;
 import bzh.plealog.dbmirror.lucenedico.DicoStorageSystem;
 import bzh.plealog.dbmirror.lucenedico.DicoStorageSystemException;
+import bzh.plealog.dbmirror.lucenedico.DicoTerm;
 import bzh.plealog.dbmirror.lucenedico.DicoUtils;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -59,9 +60,28 @@ public class NcbiTaxonomyTaxNamesParser implements DicoParsable {
   }
 
   /**
-   * Analyzes a data line.
+   * Analyzes a data line from merged.dmp.
    */
-  private void splitDataLine(String line, String[] data) {
+  private void splitMergedDataLine(String line, String[] data) {
+
+    int idx1, idx2;
+    // to parse this : (merged.dmp from NCBI data repository)
+    // 45499   |       45514   |
+    // we do not use StringTokenizer to avoid lots of instances of that class
+    idx1 = line.indexOf('|');
+    idx2 = line.indexOf('|', idx1 + 1);
+
+    // n was added because taxon IDs from names.dat and nodes.dat are put
+    // within a single index
+    data[0] = DicoUtils.TAX_ID_NAME_PREFIX + line.substring(0, idx1).trim();
+    data[1] = DicoTerm.SYNONYM + DicoUtils.TAX_ID_NAME_PREFIX + 
+        line.substring(idx1 + 1, idx2).trim();
+  }
+
+  /**
+   * Analyzes a data line from names.dmp.
+   */
+  private void splitNamesDataLine(String line, String[] data) {
 
     int idx1, idx2, idx3, idx4;
     // to parse this : (names.dmp from NCBI data repository)
@@ -93,10 +113,61 @@ public class NcbiTaxonomyTaxNamesParser implements DicoParsable {
     _pMonitor = pm;
   }
 
-  /**
-   * Implementation of DicoParsable interface.
-   */
-  public void parse(String file, DicoStorageSystem ss)
+  private void parseMerged(String file, DicoStorageSystem ss)
+      throws DicoParserException {
+    BufferedReader reader = null;
+    String line;
+    String[] data;
+    long curPos = 0;
+    int endOfLineSize, entries=0;
+
+    try {
+      endOfLineSize = Utils.getLineTerminatorSize(file);
+      reader = new BufferedReader(new InputStreamReader(new FileInputStream(
+          file), "UTF-8"));
+      data = new String[2];
+      if (_pMonitor != null) {
+        _pMonitor.startProcessingFile(file, new File(file).length());
+      }
+      while ((line = reader.readLine()) != null) {
+        /*
+         * if (_entries>5) break;
+         */
+        splitMergedDataLine(line, data);
+        if (_pMonitor != null) {
+          _pMonitor.seqFound(data[0], data[1], file, curPos, curPos, false);
+        }
+        if (ss != null) {
+          if (data[0].length() == 0)
+            throw new DicoStorageSystemException("taxon ID is missing");
+          if (data[1].length() == 0)
+            throw new DicoStorageSystemException("taxon synonym ID is missing");
+          ss.addEntry(data[0], data[1]);
+          entries++;
+        }
+        curPos += (long) (line.length() + endOfLineSize);
+      }
+
+    } catch (Exception e) {
+      String msg = "Error while parsing NCBI taxon no. " + (entries + 1);
+      LOGGER.warn(msg + ": " + e);
+      throw new DicoParserException(msg + ": " + e.getMessage());
+    } finally {
+      if (reader != null) {
+        try {
+          reader.close();
+        } catch (IOException e) {
+        }
+      }
+      if (_pMonitor != null) {
+        //set 0 to entries to avoid modifying total number of TaxIDs
+        // (see InstallInProduction task)
+        _pMonitor.stopProcessingFile(file, 0);
+      }
+    }
+    LoggerCentral.info(LOGGER, file + " contains " + entries + " entries");
+  }
+  private void parseNames(String file, DicoStorageSystem ss)
       throws DicoParserException {
     BufferedReader reader = null;
     String line;
@@ -117,7 +188,7 @@ public class NcbiTaxonomyTaxNamesParser implements DicoParsable {
         /*
          * if (_entries>5) break;
          */
-        splitDataLine(line, data);
+        splitNamesDataLine(line, data);
         if ("scientific name".equals(data[3])) {
           if (_pMonitor != null) {
             _pMonitor.seqFound(data[0], data[1], file, curPos, curPos, false);
@@ -159,6 +230,33 @@ public class NcbiTaxonomyTaxNamesParser implements DicoParsable {
     if (_entries == 0)
       throw new DicoParserException("Data file does not contain any taxons.");
     LoggerCentral.info(LOGGER, file + " contains " + _entries + " entries");
+  }
+
+  /**
+   * Implementation of DicoParsable interface.
+   */
+  public void parse(String file, DicoStorageSystem ss)
+      throws DicoParserException {
+    
+    // This method was originally designed to handle a single file, names.dmp.
+    // By design, to avoid huge modification of the existing code, file
+    // parameter can now contain two files: names.dmp:merged.dmp.
+    // To enable backward compatibility, merged.dmp is optional.
+    
+    // why ':'? Check out NCBI_Taxonony.dsc configuration file!
+    int idx = file.indexOf(':');
+    
+    if (idx==-1) {
+      parseNames(file, ss);
+    }
+    else {
+      String fNames = file.substring(0, idx);
+      parseNames(fNames, ss);
+      File f = new File(fNames);
+      fNames = Utils.terminatePath(f.getParent()) + file.substring(idx+1);
+      parseMerged(fNames, ss);
+    }
+    
   }
 
   /**

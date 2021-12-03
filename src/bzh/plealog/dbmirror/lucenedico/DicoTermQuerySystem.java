@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -497,9 +497,9 @@ public class DicoTermQuerySystem {
     if (taxonTerm == null)
       return null;
 
-    // 2: get taxon term path
+    // 2: get taxon term path; note we reuse taxonTerm instead of id (synonyms case)
     terms = this.storages.get(Dicos.NCBI_TAXONOMY).getTerms(
-        DicoUtils.TAX_ID_NODE_PREFIX + id, "o1");
+        DicoUtils.TAX_ID_NODE_PREFIX + taxonTerm.getId().substring(1), "o1");
     if (terms == null || terms.length <= 1)// no result
       return null;
 

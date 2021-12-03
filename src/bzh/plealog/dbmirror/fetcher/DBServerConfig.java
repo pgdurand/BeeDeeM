@@ -198,7 +198,7 @@ public class DBServerConfig {
       if (dico == Dicos.NCBI_TAXONOMY) {
         if (databankFiles.size() == 1) {// user provides taxdump.tar.gz
           unitTasks = new StringBuilder("gunzip,untar,idxdico(type="
-              + Dicos.NCBI_TAXONOMY.readerId + ";file=names.dmp),idxdico(type="
+              + Dicos.NCBI_TAXONOMY.readerId + ";file=names.dmp:merged.dmp),idxdico(type="
               + Dicos.NCBI_TAXONOMY.additionalReaderId + ";file=nodes.dmp)");
           globalTasks = new StringBuilder("deltmpidx,deltar,delgz");
         } else {// user provides names.dmp and nodes.dmp

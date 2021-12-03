@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -29,7 +29,8 @@ public class DicoTerm {
 
   private static final String EMPTY_FIELD       = "-";
   public static final String  EMPTY_DESCRIPTION = "no description";
-
+  public static final String SYNONYM = "SYN:";
+  
   /**
    * Constructor.
    * 
@@ -77,5 +78,9 @@ public class DicoTerm {
 
   public void set_dataObject(Object _dataObject) {
     this._dataObject = _dataObject;
+  }
+  
+  public boolean isSynonym() {
+    return _dataField.startsWith(SYNONYM);
   }
 }

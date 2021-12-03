@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -173,7 +173,7 @@ public class DicoStorageSystemImplem implements DicoStorageSystem,
   /**
    * Implementation of DicoStorageSystem interface.
    */
-  public DicoTerm getTerm(String id) throws DicoStorageSystemException {
+  private DicoTerm getTermImplem(String id) throws DicoStorageSystemException {
     DicoTerm term = null;
     Document doc;
     Query query = null;
@@ -206,6 +206,23 @@ public class DicoStorageSystemImplem implements DicoStorageSystem,
     return term;
   }
 
+  public DicoTerm getTerm(String id) throws DicoStorageSystemException {
+    DicoTerm term = getTermImplem(id);
+    //Added to enable use of SYNonyms IDs stored in index.
+    //Used for NCBI Taxonomy for instance (merged.dmp file)
+    if (term!=null && term.isSynonym()) {
+      term = getTermImplem(term.getId());
+      if (term!=null) {
+        // For a synonym term, synonym ID is contained in the DataField
+        // See DicoTerm class for more information
+        String synonym = term.getDataField();
+        synonym = synonym.substring(synonym.indexOf(':')+1);
+        term = getTermImplem(synonym);
+      }
+    }
+    return term;
+  }
+  
   /**
    * Implementation of DicoStorageSystem interface.
    */

@@ -6,7 +6,7 @@ db.ldir=${mirrordir}|d|NCBI_Taxonomy
 db.files.include=taxdump.tar.gz
 db.files.exclude=
 
-tasks.unit.post=gunzip,untar,idxdico(type=tax; file=names.dmp),idxdico(type=nodes; file= nodes.dmp)
+tasks.unit.post=gunzip,untar,idxdico(type=tax; file=names.dmp:merged.dmp),idxdico(type=nodes; file= nodes.dmp)
 tasks.global.post=deltmpidx,deltar,delgz
 
 ftp.server=ftp.ncbi.nih.gov
