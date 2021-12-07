@@ -16,6 +16,10 @@
  */
 package bzh.plealog.dbmirror.main;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Hashtable;
 
 import org.apache.commons.cli.CommandLine;
@@ -33,6 +37,7 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
  * -d   databank, one of: protein, nucleotide or dico<br>
  * -i   comma-separated list of sequence IDs, of path to a file of seqIDs (one per line)<br>
  * -f   format. One of: txt, fas, html, insd, finsd.<br>
+ * -o   output. If not set, default to stdout.<br>
  * <br>
  * In addition, some parameters can be passed to the JVM for special
  * configuration purposes:<br>
@@ -51,8 +56,9 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
  */
 public class CmdLineQuery {
   private static final String DATABASE = "d";
-  private static final String SEQID = "i";
-  private static final String FORMAT = "f";
+  private static final String SEQID    = "i";
+  private static final String FORMAT   = "f";
+  private static final String OUTPUT   = "o";
 
   /**
    * Setup the valid command-line of the application.
@@ -79,11 +85,17 @@ public class CmdLineQuery {
         .isRequired()
         .withDescription( DBMSMessages.getString("Tool.Query.arg3.desc") )
         .create(FORMAT);
+    Option out = OptionBuilder
+        .withArgName( DBMSMessages.getString("Tool.Query.arg4.lbl") )
+        .hasArg()
+        .withDescription( DBMSMessages.getString("Tool.Query.arg4.desc") )
+        .create(OUTPUT);
 
     opts = new Options();
     opts.addOption(repo);
     opts.addOption(in);
     opts.addOption(ft);
+    opts.addOption(out);
     CmdLineUtils.setConfDirOption(opts);
     return opts;
   }
@@ -94,6 +106,7 @@ public class CmdLineQuery {
     CommandLine cmdLine;
     Options options;
     String toolName = DBMSMessages.getString("Tool.Query.name");
+    OutputStream os = System.out;
     
     // prepare the Logging system
     StarterUtils.configureApplication(null, toolName, true, false, true);
@@ -111,7 +124,15 @@ public class CmdLineQuery {
     values.put("id", cmdLine.getOptionValue(SEQID));
     values.put("format", cmdLine.getOptionValue(FORMAT));
 
-    qm.executeJob(values, System.out, DBMSAbstractConfig.getLocalMirrorConfFile());
+    if (cmdLine.hasOption(OUTPUT)) {
+      try {
+        os = new FileOutputStream(new File(cmdLine.getOptionValue(OUTPUT)));
+      } catch (FileNotFoundException e) {
+        System.err.println(e);
+        return false;
+      }
+    }
+    qm.executeJob(values, os, System.err, DBMSAbstractConfig.getLocalMirrorConfFile());
     return true;
   }
 

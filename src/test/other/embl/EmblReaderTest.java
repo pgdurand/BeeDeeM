@@ -36,9 +36,9 @@ public class EmblReaderTest {
 
   private static void format(String file) throws IOException {
     PSequence seq = DBUtils.readEmblEntry(new File(file), 0, 0, false);
-    PFormatter formatter = new PFormatter();
     Writer w = new BufferedWriter(new OutputStreamWriter(System.out));
-    formatter.dump(w, seq, "insd");
+    PFormatter formatter = new PFormatter(w, null);
+    formatter.dump(seq, "insd");
     w.flush();
     w.close();
   }

@@ -51,9 +51,9 @@ public class SwissProtReaderTest {
 
   private static void testReadOnly(String file) {
     PSequence seq = DBUtils.readUniProtEntry(new File(file), 0, 0, false);
-    PFormatter formatter = new PFormatter();
     Writer w = new BufferedWriter(new OutputStreamWriter(System.out));
-    formatter.dump(w, seq, "finsd");
+    PFormatter formatter = new PFormatter(w, null);
+    formatter.dump(seq, "finsd");
     try {
       w.flush();
       w.close();

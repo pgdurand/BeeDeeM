@@ -827,10 +827,10 @@ public class DefaultLoaderMonitorTest {
 
     PSequence seq = DBUtils.readGenbankEntry(new File(
         "./tests/junit/DBXrefManager/z78540b.dat"), 0, 0, false);
-    PFormatter formatter = new PFormatter();
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     Writer w = new BufferedWriter(new OutputStreamWriter(output));
-    formatter.dump(w, seq, "insd");
+    PFormatter formatter = new PFormatter(w, null);
+    formatter.dump(seq, "insd");
     try {
       w.flush();
       w.close();

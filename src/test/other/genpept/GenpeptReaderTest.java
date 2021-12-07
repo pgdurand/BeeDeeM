@@ -37,9 +37,9 @@ public class GenpeptReaderTest {
 
   private static void test5(String file) {
     PSequence seq = DBUtils.readGenpeptEntry(new File(file), 0, 0, false);
-    PFormatter formatter = new PFormatter();
     Writer w = new BufferedWriter(new OutputStreamWriter(System.out));
-    formatter.dump(w, seq, "insd");
+    PFormatter formatter = new PFormatter(w, null);
+    formatter.dump(seq, "insd");
     try {
       w.flush();
       w.close();

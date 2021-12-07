@@ -63,9 +63,69 @@ public class PFormatter {
     AVAILABLE_FORMATS.put(FASTA_FORMAT, "simpleFasta.vm");
   }
 
+  private Writer outWriter = null;
+  private Writer errWriter = null;
+
+  /**
+   * Creates a data formatter. Please note that both outWriter and errWriter
+   * are null.
+   */
   public PFormatter() {
   }
 
+  /**
+   * Creates a data formatter.
+   */
+  public PFormatter(Writer outWriter, Writer errWriter) {
+    this.outWriter = outWriter;
+    this.errWriter = errWriter;
+  }
+  
+  public void setOutWriter(Writer outWriter) {
+    this.outWriter = outWriter;
+  }
+
+  public void setErrWriter(Writer errWriter) {
+    this.errWriter = errWriter;
+  }
+  
+  public Writer getOutWriter() {
+    return outWriter;
+  }
+
+  public Writer getErrWriter() {
+    return errWriter;
+  }
+
+  public void closeOutWriter() {
+    if (outWriter == null)
+      return;
+    try {
+      outWriter.flush();
+    } catch (IOException ex) {
+    }
+    try {
+      outWriter.close();
+    } catch (IOException ex) {
+    }
+  }
+  public void closeErrWriter() {
+    if (errWriter == null)
+      return;
+    try {
+      errWriter.flush();
+    } catch (IOException ex) {
+    }
+    try {
+      errWriter.close();
+    } catch (IOException ex) {
+    }
+  }
+
+  public void closeWriters() {
+    closeOutWriter();
+    closeErrWriter();
+  }
   /**
    * Cleanup string for display or for XML transmission. Replace all known chars
    * to cause XML problems with their XML safe equivalents or replace the XML
@@ -159,7 +219,7 @@ public class PFormatter {
    * @param format
    *          the format code
    */
-  public void dump(Writer outWriter, String text, String dbName, String id,
+  public void dump(String text, String dbName, String id,
       String format) {
     VelocityEngine ve;
     VelocityContext context;
@@ -187,14 +247,12 @@ public class PFormatter {
    * Dump some sequence data using a particular Velocity template. This method
    * dumps formatted data to standard output.
    * 
-   * @param outWriter
-   *          the writer
    * @param seq
    *          the sequence to format
    * @param format
    *          the format code
    */
-  public void dump(Writer outWriter, PSequence seq, String format) {
+  public void dump(PSequence seq, String format) {
     VelocityEngine ve;
     VelocityContext context;
     Template t;
@@ -217,7 +275,7 @@ public class PFormatter {
     }
   }
 
-  private void dumpPE(Writer outWriter, String template) {
+  private void dumpPE(String template) {
     VelocityEngine ve;
     VelocityContext context;
     Template t;
@@ -236,30 +294,36 @@ public class PFormatter {
     }
   }
 
-  public void startEpilogue(Writer w, String format) {
-    if (w == null)
+  public void startEpilogue(String format) {
+    if (outWriter == null)
       return;
-    dumpPE(w, "E" + AVAILABLE_FORMATS.get(format));
+    dumpPE("E" + AVAILABLE_FORMATS.get(format));
   }
 
-  public void startPrologue(Writer w, String format) {
-    if (w == null)
+  public void startPrologue(String format) {
+    if (outWriter == null)
       return;
-    dumpPE(w, "P" + AVAILABLE_FORMATS.get(format));
+    dumpPE("P" + AVAILABLE_FORMATS.get(format));
   }
 
-  public void dumpError(Writer w, String format, String msg) {
+  public void dumpError(String format, String msg) {
+    Writer w = errWriter;
+    if (w == null)
+      w = outWriter;
     if (w == null)
       return;
     try {
       if (HTML_FORMAT.equals(format)) {
-        w.write("<B>" + msg + "</B>\n");
+        errWriter.write("<B>" + msg + "</B>\n");
       } else if (INSD_FORMAT.equals(format)) {
-        w.write("<Error>" + msg + "</Error>\n");
+        errWriter.write("<Error>" + msg + "</Error>\n");
       } else {
-        w.write(msg + "\n");
+        errWriter.write(msg + "\n");
       }
     } catch (IOException e) {
     }
+  }
+  public void dumpError(String msg) {
+    dumpError(TXT_FORMAT, msg);
   }
 }

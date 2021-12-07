@@ -324,7 +324,7 @@ public class PQueryMirrorBase {
     return reader;
   }
 
-  private PSequence[] handleMultipleID(Writer w, PFormatter formatter,
+  private PSequence[] handleMultipleID(PFormatter formatter,
       String mirrorPath, List<String> idxNames, String ids, String format,
       String dbName, String dbKey) {
     StringTokenizer tokenizer;
@@ -336,7 +336,7 @@ public class PQueryMirrorBase {
     tokenizer = new StringTokenizer(ids, ",");
     while (tokenizer.hasMoreTokens()) {
       id = tokenizer.nextToken().trim();
-      res = handleSingleID(w, formatter, mirrorPath, idxNames, id, format,
+      res = handleSingleID(formatter, mirrorPath, idxNames, id, format,
           dbName, dbKey, 0, 0, false);
       if (res != null)
         results.add(res);
@@ -346,19 +346,19 @@ public class PQueryMirrorBase {
     return results.toArray(new PSequence[0]);
   }
 
-  private void handleMultipleID(Writer w, PFormatter formatter,
+  private void handleMultipleID(PFormatter formatter,
       String mirrorPath, List<String> idxNames, File foIDs, String format,
       String dbName, String dbKey) {
     try {
       Files.lines(foIDs.toPath())
-        .forEach(a -> handleSingleID(w, formatter, mirrorPath, idxNames, a.trim(), format,
+        .forEach(a -> handleSingleID(formatter, mirrorPath, idxNames, a.trim(), format,
             dbName, dbKey, 0, 0, false));
     } catch (IOException e) {
       LOGGER.warn("unable to read: " +foIDs+ ": " + e);
     }
 
   }
-  private PSequence handleSingleID(Writer w, PFormatter formatter,
+  private PSequence handleSingleID(PFormatter formatter,
       String mirrorPath, List<String> idxNames, String id, String format,
       String dbName, String dbKey, int start, int stop, boolean adjust) {
     PSequence seq = null;
@@ -377,26 +377,26 @@ public class PQueryMirrorBase {
           entry.getStop());
       // prepare the output
       if (dbFile == null) {
-        formatter.dumpError(w, format, "Unable to retrieve " + id
+        formatter.dumpError(format, "Unable to retrieve " + id
             + " from database");
       } else {
         // TXT_FORMAT
         if (PFormatter.HTML_FORMAT.equals(format)) {
           strEntry = loadEntry(dbFile);
           if (strEntry != null) {
-            formatter.dump(w, strEntry, dbName, id, PFormatter.HTML_FORMAT);
+            formatter.dump(strEntry, dbName, id, PFormatter.HTML_FORMAT);
             bOk = true;
           } else {
-            formatter.dumpError(w, format, "Unable to retrieve " + id
+            formatter.dumpError(format, "Unable to retrieve " + id
                 + " from database");
           }
         } else if (PFormatter.TXT_FORMAT.equals(format)) {
           strEntry = loadEntry(dbFile);
           if (strEntry != null) {
-            formatter.dump(w, strEntry, dbName, id, PFormatter.TXT_FORMAT);
+            formatter.dump(strEntry, dbName, id, PFormatter.TXT_FORMAT);
             bOk = true;
           } else {
-            formatter.dumpError(w, format, "Unable to retrieve " + id
+            formatter.dumpError(format, "Unable to retrieve " + id
                 + " from database");
           }
         } else {
@@ -429,15 +429,15 @@ public class PQueryMirrorBase {
           }
           if (seq != null) {
             if (PFormatter.INSD_FORMAT.equals(format))
-              formatter.dump(w, seq, PFormatter.INSD_FORMAT);
+              formatter.dump(seq, PFormatter.INSD_FORMAT);
             else
-              formatter.dump(w, seq.getFastaSequence(), dbName, id,
+              formatter.dump(seq.getFastaSequence(), dbName, id,
                   PFormatter.TXT_FORMAT);
             bOk = true;
           } else {
             _errMsg = "Unable to read sequence data for " + id;
             LOGGER.debug(_errMsg);
-            formatter.dumpError(w, format, _errMsg);
+            formatter.dumpError(format, _errMsg);
           }
         }
         if (bOk)
@@ -446,7 +446,7 @@ public class PQueryMirrorBase {
     } else {
       _errMsg = "entry " + id + " not found in index (" + dbKey + ")";
       LOGGER.debug(_errMsg);
-      formatter.dumpError(w, format, _errMsg);
+      formatter.dumpError(format, _errMsg);
     }
 
     return seq;
@@ -455,8 +455,7 @@ public class PQueryMirrorBase {
   /**
    * Execute the query.
    */
-  private PSequence[] executeQuery(Writer w, Map<String, String> data) {
-    PFormatter formatter;
+  private PSequence[] executeQuery(PFormatter formatter, Map<String, String> data) {
     PSequence[] result = null;
     PSequence seq;
     String val, dbKey, mirrorPath = null, id, format, dbName, idxKey, path;
@@ -472,7 +471,7 @@ public class PQueryMirrorBase {
     if (dbKey == null) {
       _errMsg = "database not provided";
       LOGGER.debug(_errMsg);
-      dumpSevereError(w, _errMsg);
+      formatter.dumpError(_errMsg);
       return result;
     }
     // get the sequence ID (mandatory)
@@ -480,7 +479,7 @@ public class PQueryMirrorBase {
     if (id == null) {
       _errMsg = "sequence ID not provided";
       LOGGER.debug(_errMsg);
-      dumpSevereError(w, _errMsg);
+      formatter.dumpError(_errMsg);
       return result;
     }
     // test used by client to detect this service
@@ -509,7 +508,7 @@ public class PQueryMirrorBase {
     if (idxKeys == null && mirrorPath == null) {
       _errMsg = "unknown database mirror path for: " + dbKey;
       LOGGER.debug(_errMsg);
-      dumpSevereError(w, _errMsg);
+      formatter.dumpError(_errMsg);
       return result;
     }
     if (idxKeys != null) {
@@ -522,7 +521,7 @@ public class PQueryMirrorBase {
         if (path == null) {
           _errMsg = "unknown database mirror path for: " + idxKey;
           LOGGER.debug(_errMsg);
-          dumpSevereError(w, _errMsg);
+          formatter.dumpError(_errMsg);
           return result;
         } else {
           // following line added since Fasta-based databanks (used with Plast)
@@ -599,52 +598,26 @@ public class PQueryMirrorBase {
 
     if (!dbKey.startsWith((DBMirrorConfig.DICO_IDX))) {
       // nuc/prot index
-      formatter = new PFormatter();
-      formatter.startPrologue(w, format);
+      formatter.startPrologue(format);
       // process query
       if (hasfoIDs) {
-        handleMultipleID(w, formatter, mirrorPath, idxNames, foIDs,
+        handleMultipleID(formatter, mirrorPath, idxNames, foIDs,
             format, dbName, dbKey);
       }
       else if (id.indexOf(',') == -1) {
-        seq = handleSingleID(w, formatter, mirrorPath, idxNames, id, format,
+        seq = handleSingleID(formatter, mirrorPath, idxNames, id, format,
             dbName, dbKey, start, stop, adjust);
         result = new PSequence[1];
         result[0] = seq;
       } else {
-        result = handleMultipleID(w, formatter, mirrorPath, idxNames, id,
+        result = handleMultipleID(formatter, mirrorPath, idxNames, id,
             format, dbName, dbKey);
       }
-      formatter.startEpilogue(w, format);
+      formatter.startEpilogue(format);
     } else {// dico
-      handleDicoIds(w, dbKey, mirrorPath, idxNames, id);
+      handleDicoIds(formatter.getOutWriter(), dbKey, mirrorPath, idxNames, id);
     }
     return result;
-  }
-
-  /**
-   * Sends an error msg to the standard error stream.
-   */
-  protected void dumpSevereError(Writer w, String msg) {
-    if (w == null)
-      return;
-    try {
-      w.write(msg);
-    } catch (IOException e) {
-    }
-  }
-
-  public void closeWriter(Writer w) {
-    if (w == null)
-      return;
-    try {
-      w.flush();
-    } catch (IOException ex) {
-    }
-    try {
-      w.close();
-    } catch (IOException ex) {
-    }
   }
 
   /**
@@ -696,13 +669,13 @@ public class PQueryMirrorBase {
       LOGGER.debug(_errMsg);
       return result;
     }
-    formatter = new PFormatter();
+    formatter = new PFormatter(outWriter, null);
     // process query
     if (dbKey==null) {
       dbKey="";
     }
     if (!dbKey.startsWith(DBMirrorConfig.DICO_IDX)) {
-      PSequence seq = handleSingleID(outWriter, formatter, mirrorPath, null,
+      PSequence seq = handleSingleID(formatter, mirrorPath, null,
           id, format, "", "", 0, 0, false);
       result = new PSequence[1];
       result[0] = seq;
@@ -710,7 +683,7 @@ public class PQueryMirrorBase {
       handleDicoIds(outWriter, dbKey, mirrorPath, null, id);
     }
 
-    closeWriter(outWriter);
+    formatter.closeWriters();
     return result;
   }
 
@@ -763,7 +736,7 @@ public class PQueryMirrorBase {
       LOGGER.debug(_errMsg);
       return null;
     }
-    return executeJob(getValuesFromString(getVar), os, dbMirrorConfFile);
+    return executeJob(getValuesFromString(getVar), os, null, dbMirrorConfFile);
   }
 
   public PSequence[] executeJob(String dbName, String id, Integer start,
@@ -819,23 +792,34 @@ public class PQueryMirrorBase {
   }
 
   /**
-   * This method can only be used when working in the context of a web server.
-   * Indeed, this method gets values used to process the query from either the
-   * GET or the POST environment variable.
+   * Process a query.
    */
-  public PSequence[] executeJob(Map<String, String> values, OutputStream os,
-      String dbMirrorConfFile) {
+  public PSequence[] executeJob(Map<String, String> values, 
+      OutputStream stdout, OutputStream stderr, String dbMirrorConfFile) {
     FileInputStream fis = null;
-    Writer outWriter = null;
+    PFormatter formatter = new PFormatter();
     PSequence[] result = null;
 
     _errMsg = null;
     try {
-      if (os != null)
-        outWriter = new BufferedWriter(new OutputStreamWriter(os));
+      if (stdout != null)
+        formatter.setOutWriter(new BufferedWriter(new OutputStreamWriter(stdout)));
     } catch (Exception e1) {
-      _errMsg = "Internal server error 1";
-      LOGGER.debug("unable to open buffered writer: " + e1);
+      _errMsg = "Internal error 1";
+      LOGGER.debug("unable to create stdout buffered writer: " + e1);
+      formatter.dumpError(_errMsg);
+      formatter.closeWriters();
+      return result;
+    }
+
+    try {
+      if (stderr != null)
+        formatter.setErrWriter(new BufferedWriter(new OutputStreamWriter(stderr)));
+    } catch (Exception e1) {
+      _errMsg = "Internal error 2";
+      LOGGER.debug("unable to create stderr buffered writer: " + e1);
+      formatter.dumpError(_errMsg);
+      formatter.closeWriters();
       return result;
     }
 
@@ -843,17 +827,17 @@ public class PQueryMirrorBase {
     try {
       fis = new FileInputStream(dbMirrorConfFile);
     } catch (FileNotFoundException e) {
-      _errMsg = "Internal server error 1: unable to find: " + dbMirrorConfFile;
+      _errMsg = "Internal error 3: unable to find: " + dbMirrorConfFile;
       LOGGER.debug(_errMsg);
-      dumpSevereError(outWriter, _errMsg);
-      closeWriter(outWriter);
+      formatter.dumpError(_errMsg);
+      formatter.closeWriters();
       return result;
     }
     _dbMirrorConfig = new DBMirrorConfig();
     if (!_dbMirrorConfig.load(fis)) {
-      _errMsg = "Internal server error 2: unable to load databank configuration";
-      dumpSevereError(outWriter, _errMsg);
-      closeWriter(outWriter);
+      _errMsg = "Internal error 4: unable to load databank configuration";
+      formatter.dumpError(_errMsg);
+      formatter.closeWriters();
       return result;
     }
     try {
@@ -862,24 +846,24 @@ public class PQueryMirrorBase {
     }
     _descriptors = DBDescriptorUtils.prepareIndexDBList(_dbMirrorConfig);
     if (values != null) {
-      result = executeQuery(outWriter, values);
+      result = executeQuery(formatter, values);
     } else {
       _errMsg = "Internal server error 3: unable to prepare databank list";
-      dumpSevereError(outWriter, _errMsg);
+      formatter.dumpError(_errMsg);
     }
-    closeWriter(outWriter);
+    formatter.closeWriters();
     return result;
   }
 
   public PSequence[] executeJob(Map<String, String> values, OutputStream os,
       DBMirrorConfig dbMirrorConf) {
-    Writer outWriter = null;
+    PFormatter formatter = new PFormatter();
     PSequence[] result = null;
 
     _errMsg = null;
     try {
       if (os != null)
-        outWriter = new BufferedWriter(new OutputStreamWriter(os));
+        formatter.setOutWriter(new BufferedWriter(new OutputStreamWriter(os)));
     } catch (Exception e1) {
       _errMsg = "Internal server error 1";
       LOGGER.debug("unable to open buffered writer: " + e1);
@@ -888,12 +872,12 @@ public class PQueryMirrorBase {
     _dbMirrorConfig = dbMirrorConf;
     _descriptors = DBDescriptorUtils.prepareIndexDBList(_dbMirrorConfig);
     if (values != null) {
-      result = executeQuery(outWriter, values);
+      result = executeQuery(formatter, values);
     } else {
       _errMsg = "Internal server error 2: unable to prepare databank list";
-      dumpSevereError(outWriter, _errMsg);
+      formatter.dumpError(_errMsg);
     }
-    closeWriter(outWriter);
+    formatter.closeWriters();;
     return result;
   }
 
