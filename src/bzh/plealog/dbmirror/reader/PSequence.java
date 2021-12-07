@@ -101,7 +101,7 @@ public class PSequence {
     String name;
     int i, size;
 
-    szBuf = new StringBuffer("> ");
+    szBuf = new StringBuffer(">");
     if (seqInfo != null) {
       name = seqInfo.getId();
     } else {
