@@ -48,19 +48,33 @@ public class CmdLineQueryTest {
   public static void setUpBeforeClass() throws Exception {
     UtilsTest.configureApp();
     UtilsTest.cleanInstalledDatabanks();
+    // delete the db_mirror directory to be sure that only one bank is installed
+    /*File mirrorPath = new File(DBMSAbstractConfig.getLocalMirrorPath());
+    if (mirrorPath.exists()) {
+      try {
+        FileUtils.cleanDirectory(mirrorPath);
+        Thread.sleep(2000);
+      } catch (Exception e) {
+        e.printStackTrace();
+        Assert.fail("Unable to clean the directory : " + mirrorPath.getAbsolutePath());
+      }
+    }*/
+    // install the uniprot databank
+    DefaultLoaderMonitorTest.completeInstall("uniprot", "sample_Uniprot.dsc", true);
+
   }
 
   @AfterClass
   public static void tearDownAfterClass() throws Exception {
     UtilsTest.cleanInstalledDatabanks();
-  }
-
-  @After
-  public void tearDown() {
     try {
       FileUtils.deleteDirectory(new File(DBMSAbstractConfig.getLocalMirrorPath()));
     } catch (IOException e) {
     }
+  }
+
+  @After
+  public void tearDown() {
   }
 
   public boolean compareTwoFiles(File file1, File file2)
@@ -96,26 +110,47 @@ public class CmdLineQueryTest {
 
   @Test
   public void testCmdLine() {
-    // delete the db_mirror directory to be sure that only one bank is installed
-    File mirrorPath = new File(DBMSAbstractConfig.getLocalMirrorPath());
-    if (mirrorPath.exists()) {
-      try {
-        FileUtils.cleanDirectory(mirrorPath);
-        Thread.sleep(2000);
-      } catch (Exception e) {
-        e.printStackTrace();
-        Assert.fail("Unable to clean the directory : " + mirrorPath.getAbsolutePath());
-      }
-    }
-    // install the uniprot databank
-    DefaultLoaderMonitorTest.completeInstall("uniprot", "sample_Uniprot.dsc", true);
-
     String[] args = {
         "-d", "protein", 
         "-i", "KKCC1_RAT",
         "-f", "txt"};
     
     File refFile = new File(UtilsTest.getTestFilePath("Tools", "query.dat"));
+
+    File result=null;
+    try {
+      result = File.createTempFile("bdmQueryTest", ".dat");
+      result.deleteOnExit();
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+    try {
+      System.setOut(outputFile(result));
+    } catch (Exception e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+
+    Assert.assertTrue(CmdLineQuery.doJob(args));
+    try {
+      Assert.assertTrue(compareTwoFiles(refFile, result));
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+  }
+  
+  @Test
+  public void testCmdLineFOIDs() {
+    File foIDsFile = new File(UtilsTest.getTestFilePath("Tools", "foIDs.txt"));
+    
+    String[] args = {
+        "-d", "protein", 
+        "-i", foIDsFile.getAbsolutePath(),
+        "-f", "txt"};
+    
+    File refFile = new File(UtilsTest.getTestFilePath("Tools", "query3.dat"));
 
     File result=null;
     try {

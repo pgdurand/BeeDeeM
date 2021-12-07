@@ -28,6 +28,7 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.URLDecoder;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -193,9 +194,11 @@ public class PQueryMirrorBase {
     return line;
   }
 
-	private void handleDicoIds(Writer w, String dbKey, String mirrorPath, List<String> idxNames, String[] ids) {
-		DicoTerm term;
-		int i;
+	private void handleDicoIds(Writer w, String dbKey, String mirrorPath, List<String> idxNames, String ids) {
+		DicoTerm        term;
+		StringTokenizer tokenizer;
+		String          id;
+		int             i;
 		
 		// connect to Dictionnary Lucene Indexes
 		DicoTermQuerySystem dicoConnector;
@@ -213,16 +216,18 @@ public class PQueryMirrorBase {
       dbKey = Dicos.NCBI_TAXONOMY.xrefId;
     }
 		try {
-			if (dbKey.toLowerCase().startsWith(Dicos.NCBI_TAXONOMY.xrefId.toLowerCase())) {
-				for (i = 0; i < ids.length; i++) {
-				  //get NCBI Taxonomy Term given a taxID
-					term = dicoConnector.getTerm(Dicos.NCBI_TAXONOMY, ids[i]);
+		  tokenizer = new StringTokenizer(ids, ",");
+		  if (dbKey.toLowerCase().startsWith(Dicos.NCBI_TAXONOMY.xrefId.toLowerCase())) {
+		    while (tokenizer.hasMoreTokens()) {
+				  id = tokenizer.nextToken().trim();
+		      //get NCBI Taxonomy Term given a taxID
+					term = dicoConnector.getTerm(Dicos.NCBI_TAXONOMY, id);
           //dump simplified taxo, i.e. path containing only official ranks (kingdom, order, etc)
 					//missing ranks are tagged with "unknown" to always produce tax-path of same size
-					w.write(ids[i]);
+					w.write(id);
           w.write("\t");
 					if (term != null) {
-						w.write(dicoConnector.getTaxPath(ids[i], true, true, true));
+						w.write(dicoConnector.getTaxPath(id, true, true, true));
 					}
 					else {
 					  w.write(UNK);
@@ -231,10 +236,11 @@ public class PQueryMirrorBase {
 				}
 			}
 			else if (dbKey.toLowerCase().startsWith(Dicos.GENE_ONTOLOGY.xrefId.toLowerCase())) {
-			  for (i = 0; i < ids.length; i++) {
+			  while (tokenizer.hasMoreTokens()) {
+          id = tokenizer.nextToken().trim();
 			    //get GO term given a GO-ID
-          term = dicoConnector.getTerm(Dicos.GENE_ONTOLOGY, Dicos.GENE_ONTOLOGY.xrefId+":"+ids[i]);
-          w.write(ids[i]);
+          term = dicoConnector.getTerm(Dicos.GENE_ONTOLOGY, Dicos.GENE_ONTOLOGY.xrefId+":"+id);
+          w.write(id);
           w.write("\t");
           if (term != null) {
             GeneOntologyTerm goTerm = (GeneOntologyTerm) term.get_dataObject();
@@ -251,10 +257,11 @@ public class PQueryMirrorBase {
   			}
 			}
       else if (dbKey.toLowerCase().startsWith(Dicos.INTERPRO.xrefId.toLowerCase())) {
-        for (i = 0; i < ids.length; i++) {
+        while (tokenizer.hasMoreTokens()) {
+          id = tokenizer.nextToken().trim();
           //get InterPro term given a IPR-ID
-          term = dicoConnector.getTerm(Dicos.INTERPRO, ids[i]);
-          w.write(ids[i]);
+          term = dicoConnector.getTerm(Dicos.INTERPRO, id);
+          w.write(id);
           w.write("\t");
           if (term != null) {
             w.write(term.getDataField().toString());
@@ -266,10 +273,11 @@ public class PQueryMirrorBase {
         }
       }
       else if (dbKey.toLowerCase().startsWith(Dicos.ENZYME.xrefId.toLowerCase())) {
-        for (i = 0; i < ids.length; i++) {
+        while (tokenizer.hasMoreTokens()) {
+          id = tokenizer.nextToken().trim();
           //get Enzyme term given a EC-ID
-          term = dicoConnector.getTerm(Dicos.ENZYME, ids[i]);
-          w.write(ids[i]);
+          term = dicoConnector.getTerm(Dicos.ENZYME, id);
+          w.write(id);
           w.write("\t");
           if (term != null) {
             w.write(term.getDataField().toString());
@@ -284,22 +292,6 @@ public class PQueryMirrorBase {
 			LOGGER.debug("unable to write result: " + e);
 		}
 	}
-
-  private String[] getIDs(String id) {
-    ArrayList<String> idsList;
-    StringTokenizer tokenizer;
-
-    idsList = new ArrayList<String>();
-    if (id.indexOf(',') != -1) {
-      tokenizer = new StringTokenizer(id, ",");
-      while (tokenizer.hasMoreTokens()) {
-        idsList.add(tokenizer.nextToken().trim());
-      }
-    } else {
-      idsList.add(id);
-    }
-    return idsList.toArray(new String[0]);
-  }
 
   private String findReader(String idxPath) {
     String reader = null;
@@ -354,6 +346,18 @@ public class PQueryMirrorBase {
     return results.toArray(new PSequence[0]);
   }
 
+  private void handleMultipleID(Writer w, PFormatter formatter,
+      String mirrorPath, List<String> idxNames, File foIDs, String format,
+      String dbName, String dbKey) {
+    try {
+      Files.lines(foIDs.toPath())
+        .forEach(a -> handleSingleID(w, formatter, mirrorPath, idxNames, a.trim(), format,
+            dbName, dbKey, 0, 0, false));
+    } catch (IOException e) {
+      LOGGER.warn("unable to read: " +foIDs+ ": " + e);
+    }
+
+  }
   private PSequence handleSingleID(Writer w, PFormatter formatter,
       String mirrorPath, List<String> idxNames, String id, String format,
       String dbName, String dbKey, int start, int stop, boolean adjust) {
@@ -459,8 +463,9 @@ public class PQueryMirrorBase {
     ArrayList<String> idxNames;
     List<String> idxKeys, idxKeys2;
     Iterator<String> iter;
+    File foIDs;
     int start, stop;
-    boolean adjust;
+    boolean adjust, hasfoIDs;
 
     // get the db identifier (mandatory)
     dbKey = data.get(DBKEY);
@@ -482,7 +487,12 @@ public class PQueryMirrorBase {
     if ("a".equals(dbKey) && "b".equals(id)) {
       return null;
     }
-    id = id.toUpperCase();
+    //id can be a single ID, a list of IDs or a path to a file of IDs
+    foIDs = new File(id);
+    hasfoIDs = foIDs.exists();
+    if(!hasfoIDs) {
+      id = id.toUpperCase();
+    }
     // given the db key, get the path to the db mirror
     idxKeys = _dbMirrorConfig.getMirrorCodes(dbKey);
     // following line add since Fasta-based databanks (used with Plast) are
@@ -592,7 +602,11 @@ public class PQueryMirrorBase {
       formatter = new PFormatter();
       formatter.startPrologue(w, format);
       // process query
-      if (id.indexOf(',') == -1) {
+      if (hasfoIDs) {
+        handleMultipleID(w, formatter, mirrorPath, idxNames, foIDs,
+            format, dbName, dbKey);
+      }
+      else if (id.indexOf(',') == -1) {
         seq = handleSingleID(w, formatter, mirrorPath, idxNames, id, format,
             dbName, dbKey, start, stop, adjust);
         result = new PSequence[1];
@@ -603,7 +617,7 @@ public class PQueryMirrorBase {
       }
       formatter.startEpilogue(w, format);
     } else {// dico
-      handleDicoIds(w, dbKey, mirrorPath, idxNames, getIDs(id));
+      handleDicoIds(w, dbKey, mirrorPath, idxNames, id);
     }
     return result;
   }
@@ -693,7 +707,7 @@ public class PQueryMirrorBase {
       result = new PSequence[1];
       result[0] = seq;
     } else {// dico
-      handleDicoIds(outWriter, dbKey, mirrorPath, null, getIDs(id));
+      handleDicoIds(outWriter, dbKey, mirrorPath, null, id);
     }
 
     closeWriter(outWriter);
