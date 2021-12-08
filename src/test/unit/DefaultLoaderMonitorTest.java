@@ -829,8 +829,8 @@ public class DefaultLoaderMonitorTest {
         "./tests/junit/DBXrefManager/z78540b.dat"), 0, 0, false);
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     Writer w = new BufferedWriter(new OutputStreamWriter(output));
-    PFormatter formatter = new PFormatter(w, null);
-    formatter.dump(seq, "insd");
+    PFormatter formatter = new PFormatter(PFormatter.FORMAT.INSD_FORMAT, w, null);
+    formatter.dump(seq);
     try {
       w.flush();
       w.close();

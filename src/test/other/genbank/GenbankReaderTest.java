@@ -38,8 +38,8 @@ public class GenbankReaderTest {
   private static void test5(String file) {
     PSequence seq = DBUtils.readGenbankEntry(new File(file), 0, 0, false);
     Writer w = new BufferedWriter(new OutputStreamWriter(System.out));
-    PFormatter formatter = new PFormatter(w, null);
-    formatter.dump(seq, "insd");
+    PFormatter formatter = new PFormatter(PFormatter.FORMAT.INSD_FORMAT, w, null);
+    formatter.dump(seq);
     try {
       w.flush();
       w.close();

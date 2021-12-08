@@ -325,7 +325,7 @@ public class PQueryMirrorBase {
   }
 
   private PSequence[] handleMultipleID(PFormatter formatter,
-      String mirrorPath, List<String> idxNames, String ids, String format,
+      String mirrorPath, List<String> idxNames, String ids,
       String dbName, String dbKey) {
     StringTokenizer tokenizer;
     String id;
@@ -336,7 +336,7 @@ public class PQueryMirrorBase {
     tokenizer = new StringTokenizer(ids, ",");
     while (tokenizer.hasMoreTokens()) {
       id = tokenizer.nextToken().trim();
-      res = handleSingleID(formatter, mirrorPath, idxNames, id, format,
+      res = handleSingleID(formatter, mirrorPath, idxNames, id,
           dbName, dbKey, 0, 0, false);
       if (res != null)
         results.add(res);
@@ -347,11 +347,11 @@ public class PQueryMirrorBase {
   }
 
   private void handleMultipleID(PFormatter formatter,
-      String mirrorPath, List<String> idxNames, File foIDs, String format,
+      String mirrorPath, List<String> idxNames, File foIDs, 
       String dbName, String dbKey) {
     try {
       Files.lines(foIDs.toPath())
-        .forEach(a -> handleSingleID(formatter, mirrorPath, idxNames, a.trim(), format,
+        .forEach(a -> handleSingleID(formatter, mirrorPath, idxNames, a.trim(),
             dbName, dbKey, 0, 0, false));
     } catch (IOException e) {
       LOGGER.warn("unable to read: " +foIDs+ ": " + e);
@@ -359,7 +359,7 @@ public class PQueryMirrorBase {
 
   }
   private PSequence handleSingleID(PFormatter formatter,
-      String mirrorPath, List<String> idxNames, String id, String format,
+      String mirrorPath, List<String> idxNames, String id,
       String dbName, String dbKey, int start, int stop, boolean adjust) {
     PSequence seq = null;
     DBEntry entry;
@@ -377,26 +377,26 @@ public class PQueryMirrorBase {
           entry.getStop());
       // prepare the output
       if (dbFile == null) {
-        formatter.dumpError(format, "Unable to retrieve " + id
+        formatter.dumpError("Unable to retrieve " + id
             + " from database");
       } else {
         // TXT_FORMAT
-        if (PFormatter.HTML_FORMAT.equals(format)) {
+        if (PFormatter.FORMAT.HTML_FORMAT.equals(formatter.getFormat())) {
           strEntry = loadEntry(dbFile);
           if (strEntry != null) {
-            formatter.dump(strEntry, dbName, id, PFormatter.HTML_FORMAT);
+            formatter.dump(strEntry, dbName, id);
             bOk = true;
           } else {
-            formatter.dumpError(format, "Unable to retrieve " + id
+            formatter.dumpError("Unable to retrieve " + id
                 + " from database");
           }
-        } else if (PFormatter.TXT_FORMAT.equals(format)) {
+        } else if (PFormatter.FORMAT.TXT_FORMAT.equals(formatter.getFormat())) {
           strEntry = loadEntry(dbFile);
           if (strEntry != null) {
-            formatter.dump(strEntry, dbName, id, PFormatter.TXT_FORMAT);
+            formatter.dump(strEntry, dbName, id);
             bOk = true;
           } else {
-            formatter.dumpError(format, "Unable to retrieve " + id
+            formatter.dumpError("Unable to retrieve " + id
                 + " from database");
           }
         } else {
@@ -428,16 +428,15 @@ public class PQueryMirrorBase {
             seq = null;
           }
           if (seq != null) {
-            if (PFormatter.INSD_FORMAT.equals(format))
-              formatter.dump(seq, PFormatter.INSD_FORMAT);
+            if (PFormatter.FORMAT.INSD_FORMAT.equals(formatter.getFormat()))
+              formatter.dump(seq);
             else
-              formatter.dump(seq.getFastaSequence(), dbName, id,
-                  PFormatter.TXT_FORMAT);
+              formatter.dump(seq.getFastaSequence(), dbName, id);
             bOk = true;
           } else {
             _errMsg = "Unable to read sequence data for " + id;
             LOGGER.debug(_errMsg);
-            formatter.dumpError(format, _errMsg);
+            formatter.dumpError(_errMsg);
           }
         }
         if (bOk)
@@ -446,7 +445,7 @@ public class PQueryMirrorBase {
     } else {
       _errMsg = "entry " + id + " not found in index (" + dbKey + ")";
       LOGGER.debug(_errMsg);
-      formatter.dumpError(format, _errMsg);
+      formatter.dumpError(_errMsg);
     }
 
     return seq;
@@ -458,7 +457,7 @@ public class PQueryMirrorBase {
   private PSequence[] executeQuery(PFormatter formatter, Map<String, String> data) {
     PSequence[] result = null;
     PSequence seq;
-    String val, dbKey, mirrorPath = null, id, format, dbName, idxKey, path;
+    String val, dbKey, mirrorPath = null, id, dbName, idxKey, path;
     ArrayList<String> idxNames;
     List<String> idxKeys, idxKeys2;
     Iterator<String> iter;
@@ -564,14 +563,6 @@ public class PQueryMirrorBase {
      * _errMsg = "unknown database reader for: "+dbKey; LOGGER.debug(_errMsg);
      * dumpSevereError(w, _errMsg); return result; }
      */
-    // get the output format
-    val = data.get(FOMRATKEY);
-    if (val != null && PFormatter.AVAILABLE_FORMATS != null
-        && PFormatter.AVAILABLE_FORMATS.containsKey(val)) {
-      format = val;
-    } else {
-      format = PFormatter.TXT_FORMAT;
-    }
     // get the start/top values defining the sequence coordinate range
     // from where to retrieve the features. These values are not used for
     // TXT_FORMAT dump
@@ -598,22 +589,21 @@ public class PQueryMirrorBase {
 
     if (!dbKey.startsWith((DBMirrorConfig.DICO_IDX))) {
       // nuc/prot index
-      formatter.startPrologue(format);
+      formatter.startPrologue();
       // process query
       if (hasfoIDs) {
-        handleMultipleID(formatter, mirrorPath, idxNames, foIDs,
-            format, dbName, dbKey);
+        handleMultipleID(formatter, mirrorPath, idxNames, foIDs, dbName, dbKey);
       }
       else if (id.indexOf(',') == -1) {
-        seq = handleSingleID(formatter, mirrorPath, idxNames, id, format,
+        seq = handleSingleID(formatter, mirrorPath, idxNames, id,
             dbName, dbKey, start, stop, adjust);
         result = new PSequence[1];
         result[0] = seq;
       } else {
         result = handleMultipleID(formatter, mirrorPath, idxNames, id,
-            format, dbName, dbKey);
+            dbName, dbKey);
       }
-      formatter.startEpilogue(format);
+      formatter.startEpilogue();
     } else {// dico
       handleDicoIds(formatter.getOutWriter(), dbKey, mirrorPath, idxNames, id);
     }
@@ -641,7 +631,6 @@ public class PQueryMirrorBase {
       OutputStream os) {
     BufferedWriter outWriter = null;
     PFormatter formatter;
-    String format;
     PSequence[] result = null;
 
     _errMsg = null;
@@ -656,11 +645,7 @@ public class PQueryMirrorBase {
       LOGGER.debug(_errMsg);
       return result;
     }
-    /*
-     * if (os==null){ os = System.out; }
-     */
     // prepare basic text output
-    format = PFormatter.TXT_FORMAT;
     try {
       if (os != null)
         outWriter = new BufferedWriter(new OutputStreamWriter(os));
@@ -669,14 +654,14 @@ public class PQueryMirrorBase {
       LOGGER.debug(_errMsg);
       return result;
     }
-    formatter = new PFormatter(outWriter, null);
+    formatter = new PFormatter(PFormatter.FORMAT.TXT_FORMAT, outWriter, null);
     // process query
     if (dbKey==null) {
       dbKey="";
     }
     if (!dbKey.startsWith(DBMirrorConfig.DICO_IDX)) {
       PSequence seq = handleSingleID(formatter, mirrorPath, null,
-          id, format, "", "", 0, 0, false);
+          id, "", "", 0, 0, false);
       result = new PSequence[1];
       result[0] = seq;
     } else {// dico
@@ -792,14 +777,43 @@ public class PQueryMirrorBase {
   }
 
   /**
-   * Process a query.
+   * Get FORMAT from user provided arguments. 
+   * 
+   * @param values user-provided values
+   * 
+   * @return if argument values is null or does not contain
+   * any format argument, returns PFormatter.FORMAT.TXT_FORMAT.
    */
+  private PFormatter.FORMAT getFormat(Map<String, String> values) {
+    PFormatter.FORMAT format = null;
+    // get the output format
+    if(values!=null && values.containsKey(FOMRATKEY)) {
+      format = PFormatter.FORMAT.findByType(values.get(FOMRATKEY));
+    }
+    if (format==null) {
+      format = PFormatter.FORMAT.TXT_FORMAT; 
+    }
+    return format;
+  }
+  
+  /**
+   * Execute a query against banks managed by BeeDeeM.
+   * 
+   * @param values user-provided arguments
+   * @param stdout where to dump results
+   * @param stderr where to dump error messages
+   * @param dbMirrorConf BeeDeeM configuration
+   * 
+   * @return array of PSequences object or null if working with Dictionnary or
+   * user has provided a file of sequence IDs.
+   * */
   public PSequence[] executeJob(Map<String, String> values, 
       OutputStream stdout, OutputStream stderr, String dbMirrorConfFile) {
     FileInputStream fis = null;
-    PFormatter formatter = new PFormatter();
-    PSequence[] result = null;
+    PFormatter      formatter;
+    PSequence[]     result = null;
 
+    formatter = new PFormatter(getFormat(values));
     _errMsg = null;
     try {
       if (stdout != null)
@@ -855,11 +869,25 @@ public class PQueryMirrorBase {
     return result;
   }
 
-  public PSequence[] executeJob(Map<String, String> values, OutputStream os,
+  /**
+   * Execute a query against banks managed by BeeDeeM.
+   * 
+   * @param values user-provided arguments
+   * @param os where to dump results
+   * @param dbMirrorConf BeeDeeM configuration
+   * 
+   * @return array of PSequences object or null if working with Dictionnary or
+   * user has provided a file of sequence IDs.
+   * */
+  public PSequence[] executeJob(
+      Map<String, String> values, 
+      OutputStream os,
       DBMirrorConfig dbMirrorConf) {
-    PFormatter formatter = new PFormatter();
-    PSequence[] result = null;
-
+    PFormatter        formatter;
+    PSequence[]       result = null;
+    
+    // get the output format
+    formatter = new PFormatter(getFormat(values));
     _errMsg = null;
     try {
       if (os != null)
@@ -877,13 +905,13 @@ public class PQueryMirrorBase {
       _errMsg = "Internal server error 2: unable to prepare databank list";
       formatter.dumpError(_errMsg);
     }
-    formatter.closeWriters();;
+    formatter.closeWriters();
     return result;
   }
 
   /**
    * Call this method after a call to a executeQuery method to figure out
-   * whether or not an error occured during the process.
+   * whether or not an error occurred during the process.
    */
   public boolean terminateWithError() {
     return _errMsg != null;

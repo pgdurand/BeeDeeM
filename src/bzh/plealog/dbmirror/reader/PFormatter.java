@@ -19,6 +19,7 @@ package bzh.plealog.dbmirror.reader;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.Hashtable;
 
 import org.apache.commons.logging.Log;
@@ -42,41 +43,62 @@ public class PFormatter {
                                                               .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                   + ".PFormatter");
 
-  public static Hashtable<String, String> AVAILABLE_FORMATS;
+  public static Hashtable<FORMAT, String> AVAILABLE_FORMATS;
 
   // use a singleton
   private static VelocityEngine           _velocityEngine = null;
 
   // output formats available
-  public static final String              TXT_FORMAT      = "txt";
-  public static final String              HTML_FORMAT     = "html";
-  public static final String              INSD_FORMAT     = "insd";
-  public static final String              F_INSD_FORMAT   = "finsd";
-  public static final String              FASTA_FORMAT    = "fas";
-
+  public enum FORMAT {
+    TXT_FORMAT("txt"), 
+    HTML_FORMAT("html"), 
+    INSD_FORMAT("insd"), 
+    F_INSD_FORMAT("finsd"), 
+    FASTA_FORMAT("fas");
+    
+    private String type;
+    
+    FORMAT(String type){
+      this.type = type;
+    }
+    
+    public String getType() {
+      return type;
+    }
+    public String toString() {
+      return type;
+    }
+    public static FORMAT findByType(final String type){
+      return Arrays.stream(values()).filter(value -> value.getType().equals(type)).findFirst().orElse(null);
+  }
+  }
+  
   static {
-    AVAILABLE_FORMATS = new Hashtable<String, String>();
-    AVAILABLE_FORMATS.put(TXT_FORMAT, "simpleAsciiText.vm");
-    AVAILABLE_FORMATS.put(HTML_FORMAT, "simpleHtmlText.vm");
-    AVAILABLE_FORMATS.put(INSD_FORMAT, "simpleINSDseq.vm");
-    AVAILABLE_FORMATS.put(F_INSD_FORMAT, "fullINSDseq.vm");
-    AVAILABLE_FORMATS.put(FASTA_FORMAT, "simpleFasta.vm");
+    AVAILABLE_FORMATS = new Hashtable<FORMAT, String>();
+    AVAILABLE_FORMATS.put(FORMAT.TXT_FORMAT, "simpleAsciiText.vm");
+    AVAILABLE_FORMATS.put(FORMAT.HTML_FORMAT, "simpleHtmlText.vm");
+    AVAILABLE_FORMATS.put(FORMAT.INSD_FORMAT, "simpleINSDseq.vm");
+    AVAILABLE_FORMATS.put(FORMAT.F_INSD_FORMAT, "fullINSDseq.vm");
+    AVAILABLE_FORMATS.put(FORMAT.FASTA_FORMAT, "simpleFasta.vm");
   }
 
   private Writer outWriter = null;
   private Writer errWriter = null;
-
+  private FORMAT format = FORMAT.TXT_FORMAT;
+  
   /**
    * Creates a data formatter. Please note that both outWriter and errWriter
-   * are null.
+   * are null by default.
    */
-  public PFormatter() {
+  public PFormatter(FORMAT format) {
+    this.format = format;
   }
 
   /**
    * Creates a data formatter.
    */
-  public PFormatter(Writer outWriter, Writer errWriter) {
+  public PFormatter(FORMAT format, Writer outWriter, Writer errWriter) {
+    this(format);
     this.outWriter = outWriter;
     this.errWriter = errWriter;
   }
@@ -85,16 +107,24 @@ public class PFormatter {
     this.outWriter = outWriter;
   }
 
-  public void setErrWriter(Writer errWriter) {
-    this.errWriter = errWriter;
-  }
-  
   public Writer getOutWriter() {
     return outWriter;
   }
 
+  public void setErrWriter(Writer errWriter) {
+    this.errWriter = errWriter;
+  }
+  
   public Writer getErrWriter() {
     return errWriter;
+  }
+
+  public void setFormat(FORMAT format) {
+    this.format = format;
+  }
+
+  public FORMAT getFormat() {
+    return format;
   }
 
   public void closeOutWriter() {
@@ -214,13 +244,12 @@ public class PFormatter {
    * Dump some text data using a particular Velocity template. This method dumps
    * formatted String to standard output.
    * 
-   * @param text
-   *          the string to format
-   * @param format
-   *          the format code
+   * @param text the string to format
+   * @param dbName name of the databank
+   * @param id sequence ID
+   *        
    */
-  public void dump(String text, String dbName, String id,
-      String format) {
+  public void dump(String text, String dbName, String id) {
     VelocityEngine ve;
     VelocityContext context;
     Template t;
@@ -247,12 +276,9 @@ public class PFormatter {
    * Dump some sequence data using a particular Velocity template. This method
    * dumps formatted data to standard output.
    * 
-   * @param seq
-   *          the sequence to format
-   * @param format
-   *          the format code
+   * @param seq the sequence to format
    */
-  public void dump(PSequence seq, String format) {
+  public void dump(PSequence seq) {
     VelocityEngine ve;
     VelocityContext context;
     Template t;
@@ -266,7 +292,7 @@ public class PFormatter {
       context = new VelocityContext();
       seq.getFeatTable().sort(FeatureTable.POS_SORTER);
       context.put("seqinfo", seq);
-      context.put("xFomatter", new PFormatter());
+      context.put("xFomatter", new PFormatter(format));
       writer = new StringWriter();
       t.merge(context, writer);
       outWriter.write(writer.toString());
@@ -294,36 +320,33 @@ public class PFormatter {
     }
   }
 
-  public void startEpilogue(String format) {
+  public void startEpilogue() {
     if (outWriter == null)
       return;
     dumpPE("E" + AVAILABLE_FORMATS.get(format));
   }
 
-  public void startPrologue(String format) {
+  public void startPrologue() {
     if (outWriter == null)
       return;
     dumpPE("P" + AVAILABLE_FORMATS.get(format));
   }
 
-  public void dumpError(String format, String msg) {
+  public void dumpError(String msg) {
     Writer w = errWriter;
     if (w == null)
       w = outWriter;
     if (w == null)
       return;
     try {
-      if (HTML_FORMAT.equals(format)) {
+      if (FORMAT.HTML_FORMAT.equals(format)) {
         errWriter.write("<B>" + msg + "</B>\n");
-      } else if (INSD_FORMAT.equals(format)) {
+      } else if (FORMAT.INSD_FORMAT.equals(format)) {
         errWriter.write("<Error>" + msg + "</Error>\n");
       } else {
         errWriter.write(msg + "\n");
       }
     } catch (IOException e) {
     }
-  }
-  public void dumpError(String msg) {
-    dumpError(TXT_FORMAT, msg);
   }
 }
