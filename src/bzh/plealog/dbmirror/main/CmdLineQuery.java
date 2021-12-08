@@ -132,8 +132,16 @@ public class CmdLineQuery {
         return false;
       }
     }
+    
     qm.executeJob(values, os, System.err, DBMSAbstractConfig.getLocalMirrorConfFile());
-    return true;
+    
+    if (qm.terminateWithError()) {
+      System.err.println(qm.getErrorMessage());
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 
   public static void main(String[] args) {

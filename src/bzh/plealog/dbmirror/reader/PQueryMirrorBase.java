@@ -597,8 +597,10 @@ public class PQueryMirrorBase {
       else if (id.indexOf(',') == -1) {
         seq = handleSingleID(formatter, mirrorPath, idxNames, id,
             dbName, dbKey, start, stop, adjust);
-        result = new PSequence[1];
-        result[0] = seq;
+        if (seq!=null) {
+          result = new PSequence[1];
+          result[0] = seq;
+        }
       } else {
         result = handleMultipleID(formatter, mirrorPath, idxNames, id,
             dbName, dbKey);
@@ -672,9 +674,8 @@ public class PQueryMirrorBase {
     return result;
   }
 
-  public PSequence[] executeJob(String dbName, String id, Integer start,
-      Integer stop, Boolean adjust, String format, OutputStream os,
-      String dbMirrorConfFile) {
+  private String prepareQuery(String dbName, String id, Integer start,
+      Integer stop, Boolean adjust, String format) {
     StringBuffer szBuf;
     String getVar;
 
@@ -721,59 +722,26 @@ public class PQueryMirrorBase {
       LOGGER.debug(_errMsg);
       return null;
     }
+    else {
+      return getVar;
+    }
+  }
+  public PSequence[] executeJob(String dbName, String id, Integer start,
+      Integer stop, Boolean adjust, String format, OutputStream os,
+      String dbMirrorConfFile) {
+    String getVar = prepareQuery(dbName, id, start, stop, adjust, format);
+    if (getVar==null)
+      return null;
     return executeJob(getValuesFromString(getVar), os, null, dbMirrorConfFile);
   }
 
   public PSequence[] executeJob(String dbName, String id, Integer start,
       Integer stop, Boolean adjust, String format, OutputStream os,
       DBMirrorConfig dbMirrorConf) {
-    StringBuffer szBuf;
-    String getVar;
-
-    _errMsg = null;
-    szBuf = new StringBuffer();
-    if (dbName != null) {
-      szBuf.append(DBKEY);
-      szBuf.append("=");
-      szBuf.append(dbName);
-    }
-    if (id != null) {
-      szBuf.append("&");
-      szBuf.append(IDKEY);
-      szBuf.append("=");
-      szBuf.append(id);
-    }
-    if (start != null) {
-      szBuf.append("&");
-      szBuf.append(STARTKEY);
-      szBuf.append("=");
-      szBuf.append(start);
-    }
-    if (stop != null) {
-      szBuf.append("&");
-      szBuf.append(STOPKEY);
-      szBuf.append("=");
-      szBuf.append(stop);
-    }
-    if (adjust != null) {
-      szBuf.append("&");
-      szBuf.append(ADJUSTKEY);
-      szBuf.append("=");
-      szBuf.append(adjust);
-    }
-    if (format != null) {
-      szBuf.append("&");
-      szBuf.append(FOMRATKEY);
-      szBuf.append("=");
-      szBuf.append(format);
-    }
-    getVar = szBuf.toString();
-    if (getVar.length() == 0) {
-      _errMsg = "unable to get values to handle query.";
-      LOGGER.debug(_errMsg);
+    String getVar = prepareQuery(dbName, id, start, stop, adjust, format);
+    if (getVar==null)
       return null;
-    }
-    return executeJob(getValuesFromString(getVar), os, dbMirrorConf);
+    return executeJob(getValuesFromString(getVar), os, null, dbMirrorConf);
   }
 
   /**
@@ -796,23 +764,15 @@ public class PQueryMirrorBase {
     return format;
   }
   
-  /**
-   * Execute a query against banks managed by BeeDeeM.
-   * 
-   * @param values user-provided arguments
-   * @param stdout where to dump results
-   * @param stderr where to dump error messages
-   * @param dbMirrorConf BeeDeeM configuration
-   * 
-   * @return array of PSequences object or null if working with Dictionnary or
-   * user has provided a file of sequence IDs.
-   * */
-  public PSequence[] executeJob(Map<String, String> values, 
-      OutputStream stdout, OutputStream stderr, String dbMirrorConfFile) {
-    FileInputStream fis = null;
+  private PSequence[] executeJob(
+      Map<String, String> values, 
+      OutputStream stdout, 
+      OutputStream stderr,
+      DBMirrorConfig dbMirrorConf) {
+    
     PFormatter      formatter;
     PSequence[]     result = null;
-
+    
     formatter = new PFormatter(getFormat(values));
     _errMsg = null;
     try {
@@ -836,67 +796,6 @@ public class PQueryMirrorBase {
       formatter.closeWriters();
       return result;
     }
-
-    // load the mirror configuration
-    try {
-      fis = new FileInputStream(dbMirrorConfFile);
-    } catch (FileNotFoundException e) {
-      _errMsg = "Internal error 3: unable to find: " + dbMirrorConfFile;
-      LOGGER.debug(_errMsg);
-      formatter.dumpError(_errMsg);
-      formatter.closeWriters();
-      return result;
-    }
-    _dbMirrorConfig = new DBMirrorConfig();
-    if (!_dbMirrorConfig.load(fis)) {
-      _errMsg = "Internal error 4: unable to load databank configuration";
-      formatter.dumpError(_errMsg);
-      formatter.closeWriters();
-      return result;
-    }
-    try {
-      fis.close();
-    } catch (IOException e) {
-    }
-    _descriptors = DBDescriptorUtils.prepareIndexDBList(_dbMirrorConfig);
-    if (values != null) {
-      result = executeQuery(formatter, values);
-    } else {
-      _errMsg = "Internal server error 3: unable to prepare databank list";
-      formatter.dumpError(_errMsg);
-    }
-    formatter.closeWriters();
-    return result;
-  }
-
-  /**
-   * Execute a query against banks managed by BeeDeeM.
-   * 
-   * @param values user-provided arguments
-   * @param os where to dump results
-   * @param dbMirrorConf BeeDeeM configuration
-   * 
-   * @return array of PSequences object or null if working with Dictionnary or
-   * user has provided a file of sequence IDs.
-   * */
-  public PSequence[] executeJob(
-      Map<String, String> values, 
-      OutputStream os,
-      DBMirrorConfig dbMirrorConf) {
-    PFormatter        formatter;
-    PSequence[]       result = null;
-    
-    // get the output format
-    formatter = new PFormatter(getFormat(values));
-    _errMsg = null;
-    try {
-      if (os != null)
-        formatter.setOutWriter(new BufferedWriter(new OutputStreamWriter(os)));
-    } catch (Exception e1) {
-      _errMsg = "Internal server error 1";
-      LOGGER.debug("unable to open buffered writer: " + e1);
-      return result;
-    }
     _dbMirrorConfig = dbMirrorConf;
     _descriptors = DBDescriptorUtils.prepareIndexDBList(_dbMirrorConfig);
     if (values != null) {
@@ -908,6 +807,47 @@ public class PQueryMirrorBase {
     formatter.closeWriters();
     return result;
   }
+
+  /**
+   * Execute a query against banks managed by BeeDeeM.
+   * 
+   * @param values user-provided arguments
+   * @param stdout where to dump results
+   * @param stderr where to dump error messages
+   * @param dbMirrorConf BeeDeeM configuration
+   * 
+   * @return array of PSequence objects or null if working with Dictionary or
+   * user has provided a file of sequence IDs.
+   * @throws IOException 
+   * */
+  public PSequence[] executeJob(
+      Map<String, String> values, 
+      OutputStream stdout, 
+      OutputStream stderr, 
+      String dbMirrorConfFile) {
+    
+    DBMirrorConfig config = null;
+    
+    // load the mirror configuration
+    try (FileInputStream fis = new FileInputStream(dbMirrorConfFile)) {
+      config = new DBMirrorConfig();
+      if (!config.load(fis)) {
+        _errMsg = "Error: unable to load databank configuration";
+        return null;
+      }
+    } 
+    catch (FileNotFoundException e) {
+      _errMsg = "Error: unable to find: " + dbMirrorConfFile;
+      LOGGER.debug(_errMsg);
+      return null;
+    } catch (IOException e1) {
+      _errMsg = "Error: unable to read/close: " + dbMirrorConfFile;
+      LOGGER.debug(_errMsg);
+      return null;
+    }
+    return executeJob(values, stdout, stderr, config);
+  }
+
 
   /**
    * Call this method after a call to a executeQuery method to figure out

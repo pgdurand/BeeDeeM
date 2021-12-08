@@ -153,8 +153,32 @@ public class PFormatter {
   }
 
   public void closeWriters() {
-    closeOutWriter();
-    closeErrWriter();
+    //Flush all
+    if (outWriter!=null) {
+      try {
+        outWriter.flush();
+      } catch (IOException ex) {
+      }
+    }
+    if (errWriter!=null) {
+      try {
+        errWriter.flush();
+      } catch (IOException ex) {
+      }
+    }
+    // Then close all
+    if (outWriter!=null) {
+      try {
+        outWriter.close();
+      } catch (IOException ex) {
+      }
+    }
+    if (errWriter!=null) {
+      try {
+        errWriter.close();
+      } catch (IOException ex) {
+      }
+    }
   }
   /**
    * Cleanup string for display or for XML transmission. Replace all known chars
@@ -340,11 +364,11 @@ public class PFormatter {
       return;
     try {
       if (FORMAT.HTML_FORMAT.equals(format)) {
-        errWriter.write("<B>" + msg + "</B>\n");
+        w.write("<B>" + msg + "</B>\n");
       } else if (FORMAT.INSD_FORMAT.equals(format)) {
-        errWriter.write("<Error>" + msg + "</Error>\n");
+        w.write("<Error>" + msg + "</Error>\n");
       } else {
-        errWriter.write(msg + "\n");
+        w.write(msg + "\n");
       }
     } catch (IOException e) {
     }

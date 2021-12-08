@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2017 Ludovic Antin
+/* Copyright (C) 2006-2021 Ludovic Antin, Patrick Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -25,6 +25,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -35,10 +36,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import bzh.plealog.dbmirror.main.CmdLineQuery;
+import bzh.plealog.dbmirror.reader.PQueryMirrorBase;
+import bzh.plealog.dbmirror.reader.PSequence;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 
 /**
- * Unit tests of the CmdLine Query Tool.
+ * Unit tests of the CmdLine Query Tool and underlying PQueryMirrorBase class.
  * 
  * @author Patrick Durand
  */
@@ -48,19 +51,8 @@ public class CmdLineQueryTest {
   public static void setUpBeforeClass() throws Exception {
     UtilsTest.configureApp();
     UtilsTest.cleanInstalledDatabanks();
-    // delete the db_mirror directory to be sure that only one bank is installed
-    /*File mirrorPath = new File(DBMSAbstractConfig.getLocalMirrorPath());
-    if (mirrorPath.exists()) {
-      try {
-        FileUtils.cleanDirectory(mirrorPath);
-        Thread.sleep(2000);
-      } catch (Exception e) {
-        e.printStackTrace();
-        Assert.fail("Unable to clean the directory : " + mirrorPath.getAbsolutePath());
-      }
-    }*/
-    // install the uniprot databank
     DefaultLoaderMonitorTest.completeInstall("uniprot", "sample_Uniprot.dsc", true);
+    DefaultLoaderMonitorTest.completeInstall("taxonomy", "NCBI_Taxonomy.dsc", true);
 
   }
 
@@ -167,12 +159,192 @@ public class CmdLineQueryTest {
       Assert.fail();
     }
 
-    Assert.assertTrue(CmdLineQuery.doJob(args));
+    //AssertFalse because file of IDs contains a fake ID, so we expect an error message
+    Assert.assertFalse(CmdLineQuery.doJob(args));
     try {
       Assert.assertTrue(compareTwoFiles(refFile, result));
     } catch (IOException e) {
       e.printStackTrace();
       Assert.fail();
     }
+  }
+  
+  @Test
+  public void testQueryMirrorBase1() {
+    
+    PQueryMirrorBase querySystem = new PQueryMirrorBase();
+    Hashtable<String, String> values;
+    
+    // get the key/value data and process the query
+    values = new Hashtable<>();
+    values.put("database", "protein");
+    values.put("id", "KKCC1_RAT");
+    values.put("format", "txt");
+
+    //txt format: only dump entry on stdout
+    PSequence[] seqs = querySystem.executeJob(values, System.out, System.err, 
+        DBMSAbstractConfig.getLocalMirrorConfFile());
+    Assert.assertFalse(querySystem.terminateWithError());
+    Assert.assertNull(seqs);
+  }
+  
+  @Test
+  public void testQueryMirrorBase2() {
+    
+    PQueryMirrorBase querySystem = new PQueryMirrorBase();
+    Hashtable<String, String> values;
+    
+    // get the key/value data and process the query
+    values = new Hashtable<>();
+    values.put("database", "protein");
+    values.put("id", "KKCC1_RAT");
+    values.put("format", "insd");
+
+    //txt format: only dump entry on stdout
+    PSequence[] seqs = querySystem.executeJob(values, System.out, System.err, 
+        DBMSAbstractConfig.getLocalMirrorConfFile());
+    Assert.assertFalse(querySystem.terminateWithError());
+    Assert.assertNotNull(seqs);
+    Assert.assertNotNull(seqs[0]);
+    Assert.assertNotNull(seqs[0].getFeatTable());
+    Assert.assertEquals(seqs[0].getFeatTable().features(), 25);
+    Assert.assertNotNull(seqs[0].getSeqInfo());
+    Assert.assertEquals(seqs[0].getSeqInfo().getId(), "P97756");
+    Assert.assertEquals(seqs[0].getSeqInfo().getOrganism(), "Rattus norvegicus (Rat)");
+    Assert.assertEquals(seqs[0].getSequence().length(), 505);
+    Assert.assertTrue(seqs[0].getSequence().startsWith("MERSPAVCCQDPRAELVERVAA"));
+  }
+  
+  @Test
+  public void testQueryMirrorBase3() {
+    
+    PQueryMirrorBase querySystem = new PQueryMirrorBase();
+    Hashtable<String, String> values;
+    
+    // get the key/value data and process the query
+    values = new Hashtable<>();
+    values.put("database", "protein");
+    values.put("id", "COCO_CHANEL");
+    values.put("format", "insd");
+
+    PSequence[] seqs = querySystem.executeJob(values, System.out, null, 
+        DBMSAbstractConfig.getLocalMirrorConfFile());
+    Assert.assertTrue(querySystem.terminateWithError());
+    Assert.assertNull(seqs);
+  }
+  
+  @Test
+  public void testQueryMirrorBase4() {
+    PQueryMirrorBase querySystem = new PQueryMirrorBase();
+    
+    PSequence[] seqs = querySystem.executeJob("protein", "Q91356_COTCO", 0,
+        0, false, "fas", System.out, DBMSAbstractConfig.getLocalMirrorConfFile());
+
+    Assert.assertFalse(querySystem.terminateWithError());
+    Assert.assertNotNull(seqs);
+    
+    Assert.assertNotNull(seqs[0]);
+    Assert.assertNotNull(seqs[0].getFeatTable());
+    Assert.assertEquals(seqs[0].getFeatTable().features(), 3);
+    Assert.assertNotNull(seqs[0].getSeqInfo());
+    Assert.assertEquals(seqs[0].getSeqInfo().getId(), "Q91356");
+    Assert.assertEquals(seqs[0].getSeqInfo().getOrganism(), "Coturnix coturnix (Common quail) (Tetrao coturnix)");
+    Assert.assertEquals(seqs[0].getSequence().length(), 367);
+    Assert.assertTrue(seqs[0].getSequence().startsWith("WMDLWQSPLTMEDLICYSF"));
+    Assert.assertTrue(seqs[0].getSequence().endsWith("PPALHASFFSEQY"));
+  }
+  
+  @Test
+  public void testQueryMirrorBase5() {
+    PQueryMirrorBase querySystem = new PQueryMirrorBase();
+    
+    PSequence[] seqs = querySystem.executeJob("protein", "Q91356_COTCO", 15,
+        128, false, "fas", System.out, DBMSAbstractConfig.getLocalMirrorConfFile());
+
+    Assert.assertFalse(querySystem.terminateWithError());
+    Assert.assertNotNull(seqs);
+    
+    Assert.assertNotNull(seqs[0]);
+    Assert.assertNotNull(seqs[0].getFeatTable());
+    Assert.assertEquals(seqs[0].getFeatTable().features(), 2);
+    Assert.assertNotNull(seqs[0].getSeqInfo());
+    Assert.assertEquals(seqs[0].getSeqInfo().getId(), "Q91356");
+    Assert.assertEquals(seqs[0].getSeqInfo().getOrganism(), "Coturnix coturnix (Common quail) (Tetrao coturnix)");
+    Assert.assertEquals(seqs[0].getSequence().length(), 114);
+    Assert.assertTrue(seqs[0].getSequence().startsWith("ICYSFQ"));
+    Assert.assertTrue(seqs[0].getSequence().endsWith("ASPYPGVQINEEFCQRF"));
+  }
+
+  @Test
+  public void testCmdLineTaxo() {
+    
+    File refFile = new File(UtilsTest.getTestFilePath("Tools", "queryTaxo.dat"));
+    
+    File result=null;
+    try {
+      result = File.createTempFile("bdmQueryTest", ".dat");
+      result.deleteOnExit();
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+
+    String[] args = {
+        "-d", "dico", 
+        "-i", "9606,2157,10116,10090,45351,99999",
+        "-f", "txt",
+        "-o", result.getAbsolutePath()};
+
+    Assert.assertTrue(CmdLineQuery.doJob(args));
+    
+    try {
+      Assert.assertTrue(compareTwoFiles(refFile, result));
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+
+  }
+  
+  @Test
+  public void testQueryMirrorBase6() {
+    
+    PQueryMirrorBase querySystem = new PQueryMirrorBase();
+    Hashtable<String, String> values;
+    
+    // get the key/value data and process the query
+    values = new Hashtable<>();
+    values.put("database", "taxo"); // Use wrong dico name
+    values.put("id", "9606,2157,10116,10090,45351,99999");
+    values.put("format", "txt");
+
+    //txt format: only dump entry on stdout
+    PSequence[] seqs = querySystem.executeJob(values, System.out, System.err, 
+        DBMSAbstractConfig.getLocalMirrorConfFile());
+    //wrong index name, so we expect failure
+    Assert.assertTrue(querySystem.terminateWithError());
+    //wrong index, so return empty PSequences
+    Assert.assertNotNull(seqs);
+  }
+  
+  @Test
+  public void testQueryMirrorBase7() {
+    
+    PQueryMirrorBase querySystem = new PQueryMirrorBase();
+    Hashtable<String, String> values;
+    
+    // get the key/value data and process the query
+    values = new Hashtable<>();
+    values.put("database", "dico"); 
+    //AAAAA is not a TaxID, by design the software does not report it as error
+    //but as an unknown TaxID 
+    values.put("id", "9606,2157,10116,10090,45351,99999,AAAAA");
+    values.put("format", "txt");
+
+    //txt format: only dump entry on stdout
+    PSequence[] seqs = querySystem.executeJob(values, System.out, System.err, 
+        DBMSAbstractConfig.getLocalMirrorConfFile());
+    Assert.assertFalse(querySystem.terminateWithError());
+    Assert.assertNull(seqs);
   }
 }
