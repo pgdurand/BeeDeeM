@@ -552,7 +552,11 @@ public class DBServerConfig {
   }
 
   public String getIncludeFileList() {
-    return _properties.getProperty(DBINCFILES_KEY);
+    String val = _properties.getProperty(DBINCFILES_KEY);
+    if (val!=null) {
+      val = DBMSExecNativeCommand.formatNativePath(val, false, false);
+    }
+    return val;
   }
 
   public String getDBLocalInstallDir() {

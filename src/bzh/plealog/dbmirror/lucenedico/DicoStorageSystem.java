@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -129,7 +129,7 @@ public interface DicoStorageSystem {
    * Each DicoTerm result contains : - id : the taxonomic id - data : the
    * taxonomic name - object : the found score (to allow sort by bests results)
    */
-  public List<DicoTerm> getApprochingTerms(String term)
+  public List<DicoTerm> getApprochingTerms(String term, int maxTerms)
       throws DicoStorageSystemException;
 
 }

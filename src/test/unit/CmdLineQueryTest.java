@@ -35,6 +35,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import bzh.plealog.dbmirror.lucenedico.Dicos;
 import bzh.plealog.dbmirror.main.CmdLineQuery;
 import bzh.plealog.dbmirror.reader.PQueryMirrorBase;
 import bzh.plealog.dbmirror.reader.PSequence;
@@ -53,7 +54,10 @@ public class CmdLineQueryTest {
     UtilsTest.cleanInstalledDatabanks();
     DefaultLoaderMonitorTest.completeInstall("uniprot", "sample_Uniprot.dsc", true);
     DefaultLoaderMonitorTest.completeInstall("taxonomy", "NCBI_Taxonomy.dsc", true);
-
+    DefaultLoaderMonitorTest.completeInstall("enzyme", "enzyme.dsc", true);
+    DefaultLoaderMonitorTest.completeInstall("cdd", "CDD_terms.dsc", true);
+    DefaultLoaderMonitorTest.completeInstall("interpro", "ipr_terms.dsc", true);
+    DefaultLoaderMonitorTest.completeInstall("go", "go_terms.dsc", true);
   }
 
   @AfterClass
@@ -346,5 +350,221 @@ public class CmdLineQueryTest {
         DBMSAbstractConfig.getLocalMirrorConfFile());
     Assert.assertFalse(querySystem.terminateWithError());
     Assert.assertNull(seqs);
+  }
+  
+  @Test
+  public void testQueryMirrorBase8() {
+    
+    File refFile = new File(UtilsTest.getTestFilePath("Tools", "queryTaxo2.dat"));
+    
+    File result=null;
+    try {
+      result = File.createTempFile("bdmQueryTest", ".dat");
+      result.deleteOnExit();
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+
+    try {
+      System.setOut(outputFile(result));
+    } catch (Exception e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+    PQueryMirrorBase querySystem = new PQueryMirrorBase();
+    Hashtable<String, String> values;
+    
+    // get the key/value data and process the query
+    values = new Hashtable<>();
+    values.put("database", "dico"); 
+    //try to locates some organisms... or not!
+    //TaxFinder enables some typos, so try it too!
+    values.put("id", "Gadus morhua, homo spaiens, COCO_CHANEL, Archaea, Vespa orientalis");
+    values.put("format", "txt");
+
+    //txt format: only dump entry on stdout
+    querySystem.executeJob(values, System.out, System.err, 
+        DBMSAbstractConfig.getLocalMirrorConfFile());
+    Assert.assertFalse(querySystem.terminateWithError());
+    try {
+      Assert.assertTrue(compareTwoFiles(refFile, result));
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+  }
+  
+  @Test
+  public void testQueryMirrorBase9() {
+    
+    File refFile = new File(UtilsTest.getTestFilePath("Tools", "queryCDD.dat"));
+    
+    File result=null;
+    try {
+      result = File.createTempFile("bdmQueryTest", ".dat");
+      result.deleteOnExit();
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+
+    try {
+      System.setOut(outputFile(result));
+    } catch (Exception e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+    PQueryMirrorBase querySystem = new PQueryMirrorBase();
+    Hashtable<String, String> values;
+    
+    // get the key/value data and process the query
+    values = new Hashtable<>();
+    values.put("database", "dico:"+Dicos.CDD.xrefId);//xrefId=CDD  
+    //AAAAA is not a TaxID, by design the software does not report it as error
+    //but as an unknown TaxID 
+    values.put("id", "214330, 176955,198171");
+    values.put("format", "txt");
+
+    //txt format: only dump entry on stdout
+    querySystem.executeJob(values, System.out, System.err, 
+        DBMSAbstractConfig.getLocalMirrorConfFile());
+    Assert.assertFalse(querySystem.terminateWithError());
+    try {
+      Assert.assertTrue(compareTwoFiles(refFile, result));
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+  }
+  
+  
+  @Test
+  public void testQueryMirrorBase10() {
+    
+    File refFile = new File(UtilsTest.getTestFilePath("Tools", "queryEC.dat"));
+    
+    File result=null;
+    try {
+      result = File.createTempFile("bdmQueryTest", ".dat");
+      result.deleteOnExit();
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+
+    try {
+      System.setOut(outputFile(result));
+    } catch (Exception e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+    PQueryMirrorBase querySystem = new PQueryMirrorBase();
+    Hashtable<String, String> values;
+    
+    // get the key/value data and process the query
+    values = new Hashtable<>();
+    values.put("database", "dico:"+Dicos.ENZYME.xrefId);//xrefId=EC 
+    //AAAAA is not a TaxID, by design the software does not report it as error
+    //but as an unknown TaxID 
+    values.put("id", "1.1.1.4, 3.2.1.5, 4.5, A.B.C");
+    values.put("format", "txt");
+
+    //txt format: only dump entry on stdout
+    querySystem.executeJob(values, System.out, System.err, 
+        DBMSAbstractConfig.getLocalMirrorConfFile());
+    Assert.assertFalse(querySystem.terminateWithError());
+    try {
+      Assert.assertTrue(compareTwoFiles(refFile, result));
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+  }
+  
+  @Test
+  public void testQueryMirrorBase11() {
+    
+    File refFile = new File(UtilsTest.getTestFilePath("Tools", "queryIPR.dat"));
+    
+    File result=null;
+    try {
+      result = File.createTempFile("bdmQueryTest", ".dat");
+      result.deleteOnExit();
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+
+    try {
+      System.setOut(outputFile(result));
+    } catch (Exception e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+    PQueryMirrorBase querySystem = new PQueryMirrorBase();
+    Hashtable<String, String> values;
+    
+    // get the key/value data and process the query
+    values = new Hashtable<>();
+    values.put("database", "dico:"+Dicos.INTERPRO.xrefId);//xrefId=InterPro 
+    //AAAAA is not a TaxID, by design the software does not report it as error
+    //but as an unknown TaxID 
+    values.put("id", "IPR000001,IPR000013, IPR046327, IPR046335, IPR_HERMES");
+    values.put("format", "txt");
+
+    //txt format: only dump entry on stdout
+    querySystem.executeJob(values, System.out, System.err, 
+        DBMSAbstractConfig.getLocalMirrorConfFile());
+    Assert.assertFalse(querySystem.terminateWithError());
+    try {
+      Assert.assertTrue(compareTwoFiles(refFile, result));
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+  }
+  
+  @Test
+  public void testQueryMirrorBase12() {
+    
+    File refFile = new File(UtilsTest.getTestFilePath("Tools", "queryGO.dat"));
+    
+    File result=null;
+    try {
+      result = File.createTempFile("bdmQueryTest", ".dat");
+      result.deleteOnExit();
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+
+    try {
+      System.setOut(outputFile(result));
+    } catch (Exception e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+    PQueryMirrorBase querySystem = new PQueryMirrorBase();
+    Hashtable<String, String> values;
+    
+    // get the key/value data and process the query
+    values = new Hashtable<>();
+    values.put("database", "dico:"+Dicos.GENE_ONTOLOGY.xrefId);//xrefId=GO
+    //AAAAA is not a TaxID, by design the software does not report it as error
+    //but as an unknown TaxID 
+    values.put("id", "GO:0000002,GO:0018130,GO:2001316,2001315,0000005,GUERLAIN");
+    values.put("format", "txt");
+
+    //txt format: only dump entry on stdout
+    querySystem.executeJob(values, System.out, System.err, 
+        DBMSAbstractConfig.getLocalMirrorConfFile());
+    Assert.assertFalse(querySystem.terminateWithError());
+    try {
+      Assert.assertTrue(compareTwoFiles(refFile, result));
+    } catch (IOException e) {
+      e.printStackTrace();
+      Assert.fail();
+    }
   }
 }

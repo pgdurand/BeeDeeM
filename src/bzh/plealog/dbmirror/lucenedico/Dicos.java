@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand - Ludovic Antin
+/* Copyright (C) 2007-2021 Patrick G. Durand - Ludovic Antin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -15,6 +15,8 @@
  *  GNU Affero General Public License for more details.
  */
 package bzh.plealog.dbmirror.lucenedico;
+
+import java.util.Arrays;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -220,4 +222,7 @@ public enum Dicos {
     return null;
   }
 
+  public static Dicos findByXRefId(final String xrefId){
+    return Arrays.stream(values()).filter(value -> value.xrefId.equalsIgnoreCase(xrefId)).findFirst().orElse(null);
+  }
 }

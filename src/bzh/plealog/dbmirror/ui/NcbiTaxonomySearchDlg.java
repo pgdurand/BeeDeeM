@@ -177,7 +177,7 @@ public class NcbiTaxonomySearchDlg extends JDialog {
       try {
 
         List<DicoTerm> terms = dicoQuerySystem.getApprochingTerms(tfSearch
-            .getText());
+            .getText(), 1500);
         int rows = tblModel.getRowCount();
         for (int i = rows - 1; i >= 0; i--) {
           tblModel.removeRow(i);
