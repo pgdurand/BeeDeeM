@@ -81,6 +81,6 @@ public class DicoTerm {
   }
   
   public boolean isSynonym() {
-    return _dataField.startsWith(SYNONYM);
+    return _dataField!=null && _dataField.startsWith(SYNONYM);
   }
 }

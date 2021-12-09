@@ -464,7 +464,7 @@ public class DicoStorageSystemImplem implements DicoStorageSystem,
 
   @SuppressWarnings("deprecation")
   @Override
-  public List<DicoTerm> getApprochingTerms(String term)
+  public List<DicoTerm> getApprochingTerms(String term, int maxTerms)
       throws DicoStorageSystemException {
     List<DicoTerm> result = new ArrayList<DicoTerm>();
 
@@ -482,7 +482,7 @@ public class DicoStorageSystemImplem implements DicoStorageSystem,
 
     // add ~ to use approximate search
     // (http://lucene.apache.org/core/2_9_4/queryparsersyntax.html)
-    term += " OR " + term.replace("*", "") + "~";
+    term += " OR " + term.replace("*", "") + "~0.6";
 
     QueryParser parser = new QueryParser(/* Version.LUCENE_29, */DATA_FIELD,
         this.analyzer);
@@ -490,8 +490,8 @@ public class DicoStorageSystemImplem implements DicoStorageSystem,
       Query query = parser.parse(term);
       Document doc;
       String id;
-      // only the 100 first results
-      ScoreDoc[] hits = _searcher.search(query, null, 10000).scoreDocs;
+      // only the maxTerms first results
+      ScoreDoc[] hits = _searcher.search(query, null, maxTerms).scoreDocs;
       if (!ArrayUtils.isEmpty(hits)) {
         for (int i = 0; i < hits.length; i++) {
           doc = _searcher.doc(hits[i].doc);

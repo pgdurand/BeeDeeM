@@ -70,7 +70,7 @@ public class PFormatter {
     }
     public static FORMAT findByType(final String type){
       return Arrays.stream(values()).filter(value -> value.getType().equals(type)).findFirst().orElse(null);
-  }
+    }
   }
   
   static {

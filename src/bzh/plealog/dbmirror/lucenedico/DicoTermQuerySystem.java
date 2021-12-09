@@ -593,10 +593,10 @@ public class DicoTermQuerySystem {
    * @throws DicoStorageSystemException
    * @see DicoStorageSystem.getApprochingTerms
    */
-  public List<DicoTerm> getApprochingTerms(String term)
+  public List<DicoTerm> getApprochingTerms(String term, int maxTerms)
       throws DicoStorageSystemException {
     try {
-      return storages.get(Dicos.NCBI_TAXONOMY).getApprochingTerms(term);
+      return storages.get(Dicos.NCBI_TAXONOMY).getApprochingTerms(term, maxTerms);
     } catch (NullPointerException ex) {
       return null;
     }

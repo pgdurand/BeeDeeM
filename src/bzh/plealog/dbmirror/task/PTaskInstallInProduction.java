@@ -519,7 +519,7 @@ public class PTaskInstallInProduction extends PAbstractTask {
   /**
    * Implementation of KLTask interface.
    */
-  public boolean execute() {
+  private boolean executeImpl() {
     PrintWriter writer = null;
     String dbPathLock;
     File locker;
@@ -572,6 +572,16 @@ public class PTaskInstallInProduction extends PAbstractTask {
     return bRet;
   }
 
+  /**
+   * Implementation of KLTask interface.
+   */
+  public boolean execute() {
+    boolean bRet = executeImpl();
+    if (!bRet) {
+      LoggerCentral.warn(LOGGER, _errMsg);
+    }
+    return bRet;
+  }
   public void setParameters(String params) {
   }
 

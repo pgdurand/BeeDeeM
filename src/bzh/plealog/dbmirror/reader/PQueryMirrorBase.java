@@ -194,19 +194,65 @@ public class PQueryMirrorBase {
     return line;
   }
 
+  private void dumpDicoData(Dicos dico, StringTokenizer tokenizer, DicoTermQuerySystem dicoConnector, 
+      Writer w) throws IOException {
+    DicoTerm        term;
+    String           id, taxPath;
+    
+    if (dico==null) {
+      return;
+    }
+    while (tokenizer.hasMoreTokens()) {
+      id = tokenizer.nextToken().trim();
+      term = dicoConnector.getTerm(dico, id);
+      //not found: try to search by organism name
+      if (term==null) {
+        if(dico.equals(Dicos.NCBI_TAXONOMY)) {
+          List<DicoTerm> terms = dicoConnector.getApprochingTerms(id, 1);
+          if (terms.size()!=0) {
+            id = terms.get(0).getId();
+            term = dicoConnector.getTerm(Dicos.NCBI_TAXONOMY, id);
+          }
+        }
+        else if(dico.equals(Dicos.GENE_ONTOLOGY)) {
+          //get GO term given a GO-ID; expect standard id for GO, i.e GO:0000002
+          //but this code also accepts GO id without GO: prefix, so add it
+          id = Dicos.GENE_ONTOLOGY.xrefId+":"+id;
+          term = dicoConnector.getTerm(Dicos.GENE_ONTOLOGY, id);
+        }
+      }
+      w.write(id);
+      w.write("\t");
+      if (term != null) {
+        if(dico.equals(Dicos.NCBI_TAXONOMY)) {
+          taxPath = dicoConnector.getTaxPath(id, true, true, true);
+          w.write(taxPath!=null ? taxPath : UNK);
+        }
+        else if(dico.equals(Dicos.GENE_ONTOLOGY)) {
+          GeneOntologyTerm goTerm = (GeneOntologyTerm) term.get_dataObject();
+          w.write(goTerm.get_node_ontology_code());
+          w.write(":");
+          w.write(goTerm.get_node_name());
+        }
+        else{
+          w.write(term.getDataField().toString());
+        }
+      }
+      else {
+        w.write(UNK);
+      }
+      w.write("\n");
+    }
+  }
+  
 	private void handleDicoIds(Writer w, String dbKey, String mirrorPath, List<String> idxNames, String ids) {
-		DicoTerm        term;
-		StringTokenizer tokenizer;
-		String          id;
-		int             i;
-		
-		// connect to Dictionnary Lucene Indexes
+		// connect to Dictionary Lucene Indexes
 		DicoTermQuerySystem dicoConnector;
 		dicoConnector = DicoTermQuerySystem.getDicoTermQuerySystem(_dbMirrorConfig);
 		
 		// if "dico", we expect having dico type provided int he form: "dico:type"
 		// where type is one of Dicos.XXX.xrefId string
-		i = dbKey.indexOf(':');
+		int i = dbKey.indexOf(':');
     if (i!=-1) {
       // get dico type to query
       dbKey = dbKey.substring(i+1);
@@ -216,78 +262,7 @@ public class PQueryMirrorBase {
       dbKey = Dicos.NCBI_TAXONOMY.xrefId;
     }
 		try {
-		  tokenizer = new StringTokenizer(ids, ",");
-		  if (dbKey.toLowerCase().startsWith(Dicos.NCBI_TAXONOMY.xrefId.toLowerCase())) {
-		    while (tokenizer.hasMoreTokens()) {
-				  id = tokenizer.nextToken().trim();
-		      //get NCBI Taxonomy Term given a taxID
-					term = dicoConnector.getTerm(Dicos.NCBI_TAXONOMY, id);
-          //dump simplified taxo, i.e. path containing only official ranks (kingdom, order, etc)
-					//missing ranks are tagged with "unknown" to always produce tax-path of same size
-					w.write(id);
-          w.write("\t");
-					if (term != null) {
-						w.write(dicoConnector.getTaxPath(id, true, true, true));
-					}
-					else {
-					  w.write(UNK);
-					}
-          w.write("\n");
-				}
-			}
-			else if (dbKey.toLowerCase().startsWith(Dicos.GENE_ONTOLOGY.xrefId.toLowerCase())) {
-			  while (tokenizer.hasMoreTokens()) {
-          id = tokenizer.nextToken().trim();
-			    //get GO term given a GO-ID
-          term = dicoConnector.getTerm(Dicos.GENE_ONTOLOGY, Dicos.GENE_ONTOLOGY.xrefId+":"+id);
-          w.write(id);
-          w.write("\t");
-          if (term != null) {
-            GeneOntologyTerm goTerm = (GeneOntologyTerm) term.get_dataObject();
-            w.write(goTerm.get_node_ontology_code());
-            w.write(":");
-            w.write(goTerm.get_node_name());
-            //w.write("\t");
-            //w.write(dicoConnector.getGoPath(Dicos.GENE_ONTOLOGY.xrefId+":"+ids[i]).toString());
-          }
-          else {
-            w.write(UNK);
-          }
-          w.write("\n");
-  			}
-			}
-      else if (dbKey.toLowerCase().startsWith(Dicos.INTERPRO.xrefId.toLowerCase())) {
-        while (tokenizer.hasMoreTokens()) {
-          id = tokenizer.nextToken().trim();
-          //get InterPro term given a IPR-ID
-          term = dicoConnector.getTerm(Dicos.INTERPRO, id);
-          w.write(id);
-          w.write("\t");
-          if (term != null) {
-            w.write(term.getDataField().toString());
-          }
-          else {
-            w.write(UNK);
-          }
-          w.write("\n");
-        }
-      }
-      else if (dbKey.toLowerCase().startsWith(Dicos.ENZYME.xrefId.toLowerCase())) {
-        while (tokenizer.hasMoreTokens()) {
-          id = tokenizer.nextToken().trim();
-          //get Enzyme term given a EC-ID
-          term = dicoConnector.getTerm(Dicos.ENZYME, id);
-          w.write(id);
-          w.write("\t");
-          if (term != null) {
-            w.write(term.getDataField().toString());
-          }
-          else {
-            w.write(UNK);
-          }
-          w.write("\n");
-        }
-      }
+		  dumpDicoData(Dicos.findByXRefId(dbKey), new StringTokenizer(ids, ","), dicoConnector, w);
 		} catch (IOException e) {
 			LOGGER.debug("unable to write result: " + e);
 		}
@@ -488,9 +463,6 @@ public class PQueryMirrorBase {
     //id can be a single ID, a list of IDs or a path to a file of IDs
     foIDs = new File(id);
     hasfoIDs = foIDs.exists();
-    if(!hasfoIDs) {
-      id = id.toUpperCase();
-    }
     // given the db key, get the path to the db mirror
     idxKeys = _dbMirrorConfig.getMirrorCodes(dbKey);
     // following line add since Fasta-based databanks (used with Plast) are
