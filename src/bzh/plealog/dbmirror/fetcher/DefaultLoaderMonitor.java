@@ -235,12 +235,6 @@ public class DefaultLoaderMonitor implements LoaderMonitor {
     uTasks = _dbConf.getUnitPostTasks();
     gTasks = _dbConf.getGlobalPostTasks();
 
-    if (_fileCounter==0){
-      // We always get bank release date for all banks
-      _taskEngine.addTask(new PTaskReleaseDate(_dbConf.getLocalTmpFolder(), fName), _dbConf.getName());
-
-    }
-    
     // at the origin of the system, list of unit tasks where not tokenized
     // using a comma (,)
     // and we allowed the use of comma for tasks parameters. Later on, we
@@ -538,6 +532,7 @@ public class DefaultLoaderMonitor implements LoaderMonitor {
         startPostUnitTasks(fName);
       _fileCounter++;
       if (_fileCounter == _files) {
+        _taskEngine.addTask(new PTaskReleaseDate(_dbConf.getLocalTmpFolder()), _dbConf.getName());
         startPostGlobalTasks(fName);
         _taskEngine.addTask(new PTaskEndProcessing(), _dbConf.getName());
       }
