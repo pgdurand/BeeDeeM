@@ -1,5 +1,6 @@
 package bzh.plealog.dbmirror.main;
 
+import java.io.File;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -10,6 +11,7 @@ import org.apache.commons.cli.Options;
 
 import bzh.plealog.dbmirror.fetcher.PFTPLoaderDescriptor;
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
+import bzh.plealog.dbmirror.util.Utils;
 
 /**
  * This class handles available options for the command-line installer.
@@ -188,7 +190,25 @@ public class CmdLineInstallerOptions {
       return null;
     }
   }
-  
+  private static String compileDescriptorName(String value) {
+    StringBuffer buf = new StringBuffer();
+    String[] tokens = Utils.tokenize(value, ",");
+    int i=0;
+    for(String token : tokens) {
+      File f = new File(token);
+      if (f.exists()) {
+        buf.append(Utils.getFileName(f));
+      }
+      else {
+        buf.append(token);
+      }
+      if ((i + 1 < tokens.length)) {
+        buf.append("-");
+      }
+      i++;
+    }
+    return buf.toString();
+  }
   /**
    * Convert cmdline options into a PFTPLoaderDescriptor instance.
    * 
@@ -211,7 +231,7 @@ public class CmdLineInstallerOptions {
         String value = cmdline.getOptionValue(argName);
         descriptor.setProperty(keyName, value);
         if (argName.equals(DESC_OPT)) {
-          descriptor.setDescriptorName(value);
+          descriptor.setDescriptorName(compileDescriptorName(value));
         }
       }
     }
