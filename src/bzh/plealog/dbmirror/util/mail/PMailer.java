@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -34,8 +34,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -53,8 +53,7 @@ public class PMailer {
   private int              _smtpPort = 25;
   private boolean          _debug    = false;
 
-  private static final Log LOGGER    = LogFactory
-                                         .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger LOGGER    = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                              + ".PMailer");
 
   private class SMTPAuthenticator extends Authenticator {

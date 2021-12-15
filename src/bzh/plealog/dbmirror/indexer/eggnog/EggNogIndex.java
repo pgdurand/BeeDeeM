@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Ludovic Antin
+/* Copyright (C) 2007-2021 Ludovic Antin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -20,8 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.store.LockObtainFailedException;
 
@@ -43,8 +43,7 @@ import bzh.plealog.dbmirror.util.lucene.SimpleIndex;
  */
 public class EggNogIndex {
 
-  private static final Log      LOGGER  = LogFactory
-                                            .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger      LOGGER  = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                 + ".EggNogIndex");
 
   @SuppressWarnings("unchecked")

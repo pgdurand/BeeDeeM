@@ -22,8 +22,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.indexer.ParserMonitor;
 import bzh.plealog.dbmirror.lucenedico.DicoParsable;
@@ -52,8 +52,7 @@ public class NcbiTaxonomyTaxNamesParser implements DicoParsable {
   private boolean          _verbose;
   private ParserMonitor    _pMonitor;
 
-  private static final Log LOGGER = LogFactory
-                                      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                           + ".NcbiTaxonomyTaxNamesParser");
 
   public NcbiTaxonomyTaxNamesParser() {

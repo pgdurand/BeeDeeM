@@ -24,8 +24,8 @@ import java.util.HashMap;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.lucenedico.DicoParserException;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -41,8 +41,7 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
 public class EggNogPropertyFile extends HashMap<String, String> {
   private static final long serialVersionUID      = -2647205510984082862L;
 
-  private static final Log  LOGGER                = LogFactory
-                                                      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger  LOGGER                = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                           + ".EggNogPropertyFile");
 
   private File              propertyFile          = null;

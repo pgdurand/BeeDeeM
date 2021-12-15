@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -34,8 +34,8 @@ import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.biojava.bio.Annotation;
 import org.biojava.bio.seq.Feature;
 import org.biojava.bio.seq.Sequence;
@@ -70,8 +70,7 @@ import bzh.plealog.dbmirror.util.sequence.SeqIOUtils;
 @SuppressWarnings("deprecation")
 public class DBUtils {
 
-  private static final Log    LOGGER                 = LogFactory
-                                                         .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger    LOGGER                 = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                              + ".DBUtils");
   private static final String STD_DATE               = "01-JAN-1970";
   private static final int    STD_DATE_INT           = 19700101;

@@ -32,8 +32,8 @@ import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.lucenedico.Dicos;
 import bzh.plealog.dbmirror.reader.DBFormatEntry;
@@ -54,8 +54,7 @@ import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
  */
 public class DBServerConfig {
 
-  private static final Log      LOGGER               = LogFactory
-                                                         .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                              + ".DBServerConfig");
 
   private Properties            _properties          = new Properties();
@@ -692,11 +691,11 @@ public class DBServerConfig {
     return _properties.getProperty(LOCALRDIR_EXCL_KEY);
   }
 
-  public void dumpContent(Log logger) {
+  public void dumpContent(Logger logger) {
     for (String key : KEYS) {
       if (_properties.containsKey(key) == false)
         continue;
-      LoggerCentral.info(logger, key + "=" + _properties.get(key));
+      LoggerCentral.info(LOGGER, key + "=" + _properties.get(key));
     }
   }
 

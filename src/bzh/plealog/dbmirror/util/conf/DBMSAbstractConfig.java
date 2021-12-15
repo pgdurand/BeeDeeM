@@ -23,22 +23,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Properties;
 
 import org.apache.commons.configuration.event.ConfigurationEvent;
 import org.apache.commons.configuration.event.ConfigurationListener;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.Appender;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Category;
-import org.apache.log4j.DailyRollingFileAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.PropertyConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.fetcher.PProxyConfig;
 import bzh.plealog.dbmirror.util.Utils;
@@ -81,8 +72,7 @@ public class DBMSAbstractConfig {
   // this boolean is used only if _dbInstallAuthorized = false
   private static boolean                 _overwriteInstallPermForDico = true;
 
-  private static final Log               LOGGER                       = LogFactory
-                                                                          .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger               LOGGER                       = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                               + ".DBMSAbstractConfig");
   private static DBMSConfigurator        _configurator;
   private static DBMirrorListenerSupport _listenerSupport             = new DBMirrorListenerSupport();  ;
@@ -367,9 +357,11 @@ public class DBMSAbstractConfig {
   }
 
   public static void setupLoggers(String logName, boolean updateLogLevel) {
+    /*
     DailyRollingFileAppender drfa;
     String userPath, szLogFileName, lvl, sysLogName;
 
+    LogManager.getLogger(KDMS_ROOTLOG_CATEGORY).se;
     Category cat = Logger.getInstance(KDMS_ROOTLOG_CATEGORY);
     cat.setAdditivity(false);
 
@@ -413,6 +405,7 @@ public class DBMSAbstractConfig {
     drfa.activateOptions();
 
     cat.addAppender(drfa);
+    *//*XXLOG4J2XX*/
   }
 
   public static boolean isSilentMode() {
@@ -432,7 +425,8 @@ public class DBMSAbstractConfig {
    * is already configured, use setupLoggers() instead.
    */
   public static void configureLog4J(String logName) {
-    BasicConfigurator.configure();
+    /*
+     * BasicConfigurator.configure();
     
     String logType = pruneQuotes(System.getenv(APP_LOG_TYPE_PROP_KEY));
     if (logType==null)
@@ -471,6 +465,7 @@ public class DBMSAbstractConfig {
     else {
       Logger.getRootLogger().setLevel(Level.OFF);
     }
+    *//*XXLOG4J2XX*/
   }
 
   /**
@@ -519,10 +514,10 @@ public class DBMSAbstractConfig {
   /**
    * Adds an appender to listen to the KDMS internal logging system.
    */
-  public static void addLogAppender(Appender app) {
+  /*public static void addLogAppender(Appender app) {
     Category cat = Logger.getInstance(KDMS_ROOTLOG_CATEGORY);
     cat.addAppender(app);
-  }
+  }*//*XXLOG4J2XX*/
 
   /**
    * Initializes the Configurator object given a standard KDMS Configuration

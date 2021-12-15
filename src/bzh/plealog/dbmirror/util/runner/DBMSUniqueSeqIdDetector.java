@@ -18,8 +18,8 @@ package bzh.plealog.dbmirror.util.runner;
 
 import java.util.HashSet;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
@@ -62,8 +62,7 @@ public class DBMSUniqueSeqIdDetector {
   // public and not final for tests
   public static int            MAX_SEQID         = 5000000;
   private static final Object  SEM               = new Object();
-  private static final Log     LOGGER            = LogFactory
-                                                     .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger     LOGGER            = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                          + ".PDMSUniqueSeqIdDetector");
   public static int            CHECK_MEMORY_STEP = 10;
 

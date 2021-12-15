@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -18,8 +18,8 @@ package bzh.plealog.dbmirror.task;
 
 import java.io.File;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.indexer.BOLDParser;
 import bzh.plealog.dbmirror.indexer.ParserMonitor;
@@ -37,8 +37,7 @@ public class PTaskBold2Genbank extends PAbstractTask implements PParserTask {
   private String           _errMsg;
   private ParserMonitor    _monitor;
 
-  private static final Log LOGGER = LogFactory
-                                      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                           + ".PTaskEngine");
 
   public PTaskBold2Genbank(String srcFile) {

@@ -22,14 +22,13 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.BasicConfigurator;
-
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.conf.DBMSConfigurator;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
 import bzh.plealog.dbmirror.util.runner.CommandArgument;
 import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
+import test.unit.UtilsTest;
 
 /**
  * This class illustrates the use of the KDMSExecNativeCommand API.
@@ -133,7 +132,7 @@ public class DBMSExecNativeCommandTest {
       System.exit(1);
     }
 
-    BasicConfigurator.configure();
+    UtilsTest.configureApp();
     String confPath = getConfPath();
     DBMSAbstractConfig.configureLog4J("kdmsUI");
     DBMSAbstractConfig.setConfPath(confPath);

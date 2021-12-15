@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -26,8 +26,8 @@ import java.util.Hashtable;
 import java.util.StringTokenizer;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 
@@ -40,9 +40,8 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 public class DBXrefTagManager {
   private Hashtable<String, DBXrefTagHandler> handlers;
 
-  private static final Log                    LOGGER = LogFactory
-                                                         .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                                                             + ".DBXrefTagManager");
+  private static final Logger                    LOGGER = LogManager.getLogger(
+      DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".DBXrefTagManager");
 
   public DBXrefTagManager() {
     handlers = new Hashtable<String, DBXrefTagHandler>();

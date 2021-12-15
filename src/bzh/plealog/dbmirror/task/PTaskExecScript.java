@@ -1,4 +1,4 @@
-/* Copyright (C) 2020 Patrick G. Durand
+/* Copyright (C) 2020-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -21,8 +21,8 @@ import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.fetcher.UserProcessingMonitor;
 import bzh.plealog.dbmirror.util.Utils;
@@ -62,8 +62,7 @@ public class PTaskExecScript extends PAbstractTask {
   public static final String UNIX_FILE_EXT = ".sh";
   public static final String WIN_FILE_EXT = ".bat";
   
-  private static final Log LOGGER     = LogFactory
-                                          .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger LOGGER     = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                               + ".PTaskEngine");
 
   /**

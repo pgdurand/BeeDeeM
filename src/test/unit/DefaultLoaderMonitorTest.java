@@ -601,7 +601,7 @@ public class DefaultLoaderMonitorTest {
     Object[] tasks = _taskEngine.getTasks().toArray();
     assertNotNull(tasks);
     assertEquals(9, tasks.length);
-    PTaskLuceneSWIndexer task = (PTaskLuceneSWIndexer) tasks[2];
+    PTaskLuceneSWIndexer task = (PTaskLuceneSWIndexer) tasks[1];
     // check task name
     assertTrue(task.getSrc().endsWith("uniprot_sprot_human.dat"));
     // check files input for formatDb
@@ -633,8 +633,8 @@ public class DefaultLoaderMonitorTest {
     Object[] tasks = _taskEngine.getTasks().toArray();
     assertNotNull(tasks);
     assertEquals(7, tasks.length);
-    PTaskBold2Genbank task = (PTaskBold2Genbank) tasks[2];
-    PTaskLuceneGBIndexer taskIndexer = (PTaskLuceneGBIndexer) tasks[3];
+    PTaskBold2Genbank task = (PTaskBold2Genbank) tasks[1];
+    PTaskLuceneGBIndexer taskIndexer = (PTaskLuceneGBIndexer) tasks[2];
     // check task name
     assertTrue(task.getSrc().contains(
         _dbConf.getName() + File.separator + "iBOL"));

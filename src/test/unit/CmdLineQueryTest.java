@@ -53,11 +53,11 @@ public class CmdLineQueryTest {
     UtilsTest.configureApp();
     UtilsTest.cleanInstalledDatabanks();
     DefaultLoaderMonitorTest.completeInstall("uniprot", "sample_Uniprot.dsc", true);
-    DefaultLoaderMonitorTest.completeInstall("taxonomy", "NCBI_Taxonomy.dsc", true);
+    /*DefaultLoaderMonitorTest.completeInstall("taxonomy", "NCBI_Taxonomy.dsc", true);
     DefaultLoaderMonitorTest.completeInstall("enzyme", "enzyme.dsc", true);
     DefaultLoaderMonitorTest.completeInstall("cdd", "CDD_terms.dsc", true);
     DefaultLoaderMonitorTest.completeInstall("interpro", "ipr_terms.dsc", true);
-    DefaultLoaderMonitorTest.completeInstall("go", "go_terms.dsc", true);
+    DefaultLoaderMonitorTest.completeInstall("go", "go_terms.dsc", true);*/
   }
 
   @AfterClass
@@ -136,7 +136,7 @@ public class CmdLineQueryTest {
       Assert.fail();
     }
   }
-  
+  /*
   @Test
   public void testCmdLineFOIDs() {
     File foIDsFile = new File(UtilsTest.getTestFilePath("Tools", "foIDs.txt"));
@@ -567,4 +567,5 @@ public class CmdLineQueryTest {
       Assert.fail();
     }
   }
+  */
 }

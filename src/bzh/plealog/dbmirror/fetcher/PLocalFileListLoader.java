@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -18,7 +18,7 @@ package bzh.plealog.dbmirror.fetcher;
 
 import java.util.ArrayList;
 
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
 
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
@@ -62,11 +62,9 @@ public class PLocalFileListLoader extends FileListLoader {
 
     if (!listingOk()) {// failure? Report error now!
       LoggerCentral.error(
-          LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+          LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
               + ".PLocalLoader"),
-          "An error has been generated during the file research.");// TODO
-                                                                   // changer
-                                                                   // l'erreur
+          "File list retrieval failed");
     }
   }
 

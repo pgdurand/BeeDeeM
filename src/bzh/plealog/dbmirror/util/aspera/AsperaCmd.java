@@ -1,4 +1,4 @@
-/* Copyright (C) 2019 Patrick G. Durand
+/* Copyright (C) 2019-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -19,8 +19,8 @@ package bzh.plealog.dbmirror.util.aspera;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
@@ -45,7 +45,7 @@ public class AsperaCmd {
 	// arguments to be used with ascp tool
 	Map<String, CommandArgument> args;
 
-	private static final Log LOGGER = LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".AsperaCmd");
+	private static final Logger LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".AsperaCmd");
 
 	/**
 	 * No private constructor available.

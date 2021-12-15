@@ -215,7 +215,7 @@ public class NcbiTaxonomyIndexerTest {
 	@Test
 	public void testApproxSearch() {
 
-		List<DicoTerm> terms = ncbiTaxonDico.getApprochingTerms("melittangium", 50);
+		List<DicoTerm> terms = ncbiTaxonDico.getApprochingTerms("melittangium", 10000);
 		Assert.assertTrue(this.contains(terms, "Melittangium"));
 		Assert.assertTrue(this.contains(terms, "44:"));
 		Assert.assertTrue(this.contains(terms, "45:"));
@@ -223,7 +223,7 @@ public class NcbiTaxonomyIndexerTest {
 		Assert.assertTrue(this.contains(terms, "Rhododendron meliphagidum"));
 		Assert.assertTrue(this.contains(terms, "83452:"));
 
-		terms = ncbiTaxonDico.getApprochingTerms("molitt*ngium", 50);
+		terms = ncbiTaxonDico.getApprochingTerms("molitt*ngium", 10000);
 		Assert.assertTrue(this.contains(terms, "Melittangium"));
 		Assert.assertTrue(this.contains(terms, "44:"));
 		Assert.assertTrue(this.contains(terms, "45:"));
@@ -231,7 +231,7 @@ public class NcbiTaxonomyIndexerTest {
 		Assert.assertTrue(this.contains(terms, "Rhododendron meliphagidum"));
 		Assert.assertTrue(this.contains(terms, "83452:"));
 
-		terms = ncbiTaxonDico.getApprochingTerms("moli[\\tt*ngium", 50);
+		terms = ncbiTaxonDico.getApprochingTerms("moli[\\tt*ngium", 10000);
 		Assert.assertTrue(this.contains(terms, "Melittangium"));
 		Assert.assertTrue(this.contains(terms, "44:"));
 		Assert.assertTrue(this.contains(terms, "45:"));
@@ -239,7 +239,7 @@ public class NcbiTaxonomyIndexerTest {
 		Assert.assertTrue(this.contains(terms, "Rhododendron meliphagidum"));
 		Assert.assertTrue(this.contains(terms, "83452:"));
 
-		terms = ncbiTaxonDico.getApprochingTerms("*sapiens", 50);
+		terms = ncbiTaxonDico.getApprochingTerms("*sapiens", 10000);
 		Assert.assertTrue(this.contains(terms, "Homo sapiens"));
 		Assert.assertTrue(this.contains(terms, "9606:"));
 		Assert.assertTrue(this.contains(terms, "45:"));
@@ -247,7 +247,7 @@ public class NcbiTaxonomyIndexerTest {
 		Assert.assertTrue(this.contains(terms, "1383439:"));
 		Assert.assertTrue(this.contains(terms, "Homo sapiens neanderthalensis"));
 
-		terms = ncbiTaxonDico.getApprochingTerms("*sapiens", 50);
+		terms = ncbiTaxonDico.getApprochingTerms("*sapiens", 10000);
 		Assert.assertTrue(this.contains(terms, "Homo sapiens"));
 		Assert.assertTrue(this.contains(terms, "9606:"));
 		Assert.assertTrue(this.contains(terms, "45:"));
@@ -255,7 +255,7 @@ public class NcbiTaxonomyIndexerTest {
 		Assert.assertTrue(this.contains(terms, "1383439:"));
 		Assert.assertTrue(this.contains(terms, "Homo sapiens neanderthalensis"));
 
-		terms = ncbiTaxonDico.getApprochingTerms("Homo sapiens", 50);
+		terms = ncbiTaxonDico.getApprochingTerms("Homo sapiens", 10000);
 		Assert.assertTrue(this.contains(terms, "Homo sapiens"));
 		Assert.assertTrue(this.contains(terms, "9606:"));
 		Assert.assertTrue(this.contains(terms, "Homo"));

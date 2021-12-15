@@ -17,7 +17,7 @@
 
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
 
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
 import bzh.plealog.dbmirror.fetcher.UserProcessingMonitor;
@@ -111,7 +111,7 @@ public class PPreTaskProcessor extends Thread {
       }
       try {
         LoggerCentral.info(
-            LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+            LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                 + ".PPreTaskProcessor"), WAIT_MSG);
         sleep(_waitTime);
       } catch (InterruptedException e) {

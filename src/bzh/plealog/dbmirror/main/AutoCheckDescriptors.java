@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -28,8 +28,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.plealog.genericapp.api.file.EZFileUtils;
 
@@ -66,7 +66,7 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
  * @author Patrick G. Durand
  */
 public class AutoCheckDescriptors {
-  private static final Log LOGGER = LogFactory.getLog(
+  private static final Logger LOGGER = LogManager.getLogger(
       DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".DSCChecker");
   private static final String CODE_ARG = "dsc";
   /**

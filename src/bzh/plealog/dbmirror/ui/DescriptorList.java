@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -59,8 +59,13 @@ import javax.swing.event.ListSelectionListener;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.plealog.genericapp.api.EZEnvironment;
+import com.plealog.genericapp.api.file.EZFileFilter;
+import com.plealog.genericapp.api.file.EZFileManager;
+import com.plealog.genericapp.api.file.EZFileUtils;
 
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
 import bzh.plealog.dbmirror.fetcher.PFTPLoaderDescriptor;
@@ -73,11 +78,6 @@ import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
 import bzh.plealog.dbmirror.util.descriptor.DescriptorEntry;
 import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
-
-import com.plealog.genericapp.api.EZEnvironment;
-import com.plealog.genericapp.api.file.EZFileFilter;
-import com.plealog.genericapp.api.file.EZFileManager;
-import com.plealog.genericapp.api.file.EZFileUtils;
 
 /**
  * This class is used to display the list of available databank descriptors.
@@ -102,8 +102,7 @@ public class DescriptorList extends JPanel {
   private ImportDescriptorAction            _importDescriptorAction;
   private PreferencesAction                 _prefsAction;
 
-  private static final Log                  LOGGER               = LogFactory
-                                                                     .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger                  LOGGER               = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                          + ".DescriptorList");
 
   // remove the dot defore dsc

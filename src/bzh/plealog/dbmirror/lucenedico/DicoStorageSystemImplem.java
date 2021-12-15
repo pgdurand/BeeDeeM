@@ -23,8 +23,8 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -67,8 +67,7 @@ public class DicoStorageSystemImplem implements DicoStorageSystem,
   protected static final String DATA_FIELD_NOT_ANALYZED   = "name_na";
   protected static final String OBJECT_FIELD              = "object";
 
-  private static final Log      LOGGER                    = LogFactory
-                                                              .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger   LOGGER                    = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                   + ".DicoStorageSystemImplem");
 
   private static final String   ERR_MSG1                  = "While adding term in index: ";

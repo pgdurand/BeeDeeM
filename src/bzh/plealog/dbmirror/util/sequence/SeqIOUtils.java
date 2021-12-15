@@ -34,8 +34,8 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.biojava.bio.Annotation;
 import org.biojava.bio.seq.DNATools;
 import org.biojava.bio.seq.RNATools;
@@ -107,9 +107,8 @@ public class SeqIOUtils {
       "SwissProt", "Genbank", "EMBL", "Fasta-Prot", "Fasta-DNA", "Fasta-RNA",
       "GenPept"                                              };
 
-  private static final Log       LOGGER                       = LogFactory
-                                                                  .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                                                                      + ".SeqIOUtils");
+  private static final Logger       LOGGER                       = LogManager.getLogger(
+      DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".SeqIOUtils");
 
   // see DBXrefSplitter class for more details of the syntax
   public static final String     DEFAULT_CONFIG_XREF_RETRIEVE = "\"DR\" , \"GO\"         , \";\" , \";\" , \"GO\"       , \":\"\n"

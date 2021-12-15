@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Ludovic Antin
+/* Copyright (C) 2007-2021 Ludovic Antin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -47,7 +47,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
+
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
 
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.Utils;
@@ -59,10 +63,6 @@ import bzh.plealog.dbmirror.util.sequence.SequenceValidatorDescription;
 import bzh.plealog.dbmirror.util.sequence.SequenceValidatorRenamer;
 import bzh.plealog.dbmirror.util.sequence.SequenceValidatorSize;
 import bzh.plealog.dbmirror.util.sequence.SequenceValidatorSubset;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormLayout;
 
 /**
  * Create an UI to instanciate a SequenceFileManager
@@ -493,7 +493,7 @@ public class SequenceFileManagerUI {
   }
 
   public SequenceFileManager getSequenceFileManager(String sequenceFilepath,
-      DatabankFormat format, Log logger) throws IOException {
+      DatabankFormat format, Logger logger) throws IOException {
     SequenceFileManager result = new SequenceFileManager(sequenceFilepath,
         format, logger, this.progressBar);
     this.addValidatorsTo(result);
@@ -501,7 +501,7 @@ public class SequenceFileManagerUI {
   }
 
   public SequenceFileManager getSequenceFileManager(BufferedReader reader,
-      BufferedWriter writer, DatabankFormat format, Log logger)
+      BufferedWriter writer, DatabankFormat format, Logger logger)
       throws IOException {
     SequenceFileManager result = new SequenceFileManager(reader, writer,
         format, logger);

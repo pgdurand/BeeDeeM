@@ -26,8 +26,8 @@ import java.util.Vector;
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.map.LinkedMap;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.lucenedico.go.GeneOntologyGenerateTree;
 import bzh.plealog.dbmirror.lucenedico.go.GeneOntologyGenerateTree.Path;
@@ -55,8 +55,7 @@ public class DicoTermQuerySystem {
 
   private static DicoTermQuerySystem        _dicoSystem;
   private static final Object               SEM      = new Object();
-  private static final Log                  LOGGER   = LogFactory
-                                                         .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger               LOGGER   = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                              + ".DicoStorageSystemImplem");
 
   private DicoTermQuerySystem() {

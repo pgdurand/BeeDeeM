@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2020 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -21,8 +21,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.velocity.runtime.log.Log;
 
 import bzh.plealog.dbmirror.fetcher.PProxyConfig;
 import bzh.plealog.dbmirror.indexer.LuceneUtils;
@@ -38,8 +39,7 @@ import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
  * @author Patrick G. Durand
  */
 public class StarterUtils {
-  private static final Log    LOGGER   = LogFactory
-                                           .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger    LOGGER   = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                + ".StarterUtils");
   private static final String MSG1     = "Loaded network config from: ";
   private static final String ERR1     = "Unable to load network config: ";

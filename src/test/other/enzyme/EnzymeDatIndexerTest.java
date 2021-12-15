@@ -16,11 +16,10 @@
  */
 package test.other.enzyme;
 
-import org.apache.log4j.BasicConfigurator;
-
 import bzh.plealog.dbmirror.lucenedico.DicoStorageSystem;
 import bzh.plealog.dbmirror.lucenedico.DicoStorageSystemImplem;
 import bzh.plealog.dbmirror.lucenedico.ec.EnzymeDatParser;
+import test.unit.UtilsTest;
 
 /**
  * This code snippet illustrates how to create the Lucene index of the Enzyme
@@ -36,7 +35,7 @@ public class EnzymeDatIndexerTest {
    *          (to be created) and [1] is the Enzyme plain text databank file.
    */
   public static void main(String[] args) {
-    BasicConfigurator.configure();
+    UtilsTest.configureApp();
     System.out.println("Start indexing: " + args[1]);
     long tim = System.currentTimeMillis();
     DicoStorageSystem lss = new DicoStorageSystemImplem();

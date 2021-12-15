@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -19,7 +19,8 @@ package bzh.plealog.dbmirror.fetcher;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.aspera.AsperaUtils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -40,6 +41,8 @@ public class PFTPLoaderEngine extends LoaderEngine {
   private int                   _retry        = 3;
   private int                   _counter      = 0;
 
+  private static final Logger LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+      + ".PFTPLoader");
   /**
    * Constructor.
    * 
@@ -138,8 +141,7 @@ public class PFTPLoaderEngine extends LoaderEngine {
             break;
           retry++;
           LoggerCentral.info(
-              LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                  + ".PFTPLoader"), _loader.getLoaderId() + ": "
+              LOGGER, _loader.getLoaderId() + ": "
                   + PFTPLoader.CONN_ERR_MSG);
           try {
             sleep(_scheduleTime);
@@ -156,8 +158,7 @@ public class PFTPLoaderEngine extends LoaderEngine {
               break;
             retry++;
             LoggerCentral.info(
-                LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                    + ".PFTPLoader"), PFTPLoader.CONN_ERR_MSG);
+                LOGGER, PFTPLoader.CONN_ERR_MSG);
             try {
               sleep(_scheduleTime);
             } catch (InterruptedException e) {
@@ -166,12 +167,10 @@ public class PFTPLoaderEngine extends LoaderEngine {
         }
         if (bRet == 0) {// failure? Report error now!
           LoggerCentral.error(
-              LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                  + ".PFTPLoader"), _loader.getErrorMsg());
+              LOGGER, _loader.getErrorMsg());
         } else if (bRet == 3) {
           LoggerCentral.info(
-              LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                  + ".PFTPLoader"), _loader.getErrorMsg());
+              LOGGER, _loader.getErrorMsg());
           LoggerCentral.abortProcess();
         }
         if (_monitor != null) {

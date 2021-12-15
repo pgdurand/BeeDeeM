@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -25,9 +25,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.commons.net.io.Util;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.fetcher.UserProcessingMonitor;
 import bzh.plealog.dbmirror.indexer.ParserMonitor;
@@ -53,8 +53,7 @@ public class PTaskEngine {
 
   public static final String      WORKER_ID               = "TaskEngine";
 
-  private static final Log        LOGGER                  = LogFactory
-                                                              .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger        LOGGER                  = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                   + ".PTaskEngine");
 
   /**

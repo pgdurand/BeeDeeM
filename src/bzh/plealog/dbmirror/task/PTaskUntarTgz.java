@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -16,9 +16,8 @@
  */
 package bzh.plealog.dbmirror.task;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.BasicConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.ant.PAntTasks;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -35,8 +34,7 @@ public class PTaskUntarTgz extends PAbstractTask {
   private String           _dest;
   private String           _errMsg;
 
-  private static final Log LOGGER = LogFactory
-                                      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                           + ".PTaskEngine");
 
   public PTaskUntarTgz(String srcFile, String destDir) {
@@ -88,7 +86,6 @@ public class PTaskUntarTgz extends PAbstractTask {
   public static void main(String[] args) {
     PTaskUntarTgz task;
 
-    BasicConfigurator.configure();
     task = new PTaskUntarTgz(args[0], args[1]);
     if (!task.execute()) {
       LoggerCentral.error(LOGGER, "Unable to untartgz");

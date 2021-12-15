@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -19,8 +19,8 @@ package bzh.plealog.dbmirror.util.ant;
 import java.io.File;
 import java.util.HashMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.conf.Configuration;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -31,8 +31,7 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
  * @author Patrick G. Durand
  */
 public class PAntTasks {
-  private static final Log LOGGER = LogFactory
-                                      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                           + ".PAntTasks");
 
   public static boolean setProxy(String host, String port) {

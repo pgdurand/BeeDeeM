@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Ludovic Antin
+/* Copyright (C) 2007-2021 Ludovic Antin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -32,7 +32,7 @@ import javax.swing.JProgressBar;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -55,7 +55,7 @@ public class SequenceFileManager {
   private File                     sequenceFile;
   private File                     filteredFile;
   private DatabankFormat           databankFormat;
-  private Log                      logger;
+  private Logger                   logger;
   private List<ISequenceValidator> validators;
 
   private long                     nbSequencesFound        = -1;
@@ -106,7 +106,7 @@ public class SequenceFileManager {
    * @throws IOException
    */
   public SequenceFileManager(String sequenceFilepath,
-      DatabankFormat databankFormat, Log logger, JProgressBar progressBar)
+      DatabankFormat databankFormat, Logger logger, JProgressBar progressBar)
       throws IOException {
     setTmpFileDirectory(DBMSAbstractConfig.getWorkingFilterPath());
     this.sequenceFile = new File(sequenceFilepath);
@@ -141,7 +141,7 @@ public class SequenceFileManager {
    * @throws IOException
    */
   public SequenceFileManager(BufferedReader reader, BufferedWriter writer,
-      DatabankFormat databankFormat, Log logger) {
+      DatabankFormat databankFormat, Logger logger) {
     setTmpFileDirectory(DBMSAbstractConfig.getWorkingFilterPath());
     this.databankFormat = databankFormat;
     this.logger = logger;

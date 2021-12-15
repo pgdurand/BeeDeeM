@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -19,7 +19,8 @@ package bzh.plealog.dbmirror.util.runner;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -55,9 +56,7 @@ public class DBMSUniqueSeqIdIndex {
     READ_MODE, WRITE_MODE, WRITE_APPEND_MODE
   };
 
-  private static final Logger LOGGER                        = Logger
-                                                                .getLogger("kb."
-                                                                    + "KDMSUniqueSeqIdIndex");
+  private static final Logger LOGGER = LogManager.getLogger("kb." + "KDMSUniqueSeqIdIndex");
   private static final int    LUCENE_SEARCH_HITS_MAX_NUMBER = 1;
 
   private static final String SEQID_FIELD                   = "seqid";

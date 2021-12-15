@@ -25,13 +25,12 @@ import javax.swing.JProgressBar;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
 import bzh.plealog.dbmirror.fetcher.UserProcessingMonitor;
 import bzh.plealog.dbmirror.task.PTaskEngine;
-
 import bzh.plealog.dbmirror.util.ant.PAntTasks;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.descriptor.DatabankFormat;
@@ -50,8 +49,7 @@ import bzh.plealog.dbmirror.util.sequence.SequenceValidatorEggNog;
  */
 public class EggNogPreparator {
 
-  private static final Log      LOGGER                = LogFactory
-                                                          .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger      LOGGER                = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                               + ".EggNogPreparator");
 
   // where are decompressed all members files

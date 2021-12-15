@@ -23,8 +23,8 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.Configuration;
@@ -252,8 +252,7 @@ public class PFTPLoaderDescriptor {
   }
   
   public void dumpContent() {
-    Log LOGGER = LogFactory
-        .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY+".LoaderDescriptor");
+    Logger LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY+".LoaderDescriptor");
 	  LoggerCentral.info(LOGGER, String.format("Content of global descriptor: %s",_descriptor));
 	  for(String key : KEYS){
 		  LoggerCentral.info(LOGGER, String.format("%s=%s",key, _properties.getProperty(key)));

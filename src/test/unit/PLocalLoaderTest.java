@@ -20,7 +20,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.BasicConfigurator;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -38,7 +37,7 @@ public class PLocalLoaderTest {
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
-    BasicConfigurator.configure();
+    UtilsTest.configureApp();
   }
 
   @AfterClass

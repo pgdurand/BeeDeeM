@@ -1,4 +1,4 @@
-/* Copyright (C) 2019 Patrick G. Durand
+/* Copyright (C) 2019-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -21,8 +21,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.aspera.AsperaCmd;
 import bzh.plealog.dbmirror.util.aspera.AsperaUtils;
@@ -45,8 +45,7 @@ public class PAsperaLoader extends PFTPLoader {
 	
 	public static final String ASPC_WORKER = "AsperaLoader";
 
-	private static final Log      LOGGER       = LogFactory
-      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+	private static final Logger LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
           + ".PAsperaLoader");
   private static String ERR_1=" is not defined in dbms config file";
   private static String ERR_2=" Aspera server address not defined in bank descriptor";

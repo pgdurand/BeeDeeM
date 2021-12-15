@@ -20,8 +20,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,8 +39,7 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
 public class BankJsonDescriptor {
   private BankJsonMainSectionDescriptor _main;
 
-  private static final Log        LOGGER = LogFactory
-      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger        LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
           + ".BankJsonDescriptor");
 
   public static final String BLAST_INDEX = "blast";

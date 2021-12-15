@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -40,14 +40,8 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import bzh.plealog.dbmirror.fetcher.DBServerConfig;
-import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
-import bzh.plealog.dbmirror.util.Utils;
-import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
-import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.plealog.prefs4j.api.DataConnector;
 import com.plealog.prefs4j.api.DataConnectorFactory;
@@ -55,6 +49,12 @@ import com.plealog.prefs4j.api.PreferenceSection;
 import com.plealog.prefs4j.implem.core.PreferenceSectionImplem;
 import com.plealog.prefs4j.ui.PreferenceEditor;
 import com.plealog.prefs4j.ui.PreferenceEditorFactory;
+
+import bzh.plealog.dbmirror.fetcher.DBServerConfig;
+import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
+import bzh.plealog.dbmirror.util.Utils;
+import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
 
 /**
  * This class is used to open a Databank Descriptor Editor.
@@ -73,8 +73,7 @@ public class DescriptorEditorDlg extends JDialog {
   private static final String CFG_RES  = "cfgEditorDefaultDesc.config";
   private static final String CFG_PROP = "cfgEditorDefaultMsg.properties";
 
-  private static final Log    LOGGER   = LogFactory
-                                           .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger    LOGGER   = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                + ".DescriptorEditorDlg");
 
   // note: all parameters are mandatory. Do not provide descriptor sets to null.

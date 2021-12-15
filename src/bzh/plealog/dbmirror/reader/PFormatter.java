@@ -22,8 +22,8 @@ import java.io.Writer;
 import java.util.Arrays;
 import java.util.Hashtable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -39,8 +39,7 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
  * @author Patrick G. Durand
  */
 public class PFormatter {
-  private static final Log                LOGGER          = LogFactory
-                                                              .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger                LOGGER          = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                   + ".PFormatter");
 
   public static Hashtable<FORMAT, String> AVAILABLE_FORMATS;

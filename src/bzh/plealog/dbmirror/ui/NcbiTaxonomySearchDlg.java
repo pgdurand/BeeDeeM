@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Ludovic Antin
+/* Copyright (C) 2007-2021 Ludovic Antin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -41,7 +41,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.lucenedico.DicoStorageSystemException;
 import bzh.plealog.dbmirror.lucenedico.DicoTerm;
@@ -52,8 +53,8 @@ import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
 
 public class NcbiTaxonomySearchDlg extends JDialog {
 
-  private static final Logger LOGGER           = Logger
-                                                   .getLogger("kdms.NcbiTaxonomySearchDlg");
+  private static final Logger LOGGER     = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+      +".NcbiTaxonomySearchDlg");
 
   /**
 	 * 

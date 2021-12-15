@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -26,8 +26,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.task.PPreTaskProcessor;
 import bzh.plealog.dbmirror.task.PTaskEngine;
@@ -51,8 +51,7 @@ public class PFTPLoaderSystem {
   private UserProcessingMonitor  _userMonitor;
   private String                 _fileOfFiles;
   
-  private static final Log       LOGGER    = LogFactory
-                                               .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY+".PFTPLoaderSystem");
+  private static final Logger LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY+".PFTPLoaderSystem");
 
   public static final String     WORKER_ID = "MainLoaderSystem";
 
@@ -485,8 +484,7 @@ public class PFTPLoaderSystem {
         retry++;
         _files.clear();
         LoggerCentral.info(
-            LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                + ".PFTPLoader"), PFTPLoader.CONN_ERR_MSG);
+            LOGGER, PFTPLoader.CONN_ERR_MSG);
         try {
           sleep(_delay);
         } catch (InterruptedException e) {
@@ -495,12 +493,10 @@ public class PFTPLoaderSystem {
       }
       if (bRet == 0) {// failure? Report error now!
         LoggerCentral.error(
-            LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                + ".PFTPLoader"), _ftpLoader.getErrorMsg());
+            LOGGER, _ftpLoader.getErrorMsg());
       } else if (bRet == 3) {
         LoggerCentral.info(
-            LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                + ".PFTPLoader"), _ftpLoader.getErrorMsg());
+            LOGGER, _ftpLoader.getErrorMsg());
         LoggerCentral.abortProcess();
       }
       set_ok((bRet == 1));
@@ -526,16 +522,13 @@ public class PFTPLoaderSystem {
       }
       if (LoggerCentral.errorMsgEmitted()) {
         LoggerCentral.error(
-            LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                + ".PMirror"), "Processing failed. Check ERROR messages.");
+            LOGGER, "Processing failed. Check ERROR messages.");
       } else if (LoggerCentral.processAborted()) {
         LoggerCentral.error(
-            LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                + ".PMirror"), "Processing aborted.");
+            LOGGER, "Processing aborted.");
       } else {
         LoggerCentral.info(
-            LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                + ".PMirror"), "Processing ok.");
+            LOGGER, "Processing ok.");
       }
     }
   }

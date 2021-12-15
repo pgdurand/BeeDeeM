@@ -24,8 +24,8 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -54,9 +54,8 @@ public class AsperaCmdTest {
   private static boolean doDownloadNCBI = true;
   private static boolean doDownloadEBI = false;
   
-  private static final Log           LOGGER                   = LogFactory
-			.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-					+ ".AsperaCmdTest");
+  private static final Logger           LOGGER                   = LogManager.getLogger(
+      DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".AsperaCmdTest");
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {

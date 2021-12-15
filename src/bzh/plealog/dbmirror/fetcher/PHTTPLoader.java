@@ -20,8 +20,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.bioinfo.io.http.HTTPBasicEngine;
 import bzh.plealog.bioinfo.io.http.HTTPEngineException;
@@ -39,8 +39,7 @@ public class PHTTPLoader extends PFTPLoader {
 	
 	public static final String HTTP_WORKER = "HTTPLoader";
 
-	private static final Log      LOGGER       = LogFactory
-      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+	private static final Logger LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
           + ".PHTTPLoader");
   
 	public PHTTPLoader(int id) {

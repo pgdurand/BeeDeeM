@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -41,8 +41,8 @@ import javax.swing.SwingUtilities;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
@@ -99,8 +99,7 @@ public class RunningMirrorPanel extends JPanel {
   public static ImageIcon                    OK_ICON    = EZEnvironment
                                                             .getImageIcon("ok.png");
 
-  private static final Log                   LOGGER     = LogFactory
-                                                            .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger                   LOGGER     = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                 + ".RunningMirrorPanel");
 
   public RunningMirrorPanel() {
@@ -233,7 +232,7 @@ public class RunningMirrorPanel extends JPanel {
       if (DBMSAbstractConfig.isUsingDirectConnectionFromLogToLogViewer()) {
         LoggerCentral.setLogGateway(new MyLoggerCentral(_logViewer));
       } else {
-        DBMSAbstractConfig.addLogAppender(_logViewer.getAppender());
+        /*DBMSAbstractConfig.addLogAppender(_logViewer.getAppender());*//*XXLOG4J2XX*/
       }
       pane.add("Logs", _logViewer);
     }

@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -25,8 +25,8 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
 import bzh.plealog.dbmirror.reader.DBUtils;
@@ -61,8 +61,7 @@ public class PTaskFormatDB extends PAbstractTask {
   private int                _volSize         = DBMSAbstractConfig
                                                   .getDefaultFastaVolumeSize();
 
-  private static final Log   LOGGER           = LogFactory
-                                                  .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger   LOLO           = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                       + ".PTaskEngine");
 
   public static final String USE_LCL_ID       = "lclid";
@@ -90,7 +89,7 @@ public class PTaskFormatDB extends PAbstractTask {
       Utils.writeInFile(getTmpEntriesCountFilepath(dbPath), new Integer(
           oldNbSequences + nbSequences).toString());
     } catch (Exception e) {
-      LOGGER.warn("Unable to reset the number of sequences for file "
+      LOLO.warn("Unable to reset the number of sequences for file "
           + getTmpEntriesCountFilepath(dbPath));
     }
 
@@ -112,14 +111,14 @@ public class PTaskFormatDB extends PAbstractTask {
         return new Integer(result).intValue();
       }
     } catch (Exception e) {
-      LOGGER.info("Unable to read the number of sequences for file "
+      LOLO.info("Unable to read the number of sequences for file "
           + tmpFile.getName() + " : " + e.getMessage());
     }
     if (!result.isEmpty()) {
       try {
         return Integer.getInteger(result).intValue();
       } catch (Exception e) {
-        LOGGER.info("Unable to read the number of sequences for file "
+        LOLO.info("Unable to read the number of sequences for file "
             + tmpFile.getName() + " : " + e.getMessage());
       }
     }
@@ -142,7 +141,7 @@ public class PTaskFormatDB extends PAbstractTask {
         writeZero = true;
       }
     } catch (Exception e) {
-      LOGGER.warn("Unable to delete the file " + filepath
+      LOLO.warn("Unable to delete the file " + filepath
           + ". Try to reset the number");
       writeZero = true;
     }
@@ -150,9 +149,9 @@ public class PTaskFormatDB extends PAbstractTask {
     if (writeZero) {
       try {
         Utils.writeInFile(filepath, new String("0"));
-        LOGGER.info("Reset ok for file " + filepath);
+        LOLO.info("Reset ok for file " + filepath);
       } catch (Exception e1) {
-        LOGGER.warn("Unable to reset the number of sequences for file "
+        LOLO.warn("Unable to reset the number of sequences for file "
             + filepath);
       }
     }
@@ -204,7 +203,7 @@ public class PTaskFormatDB extends PAbstractTask {
       writer.write(String.valueOf(entries));
       writer.flush();
     } catch (IOException e) {
-      LOGGER.info("Unable to store the number of sequences (" + entries
+      LOLO.info("Unable to store the number of sequences (" + entries
           + ") in '" + f.getName() + "' : " + e.getMessage());
     } finally {
       IOUtils.closeQuietly(writer);
@@ -398,7 +397,7 @@ public class PTaskFormatDB extends PAbstractTask {
     private boolean success;
 
     public void setTxtMessage(String msg) {
-      LoggerCentral.info(LOGGER, msg);
+      LoggerCentral.info(LOLO, msg);
     }
 
     public void jobDone(boolean success) {

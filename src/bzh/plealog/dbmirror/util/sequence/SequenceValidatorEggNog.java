@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Ludovic Antin
+/* Copyright (C) 2007-2021 Ludovic Antin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.indexer.eggnog.EggNogSequenceWriter;
 import bzh.plealog.dbmirror.indexer.eggnog.EggNogSuperKingdoms;
@@ -33,9 +33,8 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 public class SequenceValidatorEggNog extends SequenceValidatorAbstract {
 
-  private static final Log           LOGGER          = LogFactory
-                                                         .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                                                             + ".SequenceValidatorEggNog");
+  private static final Logger           LOGGER          = LogManager.getLogger(
+      DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".SequenceValidatorEggNog");
 
   // writers list
   private List<EggNogSequenceWriter> writers         = new ArrayList<EggNogSequenceWriter>();

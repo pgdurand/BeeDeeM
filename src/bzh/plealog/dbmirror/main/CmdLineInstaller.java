@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2020 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -25,8 +25,8 @@ import java.text.MessageFormat;
 import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.fetcher.PFTPLoaderDescriptor;
 import bzh.plealog.dbmirror.fetcher.PFTPLoaderSystem;
@@ -180,8 +180,7 @@ public class CmdLineInstaller {
     }    
     descriptor = descriptorName + DBMSAbstractConfig.FEXT_GD;
 
-    Log LOGGER = LogFactory
-        .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+    Logger LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
             + ".PMirror");
     
     try {

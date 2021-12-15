@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -15,14 +15,6 @@
  *  GNU Affero General Public License for more details.
  */
 package bzh.plealog.dbmirror.indexer;
-
-import iubio.bioseq.Bioseq;
-import iubio.bioseq.SeqRange;
-import iubio.readseq.BasicBioseqDoc;
-import iubio.readseq.BioseqDocVals;
-import iubio.readseq.BioseqFormats;
-import iubio.readseq.BioseqRecord;
-import iubio.readseq.BioseqWriterIface;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -41,8 +33,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
 import bzh.plealog.dbmirror.util.Formatters;
@@ -52,6 +44,13 @@ import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
 import bzh.plealog.dbmirror.util.runner.DBMSUniqueSeqIdRedundantException;
+import iubio.bioseq.Bioseq;
+import iubio.bioseq.SeqRange;
+import iubio.readseq.BasicBioseqDoc;
+import iubio.readseq.BioseqDocVals;
+import iubio.readseq.BioseqFormats;
+import iubio.readseq.BioseqRecord;
+import iubio.readseq.BioseqWriterIface;
 
 /**
  * This class defines a parser for BOLD database files. Mainly, it consists in
@@ -201,8 +200,7 @@ public class BOLDParser implements DBParsable {
     VALID_DEFINITION.put("ITS", "Internal Transcribed Spacer");
   }
   // logger
-  private static final Log              LOGGER            = LogFactory
-                                                              .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger              LOGGER            = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                   + ".BOLDParser");
 
   public BOLDParser() {

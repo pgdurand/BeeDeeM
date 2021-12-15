@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -22,7 +22,7 @@ import java.util.Hashtable;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
 import bzh.plealog.dbmirror.lucenedico.DicoUtils;
@@ -199,7 +199,7 @@ public class TaxonMatcherHelper {
    * This method can be called to dump in a logger the list of taxon that
    * coudn't be called during the use of this TaxonMatherHelper.
    */
-  public void dumpTaxonNotFound(Log logger) {
+  public void dumpTaxonNotFound(Logger logger) {
     Enumeration<String> keys;
     int size;
 

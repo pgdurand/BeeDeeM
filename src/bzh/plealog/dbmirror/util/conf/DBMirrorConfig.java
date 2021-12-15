@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -34,8 +34,8 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
 import bzh.plealog.dbmirror.util.Utils;
@@ -114,8 +114,7 @@ public class DBMirrorConfig {
   public static final String D_CODE          = "|" + DBServerConfig.DICO_TYPE
                                                  + "|";
 
-  protected static final Log LOGGER          = LogFactory
-                                                 .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  protected static final Logger LOGGER          = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                      + ".DBMirrorConfig");
 
   /**

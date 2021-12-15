@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Ludovic Antin
+/* Copyright (C) 2007-2021 Ludovic Antin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 
@@ -39,9 +39,8 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
  */
 public class SequenceValidatorSubset extends SequenceValidatorAbstract {
 
-  private static final Log       LOGGER                     = LogFactory
-                                                                .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                                                                    + ".SequenceValidatorSubset");
+  private static final Logger       LOGGER                     = LogManager.getLogger(
+      DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".SequenceValidatorSubset");
 
   private int                    nbSubsets                  = 1;
   private boolean                isActive                   = true;

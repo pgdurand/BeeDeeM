@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -16,7 +16,7 @@
  */
 package bzh.plealog.dbmirror.util.log;
 
-import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.sequence.SequenceFileManager;
 
@@ -42,21 +42,23 @@ public class LoggerCentral {
     _logGateway = logGateway;
   }
 
-  public static synchronized void info(Log logger, String msg) {
+
+  public static synchronized void info(Logger logger, String msg) {
     logger.info(msg);
     if (_logGateway != null) {
       _logGateway.info(msg);
     }
   }
 
-  public static synchronized void warn(Log logger, String msg) {
+
+  public static synchronized void warn(Logger logger, String msg) {
     logger.warn(msg);
     if (_logGateway != null) {
       _logGateway.warn(msg);
     }
   }
 
-  public static synchronized void error(Log logger, String msg) {
+  public static synchronized void error(Logger logger, String msg) {
     _errorEmitted = true;
     logger.error(msg);
     if (_logGateway != null) {

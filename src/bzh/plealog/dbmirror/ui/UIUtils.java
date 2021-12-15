@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -33,8 +33,8 @@ import javax.swing.JOptionPane;
 import javax.swing.text.NumberFormatter;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -47,8 +47,7 @@ import bzh.plealog.dbmirror.util.descriptor.DescriptorEntry;
  * @author Patrick G. Durand
  */
 public class UIUtils {
-  private static final Log       LOGGER   = LogFactory
-                                              .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger       LOGGER   = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                   + ".UIUtils");
 
   private static final String    CLIPPING = "...";

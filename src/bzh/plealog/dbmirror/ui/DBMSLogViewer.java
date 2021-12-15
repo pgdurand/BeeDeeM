@@ -39,9 +39,9 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.WriterAppender;
-import org.apache.log4j.spi.LoggingEvent;
+import org.apache.logging.log4j.core.appender.WriterAppender;
+import org.apache.logging.log4j.core.layout.PatternLayout;
+
 
 /**
  * This class defines a graphical log viewer.
@@ -101,7 +101,8 @@ public class DBMSLogViewer extends JPanel {
   }
 
   public WriterAppender getAppender() {
-    return new MyAppender();
+    /*return new MyAppender();*//*XXLOG4J2XX*/
+    return null;
   }
 
   /**
@@ -167,7 +168,7 @@ public class DBMSLogViewer extends JPanel {
   }
 
   // tip from : http://textareaappender.zcage.com/
-  private class MyAppender extends WriterAppender {
+  /*private class MyAppender extends WriterAppender {
     public MyAppender() {
       this.setLayout(new PatternLayout("%d{HH:mm:ss} | %-5p| %m%n"));
     }
@@ -182,7 +183,7 @@ public class DBMSLogViewer extends JPanel {
         }
       });
     }
-  }
+  }*//*XXLOG4J2XX*/
 
   private class CopyClipBoardAction extends AbstractAction implements
       ClipboardOwner {

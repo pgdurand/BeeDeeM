@@ -18,8 +18,8 @@ package bzh.plealog.dbmirror.annotator;
 
 import java.io.File;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.bioinfo.api.data.searchresult.SROutput;
 import bzh.plealog.bioinfo.io.searchresult.ncbi.BlastLoader;
@@ -45,8 +45,7 @@ public class PAnnotateBlastResult {
   
   public static final String    include_bco               = "incbc";
   
-  protected static final Log    LOGGER                    = LogFactory
-                                                              .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  protected static final Logger                    LOGGER = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                   + ".PAnnotateBlastResult");
   public boolean annotate(String input, String output, String writer,
       String type) {

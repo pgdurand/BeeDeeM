@@ -38,8 +38,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.indexer.DBEntry;
 import bzh.plealog.dbmirror.indexer.LuceneUtils;
@@ -69,8 +69,7 @@ public class PQueryMirrorBase {
   protected List<IdxDescriptor>    _descriptors;
   private String                   _errMsg;
 
-  protected static final Log       LOGGER    = LogFactory
-                                                 .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  protected static final Logger       LOGGER    = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                      + ".PQueryMirrorBase"); ;
 
   // available keys to use for the HTTP/GET line

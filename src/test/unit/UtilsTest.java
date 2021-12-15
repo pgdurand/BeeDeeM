@@ -30,7 +30,14 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.BasicConfigurator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.Filter;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
+import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.core.config.builder.api.AppenderComponentBuilder;
+import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilder;
+import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilderFactory;
+import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 import org.junit.Test;
 
 import bzh.plealog.dbmirror.indexer.LuceneUtils;
@@ -158,7 +165,23 @@ public class UtilsTest {
 
   public static void configureApp() {
     if (!_logConfigured) {
-      BasicConfigurator.configure();
+      ConfigurationBuilder<BuiltConfiguration> builder = ConfigurationBuilderFactory.newConfigurationBuilder();
+      builder.setStatusLevel(Level.INFO);
+      builder.setConfigurationName("BeeDeeMTest-Suite");
+      builder.add(builder.newFilter("ThresholdFilter", Filter.Result.ACCEPT, Filter.Result.NEUTRAL)
+          .addAttribute("level", Level.INFO));
+      AppenderComponentBuilder appenderBuilder = builder.newAppender("Stdout", "CONSOLE").addAttribute("target",
+          ConsoleAppender.Target.SYSTEM_OUT);
+      appenderBuilder.add(builder.newLayout("PatternLayout")
+          .addAttribute("pattern", "%d{dd-MM-yyyy HH:mm:ss} [%t] %-5p %c %x | %m%n"));
+      appenderBuilder.add(builder.newFilter("MarkerFilter", Filter.Result.DENY, Filter.Result.NEUTRAL)
+          .addAttribute("marker", "FLOW"));
+      builder.add(appenderBuilder);
+      
+      builder.add(builder.newLogger("org.apache.logging.log4j", Level.INFO)
+          .add(builder.newAppenderRef("Stdout")).addAttribute("additivity", false));
+      builder.add(builder.newRootLogger(Level.ERROR).add(builder.newAppenderRef("Stdout")));
+      Configurator.initialize(builder.build());
       _logConfigured = true;
     }
 

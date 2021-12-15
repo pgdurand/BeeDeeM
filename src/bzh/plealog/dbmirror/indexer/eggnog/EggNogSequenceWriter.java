@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Ludovic Antin
+/* Copyright (C) 2007-2021 Ludovic Antin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -29,8 +29,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.mutable.MutableInt;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.indexer.SwissProtParser;
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
@@ -51,8 +51,7 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
  */
 public class EggNogSequenceWriter {
 
-  private static final Log           LOGGER              = LogFactory
-                                                             .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger           LOGGER              = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                  + ".EggNogSequenceWriter");
 
   // ID 1A1C_VIGRR Reviewed; 368 AA.

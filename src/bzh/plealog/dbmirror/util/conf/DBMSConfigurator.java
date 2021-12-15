@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2021 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -25,8 +25,8 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.event.ConfigurationListener;
 import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
@@ -76,8 +76,7 @@ public class DBMSConfigurator {
   public static enum LUCENE_FS_VALUES {FS_DEFAULT, FS_NIO, FS_SIMPLE};
   public static enum LUCENE_LK_VALUES {LK_DEFAULT, LK_NATIVE, LK_SIMPLE};
   
-  private static final Log          LOGGER               = LogFactory
-                                                             .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Logger          LOGGER               = LogManager.getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                                  + ".DBMSConfigurator");
 
   private static final String[] KEYS ={MIRROR_PATH, MIRROR_PREPA_PATH, MIRROR_FILE,
@@ -250,12 +249,13 @@ public class DBMSConfigurator {
     }
   }
   
-  public void dumpContent(Log logger) {
-	  for (String key : KEYS) {
-		  if (_pConfig.containsKey(key) == false)
-			  continue;
-		  LoggerCentral.info(logger, key + "=" + _pConfig.getProperty(key));
-	  }
+  public void dumpContent(Logger logger) {
+    for (String key : KEYS) {
+      if (_pConfig.containsKey(key) == false)
+        continue;
+      LoggerCentral.info(logger, key + "=" + _pConfig.getProperty(key));
+    }
   }
+ 
 
 }

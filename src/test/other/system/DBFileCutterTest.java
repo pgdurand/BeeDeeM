@@ -16,11 +16,10 @@
  */
 package test.other.system;
 
-import org.apache.log4j.BasicConfigurator;
-
 import bzh.plealog.dbmirror.util.sequence.DBFileCutter;
 import bzh.plealog.dbmirror.util.sequence.SeqIOConvertMonitor;
 import bzh.plealog.dbmirror.util.sequence.SeqIOUtils;
+import test.unit.UtilsTest;
 
 /**
  * This snippet illustrates how to cut a sequence file.
@@ -35,7 +34,7 @@ public class DBFileCutterTest {
    *          is the output file and [2]-[3] is the sequence range [from..to].
    */
   public static void main(String[] args) {
-    BasicConfigurator.configure();
+    UtilsTest.configureApp();
     System.out.println("Start cutting: " + args[0]);
 
     try {
