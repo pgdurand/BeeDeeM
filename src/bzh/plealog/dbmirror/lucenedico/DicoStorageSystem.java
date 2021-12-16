@@ -132,4 +132,6 @@ public interface DicoStorageSystem {
   public List<DicoTerm> getApprochingTerms(String term, int maxTerms)
       throws DicoStorageSystemException;
 
+  public List<DicoTerm> getApprochingTerms(String term, String fuzzy, int maxTerms)
+      throws DicoStorageSystemException;
 }

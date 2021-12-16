@@ -208,7 +208,7 @@ public class PQueryMirrorBase {
       //not found: try to search by organism name
       if (term==null) {
         if(dico.equals(Dicos.NCBI_TAXONOMY)) {
-          List<DicoTerm> terms = dicoConnector.getApprochingTerms(id, 1);
+          List<DicoTerm> terms = dicoConnector.getApprochingTerms(id, "0.6", 10000);
           if (terms.size()!=0) {
             id = terms.get(0).getId();
             term = dicoConnector.getTerm(Dicos.NCBI_TAXONOMY, id);
