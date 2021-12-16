@@ -586,13 +586,20 @@ public class DicoTermQuerySystem {
   }
 
   /**
-   * 
-   * @param term
-   * @return
+   * Returns Taxonomy terms using approximate search.
+   * @param term the taxonomy search to search for
+   * @param maxTerms maximum terms to return
+   * @return a list of taxonomy terms matching approximate search or null.
    * @throws DicoStorageSystemException
+   * 
    * @see DicoStorageSystem.getApprochingTerms
    */
   public List<DicoTerm> getApprochingTerms(String term, int maxTerms)
+      throws DicoStorageSystemException {
+    return getApprochingTerms(term, "0.5", maxTerms);
+  }
+  
+  public List<DicoTerm> getApprochingTerms(String term, String fuzzy, int maxTerms)
       throws DicoStorageSystemException {
     try {
       return storages.get(Dicos.NCBI_TAXONOMY).getApprochingTerms(term, maxTerms);

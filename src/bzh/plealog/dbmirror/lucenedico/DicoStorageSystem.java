@@ -127,9 +127,12 @@ public interface DicoStorageSystem {
    * of the input string parameter
    * 
    * Each DicoTerm result contains : - id : the taxonomic id - data : the
-   * taxonomic name - object : the found score (to allow sort by bests results)
+   * taxonomic name - object : the found score (to allow sort by bests results).
+   * Fuzzy default value is set to 0.5
    */
   public List<DicoTerm> getApprochingTerms(String term, int maxTerms)
       throws DicoStorageSystemException;
-
+  
+  public List<DicoTerm> getApprochingTerms(String term, String fuzzy, int maxTerms)
+      throws DicoStorageSystemException;
 }

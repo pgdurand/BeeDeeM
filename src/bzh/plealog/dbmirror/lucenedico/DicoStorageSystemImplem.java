@@ -464,6 +464,13 @@ public class DicoStorageSystemImplem implements DicoStorageSystem,
   @SuppressWarnings("deprecation")
   @Override
   public List<DicoTerm> getApprochingTerms(String term, int maxTerms)
+      throws DicoStorageSystemException{
+    return getApprochingTerms(term, "0.5", maxTerms);
+  }
+  
+  @SuppressWarnings("deprecation")
+  @Override
+  public List<DicoTerm> getApprochingTerms(String term, String fuzzy, int maxTerms)
       throws DicoStorageSystemException {
     List<DicoTerm> result = new ArrayList<DicoTerm>();
 
@@ -481,7 +488,7 @@ public class DicoStorageSystemImplem implements DicoStorageSystem,
 
     // add ~ to use approximate search
     // (http://lucene.apache.org/core/2_9_4/queryparsersyntax.html)
-    term += " OR " + term.replace("*", "") + "~0.6";
+    term += " OR " + term.replace("*", "") + "~" + fuzzy;
 
     QueryParser parser = new QueryParser(/* Version.LUCENE_29, */DATA_FIELD,
         this.analyzer);
