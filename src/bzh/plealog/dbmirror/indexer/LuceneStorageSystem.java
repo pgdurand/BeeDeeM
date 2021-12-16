@@ -204,8 +204,6 @@ public class LuceneStorageSystem implements StorageSystem {
     // in path name of "dx" file. This way, the term "current" is appropriately
     // set in the "dx" files during auto-mirror indexing.
     str = DBMSAbstractConfig.DOWNLOADING_DIR;
-    if (str == null)
-      return fName;
     str = File.separator + str + File.separator;
 
     idx1 = fName.indexOf(str);
