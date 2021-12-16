@@ -53,11 +53,11 @@ public class CmdLineQueryTest {
     UtilsTest.configureApp();
     UtilsTest.cleanInstalledDatabanks();
     DefaultLoaderMonitorTest.completeInstall("uniprot", "sample_Uniprot.dsc", true);
-    /*DefaultLoaderMonitorTest.completeInstall("taxonomy", "NCBI_Taxonomy.dsc", true);
+    DefaultLoaderMonitorTest.completeInstall("taxonomy", "NCBI_Taxonomy.dsc", true);
     DefaultLoaderMonitorTest.completeInstall("enzyme", "enzyme.dsc", true);
     DefaultLoaderMonitorTest.completeInstall("cdd", "CDD_terms.dsc", true);
     DefaultLoaderMonitorTest.completeInstall("interpro", "ipr_terms.dsc", true);
-    DefaultLoaderMonitorTest.completeInstall("go", "go_terms.dsc", true);*/
+    DefaultLoaderMonitorTest.completeInstall("go", "go_terms.dsc", true);
   }
 
   @AfterClass
@@ -136,7 +136,7 @@ public class CmdLineQueryTest {
       Assert.fail();
     }
   }
-  /*
+  
   @Test
   public void testCmdLineFOIDs() {
     File foIDsFile = new File(UtilsTest.getTestFilePath("Tools", "foIDs.txt"));
@@ -366,8 +366,10 @@ public class CmdLineQueryTest {
       Assert.fail();
     }
 
+    PrintStream ps = null;
+    
     try {
-      System.setOut(outputFile(result));
+      ps = outputFile(result);
     } catch (Exception e) {
       e.printStackTrace();
       Assert.fail();
@@ -384,7 +386,7 @@ public class CmdLineQueryTest {
     values.put("format", "txt");
 
     //txt format: only dump entry on stdout
-    querySystem.executeJob(values, System.out, System.err, 
+    querySystem.executeJob(values, ps, ps, 
         DBMSAbstractConfig.getLocalMirrorConfFile());
     Assert.assertFalse(querySystem.terminateWithError());
     try {
@@ -567,5 +569,5 @@ public class CmdLineQueryTest {
       Assert.fail();
     }
   }
-  */
+  
 }
