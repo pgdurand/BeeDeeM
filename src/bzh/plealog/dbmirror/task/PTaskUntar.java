@@ -18,7 +18,6 @@ package bzh.plealog.dbmirror.task;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.BasicConfigurator;
 
 import bzh.plealog.dbmirror.util.ant.PAntTasks;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -88,7 +87,7 @@ public class PTaskUntar extends PAbstractTask {
   public static void main(String[] args) {
     PTaskUntar task;
 
-    BasicConfigurator.configure();
+    LoggerCentral.configure();
     task = new PTaskUntar(args[0], args[1]);
     if (!task.execute()) {
       LoggerCentral.error(LOGGER, "Unable to untar");

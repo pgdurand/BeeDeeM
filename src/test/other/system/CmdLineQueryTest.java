@@ -16,11 +16,10 @@
  */
 package test.other.system;
 
-import org.apache.log4j.BasicConfigurator;
-
 import bzh.plealog.dbmirror.main.StarterUtils;
 import bzh.plealog.dbmirror.reader.PQueryMirrorBase;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
  * This code snippet illustrates how to query databanks to get sequence by ID.
@@ -32,7 +31,7 @@ public class CmdLineQueryTest {
    * @param args
    */
   public static void main(String[] args) {
-    BasicConfigurator.configure();
+    LoggerCentral.configure();
 
     StarterUtils.configureApplication(null, "kdmsUI", true, true, false);
 

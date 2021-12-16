@@ -30,7 +30,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.BasicConfigurator;
 import org.junit.Test;
 
 import bzh.plealog.dbmirror.indexer.LuceneUtils;
@@ -158,7 +157,7 @@ public class UtilsTest {
 
   public static void configureApp() {
     if (!_logConfigured) {
-      BasicConfigurator.configure();
+      LoggerCentral.configure();
       _logConfigured = true;
     }
 

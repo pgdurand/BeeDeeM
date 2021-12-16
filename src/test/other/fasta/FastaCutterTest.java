@@ -18,9 +18,8 @@ package test.other.fasta;
 
 import java.io.FileOutputStream;
 
-import org.apache.log4j.BasicConfigurator;
-
 import bzh.plealog.dbmirror.indexer.FastaCutter;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
  * This snippet illustrates how to cut a Fasta file.
@@ -34,7 +33,7 @@ public class FastaCutterTest {
    * @param args
    */
   public static void main(String[] args) {
-    BasicConfigurator.configure();
+    LoggerCentral.configure();
     System.out.println("Start cutting: " + args[0]);
     long tim = System.currentTimeMillis();
     // see also bzh.plealog.dbmirror.util.DBFileCutter

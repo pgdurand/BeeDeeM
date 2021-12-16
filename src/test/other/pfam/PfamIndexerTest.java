@@ -16,11 +16,10 @@
  */
 package test.other.pfam;
 
-import org.apache.log4j.BasicConfigurator;
-
 import bzh.plealog.dbmirror.lucenedico.DicoStorageSystem;
 import bzh.plealog.dbmirror.lucenedico.DicoStorageSystemImplem;
 import bzh.plealog.dbmirror.lucenedico.pfam.PfamNamesParser;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 public class PfamIndexerTest {
 
@@ -28,7 +27,7 @@ public class PfamIndexerTest {
    * @param args
    */
   public static void main(String[] args) {
-    BasicConfigurator.configure();
+    LoggerCentral.configure();
     System.out.println("Start indexing: " + args[0]);
     long tim = System.currentTimeMillis();
     DicoStorageSystem lss = new DicoStorageSystemImplem();

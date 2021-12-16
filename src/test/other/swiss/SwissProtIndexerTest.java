@@ -16,12 +16,11 @@
  */
 package test.other.swiss;
 
-import org.apache.log4j.BasicConfigurator;
-
 import bzh.plealog.dbmirror.indexer.LuceneStorageSystem;
 import bzh.plealog.dbmirror.indexer.StorageSystem;
 import bzh.plealog.dbmirror.indexer.SwissProtParser;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
  * This code snippet illustrates how to filter a Swissprot data file by taxonomy
@@ -35,7 +34,7 @@ public class SwissProtIndexerTest {
    * @param args
    */
   public static void main(String[] args) {
-    BasicConfigurator.configure();
+    LoggerCentral.configure();
     System.out.println("Start indexing: " + args[0]);
     long tim = System.currentTimeMillis();
     LuceneStorageSystem lss = new LuceneStorageSystem();

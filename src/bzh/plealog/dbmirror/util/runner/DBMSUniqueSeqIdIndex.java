@@ -19,7 +19,8 @@ package bzh.plealog.dbmirror.util.runner;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -32,6 +33,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
 import bzh.plealog.dbmirror.indexer.LuceneUtils;
+import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 
 /**
  * This class represents a Lucene-based index aims at storing unique sequence
@@ -55,9 +57,8 @@ public class DBMSUniqueSeqIdIndex {
     READ_MODE, WRITE_MODE, WRITE_APPEND_MODE
   };
 
-  private static final Logger LOGGER                        = Logger
-                                                                .getLogger("kb."
-                                                                    + "KDMSUniqueSeqIdIndex");
+  private static final Log       LOGGER    = LogFactory
+      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + "KDMSUniqueSeqIdIndex");
   private static final int    LUCENE_SEARCH_HITS_MAX_NUMBER = 1;
 
   private static final String SEQID_FIELD                   = "seqid";

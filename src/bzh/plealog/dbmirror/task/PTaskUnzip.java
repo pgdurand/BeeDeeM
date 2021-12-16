@@ -20,7 +20,6 @@ import java.io.File;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.BasicConfigurator;
 
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -107,7 +106,7 @@ public class PTaskUnzip extends PAbstractTask {
   public static void main(String[] args) {
     PTaskUnzip task;
 
-    BasicConfigurator.configure();
+    LoggerCentral.configure();
     task = new PTaskUnzip(args[0], args[1], true);
     if (!task.execute()) {
       LoggerCentral.error(LOGGER, "Unable to unzip");

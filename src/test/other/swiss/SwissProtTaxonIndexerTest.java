@@ -18,8 +18,6 @@ package test.other.swiss;
 
 import java.io.File;
 
-import org.apache.log4j.BasicConfigurator;
-
 import bzh.plealog.dbmirror.indexer.LuceneStorageSystem;
 import bzh.plealog.dbmirror.indexer.StorageSystem;
 import bzh.plealog.dbmirror.indexer.SwissProtParser;
@@ -49,7 +47,7 @@ public class SwissProtTaxonIndexerTest {
     DBMSAbstractConfig.initializeConfigurator(confPath
         + DBMSAbstractConfig.MASTER_CONF_FILE);
     LoggerCentral.reset();
-    BasicConfigurator.configure();
+    LoggerCentral.configure();
     System.out.println("Start indexing: " + args[0]);
     long tim = System.currentTimeMillis();
     LuceneStorageSystem lss = new LuceneStorageSystem();

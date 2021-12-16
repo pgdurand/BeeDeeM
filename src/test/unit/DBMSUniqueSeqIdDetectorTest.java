@@ -29,7 +29,6 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.BasicConfigurator;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -45,7 +44,7 @@ public class DBMSUniqueSeqIdDetectorTest {
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
-    BasicConfigurator.configure();
+    UtilsTest.configureApp();
   }
 
   @AfterClass

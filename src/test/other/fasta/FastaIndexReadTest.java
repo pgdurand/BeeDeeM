@@ -16,13 +16,12 @@
  */
 package test.other.fasta;
 
-import org.apache.log4j.BasicConfigurator;
-
 import bzh.plealog.dbmirror.indexer.DBEntry;
 import bzh.plealog.dbmirror.indexer.FastaParser;
 import bzh.plealog.dbmirror.indexer.LuceneStorageSystem;
 import bzh.plealog.dbmirror.indexer.ParserMonitor;
 import bzh.plealog.dbmirror.indexer.StorageSystem;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
  * This code snippet illustrates how to control the content of an index for a
@@ -36,7 +35,7 @@ public class FastaIndexReadTest {
    * @param args
    */
   public static void main(String[] args) {
-    BasicConfigurator.configure();
+    LoggerCentral.configure();
     System.out.println("Index: " + args[0]);
     System.out.println("DB   : " + args[1]);
     LuceneStorageSystem lss = new LuceneStorageSystem();

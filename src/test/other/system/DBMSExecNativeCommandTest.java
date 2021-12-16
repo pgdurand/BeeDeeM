@@ -22,8 +22,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.BasicConfigurator;
-
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.conf.DBMSConfigurator;
@@ -133,7 +131,7 @@ public class DBMSExecNativeCommandTest {
       System.exit(1);
     }
 
-    BasicConfigurator.configure();
+    LoggerCentral.configure();
     String confPath = getConfPath();
     DBMSAbstractConfig.configureLog4J("kdmsUI");
     DBMSAbstractConfig.setConfPath(confPath);

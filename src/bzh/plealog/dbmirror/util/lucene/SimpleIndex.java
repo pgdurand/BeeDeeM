@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Ludovic Antin
+/* Copyright (C) 2007-2021 Ludovic Antin
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -23,7 +23,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -49,8 +50,8 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
  */
 public class SimpleIndex<T> {
 
-  private static final Logger LOGGER          = Logger
-                                                  .getLogger(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+  private static final Log       LOGGER    = LogFactory
+      .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                       + ".SimpleIndex");
   private static final String DATA_FIELD_NAME = "data";
   private static final String ID_FIELD_NAME   = "id";

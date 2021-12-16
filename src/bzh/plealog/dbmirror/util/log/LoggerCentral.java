@@ -17,6 +17,7 @@
 package bzh.plealog.dbmirror.util.log;
 
 import org.apache.commons.logging.Log;
+import org.apache.log4j.BasicConfigurator;
 
 import bzh.plealog.dbmirror.util.sequence.SequenceFileManager;
 
@@ -101,5 +102,12 @@ public class LoggerCentral {
 
   public static synchronized void removeSfmToAbort() {
     LoggerCentral.sfm = null;
+  }
+  /**
+   * Configure underlying core implementation of a logging system.
+   * To be called only by main method if needed.
+   */
+  public static synchronized void configure() {
+    BasicConfigurator.configure();
   }
 }

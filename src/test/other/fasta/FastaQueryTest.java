@@ -16,11 +16,10 @@
  */
 package test.other.fasta;
 
-import org.apache.log4j.BasicConfigurator;
-
 import bzh.plealog.dbmirror.indexer.DBEntry;
 import bzh.plealog.dbmirror.indexer.LuceneStorageSystem;
 import bzh.plealog.dbmirror.indexer.StorageSystem;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
  * This snippet illustrates how to query the Lucene index of a sequence file.
@@ -33,7 +32,7 @@ public class FastaQueryTest {
    * @param args
    */
   public static void main(String[] args) {
-    BasicConfigurator.configure();
+    LoggerCentral.configure();
     System.out.println("Query index with ID: " + args[1]);
     long tim = System.currentTimeMillis();
     LuceneStorageSystem lss = new LuceneStorageSystem();

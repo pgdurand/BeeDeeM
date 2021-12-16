@@ -16,11 +16,10 @@
  */
 package test.other.bold;
 
-import org.apache.log4j.BasicConfigurator;
-
 import bzh.plealog.dbmirror.indexer.BOLDParser;
 import bzh.plealog.dbmirror.indexer.LuceneStorageSystem;
 import bzh.plealog.dbmirror.indexer.StorageSystem;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 public class BOLDIndexerTest {
 
@@ -28,7 +27,7 @@ public class BOLDIndexerTest {
    * @param args
    */
   public static void main(String[] args) {
-    BasicConfigurator.configure();
+    LoggerCentral.configure();
     System.out.println("Start indexing: " + args[0]);
     long tim = System.currentTimeMillis();
     LuceneStorageSystem lss = new LuceneStorageSystem();

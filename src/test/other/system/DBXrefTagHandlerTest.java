@@ -21,8 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
-import org.apache.log4j.BasicConfigurator;
-
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 import bzh.plealog.dbmirror.util.sequence.SeqIOUtils;
 import bzh.plealog.dbmirror.util.xref.DBXrefInstancesManager;
 import bzh.plealog.dbmirror.util.xref.DBXrefTagHandler;
@@ -92,7 +91,7 @@ public class DBXrefTagHandlerTest {
    */
   public static void main(String[] args) {
     DBXrefTagManager manager;
-    BasicConfigurator.configure();
+    LoggerCentral.configure();
     manager = new DBXrefTagManager();
     // manager.initialise(new File("dbxref_def.config"));
     manager.initialise(SeqIOUtils.DEFAULT_CONFIG_XREF_RETRIEVE);
