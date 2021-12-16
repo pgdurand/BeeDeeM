@@ -564,10 +564,10 @@ public class DefaultLoaderMonitorTest {
     assertNotNull(tasks);
     assertEquals(6, tasks.length);
     // check task name
-    PTaskLuceneFastaIndexer task = (PTaskLuceneFastaIndexer) tasks[1];
+    PTaskLuceneFastaIndexer task = (PTaskLuceneFastaIndexer) tasks[0];
     assertTrue(task.getSrc().endsWith("SwissProt_human.fas"));
     // check the existed renamer task
-    PTaskFastaRenamer taskRenamer = (PTaskFastaRenamer) tasks[2];
+    PTaskFastaRenamer taskRenamer = (PTaskFastaRenamer) tasks[1];
     assertTrue(taskRenamer.getNewFilepath().endsWith(_dbConf.getName() + "00"));
     // check files input for formatDb
     assertEquals(1, _loaderMonitor.getFormatDBFiles().size());
@@ -601,7 +601,7 @@ public class DefaultLoaderMonitorTest {
     Object[] tasks = _taskEngine.getTasks().toArray();
     assertNotNull(tasks);
     assertEquals(9, tasks.length);
-    PTaskLuceneSWIndexer task = (PTaskLuceneSWIndexer) tasks[2];
+    PTaskLuceneSWIndexer task = (PTaskLuceneSWIndexer) tasks[1];
     // check task name
     assertTrue(task.getSrc().endsWith("uniprot_sprot_human.dat"));
     // check files input for formatDb
@@ -633,8 +633,8 @@ public class DefaultLoaderMonitorTest {
     Object[] tasks = _taskEngine.getTasks().toArray();
     assertNotNull(tasks);
     assertEquals(7, tasks.length);
-    PTaskBold2Genbank task = (PTaskBold2Genbank) tasks[2];
-    PTaskLuceneGBIndexer taskIndexer = (PTaskLuceneGBIndexer) tasks[3];
+    PTaskBold2Genbank task = (PTaskBold2Genbank) tasks[1];
+    PTaskLuceneGBIndexer taskIndexer = (PTaskLuceneGBIndexer) tasks[2];
     // check task name
     assertTrue(task.getSrc().contains(
         _dbConf.getName() + File.separator + "iBOL"));
