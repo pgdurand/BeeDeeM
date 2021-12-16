@@ -554,7 +554,7 @@ public class DBServerConfig {
   public String getIncludeFileList() {
     String val = _properties.getProperty(DBINCFILES_KEY);
     if (val!=null) {
-      val = DBMSExecNativeCommand.formatNativePath(val, false, false);
+      val = val.replaceAll("\\|", File.separator);
     }
     return val;
   }
