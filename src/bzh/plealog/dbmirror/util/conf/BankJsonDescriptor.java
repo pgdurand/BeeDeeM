@@ -103,7 +103,7 @@ public class BankJsonDescriptor {
       mainJ.setType(new ArrayList<String>() {{add(TYPE_ONTO);}});
     }
     mainJ.setProvider(new ArrayList<String>() {{add(provider);}});
-    mainJ.setOwner(EZApplicationBranding.getAppName());
+    mainJ.setOwner(EZApplicationBranding.getAppName()+"-"+EZApplicationBranding.getAppVersion());
     
     mainJ.setIndex(index);
 

@@ -16,6 +16,8 @@
  */
 package bzh.plealog.dbmirror.main;
 
+import com.plealog.genericapp.api.EZApplicationBranding;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +46,8 @@ public class StarterUtils {
   private static final String MSG1     = "Loaded network config from: ";
   private static final String ERR1     = "Unable to load network config: ";
 
+  private static boolean initDone = false;
+ 
   /**
    * Return the content of the version resource.
    */
@@ -53,6 +57,13 @@ public class StarterUtils {
         .getResourceAsStream("version.properties");) {
       props.load(in);
       in.close();
+      if(!initDone){
+        initDone=true;
+        EZApplicationBranding.setAppName(props.getProperty("prg.app.name"));
+        EZApplicationBranding.setAppVersion(props.getProperty("prg.version"));
+        EZApplicationBranding.setCopyRight(props.getProperty("prg.copyright"));
+        EZApplicationBranding.setProviderName(props.getProperty("prg.provider"));
+      }
     } catch (Exception ex) {// should not happen
       System.err.println("Unable to read props: " + ex.toString());
     }
