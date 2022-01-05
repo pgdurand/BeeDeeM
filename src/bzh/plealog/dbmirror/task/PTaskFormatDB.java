@@ -60,11 +60,13 @@ public class PTaskFormatDB extends PAbstractTask {
   private int                _headerFormat    = DBUtils.NO_HEADER_FORMAT;
   private int                _volSize         = DBMSAbstractConfig
                                                   .getDefaultFastaVolumeSize();
-
+  private int                _blastVer        = 5;
+  
   private static final Log   LOGGER           = LogFactory
                                                   .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                                                       + ".PTaskEngine");
 
+  public static final String BLAST_VER        = "blastver";//will be 5 by default
   public static final String USE_LCL_ID       = "lclid";
   public static final String CHECK_FILE       = "check";
   public static final String IS_SILVA         = "silva";
@@ -278,7 +280,7 @@ public class PTaskFormatDB extends PAbstractTask {
     runner = new FormatDBRunner(jobMonitor, formatDBCmd,
         DBMSAbstractConfig.getDbXrefTagConfiguration(), dbPathName.getParent(),
         dbPathName.getName(), _files, taxMatcher, dico, _checkNR,
-        _useNcbiIdFormat, !_isNucleic, _checkFiles, _headerFormat, _volSize);
+        _useNcbiIdFormat, !_isNucleic, _checkFiles, _headerFormat, _volSize, _blastVer);
     // end new KLib
     runner.start();
     try {
@@ -377,12 +379,23 @@ public class PTaskFormatDB extends PAbstractTask {
       try {
         data = Integer.valueOf(value);
       } catch (NumberFormatException e) {
-        data = _volSize = DBMSAbstractConfig.getDefaultFastaVolumeSize();
+        data = DBMSAbstractConfig.getDefaultFastaVolumeSize();
       }
       if (data < 2 || data > 20) {
-        data = _volSize = DBMSAbstractConfig.getDefaultFastaVolumeSize();
+        data = DBMSAbstractConfig.getDefaultFastaVolumeSize();
       }
       _volSize = data;
+    }
+    
+    value = args.get(BLAST_VER);
+    if (value != null) {
+      int data;
+      try {
+        data = Integer.valueOf(value);
+      } catch (NumberFormatException e) {
+        data = 5;
+      }
+      _blastVer = data;
     }
   }
 

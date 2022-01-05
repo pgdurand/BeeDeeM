@@ -286,7 +286,8 @@ public class FormatDBDialog extends JDialog {
               || _editor.useNcbiIdFormat(), _editor.useNcbiIdFormat(),
           _editor.isProteic(), _editor.checkInputFiles(),
           DBUtils.NO_HEADER_FORMAT,
-          DBMSAbstractConfig.getDefaultFastaVolumeSize());
+          DBMSAbstractConfig.getDefaultFastaVolumeSize(),
+          5);
       runner.start();
     }
   }
