@@ -122,6 +122,7 @@ public abstract class FormatDBMonitor implements SeqIOConvertMonitor {
       return true;
     _bInit = true;
     try {
+      LoggerCentral.info(LOGGER, "UniqueSeqId temp dir: "+System.getProperty("java.io.tmpdir"));
       f = File.createTempFile("FDBseqIds", ".ldx");
       // f is a file, whereas KDMSUniqueSeqIdDetector will f to create a
       // directory
