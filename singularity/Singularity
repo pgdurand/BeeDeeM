@@ -29,6 +29,8 @@ From: platten/alpine-oracle-jre8-docker
 	
 	# Do a little configuration
 	cp scripts/*.sh .
+        sed -i 's/@KL_WORKING_DIR@/\/beedeem-wk/g' *.sh
+        sed -i 's/@JAVA_ARGS@/-Xms128M -Xmx2048M -Djava.io.tmpdir=\/beedeem-wk -DKL_LOG_TYPE=console/g' *.sh
 	cp scripts/dbms.config conf
 	sed -i 's/@BIOBASE_ROOTDIR@/\/beedeem-db/g' conf/dbms.config
 	chmod +x *.sh
@@ -37,24 +39,15 @@ From: platten/alpine-oracle-jre8-docker
 	cd /opt/beedeem/external/bin && rm -rf macos windows
 
 	BDMT_VERSION=2.1.0
-  cd /opt
-  mkdir beedeem-tools
-  cd beedeem-tools
-  wget https://github.com/ifremer-bioinformatics/BeeDeeM-Tools/releases/download/v${BDMT_VERSION}/beedeem-tools-${BDMT_VERSION}.tar.gz
-  gunzip beedeem-tools-${BDMT_VERSION}.tar.gz
-  tar -xf beedeem-tools-${BDMT_VERSION}.tar
-  rm beedeem-tools-${BDMT_VERSION}.tar
-  chmod +x *.sh
+	cd /opt
+	mkdir beedeem-tools
+	cd beedeem-tools
+	wget https://github.com/ifremer-bioinformatics/BeeDeeM-Tools/releases/download/v${BDMT_VERSION}/beedeem-tools-${BDMT_VERSION}.tar.gz
+	gunzip beedeem-tools-${BDMT_VERSION}.tar.gz
+	tar -xf beedeem-tools-${BDMT_VERSION}.tar
+	rm beedeem-tools-${BDMT_VERSION}.tar
+	chmod +x *.sh
 
 
 %environment
 	export PATH="/opt/beedeem:/opt/beedeem-tools:$PATH"
-	export KL_WORKING_DIR=/beedeem-wk
-	# shell variable name does not allowed use of '.'
-	# (mirror__path == mirror.path)
-	export KL_mirror__path=/beedeem-db
-
-%runscript
-	echo "Running BeeDeeM container"
-	$@
-	

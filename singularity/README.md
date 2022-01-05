@@ -5,13 +5,16 @@ How to build?
  
     singularity build -f beedeem.sif Singularity
 
+How to run?
+-----------
+
+See test_container.sh script for a working example.
+_
 How to configure?
 -----------------
 
-By default you have nothing to do but:
-
-* setting KL_JRE_ARGS environment varibale to setup the java configuration for BeeDeeM
-* binding paths called /beedeem-wk and /beedeem-db (see next section, "How to run?").
+By default you have nothing to do but setting working directory, bank installation 
+directory and Java requirements; see test_container.sh script.
 
 In such a case, BeeDeeM will use its internal "conf" directory to locate
 bank descriptors. So, if you install banks for which descriptors (.dsc files)
