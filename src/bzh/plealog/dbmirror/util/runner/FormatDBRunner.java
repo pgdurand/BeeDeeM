@@ -63,6 +63,7 @@ public class FormatDBRunner extends Thread {
   private boolean                    _success                 = false;
   private int                        _headerFormat;
   private int                        _volumeSize;
+  private int                        _blastVersion;
 
   private static final int           REFORMAT_SEQ_FILE_ERROR  = 0;
   private static final int           REFORMAT_SEQ_FILE_OK     = 1;
@@ -114,7 +115,7 @@ public class FormatDBRunner extends Thread {
       String dbxrefsConfig, String dbPath, String dbName, List<String> files,
       TaxonMatcherHelper taxMatcher, DicoTermQuerySystem dico,
       boolean checkForNrID, boolean useNcbiIdFormat, boolean isProteic,
-      boolean checkInputFiles, int headerFormat, int volumeSize) {
+      boolean checkInputFiles, int headerFormat, int volumeSize, int blastVer) {
     _monitor = monitor;
     _monitor.setCheckNR(checkForNrID);
     _formatDBCmd = formatDBCmd;
@@ -129,6 +130,7 @@ public class FormatDBRunner extends Thread {
     _isProteic = isProteic;
     _headerFormat = headerFormat;
     _volumeSize = volumeSize;
+    _blastVersion = blastVer;
   }
 
   private void removeOldFiles(String path, boolean isProteic) {
@@ -312,6 +314,9 @@ public class FormatDBRunner extends Thread {
     // db name; only when we have multiple input files
     params.put("-title", new CommandArgument(dbName, false));
     params.put("-out", new CommandArgument(dbName, false));
+    //blast version; default is 5
+    params.put("-blastdb_version", new CommandArgument(String.valueOf(_blastVersion), false));
+    
     return params;
   }
 

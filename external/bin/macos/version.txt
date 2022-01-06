@@ -1,2 +1,2 @@
-2.6.0 from NCBI
-see ftp://ftp.ncbi.nih.gov/blast/executables/blast+/2.6.0/
+2.9.0 from NCBI
+see ftp://ftp.ncbi.nih.gov/blast/executables/blast+/2.9.0/
