@@ -13,6 +13,14 @@
 #PBS -l mem=4g
 #PBS -l ncpus=2
 
+
+# Test script for BeeDeeM singularity container
+# How to?
+# Step 1: build image with: singularity build -f beedeem-4.7.2.sif Singularity
+#         (update version to match BDM_VERSION variable, below)
+# Step 2: test with: ./test_container.sh
+
+
 # Configure BeeDeeM banks and working directories
 SCRATCH="$HOME/test_beedeem"
 BDM_BANKS_DIR=$SCRATCH/banks
@@ -23,7 +31,7 @@ mkdir -p $BDM_BANKS_DIR
 mkdir -p $BDM_WORK_DIR
 
 # Configure Singularity runner
-BDM_VERSION=4.7.3
+BDM_VERSION=4.7.2
 BDM_BINDS="--bind ${BDM_WORK_DIR} --bind ${BDM_BANKS_DIR}"
 BDM_SINGULITY_IMG="beedeem-${BDM_VERSION}.sif"
 
