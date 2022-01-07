@@ -205,6 +205,31 @@ public class PTaskInstallInProduction extends PAbstractTask {
       }
     }
   }
+  
+  /**
+   * Requested by users: provide correct path to indexes when possible.
+   * */
+  private String makeCorrectIndexPath(String dbPathInstalled, String indexDirName, String bankName, String bankType) {
+    StringBuffer buf = new StringBuffer(Utils.terminatePath(dbPathInstalled)+indexDirName);
+    String dirName = indexDirName.toLowerCase();
+    
+    if (dirName.startsWith("diamond")) {
+      buf.append(File.separator);
+      buf.append(bankName);
+      buf.append(".dmnd");
+    }
+    else if (dirName.startsWith("blast")) {
+      buf.append(File.separator);
+      buf.append(bankName);
+      buf.append(FormatDBRunner.BLAST_ALIAS_TAG);
+      buf.append(".");
+      buf.append(bankType);
+      buf.append("al");
+    }
+    
+    return buf.toString();
+  }
+  
   private void scanForOtherIndexes(DBServerConfig db, Map<String, String> index, 
       String dbPathDownload, String dbPathInstalled){
     List<File> files;
@@ -230,7 +255,7 @@ public class PTaskInstallInProduction extends PAbstractTask {
           props.load(fr);
           index.put(
               props.getProperty(BankJsonDescriptor.OTHER_INDEX_PROP_KEY),
-              Utils.terminatePath(dbPathInstalled)+idxDirectory.getName());
+              makeCorrectIndexPath(dbPathInstalled, idxDirectory.getName(), db.getName(), db.getTypeCode()));
         } catch (Exception e) {
           LOGGER.warn("Unable to read property file: "+propFile+": "+e.toString());
         }
