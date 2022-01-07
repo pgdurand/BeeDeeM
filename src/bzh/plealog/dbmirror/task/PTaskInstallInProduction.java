@@ -172,19 +172,19 @@ public class PTaskInstallInProduction extends PAbstractTask {
     // do we have a formatted blast mirror in addition to the data index ?
     if (hasFormatDB || hasMakeAlias) {
       if (db.isNucleic()) {
-        if (hasFormatDB)
+        //if (hasFormatDB)
           dbInstallPath += FormatDBRunner.BLAST_ALIAS_TAG;
         dbInstallPath += FormatDBRunner.NUCLEIC_ALIAS_EXT;
-        if (hasFormatDB)
+        //if (hasFormatDB)
           dbDownloadPath += FormatDBRunner.BLAST_ALIAS_TAG;
         dbDownloadPath += FormatDBRunner.NUCLEIC_ALIAS_EXT;
 
         reader = DBMirrorConfig.BLASTN_READER;
       } else if (db.isProteic()) {
-        if (hasFormatDB)
+        //if (hasFormatDB)
           dbInstallPath += FormatDBRunner.BLAST_ALIAS_TAG;
         dbInstallPath += FormatDBRunner.PROTEIN_ALIAS_EXT;
-        if (hasFormatDB)
+        //if (hasFormatDB)
           dbDownloadPath += FormatDBRunner.BLAST_ALIAS_TAG;
         dbDownloadPath += FormatDBRunner.PROTEIN_ALIAS_EXT;
         reader = DBMirrorConfig.BLASTP_READER;
