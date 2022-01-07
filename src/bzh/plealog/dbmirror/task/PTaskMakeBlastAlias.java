@@ -35,6 +35,7 @@ import org.apache.commons.logging.LogFactory;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
+import bzh.plealog.dbmirror.util.runner.FormatDBRunner;
 
 /**
  * A task capable of preparing a Blast alias files.
@@ -135,7 +136,7 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
     fExt3 = ".msk";// Blast DBs relying on other Blast DBs
 
     try {
-      fName = path + fExt2;
+      fName = path + FormatDBRunner.BLAST_ALIAS_TAG + fExt2;
       //delete old alias before creating it
       f = new File(fName);
       if (f.exists()) {
@@ -147,7 +148,7 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
       parentDir = new File(path).getParent();
       lines = getDataFromNativeAliasFile(parentDir, fExt2);
 
-      writer = new PrintWriter(path + fExt2);
+      writer = new PrintWriter(fName);
       writer.print("TITLE ");
       writer.println(dbName);
       writer.print("DBLIST ");
