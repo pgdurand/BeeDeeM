@@ -1,20 +1,34 @@
 # #############################################################################
 # Recipe to build a Singularity image for BeeDeeM software
-# This image relies upon https://github.com/platten/alpine-oracle-jre8-docker
 # #############################################################################
 
 Bootstrap : docker
-From: platten/alpine-oracle-jre8-docker
+From: ubuntu:18.04
 
 %post
 	BDM_VERSION=4.7.2
-	apk update
+        #apt update
+        # software-properties-common required to install Java Runtime
         # libbz2 libidn are required by blast tools included in BeeDeeM.
         # libxext libxrender libxtst libxi are required by Bioinformatics-Core-API included 
         #    in BeeDeeM and BeeDeeM-Tools.
         # bash is required when running this image by Nextflow pipelines.
         # wget is required to install some banks (e.g. GeneOntology).
-        apk add --no-cache libbz2 libidn bash wget libxext libxrender libxtst libxi
+	# unzip is required to deploy BeeDeeM archive
+        apt-get -y update
+        apt-get -y install software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip
+
+        # Java
+        add-apt-repository ppa:ts.sch.gr/ppa \
+          && echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections \
+          && echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections \
+          && apt-get update \
+          && apt-get -y install oracle-java8-installer \
+          && apt-get -y install oracle-java8-set-default \
+          && apt-get clean all \
+          && rm -rf /var/lib/apt/lists/*
+        cd /usr/lib/jvm/java-8-oracle
+        rm -rf bin include lib man *.zip
 
 	# Get BeeDeeM from latest release
 	mkdir -p /opt/beedeem/tmp-install
