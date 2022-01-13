@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -16,6 +16,9 @@
  */
 package bzh.plealog.dbmirror.task;
 
+import java.io.File;
+import java.io.IOException;
+
 public abstract class PAbstractTask implements PTask {
 	private String dbConfName;
 	
@@ -25,5 +28,21 @@ public abstract class PAbstractTask implements PTask {
 
 	public void setDbConfName(String name) {
 		dbConfName = name;
+	}
+	
+	public static void setTaskOkForFile(String fPath) {
+	  File f = new File(fPath+PTask.TASK_OK_FEXT);
+	  try {
+      f.createNewFile();
+    } catch (IOException e) {
+      //hide this exception; in the worst case, calling Taxk will have to
+      //redo its execution on bank installation resume... not so bad, just
+      //potentially time consuming
+    }
+	}
+	
+	public static boolean testTaskOkForFileExists(String fPath) {
+	  File f = new File(fPath+PTask.TASK_OK_FEXT);
+	  return f.exists();
 	}
 }

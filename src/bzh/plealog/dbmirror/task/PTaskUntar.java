@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -72,6 +72,10 @@ public class PTaskUntar extends PAbstractTask {
       _errMsg = "source file is unknown";
       return false;
     }
+    if (PAbstractTask.testTaskOkForFileExists(_src)) {
+      LoggerCentral.info(LOGGER, "skip task: " + _src + ": already untarred");
+      return true;
+    }
     if (_dest == null) {
       _errMsg = "destination directory is unknown";
       return false;
@@ -81,6 +85,7 @@ public class PTaskUntar extends PAbstractTask {
       _errMsg = "unable to untar " + _src;
       return false;
     }
+    PAbstractTask.setTaskOkForFile(_src);
     return true;
   }
 

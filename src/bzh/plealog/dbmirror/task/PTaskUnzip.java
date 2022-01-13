@@ -80,6 +80,10 @@ public class PTaskUnzip extends PAbstractTask {
       _errMsg = "source file is unknown";
       return false;
     }
+    if (PAbstractTask.testTaskOkForFileExists(_src)) {
+      LoggerCentral.info(LOGGER, "skip task: " + _src + ": already unzipped");
+      return true;
+    }
     // we suppose here that a zipped file already has the extension .zip
     // sizing 4 characters...
     File f = new File(_src.substring(0, _src.length() - 4));
@@ -100,6 +104,7 @@ public class PTaskUnzip extends PAbstractTask {
       _errMsg = "unable to unzip " + _src;
       return false;
     }
+    PAbstractTask.setTaskOkForFile(_src);
     return true;
   }
 

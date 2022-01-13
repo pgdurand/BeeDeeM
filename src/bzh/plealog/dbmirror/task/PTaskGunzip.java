@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -80,6 +80,10 @@ public class PTaskGunzip extends PAbstractTask {
       _errMsg = "source file is unknown";
       return false;
     }
+    if (PAbstractTask.testTaskOkForFileExists(_src)) {
+      LoggerCentral.info(LOGGER, "skip task: " + _src + ": already untarred");
+      return true;
+    }
     // we suppose here that a gzipped file already has the extension .gz
     // sizing 3 characters...
     File f = new File(_src.substring(0, _src.length() - 3));
@@ -97,10 +101,11 @@ public class PTaskGunzip extends PAbstractTask {
     }
     LoggerCentral.info(LOGGER, getName() + " " + _src + " to " + _dest);
 
-    if (/* !KLAntTasks.gunzip(_src, _dest) */Utils.gunzipFile(_src) == null) {
+    if (Utils.gunzipFile(_src) == null) {
       _errMsg = "unable to gunzip " + _src;
       return false;
     }
+    PAbstractTask.setTaskOkForFile(_src);
     return true;
   }
 

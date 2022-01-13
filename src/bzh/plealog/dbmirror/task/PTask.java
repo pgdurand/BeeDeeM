@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2020 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -52,12 +52,9 @@ public interface PTask {
   public static final String TAX_EXCLUDE             = "taxexc";
   public static final String CHECK_NR                = "nr";
 
-  // public static final String SEQUENCE_SIZE = "seqsize";
-  // public static final String DESC_FILTER = "desc";
-  // public static final String EXACT_DESC_FILTER = "exactdesc";
-
-  // public static final String CUT_FILE = "cut";
-
+  // task done with success (to enable easiest resume of bank installation)
+  public static final String TASK_OK_FEXT            = ".T_OK";
+  
   /**
    * Returns the name of the task. For internal use.
    */

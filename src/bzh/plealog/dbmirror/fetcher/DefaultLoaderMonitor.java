@@ -201,10 +201,14 @@ public class DefaultLoaderMonitor implements LoaderMonitor {
             "*.gz"), _dbConf.getName());
         _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
             "*.zip"), _dbConf.getName());
+        _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
+            PTask.TASK_OK_FEXT), _dbConf.getName());
       }
       else if (task.indexOf(PTask.TASK_G_DELETETAR) >= 0) {
         _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
             "*.tar"), _dbConf.getName());
+        _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
+            PTask.TASK_OK_FEXT), _dbConf.getName());
       }
       else if (task.indexOf(PTask.TASK_G_DELETETMPIDX) >= 0) {
         _taskEngine.addTask(new PTaskDeleteFiles(_dbConf.getLocalTmpFolder(),
