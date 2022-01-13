@@ -48,6 +48,7 @@ import com.plealog.genericapp.api.EZEnvironment;
 
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
 import bzh.plealog.dbmirror.reader.DBUtils;
+import bzh.plealog.dbmirror.task.PTaskMakeBlastAlias;
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
@@ -347,12 +348,12 @@ public class FormatDBDialog extends JDialog {
       DBStampProperties.writeDBStamp(dbPath, installDate, releaseDate, 
           new int[] { -1, totSeq == 0 ? -1 : totSeq }, bankSize);
       dbPath = Utils.terminatePath(getDBPath()) + getDBName()
-          + FormatDBRunner.BLAST_ALIAS_TAG;
+          + PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
       if (isProteic()) {
-        dbPath += FormatDBRunner.PROTEIN_ALIAS_EXT;
+        dbPath += PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT;
         reader = DBMirrorConfig.BLASTP_READER;
       } else {
-        dbPath += FormatDBRunner.NUCLEIC_ALIAS_EXT;
+        dbPath += PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT;
         reader = DBMirrorConfig.BLASTN_READER;
       }
       if (new File(dbPath).exists()) {

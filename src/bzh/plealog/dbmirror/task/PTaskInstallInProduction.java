@@ -56,7 +56,6 @@ import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
 import bzh.plealog.dbmirror.util.descriptor.IdxDescriptor;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
 import bzh.plealog.dbmirror.util.runner.DBStampProperties;
-import bzh.plealog.dbmirror.util.runner.FormatDBRunner;
 
 /**
  * A task capable of installing into production a successfully downloaded and
@@ -173,20 +172,20 @@ public class PTaskInstallInProduction extends PAbstractTask {
     if (hasFormatDB || hasMakeAlias) {
       if (db.isNucleic()) {
         //if (hasFormatDB)
-          dbInstallPath += FormatDBRunner.BLAST_ALIAS_TAG;
-        dbInstallPath += FormatDBRunner.NUCLEIC_ALIAS_EXT;
+          dbInstallPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbInstallPath += PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT;
         //if (hasFormatDB)
-          dbDownloadPath += FormatDBRunner.BLAST_ALIAS_TAG;
-        dbDownloadPath += FormatDBRunner.NUCLEIC_ALIAS_EXT;
+          dbDownloadPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbDownloadPath += PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT;
 
         reader = DBMirrorConfig.BLASTN_READER;
       } else if (db.isProteic()) {
         //if (hasFormatDB)
-          dbInstallPath += FormatDBRunner.BLAST_ALIAS_TAG;
-        dbInstallPath += FormatDBRunner.PROTEIN_ALIAS_EXT;
+          dbInstallPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbInstallPath += PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT;
         //if (hasFormatDB)
-          dbDownloadPath += FormatDBRunner.BLAST_ALIAS_TAG;
-        dbDownloadPath += FormatDBRunner.PROTEIN_ALIAS_EXT;
+          dbDownloadPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbDownloadPath += PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT;
         reader = DBMirrorConfig.BLASTP_READER;
       } else {
         dbInstallPath = null;
@@ -221,7 +220,7 @@ public class PTaskInstallInProduction extends PAbstractTask {
     else if (dirName.startsWith("blast")) {
       buf.append(File.separator);
       buf.append(bankName);
-      buf.append(FormatDBRunner.BLAST_ALIAS_TAG);
+      buf.append(PTaskMakeBlastAlias.BLAST_ALIAS_TAG);
       buf.append(".");
       buf.append(bankType);
       buf.append("al");
@@ -300,18 +299,18 @@ public class PTaskInstallInProduction extends PAbstractTask {
     if (hasFormatDB || hasMakeAlias) {
       if (db.isNucleic()) {
         if (hasFormatDB)
-          dbInstallPath += FormatDBRunner.BLAST_ALIAS_TAG;
-        dbInstallPath += FormatDBRunner.NUCLEIC_ALIAS_EXT;
+          dbInstallPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbInstallPath += PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT;
         if (hasFormatDB)
-          dbDownloadPath += FormatDBRunner.BLAST_ALIAS_TAG;
-        dbDownloadPath += FormatDBRunner.NUCLEIC_ALIAS_EXT;
+          dbDownloadPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbDownloadPath += PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT;
       } else if (db.isProteic()) {
         if (hasFormatDB)
-          dbInstallPath += FormatDBRunner.BLAST_ALIAS_TAG;
-        dbInstallPath += FormatDBRunner.PROTEIN_ALIAS_EXT;
+          dbInstallPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbInstallPath += PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT;
         if (hasFormatDB)
-          dbDownloadPath += FormatDBRunner.BLAST_ALIAS_TAG;
-        dbDownloadPath += FormatDBRunner.PROTEIN_ALIAS_EXT;
+          dbDownloadPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbDownloadPath += PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT;
       } else {
         dbInstallPath = null;
         dbDownloadPath = null;

@@ -36,6 +36,7 @@ import com.plealog.genericapp.api.file.EZFileFilter;
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
 import bzh.plealog.dbmirror.lucenedico.Dicos;
 import bzh.plealog.dbmirror.task.PTask;
+import bzh.plealog.dbmirror.task.PTaskMakeBlastAlias;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
@@ -730,7 +731,7 @@ public class DBDescriptorUtils {
     String aliasName = null;
     
     Iterator<File> files = FileUtils.iterateFiles(new File(dbPath), 
-        new String[]{FormatDBRunner.PROTEIN_ALIAS, FormatDBRunner.NUCLEIC_ALIAS},  false);
+        new String[]{PTaskMakeBlastAlias.PROTEIN_ALIAS, PTaskMakeBlastAlias.NUCLEIC_ALIAS},  false);
     
     if (files.hasNext() == false)
       return null;

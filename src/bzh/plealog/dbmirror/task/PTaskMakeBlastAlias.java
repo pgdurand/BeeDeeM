@@ -35,7 +35,6 @@ import org.apache.commons.logging.LogFactory;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
-import bzh.plealog.dbmirror.util.runner.FormatDBRunner;
 
 /**
  * A task capable of preparing a Blast alias files.
@@ -49,6 +48,20 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
   private boolean             _isNucleic;
   private boolean             _useFullPath;
 
+  public static final String         BLAST_ALIAS_TAG          = "M";
+  public static final String         NUCLEIC_IDX              = "nin";
+  public static final String         PROTEIN_IDX              = "pin";
+  public static final String         NUCLEIC_ALIAS            = "nal";
+  public static final String         PROTEIN_ALIAS            = "pal";
+
+  public static final String         NUCLEIC_IDX_EXT          = "." + NUCLEIC_IDX;
+  public static final String         PROTEIN_IDX_EXT          = "." + PROTEIN_IDX;
+  public static final String         NUCLEIC_ALIAS_EXT        = "." + NUCLEIC_ALIAS;
+  public static final String         PROTEIN_ALIAS_EXT        = "." + PROTEIN_ALIAS;
+
+  // this tag is used to avoid this error message from Blast:
+  // [NULL_Caption] WARNING: Recursive situation detected with xxx
+  // where xxx is the dbName
   private static final String USE_FULL_PATH = "fullPath";
 
   private static final Log    LOGGER        = LogFactory
@@ -136,7 +149,7 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
     fExt3 = ".msk";// Blast DBs relying on other Blast DBs
 
     try {
-      fName = path + FormatDBRunner.BLAST_ALIAS_TAG + fExt2;
+      fName = path + PTaskMakeBlastAlias.BLAST_ALIAS_TAG + fExt2;
       //delete old alias before creating it
       f = new File(fName);
       if (f.exists()) {
@@ -224,6 +237,84 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
     value = args.get(USE_FULL_PATH);
     if (value != null)
       _useFullPath = Boolean.TRUE.toString().equals(value);
+  }
+
+  /**
+   * This method overrides the standard alias file created by formatdb since it
+   * seems it does strange stuff with several Fasta files.
+   */
+  public static boolean prepareAliasFile(String path, String dbName,
+      List<String> dbFileNames, boolean isProteic) {
+    String fExt1, fExt2;
+    File[] files;
+    File f;
+    PrintWriter writer = null;
+    String fName, parentDir;
+    List<String> lines;
+    boolean bRet = false;
+    int i, pos;
+
+    fExt1 = (!isProteic ? PTaskMakeBlastAlias.NUCLEIC_IDX_EXT : PTaskMakeBlastAlias.PROTEIN_IDX_EXT);
+    fExt2 = (!isProteic ? PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT : PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT);
+
+    try {
+      parentDir = new File(path).getParent();
+      fName = path + PTaskMakeBlastAlias.BLAST_ALIAS_TAG + fExt2;
+      //delete old alias before creating it
+      f = new File(fName);
+      if (f.exists()) {
+        f.delete();
+      }
+      //get content of NCBI-based BLAST alias file if any found
+      //(this may happen when installing native NCBI BLAST bank)
+      //this has to be done BEFORE creating new alias file!!!
+      lines = PTaskMakeBlastAlias.getDataFromNativeAliasFile(parentDir, fExt2);
+
+      //create new alias file
+      writer = new PrintWriter(fName);
+      writer.print("TITLE ");
+      writer.println(dbName);
+      writer.print("DBLIST ");
+      files = new File(parentDir).listFiles();
+      for (i = 0; i < files.length; i++) {
+        f = files[i];
+        if (!f.isFile())
+          continue;
+        fName = f.getName();
+        pos = fName.indexOf(fExt1);
+        if (pos >= 0 /* && isFileNameOk(fName, dbFileNames, fExt1) */) {
+          writer.print(fName.substring(0, pos) + " ");
+        }
+      }
+      writer.println();
+      //write additional content of native BLAST alias file if any
+      if (lines!=null) {
+        for (String str : lines) {
+          writer.println(str);
+        }
+      }
+      writer.flush();
+      writer.close();
+      bRet = true;
+    } catch (Exception e) {
+      LoggerCentral.error(LOGGER, "unable to create alias file: " + e);
+    } finally {
+      IOUtils.closeQuietly(writer);
+    }
+    return bRet;
+  }
+  
+  public static void removeOldAlias(String path, boolean isProteic) {
+    String fExt;
+    File f;
+    String fName;
+
+    // remove old alias
+    fExt = (!isProteic ? PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT : PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT);
+    fName = path + PTaskMakeBlastAlias.BLAST_ALIAS_TAG + fExt;
+    f = new File(fName);
+    if (f.exists())
+      f.delete();
   }
 
 }

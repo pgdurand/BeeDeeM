@@ -47,13 +47,13 @@ import bzh.plealog.dbmirror.lucenedico.DicoTerm;
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
 import bzh.plealog.dbmirror.lucenedico.Dicos;
 import bzh.plealog.dbmirror.lucenedico.go.GeneOntologyTerm;
+import bzh.plealog.dbmirror.task.PTaskMakeBlastAlias;
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.conf.DBMirrorConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptor;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
 import bzh.plealog.dbmirror.util.descriptor.IdxDescriptor;
-import bzh.plealog.dbmirror.util.runner.FormatDBRunner;
 
 /**
  * This class is responsible for querying the database mirror to return an
@@ -498,8 +498,8 @@ public class PQueryMirrorBase {
           // following line added since Fasta-based databanks (used with Plast)
           // are indexed to be queried by Id
           // Blast index is now associated with a Lucene index
-          if (path.endsWith("M" + FormatDBRunner.PROTEIN_ALIAS_EXT)
-              || path.endsWith("M" + FormatDBRunner.NUCLEIC_ALIAS_EXT)) {
+          if (path.endsWith("M" + PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT)
+              || path.endsWith("M" + PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT)) {
             path = path.substring(0, path.lastIndexOf("M."))
                 + LuceneUtils.IDX_OK_FEXT;
           }
@@ -516,8 +516,8 @@ public class PQueryMirrorBase {
       // following line added since Fasta-based databanks (used with Plast) are
       // indexed to be queried by Id
       // Blast index is now associated with a Lucene index
-      if (mirrorPath.endsWith(FormatDBRunner.PROTEIN_ALIAS_EXT)
-          || mirrorPath.endsWith(FormatDBRunner.NUCLEIC_ALIAS_EXT)) {
+      if (mirrorPath.endsWith(PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT)
+          || mirrorPath.endsWith(PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT)) {
         mirrorPath = mirrorPath.substring(0, mirrorPath.lastIndexOf('.'))
             + LuceneUtils.IDX_OK_FEXT;
       }
