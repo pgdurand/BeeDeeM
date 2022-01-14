@@ -405,7 +405,7 @@ public class PTaskInstallInProduction extends PAbstractTask {
     String aliasName = DBDescriptorUtils.getBlastBankAliasName(path);
     if (aliasName!=null){
       BlastCmd bc = new BlastCmd();
-      bc.getNbSequences(aliasName);
+      nseqFromBlastDBCmd = bc.getNbSequences(aliasName);
     }
     if (sequences==-1 && entries==-1){
       entries = sequences = nseqFromBlastDBCmd;
