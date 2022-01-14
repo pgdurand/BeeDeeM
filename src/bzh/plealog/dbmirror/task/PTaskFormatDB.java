@@ -78,7 +78,7 @@ public class PTaskFormatDB extends PAbstractTask {
   public static final String VOL_SIZE         = "volsize";
 
   // file indicates that the fasta volumes are ok
-  public static final String VOL_FILES_OK     = "volumes.ok";
+  public static final String VOL_FILES_OK     = "volumes"+PTask.TASK_OK_FEXT;
 
   /**
    * Store the nbSequences in a temporary file for the db given in parameter

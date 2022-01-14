@@ -240,7 +240,18 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
   }
 
   /**
-   * This method overrides the standard alias file created by formatdb since it
+   * Prepare standard blast alias filename.
+   */
+  public static String getBlastAliasFilePath(String path, String dbName, boolean isProteic) {
+    String fExt2;
+    String fName;
+    fExt2 = (!isProteic ? PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT : PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT);
+    fName = Utils.terminatePath(path) + dbName + PTaskMakeBlastAlias.BLAST_ALIAS_TAG + fExt2;
+    return fName;
+  }
+  
+  /**
+   * This method overrides the standard alias file created by makeblastdb since it
    * seems it does strange stuff with several Fasta files.
    */
   public static boolean prepareAliasFile(String path, String dbName,
@@ -259,7 +270,7 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
 
     try {
       parentDir = new File(path).getParent();
-      fName = path + PTaskMakeBlastAlias.BLAST_ALIAS_TAG + fExt2;
+      fName = getBlastAliasFilePath(path, dbName, isProteic);
       //delete old alias before creating it
       f = new File(fName);
       if (f.exists()) {
@@ -304,15 +315,8 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
     return bRet;
   }
   
-  public static void removeOldAlias(String path, boolean isProteic) {
-    String fExt;
-    File f;
-    String fName;
-
-    // remove old alias
-    fExt = (!isProteic ? PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT : PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT);
-    fName = path + PTaskMakeBlastAlias.BLAST_ALIAS_TAG + fExt;
-    f = new File(fName);
+  public static void removeOldAlias(String path, String dbName, boolean isProteic) {
+    File f = new File(getBlastAliasFilePath(path, dbName, isProteic));
     if (f.exists())
       f.delete();
   }

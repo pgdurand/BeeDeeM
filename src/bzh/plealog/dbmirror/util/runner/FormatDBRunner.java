@@ -30,6 +30,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
+import bzh.plealog.dbmirror.task.PAbstractTask;
+import bzh.plealog.dbmirror.task.PTask;
 import bzh.plealog.dbmirror.task.PTaskEngineAbortException;
 import bzh.plealog.dbmirror.task.PTaskFormatDB;
 import bzh.plealog.dbmirror.task.PTaskMakeBlastAlias;
@@ -137,8 +139,8 @@ public class FormatDBRunner extends Thread {
       fName = f.getName();
       if ((fName.startsWith(fDbName1) || fName.startsWith(fDbName2))
           && !(fName.endsWith(DBMSAbstractConfig.FEXT_NUM)
-              || fName.endsWith("gz") || fName.endsWith("tgz") || fName
-                .endsWith("zip"))) {
+              || fName.endsWith("gz") || fName.endsWith("tgz") || 
+              fName.endsWith("zip")  || fName.endsWith(PTask.TASK_OK_FEXT))) {
         f.delete();
       }
     }
@@ -300,7 +302,6 @@ public class FormatDBRunner extends Thread {
     int exitCode = -1;
     boolean formatdbrunning, stopped;
     Map<String, CommandArgument> params;
-
     String fName, dbLocation, dbPath, msg;
     List<String> dbList;
     ArrayList<String> formattedDbList;
@@ -313,6 +314,16 @@ public class FormatDBRunner extends Thread {
     long tim;
     boolean runOk = true;
 
+    fName = PTaskMakeBlastAlias.getBlastAliasFilePath(_dbPath, _dbName, _isProteic);
+    if (PAbstractTask.testTaskOkForFileExists(fName)) {
+      LoggerCentral.info(LOGGER, "skip BLAST db creation: alias file already exists"); 
+      if (_taxMatcher != null)
+        _taxMatcher.closeTaxonMatcher();
+      _success = true;
+      return;
+    }
+    
+    
     dbLocation = Utils.terminatePath(_dbPath);
     dbPath = dbLocation + _dbName;
     executor = new DBMSExecNativeCommand();
@@ -331,7 +342,7 @@ public class FormatDBRunner extends Thread {
         si = new SeqInfo();
 
         // required
-        PTaskMakeBlastAlias.removeOldAlias(dbPath, _isProteic);
+        PTaskMakeBlastAlias.removeOldAlias(_dbPath, _dbName, _isProteic);
         // required
         totFiles=dbList.size();
         for (String dbFileName : dbList) {
@@ -368,14 +379,6 @@ public class FormatDBRunner extends Thread {
             break;
           }
           msg = si.msg;
-          // compatible format ?
-          /*
-           * if (isProt != SeqIOUtils.isProt(si.fileType)){
-           * _monitor.setErrMsg(BAD_FILE_FORMAT_MSG.format( new
-           * Object[]{getTypeString(isProt),dbFileName,
-           * getTypeString(SeqIOUtils.isProt(si.fileType))})); runOk = false;
-           * break; }
-           */
           msg += FORMAT_MSG_OK;
           if (si.converted) {
             msg += " ";
@@ -493,11 +496,13 @@ public class FormatDBRunner extends Thread {
     }
     System.gc();
     if (runOk) {
-      if (PTaskMakeBlastAlias.prepareAliasFile(dbPath, _dbName, formattedDbList, _isProteic)) {
+      if (PTaskMakeBlastAlias.prepareAliasFile(_dbPath, _dbName, formattedDbList, _isProteic)) {
         runOk = true;
       } else {
         runOk = false;
       }
+      fName = PTaskMakeBlastAlias.getBlastAliasFilePath(_dbPath, _dbName, _isProteic);
+      PAbstractTask.setTaskOkForFile(fName);
     }
     if (_taxMatcher != null)
       _taxMatcher.closeTaxonMatcher();
