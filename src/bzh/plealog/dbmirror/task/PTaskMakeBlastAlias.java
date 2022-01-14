@@ -23,6 +23,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
   private String              _dbPathName;
   private String              _errMsg;
   private boolean             _isNucleic;
-  private boolean             _useFullPath;
+  private static boolean      _useFullPath = false;
 
   public static final String         BLAST_ALIAS_TAG          = "M";
   public static final String         NUCLEIC_IDX              = "nin";
@@ -95,6 +96,37 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
   }
 
   /**
+   * Implementation of KLTask interface.
+   */
+  public boolean execute() {
+
+    LoggerCentral.info(LOGGER,
+        getName() + " for " + new File(_dbPathName).getName());
+
+    return prepareAliasFile(
+        new File(_dbPathName).getParent(), 
+        new File(_dbPathName).getName(),
+        _isNucleic);
+  }
+
+  public void setParameters(String params) {
+    Map<String, String> args;
+    String value;
+
+    if (params == null)
+      return;
+
+    args = Utils.getTaskArguments(params);
+
+    // make alias task accepts an optional argument that can force the write of
+    // full path name
+    // within the alias file
+    value = args.get(USE_FULL_PATH);
+    if (value != null)
+      _useFullPath = Boolean.TRUE.toString().equals(value);
+  }
+
+  /**
    * This method locates an NCBI-based BLAST bank alias file name and get its content
    * given particular conditions. 
    * 
@@ -134,22 +166,30 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
     return data;
   }
 
-  private boolean prepareAliasFile(String path, String dbName, boolean isNucleic) {
+  /**
+   * This method overrides the standard alias file created by makeblastdb since it
+   * seems it does strange stuff with several Fasta files.
+   * 
+   * @param path absolute path to bank installation (the one containing all files)
+   * @param dbName bank name
+   * @param isNucleic true or false
+   */
+  public static boolean prepareAliasFile(String path, String dbName, boolean isNucleic) {
     String fExt1, fExt2, fExt3;
     File[] files;
     File f;
     PrintWriter writer = null;
-    String fName, parentDir;
+    String fName;//, parentDir;
     List<String> lines;
     boolean bRet = false, bWrite = false;
     int i, pos;
 
-    fExt1 = (isNucleic ? ".nin" : ".pin");
-    fExt2 = (isNucleic ? ".nal" : ".pal");
+    fExt1 = (isNucleic ? PTaskMakeBlastAlias.NUCLEIC_IDX_EXT : PTaskMakeBlastAlias.PROTEIN_IDX_EXT);
+    fExt2 = (isNucleic ? PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT : PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT);
     fExt3 = ".msk";// Blast DBs relying on other Blast DBs
 
     try {
-      fName = path + PTaskMakeBlastAlias.BLAST_ALIAS_TAG + fExt2;
+      fName = Utils.terminatePath(path) + dbName + PTaskMakeBlastAlias.BLAST_ALIAS_TAG + fExt2;
       //delete old alias before creating it
       f = new File(fName);
       if (f.exists()) {
@@ -158,14 +198,15 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
       //get content of NCBI-based BLAST alias file if any found
       //(this may happen when installing native NCBI BLAST bank)
       //this has to be done BEFORE creating new alias file!!!
-      parentDir = new File(path).getParent();
-      lines = getDataFromNativeAliasFile(parentDir, fExt2);
+      //parentDir = new File(path).getParent();
+      lines = getDataFromNativeAliasFile(path, fExt2);
 
       writer = new PrintWriter(fName);
       writer.print("TITLE ");
       writer.println(dbName);
       writer.print("DBLIST ");
-      files = new File(path).getParentFile().listFiles();
+      files = new File(path).listFiles();
+      Arrays.sort(files);
       for (i = 0; i < files.length; i++) {
         f = files[i];
         if (!f.isFile())
@@ -196,47 +237,17 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
         }
       }
       writer.flush();
-      writer.close();
       if (!bWrite) {
         throw new Exception("unable to find " + fExt1
             + " or .msk files to prepare Blast DB alias");
       }
       bRet = true;
     } catch (Exception e) {
-      _errMsg = "unable to create alias file: " + e;
+      LoggerCentral.error(LOGGER, "unable to create alias file: " + e);
     } finally {
       IOUtils.closeQuietly(writer);
     }
     return bRet;
-  }
-
-  /**
-   * Implementation of KLTask interface.
-   */
-  public boolean execute() {
-
-    LoggerCentral.info(LOGGER,
-        getName() + " for " + new File(_dbPathName).getName());
-
-    return prepareAliasFile(_dbPathName, new File(_dbPathName).getName(),
-        _isNucleic);
-  }
-
-  public void setParameters(String params) {
-    Map<String, String> args;
-    String value;
-
-    if (params == null)
-      return;
-
-    args = Utils.getTaskArguments(params);
-
-    // make alias task accepts an optional argument that can force the wrtite of
-    // full path name
-    // within the alias file
-    value = args.get(USE_FULL_PATH);
-    if (value != null)
-      _useFullPath = Boolean.TRUE.toString().equals(value);
   }
 
   /**
@@ -248,71 +259,6 @@ public class PTaskMakeBlastAlias extends PAbstractTask {
     fExt2 = (!isProteic ? PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT : PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT);
     fName = Utils.terminatePath(path) + dbName + PTaskMakeBlastAlias.BLAST_ALIAS_TAG + fExt2;
     return fName;
-  }
-  
-  /**
-   * This method overrides the standard alias file created by makeblastdb since it
-   * seems it does strange stuff with several Fasta files.
-   */
-  public static boolean prepareAliasFile(String path, String dbName,
-      List<String> dbFileNames, boolean isProteic) {
-    String fExt1, fExt2;
-    File[] files;
-    File f;
-    PrintWriter writer = null;
-    String fName, parentDir;
-    List<String> lines;
-    boolean bRet = false;
-    int i, pos;
-
-    fExt1 = (!isProteic ? PTaskMakeBlastAlias.NUCLEIC_IDX_EXT : PTaskMakeBlastAlias.PROTEIN_IDX_EXT);
-    fExt2 = (!isProteic ? PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT : PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT);
-
-    try {
-      parentDir = new File(path).getParent();
-      fName = getBlastAliasFilePath(path, dbName, isProteic);
-      //delete old alias before creating it
-      f = new File(fName);
-      if (f.exists()) {
-        f.delete();
-      }
-      //get content of NCBI-based BLAST alias file if any found
-      //(this may happen when installing native NCBI BLAST bank)
-      //this has to be done BEFORE creating new alias file!!!
-      lines = PTaskMakeBlastAlias.getDataFromNativeAliasFile(parentDir, fExt2);
-
-      //create new alias file
-      writer = new PrintWriter(fName);
-      writer.print("TITLE ");
-      writer.println(dbName);
-      writer.print("DBLIST ");
-      files = new File(parentDir).listFiles();
-      for (i = 0; i < files.length; i++) {
-        f = files[i];
-        if (!f.isFile())
-          continue;
-        fName = f.getName();
-        pos = fName.indexOf(fExt1);
-        if (pos >= 0 /* && isFileNameOk(fName, dbFileNames, fExt1) */) {
-          writer.print(fName.substring(0, pos) + " ");
-        }
-      }
-      writer.println();
-      //write additional content of native BLAST alias file if any
-      if (lines!=null) {
-        for (String str : lines) {
-          writer.println(str);
-        }
-      }
-      writer.flush();
-      writer.close();
-      bRet = true;
-    } catch (Exception e) {
-      LoggerCentral.error(LOGGER, "unable to create alias file: " + e);
-    } finally {
-      IOUtils.closeQuietly(writer);
-    }
-    return bRet;
   }
   
   public static void removeOldAlias(String path, String dbName, boolean isProteic) {

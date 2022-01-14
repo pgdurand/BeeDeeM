@@ -496,7 +496,7 @@ public class FormatDBRunner extends Thread {
     }
     System.gc();
     if (runOk) {
-      if (PTaskMakeBlastAlias.prepareAliasFile(_dbPath, _dbName, formattedDbList, _isProteic)) {
+      if (PTaskMakeBlastAlias.prepareAliasFile(_dbPath, _dbName, !_isProteic)) {
         runOk = true;
       } else {
         runOk = false;
