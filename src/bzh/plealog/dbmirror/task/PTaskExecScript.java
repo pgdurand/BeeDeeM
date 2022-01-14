@@ -79,6 +79,7 @@ public class PTaskExecScript extends PAbstractTask {
     _curFile = currentFile;
     _bankName = bankName;
     _bankType = bankType;
+    
   }
 
   /**
@@ -152,12 +153,19 @@ public class PTaskExecScript extends PAbstractTask {
       _errMsg = "command name is unknown";
       return false;
     }
-    
+    String resumeFile = Utils.terminatePath(_dbInstallationPath) + 
+        "script-" + _scriptName+PTask.TASK_OK_FEXT;
     LoggerCentral.info(LOGGER, SCRIPT_NAME+": "+_scriptName);
     
     if (_scriptCmd == null) {
       _errMsg = "command to execute is unknown";
       return false;
+    }
+    
+    //task already executed ? (resume)
+    if (PAbstractTask.testTaskOkForFileExists(resumeFile)) {
+      LoggerCentral.info(LOGGER, "skip script execution: already done");
+      return true;
     }
     
     //figures out whether or not _scriptCmd is accessible
@@ -209,6 +217,9 @@ public class PTaskExecScript extends PAbstractTask {
     //properly close process (I/O streams)
     DBMSExecNativeCommand.terminateProcess(proc);
     
+    if (exitCode==0) {
+      PAbstractTask.setTaskOkForFile(resumeFile);
+    }
     return exitCode==0;
   }
 

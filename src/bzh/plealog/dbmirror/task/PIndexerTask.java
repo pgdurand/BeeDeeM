@@ -154,7 +154,8 @@ public abstract class PIndexerTask extends PAbstractTask implements
 
     // check whether index already exists
     idxName = _src + LuceneUtils.DIR_OK_FEXT;
-    if (new File(idxName).exists()) {
+    
+    if (new File(idxName).exists() || PAbstractTask.testTaskOkForFileExists(idxName)) {
       LoggerCentral.info(LOGGER, getName() + ": " + idxName
           + ": index skipped: arleady exists");
       return true;
@@ -274,6 +275,7 @@ public abstract class PIndexerTask extends PAbstractTask implements
         if (!PAntTasks.movefile(idxName, _src + LuceneUtils.DIR_OK_FEXT)) {
           throw new Exception("unable to rename index: " + idxName);
         }
+        PAbstractTask.setTaskOkForFile(_src + LuceneUtils.DIR_OK_FEXT);
       }
       // something to do in inherited classes ?
       this.parsingDone();
