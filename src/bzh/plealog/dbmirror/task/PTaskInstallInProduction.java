@@ -171,20 +171,16 @@ public class PTaskInstallInProduction extends PAbstractTask {
     // do we have a formatted blast mirror in addition to the data index ?
     if (hasFormatDB || hasMakeAlias) {
       if (db.isNucleic()) {
-        //if (hasFormatDB)
-          dbInstallPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbInstallPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
         dbInstallPath += PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT;
-        //if (hasFormatDB)
-          dbDownloadPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbDownloadPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
         dbDownloadPath += PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT;
 
         reader = DBMirrorConfig.BLASTN_READER;
       } else if (db.isProteic()) {
-        //if (hasFormatDB)
-          dbInstallPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbInstallPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
         dbInstallPath += PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT;
-        //if (hasFormatDB)
-          dbDownloadPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbDownloadPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
         dbDownloadPath += PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT;
         reader = DBMirrorConfig.BLASTP_READER;
       } else {
@@ -298,18 +294,14 @@ public class PTaskInstallInProduction extends PAbstractTask {
     // do we have a formatted blast mirror in addition to the data index ?
     if (hasFormatDB || hasMakeAlias) {
       if (db.isNucleic()) {
-        if (hasFormatDB)
-          dbInstallPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbInstallPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
         dbInstallPath += PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT;
-        if (hasFormatDB)
-          dbDownloadPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbDownloadPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
         dbDownloadPath += PTaskMakeBlastAlias.NUCLEIC_ALIAS_EXT;
       } else if (db.isProteic()) {
-        if (hasFormatDB)
-          dbInstallPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbInstallPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
         dbInstallPath += PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT;
-        if (hasFormatDB)
-          dbDownloadPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
+        dbDownloadPath += PTaskMakeBlastAlias.BLAST_ALIAS_TAG;
         dbDownloadPath += PTaskMakeBlastAlias.PROTEIN_ALIAS_EXT;
       } else {
         dbInstallPath = null;
