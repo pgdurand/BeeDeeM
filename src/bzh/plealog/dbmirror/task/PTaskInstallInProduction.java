@@ -401,12 +401,14 @@ public class PTaskInstallInProduction extends PAbstractTask {
         }
       }
     }
+    int nseqFromBlastDBCmd = 0;
+    String aliasName = DBDescriptorUtils.getBlastBankAliasName(path);
+    if (aliasName!=null){
+      BlastCmd bc = new BlastCmd();
+      bc.getNbSequences(aliasName);
+    }
     if (sequences==-1 && entries==-1){
-      String aliasName = DBDescriptorUtils.getBlastBankAliasName(path);
-      if (aliasName!=null){
-        BlastCmd bc = new BlastCmd();
-        entries = sequences = bc.getNbSequences(aliasName);
-      }
+      entries = sequences = nseqFromBlastDBCmd;
     }
     return new int[] { entries, sequences };
   }
