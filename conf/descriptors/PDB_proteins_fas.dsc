@@ -1,7 +1,7 @@
-db.name=PDB_proteins
-db.desc=PDB Protein databank (no taxonomy).
+db.name=PDB_proteins_fas
+db.desc=PDB Protein databank (Fasta, no taxonomy).
 db.type=p
-db.ldir=${mirrordir}|p|PDB_proteins
+db.ldir=${mirrordir}|p|PDB_proteins_fas
 
 db.files.include=pdbaa.gz
 db.files.exclude=
