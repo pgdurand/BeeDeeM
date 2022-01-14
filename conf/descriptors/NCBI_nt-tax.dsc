@@ -1,5 +1,5 @@
 db.name=NCBI_nt-tax
-db.desc=NCBI nt databank with taxonomy. Blast v4 bank format. Nucleotide sequences from several sources, including GenBank, RefSeq, TPA and PDB. Not non-redundant.
+db.desc=NCBI nt databank with taxonomy. Nucleotide sequences from several sources, including GenBank, RefSeq, TPA and PDB. Not non-redundant.
 db.type=n
 db.ldir=${mirrordir}|n|NCBI_nt-tax
 
