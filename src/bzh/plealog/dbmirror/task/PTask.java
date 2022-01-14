@@ -16,6 +16,11 @@
  */
 package bzh.plealog.dbmirror.task;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+
 /**
  * This interface defines a task.
  * 
@@ -55,6 +60,11 @@ public interface PTask {
   // task done with success (to enable easiest resume of bank installation)
   public static final String TASK_OK_FEXT            = ".T_OK";
   
+  // system task (e.g. debug, test, etc)
+  public static final String TASK_FORCE_STOP         = "stop";
+  
+  public static final Log    LOGGER = LogFactory.getLog(
+      DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".PTaskEngine");
   /**
    * Returns the name of the task. For internal use.
    */

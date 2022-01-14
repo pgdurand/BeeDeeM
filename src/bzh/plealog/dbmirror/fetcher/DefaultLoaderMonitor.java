@@ -35,6 +35,7 @@ import bzh.plealog.dbmirror.task.PTaskEndProcessing;
 import bzh.plealog.dbmirror.task.PTaskEngine;
 import bzh.plealog.dbmirror.task.PTaskExecScript;
 import bzh.plealog.dbmirror.task.PTaskFastaRenamer;
+import bzh.plealog.dbmirror.task.PTaskForceStop;
 import bzh.plealog.dbmirror.task.PTaskFormatDB;
 import bzh.plealog.dbmirror.task.PTaskGunzip;
 import bzh.plealog.dbmirror.task.PTaskLuceneDirMerge;
@@ -216,12 +217,10 @@ public class DefaultLoaderMonitor implements LoaderMonitor {
         mkTask.setParameters(getTaskParameters(task, PTask.TASK_G_MAKEALIAS));
         _taskEngine.addTask(mkTask, _dbConf.getName());
       }
-      
-      /*
-       * str = _dbConf.getHistoryToKeep(); if (str!=null){ _taskEngine.addTask(new
-       * KLTaskHandleHistory( _dbConf.getLocalFolder(), Integer.valueOf(str)),
-       * _dbConf.getName()); }
-       */
+      // force bank installation to stop
+      else if (task.contains(PTask.TASK_FORCE_STOP)) {
+        addTaskToEngine(new PTaskForceStop());
+      }
     }
   }
 
@@ -489,6 +488,11 @@ public class DefaultLoaderMonitor implements LoaderMonitor {
     // no unit task
     else if (unitTask.trim().equals("")) {
       addForFormatDb(gTasks, getTaskFilepath(unitTask, fName, false));
+    }
+    
+    // force bank installation to stop
+    else if (unitTask.contains(PTask.TASK_FORCE_STOP)) {
+      addTaskToEngine(new PTaskForceStop());
     }
 
   }
