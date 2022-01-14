@@ -13,6 +13,7 @@ tasks.unit.post=gunzip,untar
 
 ftp.uname=anonymous
 ftp.pswd=user@institute.org
+#ftp.server=165.112.9.228
 ftp.server=ftp.ncbi.nih.gov
 ftp.port=21
 ftp.rdir=/blast/db/
