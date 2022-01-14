@@ -527,15 +527,16 @@ public class PFTPLoaderSystem {
       if (LoggerCentral.errorMsgEmitted()) {
         LoggerCentral.error(
             LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                + ".PMirror"), "Processing failed. Check ERROR messages.");
+                + ".PMirror"), "PROCESSING: FAILED. Check ERROR messages in logs.");
       } else if (LoggerCentral.processAborted()) {
         LoggerCentral.error(
             LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                + ".PMirror"), "Processing aborted.");
+                + ".PMirror"), "PROCESSING: ABORTED.");
       } else {
         LoggerCentral.info(
             LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                + ".PMirror"), "Processing ok.");
+                + ".PMirror"), "PROCESSING: SUCCESS. " +
+                (LoggerCentral.warnMsgEmitted()?"Of note: WARN messages emitted in logs.":""));
       }
     }
   }

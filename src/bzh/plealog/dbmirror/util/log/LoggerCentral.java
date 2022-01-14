@@ -30,6 +30,7 @@ import bzh.plealog.dbmirror.util.sequence.SequenceFileManager;
  */
 public class LoggerCentral {
   public static boolean               _errorEmitted;
+  public static boolean               _warnEmitted;
   public static boolean               _processAborted;
   public static boolean               _isRunning;
 
@@ -51,6 +52,7 @@ public class LoggerCentral {
   }
 
   public static synchronized void warn(Log logger, String msg) {
+    _warnEmitted = true;
     logger.warn(msg);
     if (_logGateway != null) {
       _logGateway.warn(msg);
@@ -63,6 +65,10 @@ public class LoggerCentral {
     if (_logGateway != null) {
       _logGateway.error(msg);
     }
+  }
+
+  public static synchronized boolean warnMsgEmitted() {
+    return _warnEmitted;
   }
 
   public static synchronized boolean errorMsgEmitted() {
