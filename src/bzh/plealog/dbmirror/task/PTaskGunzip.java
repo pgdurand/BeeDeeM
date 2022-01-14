@@ -81,7 +81,7 @@ public class PTaskGunzip extends PAbstractTask {
       return false;
     }
     if (PAbstractTask.testTaskOkForFileExists(_src)) {
-      LoggerCentral.info(LOGGER, "skip task: " + _src + ": already untarred");
+      LoggerCentral.info(LOGGER, "skip task: " + _src + ": already gunzipped");
       return true;
     }
     // we suppose here that a gzipped file already has the extension .gz
