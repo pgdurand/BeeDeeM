@@ -3,7 +3,7 @@ db.desc=NCBI nr protein databank with taxonomy. Protein sequences from GenBank C
 db.type=p
 db.ldir=${mirrordir}|p|NCBI_nr
 
-db.files.include=^nr_v4.*\\d+\\.tar.gz$
+db.files.include=^nr.*\\d+\\.tar.gz$
 db.files.exclude=
 
 tasks.unit.post=gunzip,untar
@@ -13,7 +13,7 @@ ftp.server=ftp.ncbi.nih.gov
 ftp.port=21
 ftp.uname=anonymous
 ftp.pswd=user@company.com
-ftp.rdir=/blast/db/v4
+ftp.rdir=/blast/db
 ftp.rdir.exclude=
 
 history=0

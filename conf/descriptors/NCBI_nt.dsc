@@ -1,5 +1,5 @@
 db.name=NCBI_nt
-db.desc=NCBI nt databank (no annotations). Collection of sequences from several sources, including GenBank, RefSeq, TPA and PDB. Not non-redundant.
+db.desc=NCBI nt databank (Fasta, no taxonomy). Collection of sequences from several sources, including GenBank, RefSeq, TPA and PDB. Not non-redundant.
 db.type=n
 db.ldir=${mirrordir}|n|NCBI_nt
 

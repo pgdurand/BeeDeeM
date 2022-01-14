@@ -3,7 +3,7 @@ db.desc=NCBI nt databank with taxonomy. Blast v4 bank format. Nucleotide sequenc
 db.type=n
 db.ldir=${mirrordir}|n|NCBI_nt-tax
 
-db.files.include=^nt_v4.*\\d+\\.tar.gz$
+db.files.include=^nt.*\\d+\\.tar.gz$
 db.files.exclude=
 
 tasks.unit.post=gunzip,untar
@@ -18,6 +18,6 @@ ftp.rdir.exclude=
 
 history=0
 
-aspera.use=true
+aspera.use=false
 aspera.server=anonftp@ftp.ncbi.nlm.nih.gov
 aspera.args=-k 1 -T -l 640M

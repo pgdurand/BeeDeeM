@@ -1,5 +1,5 @@
 db.name=NCBI_nr
-db.desc=NCBI nr databank (no annotations). Contains non-identical sequences from GenBank CDS translations, PDB, Swiss-Prot, PIR, and PRF.
+db.desc=NCBI nr databank (Fasta, no taxonomy). Contains non-identical sequences from GenBank CDS translations, PDB, Swiss-Prot, PIR, and PRF.
 db.type=p
 db.ldir=${mirrordir}|p|NCBI_nr
 
