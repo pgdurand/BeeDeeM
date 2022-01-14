@@ -519,6 +519,9 @@ public class PTaskInstallInProduction extends PAbstractTask {
           throw new Exception("unable to rename " + dbPathDStamp + " to "
               + dbPathCur);
         }
+        
+        PAntTasks.deleteFiles(dbPathInstalled, "*"+PTask.TASK_OK_FEXT);
+        
         LoggerCentral.info(LOGGER, dbPathDStamp
             + " has been installed in production");
       }
