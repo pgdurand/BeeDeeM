@@ -286,7 +286,7 @@ public class PFTPLoader {
       msg = "Skipping already loaded file "
           + (fileNum + 1) + "/" + totFiles + ": ";
       LoggerCentral.info(LOGGER,
-          getLoaderId() + msg + file.getAbsolutePath());
+          getLoaderId() + ": " + msg + file.getAbsolutePath());
       if (_userMonitor != null) {
         _userMonitor.processingMessage(getLoaderId(), fsc.getName(),
             UserProcessingMonitor.PROCESS_TYPE.FTP_LOADING,
