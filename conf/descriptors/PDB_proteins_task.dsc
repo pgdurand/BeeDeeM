@@ -4,10 +4,10 @@
 # Illustrates the use of various scripts (external tasks)
 # DO NOT use it for production!
 
-db.name=PDB_proteins
+db.name=PDB_proteins_task
 db.desc=PDB Protein databank; illustrate use of external script call
 db.type=p
-db.ldir=${mirrordir}|p|PDB_proteins
+db.ldir=${mirrordir}|p|PDB_proteins_task
 
 db.files.include=pdbaa.tar.gz
 db.files.exclude=
