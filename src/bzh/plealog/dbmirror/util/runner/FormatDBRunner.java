@@ -29,6 +29,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import bzh.plealog.dbmirror.fetcher.LoaderEngine;
 import bzh.plealog.dbmirror.lucenedico.DicoTermQuerySystem;
 import bzh.plealog.dbmirror.task.PAbstractTask;
 import bzh.plealog.dbmirror.task.PTask;
@@ -140,7 +141,8 @@ public class FormatDBRunner extends Thread {
       if ((fName.startsWith(fDbName1) || fName.startsWith(fDbName2))
           && !(fName.endsWith(DBMSAbstractConfig.FEXT_NUM)
               || fName.endsWith("gz") || fName.endsWith("tgz") || 
-              fName.endsWith("zip")  || fName.endsWith(PTask.TASK_OK_FEXT))) {
+              fName.endsWith("zip")  || fName.endsWith(PTask.TASK_OK_FEXT)
+              || fName.endsWith(LoaderEngine.LOAD_OK_FEXT))) {
         f.delete();
       }
     }
@@ -461,6 +463,8 @@ public class FormatDBRunner extends Thread {
         exitCode = DBMSExecNativeCommand.EXEC_INTERRUPTED;
       }
 
+      LoggerCentral.info(LOGGER, _formatDBCmd+" exit code: "+exitCode);
+      
       // figures out if something wrong occurs
       if (exitCode == 0) {
         msg += FORMAT_MSG_OK;
