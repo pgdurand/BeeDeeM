@@ -43,6 +43,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import bzh.plealog.dbmirror.fetcher.DBServerConfig;
+import bzh.plealog.dbmirror.fetcher.LoaderEngine;
 import bzh.plealog.dbmirror.indexer.LuceneUtils;
 import bzh.plealog.dbmirror.lucenedico.Dicos;
 import bzh.plealog.dbmirror.lucenedico.task.PTaskDicoIndexer;
@@ -515,7 +516,8 @@ public class PTaskInstallInProduction extends PAbstractTask {
         }
         
         PAntTasks.deleteFiles(dbPathInstalled, "*"+PTask.TASK_OK_FEXT);
-        
+        PAntTasks.deleteFiles(dbPathInstalled, "*"+LoaderEngine.LOAD_OK_FEXT);
+        PAntTasks.deleteFiles(dbPathInstalled, "*"+DBMSAbstractConfig.FEXT_NUM);
         LoggerCentral.info(LOGGER, dbPathDStamp
             + " has been installed in production");
       }

@@ -16,6 +16,9 @@
  */
 package bzh.plealog.dbmirror.fetcher;
 
+import java.io.File;
+import java.io.IOException;
+
 /**
  * A super class to merge the shared method between the FTP and the Local
  * loaderEngine.
@@ -28,6 +31,10 @@ public class LoaderEngine extends Thread {
   protected DBServerConfig _dbsc;
   protected LoaderMonitor  _monitor;
   protected boolean        _ok;
+
+  // File load/Copy done with success (to enable easiest resume of bank installation
+  // especially after a cleanup of source files)
+  public static final String LOAD_OK_FEXT            = ".L_OK";
 
   public LoaderEngine(DBServerConfig dbsc, LoaderMonitor monitor) {
     _dbsc = dbsc;
@@ -90,6 +97,22 @@ public class LoaderEngine extends Thread {
    */
   protected void set_monitor(LoaderMonitor _monitor) {
     this._monitor = _monitor;
+  }
+
+  public static void setLoadOkForFile(String fPath) {
+    File f = new File(fPath+LOAD_OK_FEXT);
+    try {
+      f.createNewFile();
+    } catch (IOException e) {
+      //hide this exception; in the worst case, calling Loader will have to
+      //redo its execution on bank installation resume... not so bad, just
+      //potentially time consuming
+    }
+  }
+  
+  public static boolean testLoadOkForFileExists(String fPath) {
+    File f = new File(fPath+LOAD_OK_FEXT);
+    return f.exists();
   }
 
 }

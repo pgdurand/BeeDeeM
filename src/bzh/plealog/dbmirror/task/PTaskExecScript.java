@@ -154,7 +154,7 @@ public class PTaskExecScript extends PAbstractTask {
       return false;
     }
     String resumeFile = Utils.terminatePath(_dbInstallationPath) + 
-        "script-" + _scriptName+PTask.TASK_OK_FEXT;
+        "script-" + _scriptName;
     LoggerCentral.info(LOGGER, SCRIPT_NAME+": "+_scriptName);
     
     if (_scriptCmd == null) {

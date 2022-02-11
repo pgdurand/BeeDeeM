@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -112,7 +112,7 @@ public class PFTPLoaderEngine extends LoaderEngine {
 
     public void run() {
       DataShuttle file;
-      String fName;
+      String fName, lclFilePath;
       int retry, nFiles, bRet=0;
 
       if (AsperaUtils.asperaAvailable() && get_dbsc().useAspera()) {
@@ -129,40 +129,55 @@ public class PFTPLoaderEngine extends LoaderEngine {
       nFiles = _files.size();
       while ((file = nextFtpFile()) != null) {
         fName = file.getFile().getName();
+        lclFilePath = get_dbsc().getLocalTmpFolder() + fName;
+
         if (_monitor != null)
           _monitor.beginLoading(fName);
-        // try to get a ftp connection
-        retry = 0;
-        while (retry < _retry) {
-          if (_loader.prepareLoader(get_dbsc()))
-            break;
-          retry++;
-          LoggerCentral.info(
-              LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                  + ".PFTPLoader"), _loader.getLoaderId() + ": "
-                  + PFTPLoader.CONN_ERR_MSG);
-          try {
-            sleep(_scheduleTime);
-          } catch (InterruptedException e) {
-          }
-        }
-        if (_loader.readyToDownload()) {
-          // start loading
+        
+        if (LoaderEngine.testLoadOkForFileExists(lclFilePath) == false) {
+          // try to get a ftp connection
           retry = 0;
           while (retry < _retry) {
-            bRet = _loader.downloadFile(get_dbsc(), file.getFile(),
-                file.getFileNum(), nFiles);
-            if (bRet != 0)
+            if (_loader.prepareLoader(get_dbsc()))
               break;
             retry++;
             LoggerCentral.info(
                 LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                    + ".PFTPLoader"), PFTPLoader.CONN_ERR_MSG);
+                    + ".PFTPLoader"), _loader.getLoaderId() + ": "
+                    + PFTPLoader.CONN_ERR_MSG);
             try {
               sleep(_scheduleTime);
             } catch (InterruptedException e) {
             }
           }
+          if (_loader.readyToDownload()) {
+            // start loading
+            retry = 0;
+            while (retry < _retry) {
+              bRet = _loader.downloadFile(get_dbsc(), file.getFile(),
+                  file.getFileNum(), nFiles);
+              if (bRet != 0)
+                break;
+              retry++;
+              LoggerCentral.info(
+                  LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
+                      + ".PFTPLoader"), PFTPLoader.CONN_ERR_MSG);
+              try {
+                sleep(_scheduleTime);
+              } catch (InterruptedException e) {
+              }
+            }
+            if (bRet == 1 || bRet == 2) { //ok only
+              LoaderEngine.setLoadOkForFile(lclFilePath);
+            }
+          }
+        }
+        else {
+          bRet = 2;
+          String msg = "Skipping already loaded file "
+              + (file.getFileNum() + 1) + "/" + nFiles + ": ";
+          LoggerCentral.info(_loader.getLogger(),
+              _loader.getLoaderId() + ": " + msg + fName);
         }
         if (bRet == 0) {// failure? Report error now!
           LoggerCentral.error(
@@ -174,6 +189,7 @@ public class PFTPLoaderEngine extends LoaderEngine {
                   + ".PFTPLoader"), _loader.getErrorMsg());
           LoggerCentral.abortProcess();
         }
+        
         if (_monitor != null) {
           if (bRet == 0) {
             _monitor.doneLoading(fName, LoaderMonitor.STATUS_FAILURE);
