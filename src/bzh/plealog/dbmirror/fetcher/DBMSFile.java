@@ -92,7 +92,7 @@ public class DBMSFile {
     return fTimeStamp;
   }
   
-  public File getFile() {
+  public File getRemoteFile() {
     if (fRepr==null) {
       fRepr = new File(EZFileUtils.terminatePath(remoteDir)+fName);
     }

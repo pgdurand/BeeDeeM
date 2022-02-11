@@ -63,6 +63,11 @@ public class PHTTPLoader extends PFTPLoader {
   }
   
   @Override
+  public Log getLogger() {
+    return LOGGER;
+  }
+ 
+  @Override
   public boolean prepareLoader(DBServerConfig fsc) {
 	  url_base = fsc.getFTPAternativeProtocol();
 	  url_base+="://";

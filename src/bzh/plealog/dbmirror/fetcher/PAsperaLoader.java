@@ -1,4 +1,4 @@
-/* Copyright (C) 2019 Patrick G. Durand
+/* Copyright (C) 2019-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -60,6 +60,11 @@ public class PAsperaLoader extends PFTPLoader {
 		return ASPC_WORKER;
 	}
 
+  @Override
+  public Log getLogger() {
+    return LOGGER;
+  }
+  
   @Override
 	public void closeLoader() {
 	  //nothing to do

@@ -310,7 +310,7 @@ public class PLocalLoader {
           msg = "Skip already copyied file: " + fName;
         }
         else{
-          input = new FileInputStream(file.getFile());
+          input = new FileInputStream(file.getRemoteFile());
           output = new FileOutputStream(destDir + file.getName());
           fSize = file.getSize();
           Util.copyStream(input, output, Util.DEFAULT_COPY_BUFFER_SIZE, fSize,
@@ -336,7 +336,7 @@ public class PLocalLoader {
       } catch (Exception e) {
         result = 0;
         LoggerCentral.error(LOGGER,
-            e.getMessage() + ": " + file.getFile().getAbsolutePath());
+            e.getMessage() + ": " + file.getRemoteFile().getAbsolutePath());
         if (monitor != null)
           monitor.doneLoading(fName, LoaderMonitor.STATUS_FAILURE);
         if (_userMonitor != null) {

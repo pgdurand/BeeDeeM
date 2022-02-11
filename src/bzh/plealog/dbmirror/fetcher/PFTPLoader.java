@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2020 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -87,7 +87,9 @@ public class PFTPLoader {
   public String getLoaderId() {
     return _loaderId;
   }
-
+  public Log getLogger() {
+    return LOGGER;
+  }
   public String getWorkerBaseName() {
 	  return FTP_WORKER;
   }
