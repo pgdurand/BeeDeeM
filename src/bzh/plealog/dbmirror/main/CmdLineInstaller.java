@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2020 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -117,7 +117,7 @@ public class CmdLineInstaller {
       mailer.setDebug(true);
     desc = fDescriptor.getDescriptorName();
     dbList = fDescriptor.getProperty(PFTPLoaderDescriptor.DBLIST_KEY);
-    logFile=DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName();
+    logFile=LoggerCentral.getLogAppPath()+LoggerCentral.getLogAppFileName();
     if (LoggerCentral.errorMsgEmitted()) { 
       // ERROR
       subject = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg3")).format(
@@ -154,7 +154,7 @@ public class CmdLineInstaller {
     PFTPLoaderSystem lSystem;
     PFTPLoaderDescriptor fDesc;
     String descriptor, gdfile;
-    boolean silentMode = DBMSAbstractConfig.isSilentMode();
+    boolean silentMode = LoggerCentral.isSilentMode();
     
     if (!silentMode) {
       Properties props = StarterUtils.getVersionProperties();
@@ -171,10 +171,10 @@ public class CmdLineInstaller {
         false, true);
 
     if (!silentMode) {
-      String logFile = DBMSAbstractConfig.getLogAppFileName();
+      String logFile = LoggerCentral.getLogAppFileName();
       if(logFile!=null) {
         String msg = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg2")).format(
-            new Object[]{DBMSAbstractConfig.getLogAppPath()+logFile});
+            new Object[]{LoggerCentral.getLogAppPath()+logFile});
         System.out.println(msg);
       }
     }    

@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -101,7 +101,7 @@ public class AutoCheckDescriptors {
     System.out.println(buf.toString());
     
     String msg = new MessageFormat(DBMSMessages.getString("Tool.Install.info.msg2")).format(
-        new Object[]{DBMSAbstractConfig.getLogAppPath()+DBMSAbstractConfig.getLogAppFileName()});
+        new Object[]{LoggerCentral.getLogAppPath()+LoggerCentral.getLogAppFileName()});
     System.out.println(msg);
   }
   /**

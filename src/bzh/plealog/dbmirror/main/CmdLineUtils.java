@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2020 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -24,7 +24,7 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
-import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 public class CmdLineUtils {
   private static final String CONFDIR_KEY = "conf-dir";
@@ -52,9 +52,9 @@ public class CmdLineUtils {
   private static String getFooter() {
     Properties props = StarterUtils.getVersionProperties();
     StringBuffer buf = new StringBuffer("\n");
-    String logFile = DBMSAbstractConfig.getLogAppFileName();
+    String logFile = LoggerCentral.getLogAppFileName();
     buf.append("Default log file: ");
-    buf.append(logFile==null?"none":DBMSAbstractConfig.getLogAppPath()+logFile);
+    buf.append(logFile==null?"none":LoggerCentral.getLogAppPath()+logFile);
     buf.append("\n");
     buf.append("--\n");
     buf.append("To control Log, use JRE args:\n");
