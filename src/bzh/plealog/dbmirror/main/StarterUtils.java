@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2020 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -16,8 +16,6 @@
  */
 package bzh.plealog.dbmirror.main;
 
-import com.plealog.genericapp.api.EZApplicationBranding;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +23,8 @@ import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.plealog.genericapp.api.EZApplicationBranding;
 
 import bzh.plealog.dbmirror.fetcher.PProxyConfig;
 import bzh.plealog.dbmirror.indexer.LuceneUtils;
@@ -40,9 +40,7 @@ import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
  * @author Patrick G. Durand
  */
 public class StarterUtils {
-  private static final Log    LOGGER   = LogFactory
-                                           .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                                               + ".StarterUtils");
+  private static       Log    LOGGER   = null;
   private static final String MSG1     = "Loaded network config from: ";
   private static final String ERR1     = "Unable to load network config: ";
 
@@ -70,7 +68,12 @@ public class StarterUtils {
     return props;
   }
   
-
+  private static Log getLogger() {
+    if (LOGGER==null) {
+      LOGGER= LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY+ ".StarterUtils");
+    }
+    return LOGGER;
+  }
   private static void initNetConfig() {
     PProxyConfig proxy;
     String netConf;
@@ -86,11 +89,11 @@ public class StarterUtils {
     proxy = new PProxyConfig();
     try {
       proxy.load(netConf, true);
-      LOGGER.debug(MSG1 + netConf);
+      getLogger().debug(MSG1 + netConf);
       proxy.dumpConfig();
       DBMSAbstractConfig.setProxyConfig(proxy);
     } catch (IOException e) {
-      LOGGER.warn(ERR1 + e);
+      getLogger().warn(ERR1 + e);
     }
   }
 
@@ -120,7 +123,7 @@ public class StarterUtils {
     if (appHome != null)
       DBMSAbstractConfig.setInstallAppPath(Utils.terminatePath(appHome));
     if (configureLogger)
-      DBMSAbstractConfig.configureLog4J(nameLogger);
+      LoggerCentral.configureLog4J(nameLogger);
     if (initConfig){
       String confPath = DBMSAbstractConfig.getConfPath(Configuration.ROOT);
       initNetConfig();
