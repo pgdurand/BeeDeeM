@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -21,7 +21,7 @@ import bzh.plealog.dbmirror.lucenedico.DicoStorageSystem;
 import bzh.plealog.dbmirror.lucenedico.DicoStorageSystemImplem;
 import bzh.plealog.dbmirror.lucenedico.DicoTerm;
 import bzh.plealog.dbmirror.lucenedico.ec.EnzymeDatParser;
-import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
  * This code snippet illustrates how to control the content of an index for the
@@ -37,7 +37,7 @@ public class EnzymeDatFullIndexReadTest {
    *          and [1] is the Enzyme plain text databank file.
    */
   public static void main(String[] args) {
-    DBMSAbstractConfig.configureLog4J("EnzymeDatFullIndexReadTest");
+    LoggerCentral.configureLog4J("EnzymeDatFullIndexReadTest");
     System.out.println("Index: " + args[0]);
     System.out.println("DB   : " + args[1]);
     DicoStorageSystem lss = new DicoStorageSystemImplem();

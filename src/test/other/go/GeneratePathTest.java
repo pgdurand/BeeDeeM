@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -22,7 +22,7 @@ import bzh.plealog.dbmirror.lucenedico.DicoStorageSystem;
 import bzh.plealog.dbmirror.lucenedico.DicoStorageSystemImplem;
 import bzh.plealog.dbmirror.lucenedico.go.GeneOntologyGenerateTree;
 import bzh.plealog.dbmirror.lucenedico.go.GeneOntologyGenerateTree.Path;
-import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
  * Code snippet to check if the GO branches are correctly created.
@@ -43,7 +43,7 @@ public class GeneratePathTest {
 
       path = new GeneOntologyGenerateTree();
 
-      DBMSAbstractConfig.configureLog4J("GeneOntologyIndexReadTest");
+      LoggerCentral.configureLog4J("GeneOntologyIndexReadTest");
       lss = new DicoStorageSystemImplem();
       lss.open(args[0], DicoStorageSystem.READ_MODE);
 

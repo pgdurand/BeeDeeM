@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -248,7 +248,7 @@ public class DumpBankList {
     config.put("instconfpath", DBMSAbstractConfig.getConfPath(Configuration.ROOT)
         + DBMSAbstractConfig.MASTER_CONF_FILE);
     config.put("wkpath", DBMSAbstractConfig.getWorkingPath());
-    config.put("logpath", DBMSAbstractConfig.getLogAppPath());
+    config.put("logpath", LoggerCentral.getLogAppPath());
     config.put("confpath", DBMSAbstractConfig.getLocalMirrorConfFile());
     config.put("dbpath", DBMSAbstractConfig.getLocalMirrorPath());
 

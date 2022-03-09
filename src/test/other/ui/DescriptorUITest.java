@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -34,7 +34,7 @@ public class DescriptorUITest extends JFrame {
     // exemple:
     // args[0] = C:\temp\biobase
     // args[1] = H:\devel\plealog\dbmirror\conf\kb (put there: tasks.xml)
-    DBMSAbstractConfig.configureLog4J("autoMirror");
+    LoggerCentral.configureLog4J("autoMirror");
     // KDMSAbstractConfig.setLocalMirrorPath(args[0]);
     // KDMSAbstractConfig.setLocalMirrorConfFile(Utils.terminatePath(args[0])+"dbmirror.config");
     DBMSAbstractConfig.setConfPath(args[1]);

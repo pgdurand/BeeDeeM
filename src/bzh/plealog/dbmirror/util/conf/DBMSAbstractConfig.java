@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2020 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -21,9 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Properties;
 
 import org.apache.commons.configuration.event.ConfigurationEvent;
 import org.apache.commons.configuration.event.ConfigurationListener;
@@ -31,14 +29,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.Appender;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Category;
-import org.apache.log4j.DailyRollingFileAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.PropertyConfigurator;
 
 import bzh.plealog.dbmirror.fetcher.PProxyConfig;
 import bzh.plealog.dbmirror.util.Utils;
@@ -58,9 +48,6 @@ public class DBMSAbstractConfig {
   private static String                  _localMirrorPath;
   private static String                  _localMirrorConfFile;
   private static String                  _installAppPath;
-  private static String                  _logAppPath;
-  private static String                  _logAppFileName;
-  private static String                  _logAppFile;
   private static String                  _workingTmpPath;
   private static String                  _filterWorkingTmpPath;
   private static String                  _externalBinPath;
@@ -86,18 +73,6 @@ public class DBMSAbstractConfig {
                                                                               + ".DBMSAbstractConfig");
   private static DBMSConfigurator        _configurator;
   private static DBMirrorListenerSupport _listenerSupport             = new DBMirrorListenerSupport();  ;
-
-  public static final String             CONF_PATH_NAME               = "conf";
-  public static final String             EXT_PATH_NAME                = "external";
-  public static final String             BIN_PATH_NAME                = "bin";
-  public static final String             APP_KEY_PREFIX               = "KL_";
-  private static final String            APP_HOME_PROP_KEY            = APP_KEY_PREFIX+"HOME";
-  private static final String            APP_WORKING_DIR_PROP_KEY     = APP_KEY_PREFIX+"WORKING_DIR";
-  private static final String            APP_CONF_DIR_PROP_KEY        = APP_KEY_PREFIX+"CONF_DIR";
-  public  static final String            APP_DEBUG_MODE_PROP_KEY      = APP_KEY_PREFIX+"DEBUG";
-  private static final String            APP_LOG_FILE_PROP_KEY        = APP_KEY_PREFIX+"LOG_FILE";
-  private static final String            APP_LOG_TYPE_PROP_KEY        = APP_KEY_PREFIX+"LOG_TYPE";
-  private static final String            USER_DIR_PROP_KEY            = "user.dir";
 
   private static final String            DEF_DB_PATH                  = "beedeem_banks_repository";
 
@@ -128,8 +103,6 @@ public class DBMSAbstractConfig {
   
   private static MyConfigurationListener CONF_LISTENER                = new MyConfigurationListener();
 
-  private static enum APP_LOG_TYPE {file, console, none};
-  
   /**
    * Returns the path where the application is installed.
    */
@@ -137,11 +110,11 @@ public class DBMSAbstractConfig {
 
     if (_installAppPath != null)
       return _installAppPath;
-    String path = pruneQuotes(System.getProperty(APP_HOME_PROP_KEY));
+    String path = DBMSAbstractConfigConstants.pruneQuotes(System.getProperty(DBMSAbstractConfigConstants.APP_HOME_PROP_KEY));
     if (path != null) {
       _installAppPath = path;
     } else {
-      _installAppPath = pruneQuotes(System.getProperty(USER_DIR_PROP_KEY));
+      _installAppPath = DBMSAbstractConfigConstants.pruneQuotes(System.getProperty(DBMSAbstractConfigConstants.USER_DIR_PROP_KEY));
     }
     _installAppPath = Utils.terminatePath(_installAppPath);
     LOGGER.debug("install app path: " + _installAppPath);
@@ -173,7 +146,7 @@ public class DBMSAbstractConfig {
 
     if (_localMirrorPath != null)
       return _localMirrorPath;
-    String path = pruneQuotes(System.getProperty(APP_KEY_PREFIX+DBMSConfigurator.MIRROR_PATH));
+    String path = DBMSAbstractConfigConstants.pruneQuotes(System.getProperty(DBMSAbstractConfigConstants.APP_KEY_PREFIX+DBMSConfigurator.MIRROR_PATH));
     if (path != null) {
       _localMirrorPath = path;
     } else {
@@ -185,7 +158,7 @@ public class DBMSAbstractConfig {
       if (DBMSExecNativeCommand.getOSType() == DBMSExecNativeCommand.WINDOWS_OS) {
         _localMirrorPath = "c:\\" + DEF_DB_PATH;
       } else {
-        _localMirrorPath = pruneQuotes(DBMSExecNativeCommand
+        _localMirrorPath = DBMSAbstractConfigConstants.pruneQuotes(DBMSExecNativeCommand
             .getUserHomeDirectory());
         _localMirrorPath = Utils.terminatePath(_localMirrorPath) + DEF_DB_PATH;
       }
@@ -213,60 +186,7 @@ public class DBMSAbstractConfig {
     return localMirrorPrepaPath;
   }
 
-  /**
-   * Returns the path where the application stores log files.
-   */
-  public static String getLogAppPath() {
-    String path;
-
-    if (_logAppPath != null)
-      return _logAppPath;
-    path = pruneQuotes(System.getenv(APP_WORKING_DIR_PROP_KEY));
-    if (path==null)
-       path = pruneQuotes(System.getProperty(APP_WORKING_DIR_PROP_KEY));
-    if (path != null)
-      _logAppPath = Utils.terminatePath(path);
-    else
-      _logAppPath = Utils.terminatePath(pruneQuotes(System
-          .getProperty("java.io.tmpdir")));
-    return _logAppPath;
-  }
-
-  public static String getLogAppFileName(){
-    return _logAppFileName;
-  }
-
-  public static void setLogAppFileName(String logAppFileName){
-    _logAppFileName = logAppFileName;
-  }
   
-  public static String pruneQuotes(String str) {
-    if (str == null)
-      return str;
-    str = str.trim();
-    if (str.charAt(0) == '"' || str.charAt(0) == '\'') {
-      str = str.substring(1);
-    }
-    int lastPos = str.length() - 1;
-    if (str.charAt(lastPos) == '"' || str.charAt(lastPos) == '\'') {
-      str = str.substring(0, lastPos);
-    }
-    return str;
-  }
-
-  /**
-   * Returns the log file name. Return a non null value only if configureLog4J()
-   * has been call.
-   */
-  public static String getLogAppFile() {
-    return _logAppFile;
-  }
-
-  public static void setLogAppPath(String path) {
-    _logAppPath = Utils.terminatePath(path);
-    LOGGER.debug("log path: " + _logAppPath);
-  }
-
   /**
    * Returns the path where the application stores tmp files.
    */
@@ -275,13 +195,13 @@ public class DBMSAbstractConfig {
 
     if (_workingTmpPath != null)
       return _workingTmpPath;
-    path = pruneQuotes(System.getenv(APP_WORKING_DIR_PROP_KEY));
+    path = DBMSAbstractConfigConstants.pruneQuotes(System.getenv(DBMSAbstractConfigConstants.APP_WORKING_DIR_PROP_KEY));
     if (path==null)
-       path = pruneQuotes(System.getProperty(APP_WORKING_DIR_PROP_KEY));
+       path = DBMSAbstractConfigConstants.pruneQuotes(System.getProperty(DBMSAbstractConfigConstants.APP_WORKING_DIR_PROP_KEY));
     if (path != null)
       _workingTmpPath = Utils.terminatePath(path);
     else
-      _workingTmpPath = Utils.terminatePath(pruneQuotes(System
+      _workingTmpPath = Utils.terminatePath(DBMSAbstractConfigConstants.pruneQuotes(System
           .getProperty("java.io.tmpdir")));
     LOGGER.debug("working path: " + _workingTmpPath);
     return _workingTmpPath;
@@ -315,8 +235,8 @@ public class DBMSAbstractConfig {
   public static String getInstallExternalPath() {
     if (_externalBinPath != null)
       return _externalBinPath;
-    _externalBinPath = getInstallAppPath() + EXT_PATH_NAME + File.separator
-        + BIN_PATH_NAME + File.separator + DBMSExecNativeCommand.getOSName()
+    _externalBinPath = getInstallAppPath() + DBMSAbstractConfigConstants.EXT_PATH_NAME + File.separator
+        + DBMSAbstractConfigConstants.BIN_PATH_NAME + File.separator + DBMSExecNativeCommand.getOSName()
         + File.separator;
     LOGGER.debug("install external path: " + _externalBinPath);
     return _externalBinPath;
@@ -350,151 +270,18 @@ public class DBMSAbstractConfig {
     if (_confPath != null)
       return Utils.terminatePath(_confPath+confType.getDirectoryName());
     
-    String path = pruneQuotes(System.getenv(APP_CONF_DIR_PROP_KEY));
+    String path = DBMSAbstractConfigConstants.pruneQuotes(System.getenv(DBMSAbstractConfigConstants.APP_CONF_DIR_PROP_KEY));
     if (path==null)
-       pruneQuotes(System.getProperty(APP_CONF_DIR_PROP_KEY));
+       DBMSAbstractConfigConstants.pruneQuotes(System.getProperty(DBMSAbstractConfigConstants.APP_CONF_DIR_PROP_KEY));
     if (path != null) {
       _confPath = Utils.terminatePath(path);
     } else {
-      _confPath = Utils.terminatePath(DBMSAbstractConfig.getInstallAppPath()+CONF_PATH_NAME);
+      _confPath = Utils.terminatePath(DBMSAbstractConfig.getInstallAppPath()+DBMSAbstractConfigConstants.CONF_PATH_NAME);
     }
     
     return (Utils.terminatePath(_confPath+confType.getDirectoryName()));
   }
 
-  public static void setupLoggers(String logName) {
-    setupLoggers(logName, true);
-  }
-
-  public static void setupLoggers(String logName, boolean updateLogLevel) {
-    DailyRollingFileAppender drfa;
-    String userPath, szLogFileName, lvl, sysLogName;
-
-    Category cat = Logger.getInstance(KDMS_ROOTLOG_CATEGORY);
-    cat.setAdditivity(false);
-
-    if (updateLogLevel) {
-      lvl = pruneQuotes(System.getenv(APP_DEBUG_MODE_PROP_KEY));
-      if (lvl==null)
-        lvl = pruneQuotes(System.getProperty(APP_DEBUG_MODE_PROP_KEY));
-      if ("true".equals(lvl)) {
-        cat.setLevel(Level.DEBUG);
-        Logger.getRootLogger().setLevel(Level.DEBUG);
-      } else {
-        cat.setLevel(Level.INFO);
-        Logger.getRootLogger().setLevel(Level.INFO);
-      }
-    }
-
-    sysLogName = pruneQuotes(System.getenv(APP_LOG_FILE_PROP_KEY));
-    if (sysLogName==null)
-      sysLogName = pruneQuotes(System.getProperty(APP_LOG_FILE_PROP_KEY));
-    if (sysLogName != null)
-      _logAppFile = sysLogName;
-    else
-      _logAppFile = logName + ".log";
-
-    DBMSAbstractConfig.setLogAppFileName(_logAppFile);
-    
-    userPath = DBMSAbstractConfig.getLogAppPath();
-    szLogFileName = userPath + _logAppFile;
-
-    try {
-      cleanSystemLogs(userPath, _logAppFile);
-    } catch (Exception e) {
-      // not bad
-    }
-
-    drfa = new DailyRollingFileAppender();
-    drfa.setFile(szLogFileName);
-    drfa.setLayout(new PatternLayout(
-        "%d{dd-MM-yyyy HH:mm:ss} [%t] %-5p %c %x | %m%n"));
-    drfa.setDatePattern("yyyy-MM-dd");
-    drfa.activateOptions();
-
-    cat.addAppender(drfa);
-  }
-
-  public static boolean isSilentMode() {
-    String logType = pruneQuotes(System.getenv(APP_LOG_TYPE_PROP_KEY));
-    if (logType==null)
-      logType = pruneQuotes(System.getProperty(APP_LOG_TYPE_PROP_KEY));   
-    
-    if (logType==null) {
-      logType = APP_LOG_TYPE.file.toString();
-    }
-    
-    return logType.equalsIgnoreCase(APP_LOG_TYPE.none.toString());
-  }
-  /**
-   * Configure the logging system. To configure path where to locate the log
-   * file, you may call setLogAppPath(). Do not call if the Log4J logger system
-   * is already configured, use setupLoggers() instead.
-   */
-  public static void configureLog4J(String logName) {
-    BasicConfigurator.configure();
-    
-    String logType = pruneQuotes(System.getenv(APP_LOG_TYPE_PROP_KEY));
-    if (logType==null)
-      logType = pruneQuotes(System.getProperty(APP_LOG_TYPE_PROP_KEY)); 
-    
-    if (logType==null) {
-      logType = APP_LOG_TYPE.file.toString();
-    }
-
-    if (logType.equalsIgnoreCase(APP_LOG_TYPE.console.toString())) {
-      Properties props = new Properties();
-      String lvl = pruneQuotes(System.getenv(APP_DEBUG_MODE_PROP_KEY));
-      if(lvl==null)
-        lvl = pruneQuotes(System.getProperty(APP_DEBUG_MODE_PROP_KEY));
-      if ("true".equals(lvl)) {
-        lvl="debug";
-      } else {
-        lvl="info";
-      }
-      props.put("log4j.rootCategory",lvl+",console");
-      props.put("log4j.logger.bzh.plealog",lvl+",console");
-      props.put("log4j.additivity.com.demo.package","false");
-      props.put("log4j.appender.console","org.apache.log4j.ConsoleAppender");
-      props.put("log4j.appender.console.target","System.out");
-      props.put("log4j.appender.console.immediateFlush","true");
-      props.put("log4j.appender.console.encoding","UTF-8");
-      props.put("log4j.appender.console.threshold",lvl);
-            
-      props.put("log4j.appender.console.layout","org.apache.log4j.PatternLayout");
-      props.put("log4j.appender.console.layout.conversionPattern","%d{dd-MM-yyyy HH:mm:ss} [%t] %-5p %c %x | %m%n");
-      PropertyConfigurator.configure(props); 
-    }
-    else if (logType.equalsIgnoreCase(APP_LOG_TYPE.file.toString())) {
-      setupLoggers(logName);
-    }
-    else {
-      Logger.getRootLogger().setLevel(Level.OFF);
-    }
-  }
-
-  /**
-   * This method delete system log files older than one month.
-   */
-  private static void cleanSystemLogs(String logPath, String logName) {
-    Calendar cal;
-    Date limitDate;
-    File path;
-
-    path = new File(logPath);
-    cal = Calendar.getInstance();
-    cal.add(Calendar.DAY_OF_MONTH, -30);
-    limitDate = cal.getTime();
-    for (File f : path.listFiles()) {
-      if (f.isDirectory())
-        continue;
-      if (f.getName().startsWith(logName)) {
-        if (new Date(f.lastModified()).before(limitDate)) {
-          f.delete();
-        }
-      }
-    }
-  }
 
   /**
    * Sets if KDMS UI part has to connect directly the LoggerCentral system to
@@ -514,14 +301,6 @@ public class DBMSAbstractConfig {
    */
   public static boolean isUsingDirectConnectionFromLogToLogViewer() {
     return _connectLogViewer;
-  }
-
-  /**
-   * Adds an appender to listen to the KDMS internal logging system.
-   */
-  public static void addLogAppender(Appender app) {
-    Category cat = Logger.getInstance(KDMS_ROOTLOG_CATEGORY);
-    cat.addAppender(app);
   }
 
   /**
