@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -66,15 +66,20 @@ public class Utils {
   private static final DecimalFormat _bytesFormatter = new DecimalFormat(
                                                          "####.00");
 
-  private static final Log           LOGGER          = LogFactory
-                                                         .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                                                             + ".Utils");
+  private static Log  LOGGER = null;
 
   public static final long           TERA            = (long) 1024 * 1024 * 1024 * 1024;
   public static final long           GIGA            = (long) 1024 * 1024 * 1024;
   public static final long           MEGA            = (long) 1024 * 1024;
   public static final long           KILO            = (long) 1024;
 
+  private static Log getLogger() {
+    if (LOGGER==null) {
+      LOGGER= LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY+ ".Utils");
+    }
+    return LOGGER;
+  }
+  
   private static SimpleDateFormat getDateFormatter() {
     return new SimpleDateFormat("yyyyMMdd");
   }
@@ -215,7 +220,7 @@ public class Utils {
       writer.flush();
       writer.close();
     } catch (Exception e) {
-      LoggerCentral.error(LOGGER, "Unable to create DateStamp.");
+      LoggerCentral.error(getLogger(), "Unable to create DateStamp.");
     }
   }
 
@@ -417,7 +422,7 @@ public class Utils {
       }
     } catch (Exception e) {
       volumes = null;
-      LOGGER.warn("Unable to process File Volumes: ", e);
+      getLogger().warn("Unable to process File Volumes: ", e);
     } finally {
       IOUtils.closeQuietly(fis);
       IOUtils.closeQuietly(bis);
@@ -640,7 +645,7 @@ public class Utils {
       }
       out.flush();
     } catch (IOException e) {
-      LOGGER.warn("Couldn't open " + zipname + ": "+e.toString());
+      getLogger().warn("Couldn't open " + zipname + ": "+e.toString());
       return null;
     }
 
@@ -691,7 +696,7 @@ public class Utils {
         ze = zis.getNextEntry();
       }
     } catch (IOException ex) {
-      LOGGER.warn(ex);
+      getLogger().warn(ex);
       bRet = false;
     } finally {
       // ensure to close streams
