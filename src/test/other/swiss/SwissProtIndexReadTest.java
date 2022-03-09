@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -21,7 +21,7 @@ import bzh.plealog.dbmirror.indexer.LuceneStorageSystem;
 import bzh.plealog.dbmirror.indexer.ParserMonitor;
 import bzh.plealog.dbmirror.indexer.StorageSystem;
 import bzh.plealog.dbmirror.indexer.SwissProtParser;
-import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
  * This code snippet illustrates how to control the content of an index for the
@@ -37,7 +37,7 @@ public class SwissProtIndexReadTest {
    *          and [1] is a Ganbank plain text databank file.
    */
   public static void main(String[] args) {
-    DBMSAbstractConfig.configureLog4J("SwissProtIndexReadTest");
+    LoggerCentral.configureLog4J("SwissProtIndexReadTest");
     System.out.println("Index: " + args[0]);
     System.out.println("DB   : " + args[1]);
     LuceneStorageSystem lss = new LuceneStorageSystem();

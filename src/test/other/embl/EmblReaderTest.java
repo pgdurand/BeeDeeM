@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -26,6 +26,7 @@ import bzh.plealog.dbmirror.reader.DBUtils;
 import bzh.plealog.dbmirror.reader.PFormatter;
 import bzh.plealog.dbmirror.reader.PSequence;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
  * This snippet illustrates how to format an EMBL entry using ISND format.
@@ -48,7 +49,7 @@ public class EmblReaderTest {
    */
   public static void main(String[] args) {
     // setup the logger system
-    DBMSAbstractConfig.configureLog4J("EmblReader");
+    LoggerCentral.configureLog4J("EmblReader");
     // target the path containing Velocity templates (.vm files)
     DBMSAbstractConfig.setConfPath("./conf");
     // reformat a simple EMBL entry

@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -41,7 +41,7 @@ public class SwissProtTaxonIndexerTest {
 
   public static void main(String[] args) {
     String confPath = getConfPath();
-    DBMSAbstractConfig.configureLog4J("kdmsUI");
+    LoggerCentral.configureLog4J("kdmsUI");
     DBMSAbstractConfig.setConfPath(confPath);
 
     DBMSAbstractConfig.initializeConfigurator(confPath

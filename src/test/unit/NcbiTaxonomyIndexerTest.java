@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -34,6 +35,7 @@ import bzh.plealog.dbmirror.lucenedico.Dicos;
 import bzh.plealog.dbmirror.lucenedico.tax.TaxonomyRank;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 import bzh.plealog.dbmirror.util.descriptor.DBDescriptorUtils;
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 import bzh.plealog.dbmirror.util.sequence.TaxonMatcherHelper;
 
 public class NcbiTaxonomyIndexerTest {
@@ -154,7 +156,8 @@ public class NcbiTaxonomyIndexerTest {
 		Assert.assertEquals(
 				"n1;n131567;n2759;n33154;n33208;n6072;n33213;n33511;n7711;n89593;n7742;n7776;n117570;n117571;n8287;n1338369;n32523;n32524;n40674;n32525;n9347;n1437010;n314146;n9443;n376913;n314293;n9526;n314295;n9604;n207598;n9605;",
 				value);
-
+		LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY+"TestQuerySystem").debug("test debug message");
+	
 		// simplify path (names)
 		value = dicoSystem.getTaxPath("9606", true);
 		Assert.assertEquals("root;d__Eukaryota;k__Metazoa;p__Chordata;c__Mammalia;o__Primates;f__Hominidae;g__Homo;", value);
