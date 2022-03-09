@@ -233,7 +233,7 @@ public class RunningMirrorPanel extends JPanel {
       if (DBMSAbstractConfig.isUsingDirectConnectionFromLogToLogViewer()) {
         LoggerCentral.setLogGateway(new MyLoggerCentral(_logViewer));
       } else {
-        DBMSAbstractConfig.addLogAppender(_logViewer.getAppender());
+        LoggerCentral.addAppender(_logViewer.getAppender());
       }
       pane.add("Logs", _logViewer);
     }

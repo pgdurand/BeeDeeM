@@ -1,4 +1,4 @@
-/* Copyright (C) 2007-2017 Patrick G. Durand
+/* Copyright (C) 2007-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -32,16 +32,18 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.WriterAppender;
-import org.apache.log4j.spi.LoggingEvent;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.layout.PatternLayout;
+
+import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
  * This class defines a graphical log viewer.
@@ -100,8 +102,16 @@ public class DBMSLogViewer extends JPanel {
     this.setPreferredSize(new Dimension(100, 100));
   }
 
-  public WriterAppender getAppender() {
-    return new MyAppender();
+  @SuppressWarnings("deprecation")
+  public Appender getAppender() {
+    LoggerContext context = LoggerContext.getContext(false);
+    Configuration config = context.getConfiguration();
+    PatternLayout pl = PatternLayout.createLayout(LoggerCentral.SIMPLE_PATTERN_LAYOUT, 
+        null, config, null, null, 
+        false, false, null, null);
+    Appender appender = DBMSLogViewerAppender.createAppender("TextAreaAppender", pl, null);
+    DBMSLogViewerAppender.setLogViewer(this);
+    return appender;
   }
 
   /**
@@ -166,6 +176,7 @@ public class DBMSLogViewer extends JPanel {
     System.gc();
   }
 
+  /*
   // tip from : http://textareaappender.zcage.com/
   private class MyAppender extends WriterAppender {
     public MyAppender() {
@@ -183,7 +194,7 @@ public class DBMSLogViewer extends JPanel {
       });
     }
   }
-
+ LOG4J2*/
   private class CopyClipBoardAction extends AbstractAction implements
       ClipboardOwner {
     /**
@@ -211,4 +222,5 @@ public class DBMSLogViewer extends JPanel {
     public void lostOwnership(Clipboard arg0, Transferable arg1) {
     }
   }
+  
 }

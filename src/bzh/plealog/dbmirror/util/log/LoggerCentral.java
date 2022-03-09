@@ -22,9 +22,13 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Filter;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.appender.ConsoleAppender;
+import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.config.builder.api.AppenderComponentBuilder;
 import org.apache.logging.log4j.core.config.builder.api.ComponentBuilder;
 import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilder;
@@ -59,7 +63,8 @@ public class LoggerCentral {
   public static final String            APP_LOG_TYPE_PROP_KEY        = DBMSAbstractConfigConstants.APP_KEY_PREFIX+"LOG_TYPE";
   public static enum APP_LOG_TYPE {file, console, none}
 
-  private static final String PATTERN_LAYOUT = "%d{dd-MM-yyyy HH:mm:ss} [%t] %-5p %c | %m%n";
+  public static final String PATTERN_LAYOUT = "%d{dd-MM-yyyy HH:mm:ss} [%t] %-5p %c | %m%n";
+  public static final String SIMPLE_PATTERN_LAYOUT = "%d{HH:mm:ss} | %-5p| %m%n";
   
   
   /**
@@ -364,5 +369,24 @@ public class LoggerCentral {
    */
   public static void configure() {
     configureConsoleLogger(Level.INFO);
+  }
+  
+
+  /**
+   * Add a new appender to logger system.
+   * Mostly used by BeeDeeM UI.
+   */
+  public static void addAppender(Appender appender) {
+    // adapted from https://logging.apache.org/log4j/2.x/manual/customconfig.html (bottom of page)
+    LoggerContext context = LoggerContext.getContext(false);
+    Configuration config = context.getConfiguration();
+    appender.start();
+    config.addAppender(appender);
+    Level level = null;
+    Filter filter = null;
+    for (final LoggerConfig loggerConfig : config.getLoggers().values()) {
+        loggerConfig.addAppender(appender, level, filter);
+    }
+    config.getRootLogger().addAppender(appender, level, filter);
   }
 }

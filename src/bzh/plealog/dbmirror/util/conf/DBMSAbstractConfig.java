@@ -29,7 +29,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.logging.log4j.core.Appender;
 
 import bzh.plealog.dbmirror.fetcher.PProxyConfig;
 import bzh.plealog.dbmirror.util.Utils;
@@ -302,16 +301,6 @@ public class DBMSAbstractConfig {
    */
   public static boolean isUsingDirectConnectionFromLogToLogViewer() {
     return _connectLogViewer;
-  }
-
-  /**
-   * Adds an appender to listen to the KDMS internal logging system.
-   */
-  public static void addLogAppender(Appender app) {
-    /*
-    Category cat = Logger.getInstance(KDMS_ROOTLOG_CATEGORY);
-    cat.addAppender(app);
-     LOG4J2*/
   }
 
   /**
