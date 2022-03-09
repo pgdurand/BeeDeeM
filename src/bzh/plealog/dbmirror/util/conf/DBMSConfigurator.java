@@ -159,12 +159,12 @@ public class DBMSConfigurator {
   public String getProperty(String key) {
     //this was added to enable overriding config file properties using java -D arguments or standard 
     //environment variables.
-    String pkey = DBMSAbstractConfig.APP_KEY_PREFIX+key; 
-    String value = DBMSAbstractConfig.pruneQuotes(System.getProperty(pkey));
+    String pkey = DBMSAbstractConfigConstants.APP_KEY_PREFIX+key; 
+    String value = DBMSAbstractConfigConstants.pruneQuotes(System.getProperty(pkey));
     if (value==null) {
       //added to get config from environment variables
       //note: using '.' is not allowed for shell variables names, so use "__" instead
-      value = DBMSAbstractConfig.pruneQuotes(System.getenv(pkey.replaceAll("\\.", "__")));
+      value = DBMSAbstractConfigConstants.pruneQuotes(System.getenv(pkey.replaceAll("\\.", "__")));
     }
     return value !=null ? value : _pConfig.getString(key);
   }
