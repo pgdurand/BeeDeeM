@@ -65,7 +65,7 @@ You can easily automate bank installation using such BeeDeeM based scripts with 
 
 ### Use BeeDeeM UI
 
-Here is a screenshot of BeeDeeM user friendly interface:
+In addition to use BeeDeeM from the command-line, the software also comes with a friendly interface:
 
 ![UiManager](doc/dbms_ui.png)
 
