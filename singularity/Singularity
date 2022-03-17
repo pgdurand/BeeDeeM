@@ -6,7 +6,7 @@ Bootstrap : docker
 From: ubuntu:18.04
 
 %post
-	BDM_VERSION=4.7.2
+	BDM_VERSION=4.7.4
         #apt update
         # software-properties-common required to install Java Runtime
         # libbz2 libidn are required by blast tools included in BeeDeeM.
