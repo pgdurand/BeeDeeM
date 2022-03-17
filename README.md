@@ -65,7 +65,7 @@ You can easily automate bank installation using such BeeDeeM based scripts with 
 
 ### Use BeeDeeM UI
 
-Here is a screenshot of BeeDeeM user friendly interface:
+In addition to use BeeDeeM from the command-line, the software also comes with a friendly interface:
 
 ![UiManager](doc/dbms_ui.png)
 
@@ -106,5 +106,5 @@ Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downl
 
 It depends on several thrid-party libraries as stated in the NOTICE.txt file provided with this project.
 
---
-(c) 2007-2020 - Patrick G. Durand and Ludovic Antin
+----
+(c) 2007-2022 - Patrick G. Durand and Ludovic Antin
