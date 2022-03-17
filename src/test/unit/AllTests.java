@@ -47,7 +47,8 @@ import org.junit.runners.Suite.SuiteClasses;
   PAnnotateBlastResultTest.class,
   CmdLineQueryTest.class,
   PFTPLoaderTest.class,
-  BankJsonTest.class
+  BankJsonTest.class,
+  UniprotFormatTest.class
   })
 public class AllTests {
 

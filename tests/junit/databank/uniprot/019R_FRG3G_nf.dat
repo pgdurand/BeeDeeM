@@ -1,0 +1,119 @@
+ID   019R_FRG3G              Reviewed;         851 AA.
+AC   Q6GZV6;
+DT   28-JUN-2011, integrated into UniProtKB/Swiss-Prot.
+DT   19-JUL-2004, sequence version 1.
+DT   23-FEB-2022, entry version 82.
+DE   RecName: Full=Putative serine/threonine-protein kinase 019R;
+DE            EC=2.7.11.1;
+GN   ORFNames=FV3-019R;
+OS   Frog virus 3 (isolate Goorha) (FV-3).
+OC   Viruses; Varidnaviria; Bamfordvirae; Nucleocytoviricota; Megaviricetes;
+OC   Pimascovirales; Iridoviridae; Alphairidovirinae; Ranavirus.
+OX   NCBI_TaxID=654924;
+OH   NCBI_TaxID=30343; Dryophytes versicolor (chameleon treefrog).
+OH   NCBI_TaxID=8404; Lithobates pipiens (Northern leopard frog) (Rana pipiens).
+OH   NCBI_TaxID=45438; Lithobates sylvaticus (Wood frog) (Rana sylvatica).
+OH   NCBI_TaxID=8316; Notophthalmus viridescens (Eastern newt) (Triturus viridescens).
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA].
+RX   PubMed=15165820; DOI=10.1016/j.virol.2004.02.019;
+RA   Tan W.G., Barkman T.J., Gregory Chinchar V., Essani K.;
+RT   "Comparative genomic analyses of frog virus 3, type species of the genus
+RT   Ranavirus (family Iridoviridae).";
+RL   Virology 323:70-84(2004).
+CC   -!- CATALYTIC ACTIVITY:
+CC       Reaction=ATP + L-seryl-[protein] = ADP + H(+) + O-phospho-L-seryl-
+CC         [protein]; Xref=Rhea:RHEA:17989, Rhea:RHEA-COMP:9863, Rhea:RHEA-
+CC         COMP:11604, ChEBI:CHEBI:15378, ChEBI:CHEBI:29999, ChEBI:CHEBI:30616,
+CC         ChEBI:CHEBI:83421, ChEBI:CHEBI:456216; EC=2.7.11.1;
+CC   -!- CATALYTIC ACTIVITY:
+CC       Reaction=ATP + L-threonyl-[protein] = ADP + H(+) + O-phospho-L-
+CC         threonyl-[protein]; Xref=Rhea:RHEA:46608, Rhea:RHEA-COMP:11060,
+CC         Rhea:RHEA-COMP:11605, ChEBI:CHEBI:15378, ChEBI:CHEBI:30013,
+CC         ChEBI:CHEBI:30616, ChEBI:CHEBI:61977, ChEBI:CHEBI:456216;
+CC         EC=2.7.11.1;
+CC   -!- SIMILARITY: Belongs to the protein kinase superfamily. Ser/Thr protein
+CC       kinase family. {ECO:0000255|PROSITE-ProRule:PRU00159}.
+CC   ---------------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see https://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution (CC BY 4.0) License
+CC   ---------------------------------------------------------------------------
+DR   EMBL; AY548484; AAT09678.1; -; Genomic_DNA.
+DR   RefSeq; YP_031597.1; NC_005946.1.
+DR   PRIDE; Q6GZV6; -.
+DR   GeneID; 2947739; -.
+DR   KEGG; vg:2947739; -.
+DR   Proteomes; UP000008770; Genome.
+DR   GO; GO:0005524; F:ATP binding; IEA:UniProtKB-KW.
+DR   GO; GO:0106310; F:protein serine kinase activity; IEA:RHEA.
+DR   GO; GO:0004674; F:protein serine/threonine kinase activity; IEA:UniProtKB-KW.
+DR   GO; GO:0004712; F:protein serine/threonine/tyrosine kinase activity; IEA:RHEA.
+DR   InterPro; IPR014901; 2-cysteine_adaptor.
+DR   InterPro; IPR011009; Kinase-like_dom_sf.
+DR   InterPro; IPR000719; Prot_kinase_dom.
+DR   InterPro; IPR017441; Protein_kinase_ATP_BS.
+DR   InterPro; IPR008271; Ser/Thr_kinase_AS.
+DR   Pfam; PF08793; 2C_adapt; 5.
+DR   Pfam; PF00069; Pkinase; 1.
+DR   SMART; SM00220; S_TKc; 1.
+DR   SUPFAM; SSF56112; SSF56112; 1.
+DR   PROSITE; PS00107; PROTEIN_KINASE_ATP; 1.
+DR   PROSITE; PS50011; PROTEIN_KINASE_DOM; 1.
+DR   PROSITE; PS00108; PROTEIN_KINASE_ST; 1.
+PE   3: Inferred from homology;
+KW   ATP-binding; Kinase; Nucleotide-binding; Reference proteome;
+KW   Serine/threonine-protein kinase; Transferase.
+FT   ACT_SITE        608
+FT                   /note="Proton acceptor"
+FT                   /evidence="ECO:0000255|PROSITE-ProRule:PRU00159,
+FT                   ECO:0000255|PROSITE-ProRule:PRU10027"
+FT   CHAIN           1..851
+FT                   /note="Putative serine/threonine-protein kinase 019R"
+FT                   /id="PRO_0000410576"
+FT   DOMAIN          456..851
+FT                   /note="Protein kinase"
+FT                   /evidence="ECO:0000255|PROSITE-ProRule:PRU00159"
+FT   NP_BIND         462..470
+FT                   /note="ATP"
+FT                   /evidence="ECO:0000255|PROSITE-ProRule:PRU00159"
+FT   REGION          1..24
+FT                   /note="Disordered"
+FT                   /evidence="ECO:0000256|SAM:MobiDB-lite"
+FT   REGION          61..91
+FT                   /note="Disordered"
+FT                   /evidence="ECO:0000256|SAM:MobiDB-lite"
+FT   REGION          104..160
+FT                   /note="Disordered"
+FT                   /evidence="ECO:0000256|SAM:MobiDB-lite"
+FT   REGION          190..216
+FT                   /note="Disordered"
+FT                   /evidence="ECO:0000256|SAM:MobiDB-lite"
+FT   REGION          340..400
+FT                   /note="Disordered"
+FT                   /evidence="ECO:0000256|SAM:MobiDB-lite"
+FT   COMPBIAS        198..212
+FT                   /note="Basic residues"
+FT                   /evidence="ECO:0000256|SAM:MobiDB-lite"
+FT   COMPBIAS        341..380
+FT                   /note="Polar residues"
+FT                   /evidence="ECO:0000256|SAM:MobiDB-lite"
+FT   BINDING         485
+FT                   /note="ATP"
+FT                   /evidence="ECO:0000255|PROSITE-ProRule:PRU00159"
+SQ   SEQUENCE   851 AA;  92929 MW;  5FB497EDDDD37D89 CRC64;
+     MATNYCDEFE RNPTRNPRTG RTIKRGGPVF RALERECSDG AARVFPAAAV RGAAAARAAS
+     PRVAAASPCP EFARDPTRNP RTGRPIKRGG PVFRALEREC ADYGGASPRR VSPARAFPNR
+     RVSPARRQSP AEAAEASPCP EFARDPTRNP RTGRTIKRGG PTYRALEAEC ADYGRLSPIR
+     SPWSDWSSTG LSPFRSHMRK SPARRSPARR SPARRSLARY TEHLTSDSET EVDYDARNVI
+     RSQVGPGGVC ERFAADPTRN PVTGSPLSRN DPLYTDLMEI CKGYPDTPLT KSLTGEGTDD
+     DTCEAFCRDP TRNPVTGQKM RRNGIEYQMF AEECDCSGIS RPSGVSRTSG TSGSSGSSAS
+     SRPPNSFEAP GASSRPPNSF EASGAARVPG TPSVSRGEPR WMSSISTRHN YDESNPMSVA
+     FRLRHVKDIR KFLRTVRPGR SGFCATDKGG WLGSAAVSDN VIGQGSWGSV HMVKFRDFPE
+     EFVVKEAVLM SVSEKHRYKP TVVWDEWAAG SVPDEVVVNN MVTEIAATGM TPFVPLTAGA
+     GACDSCNPQL LEKAAKVTKC YLQAMEAADF SLDRVLPTMS PDQAASALAQ ILLGLQSLQT
+     TLGIMHNDIK AHNILVKRVP PGGYWKVTDS FNGQVFYIPN EGYLCMLADY GVVRLVKPAV
+     GMDTLYGTRN ARFVPRDVGR WGKGAGTEYV VTPIRSKISV VVRGGRFVGV EPNKAVRYWK
+     NTDTSKVGDV ITTNNVFYMG YDIEPDMQVQ LDDTNSFPVW ESRGDVADCV RTFVGGKRAS
+     QPGFHRLFYK KTGSAWEKAA ETVAKQNPLF SGFTLDGSGL KYIRAATACA YIFPGMAVPR
+     PGEREIESFT M
+//

@@ -820,7 +820,7 @@ public class DBUtils {
   /**
    * Returns a SequenceInfo object from a Uniprot sequence.
    */
-  private static IBankSequenceInfo returnUPSeqInfo(Sequence seq, boolean isEmbl) {
+  public static IBankSequenceInfo returnUPSeqInfo(Sequence seq, boolean isEmbl) {
     IBankSequenceInfo si;
     String value;
     Annotation annotItem;
@@ -1075,6 +1075,12 @@ public class DBUtils {
     iter = seq.features();
     while (iter.hasNext()) {
       feat = (Feature) iter.next();
+      //Fuzzy Location from Biojava: not handled by BeeDeeM
+      if ((feat.getLocation().getMin()<0 ||
+          feat.getLocation().getMin()==Integer.MAX_VALUE ||
+          feat.getLocation().getMax()<0 ||
+          feat.getLocation().getMax()==Integer.MAX_VALUE)) 
+        continue;
       strLoc = gff.formatLocation(feat);
       fLoc = analyseFeatureLocation(strLoc, id != null ? id : "seqId", -adjust);
       if (fLoc == null)
@@ -1139,7 +1145,7 @@ public class DBUtils {
    * 
    * @return a feature table.
    */
-  private static FeatureTable returnUPFeatureTable(Sequence seq, String id,
+  public static FeatureTable returnUPFeatureTable(Sequence seq, String id,
       int start, int stop, boolean remap) {
 
     FeatureTable ft;

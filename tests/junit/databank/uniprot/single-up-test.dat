@@ -1,0 +1,468 @@
+ID   11S1_ELAGV              Reviewed;          12 AA.
+AC   C0HLM8;
+DT   26-FEB-2020, integrated into UniProtKB/Swiss-Prot.
+DT   26-FEB-2020, sequence version 1.
+DT   10-FEB-2021, entry version 3.
+DE   RecName: Full=Globulin 1 {ECO:0000303|Ref.1};
+DE   AltName: Full=11S globulin seed storage protein 1 {ECO:0000305};
+DE   Contains:
+DE     RecName: Full=Globulin 1 basic chain {ECO:0000305};
+DE   Flags: Fragment;
+OS   Elaeis guineensis var. tenera (Oil palm).
+OC   Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+OC   Spermatophyta; Magnoliopsida; Liliopsida; Arecaceae; Arecoideae; Cocoseae;
+OC   Elaeidinae; Elaeis.
+OX   NCBI_TaxID=51953;
+RN   [1] {ECO:0000305}
+RP   PROTEIN SEQUENCE.
+RA   Tapal A., Martin A., Kaul Tiku P.;
+RT   "Oil palm (Elaeis guineensis var. tenera) kernel globulin: Proteomic
+RT   characterization.";
+RL   Submitted (OCT-2019) to UniProtKB.
+CC   -!- FUNCTION: Seed storage protein. {ECO:0000250|UniProtKB:A0A222NNM9}.
+CC   -!- SUBUNIT: Hexamer; each subunit is composed of an acidic and a basic
+CC       chain derived from a single precursor and linked by a disulfide bond.
+CC       {ECO:0000250|UniProtKB:A0A222NNM9}.
+CC   -!- SIMILARITY: Belongs to the 11S seed storage protein (globulins) family.
+CC       {ECO:0000305}.
+CC   ---------------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see https://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution (CC BY 4.0) License
+CC   ---------------------------------------------------------------------------
+DR   Proteomes; UP000504607; Genome assembly.
+DR   GO; GO:0045735; F:nutrient reservoir activity; IEA:UniProtKB-KW.
+PE   1: Evidence at protein level;
+KW   Direct protein sequencing; Disulfide bond; Reference proteome;
+KW   Seed storage protein; Storage protein.
+FT   CHAIN           1..>12
+FT                   /note="Globulin 1 basic chain"
+FT                   /evidence="ECO:0000305"
+FT                   /id="PRO_0000448941"
+FT   DISULFID        7..?
+FT                   /note="Interchain (between acidic and basic chains)"
+FT                   /evidence="ECO:0000250|UniProtKB:A0A222NNM9"
+FT   NON_TER         12
+FT                   /evidence="ECO:0000305"
+SQ   SEQUENCE   12 AA;  1402 MW;  82741C1D1EBEAB41 CRC64;
+     GLEETYCSMK IK
+//
+ID   1433B_BOVIN             Reviewed;         246 AA.
+AC   P68250; P29358; Q0VCL1;
+DT   25-OCT-2004, integrated into UniProtKB/Swiss-Prot.
+DT   23-JAN-2007, sequence version 2.
+DT   23-FEB-2022, entry version 120.
+DE   RecName: Full=14-3-3 protein beta/alpha;
+DE   AltName: Full=Protein kinase C inhibitor protein 1;
+DE            Short=KCIP-1;
+DE   Contains:
+DE     RecName: Full=14-3-3 protein beta/alpha, N-terminally processed;
+GN   Name=YWHAB;
+OS   Bos taurus (Bovine).
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Laurasiatheria; Artiodactyla; Ruminantia; Pecora; Bovidae;
+OC   Bovinae; Bos.
+OX   NCBI_TaxID=9913;
+RN   [1]
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE MRNA] (ISOFORM LONG).
+RC   STRAIN=Hereford; TISSUE=Fetal pons;
+RG   NIH - Mammalian Gene Collection (MGC) project;
+RL   Submitted (AUG-2006) to the EMBL/GenBank/DDBJ databases.
+RN   [2]
+RP   PROTEIN SEQUENCE OF 2-246.
+RX   PubMed=1671102; DOI=10.1016/0022-2836(91)90616-e;
+RA   Isobe T., Ichimura T., Sunaya T., Okuyama T., Takahashi N., Kuwano R.,
+RA   Takahashi Y.;
+RT   "Distinct forms of the protein kinase-dependent activator of tyrosine and
+RT   tryptophan hydroxylases.";
+RL   J. Mol. Biol. 217:125-132(1991).
+RN   [3]
+RP   NUCLEOTIDE SEQUENCE [MRNA] (ISOFORM SHORT).
+RA   Jones J.M., Niikura T., Pinke R.M., Guo W., Molday L., Leykam J.,
+RA   McConnell D.G.;
+RT   "Expression of 14-3-3 proteins in bovine retinal photoreceptors.";
+RL   Submitted (JAN-1998) to the EMBL/GenBank/DDBJ databases.
+RN   [4]
+RP   FUNCTION.
+RX   PubMed=7931346; DOI=10.1046/j.1471-4159.1994.63051908.x;
+RA   Tanji M., Horwitz R., Rosenfeld G., Waymire J.C.;
+RT   "Activation of protein kinase C by purified bovine brain 14-3-3: comparison
+RT   with tyrosine hydroxylase activation.";
+RL   J. Neurochem. 63:1908-1916(1994).
+CC   -!- FUNCTION: Adapter protein implicated in the regulation of a large
+CC       spectrum of both general and specialized signaling pathways. Binds to a
+CC       large number of partners, usually by recognition of a phosphoserine or
+CC       phosphothreonine motif. Binding generally results in the modulation of
+CC       the activity of the binding partner. Negative regulator of
+CC       osteogenesis. Blocks the nuclear translocation of the phosphorylated
+CC       form (by AKT1) of SRPK2 and antagonizes its stimulatory effect on
+CC       cyclin D1 expression resulting in blockage of neuronal apoptosis
+CC       elicited by SRPK2. Negative regulator of signaling cascades that
+CC       mediate activation of MAP kinases via AKAP13.
+CC       {ECO:0000250|UniProtKB:P31946, ECO:0000269|PubMed:7931346}.
+CC   -!- SUBUNIT: Homodimer (By similarity). Interacts with SAMSN1 and PRKCE (By
+CC       similarity). Interacts with AKAP13. Interacts with SSH1 and
+CC       TORC2/CRTC2. Interacts with ABL1; the interaction results in
+CC       cytoplasmic location of ABL1 and inhibition of cABL-mediated apoptosis.
+CC       Interacts with ROR2 (dimer); the interaction results in phosphorylation
+CC       of YWHAB on tyrosine residues. Interacts with GAB2. Interacts with YAP1
+CC       (phosphorylated form). Interacts with the phosphorylated (by AKT1) form
+CC       of SRPK2. Interacts with PKA-phosphorylated AANAT. Interacts with
+CC       MYO1C. Interacts with SIRT2 (By similarity). Interacts with the 'Thr-
+CC       369' phosphorylated form of DAPK2 (By similarity). Interacts with
+CC       PI4KB, TBC1D22A and TBC1D22B. Interacts with the 'Ser-1134' and 'Ser-
+CC       1161' phosphorylated form of SOS1 (By similarity). Interacts (via
+CC       phosphorylated form) with YWHAB; this interaction occurs in a protein
+CC       kinase AKT1-dependent manner (By similarity). Interacts with SLITRK1.
+CC       Interacts with SYNPO2 (phosphorylated form); YWHAB competes with ACTN2
+CC       for interaction with SYNPO2 (By similarity). Interacts with RIPOR2 (via
+CC       phosphorylated form); this interaction occurs in a chemokine-dependent
+CC       manner and does not compete for binding of RIPOR2 with RHOA nor blocks
+CC       inhibition of RIPOR2-mediated RHOA activity (By similarity). Interacts
+CC       with MARK2 and MARK3 (By similarity). Interacts with TESK1; the
+CC       interaction is dependent on the phosphorylation of TESK1 'Ser-439' and
+CC       inhibits TESK1 kinase activity (By similarity). Interacts with MEFV (By
+CC       similarity). {ECO:0000250|UniProtKB:P31946,
+CC       ECO:0000250|UniProtKB:Q9CQV8}.
+CC   -!- SUBCELLULAR LOCATION: Cytoplasm {ECO:0000250|UniProtKB:P31946}.
+CC       Melanosome {ECO:0000250|UniProtKB:P31946}.
+CC   -!- ALTERNATIVE PRODUCTS:
+CC       Event=Alternative initiation; Named isoforms=2;
+CC         Comment=It is uncertain whether isoform Short is produced by
+CC         alternative initiation or another biological event.;
+CC       Name=Long;
+CC         IsoId=P68250-1; Sequence=Displayed;
+CC       Name=Short;
+CC         IsoId=P68250-2; Sequence=VSP_018631;
+CC   -!- PTM: The alpha, brain-specific form differs from the beta form in being
+CC       phosphorylated. Phosphorylated on Ser-60 by protein kinase C delta type
+CC       catalytic subunit in a sphingosine-dependent fashion. {ECO:0000250}.
+CC   -!- SIMILARITY: Belongs to the 14-3-3 family. {ECO:0000305}.
+CC   ---------------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see https://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution (CC BY 4.0) License
+CC   ---------------------------------------------------------------------------
+DR   EMBL; BC120112; AAI20113.1; -; mRNA.
+DR   EMBL; AF043736; AAC02090.1; -; mRNA.
+DR   PIR; S13467; S13467.
+DR   RefSeq; NP_777219.2; NM_174794.2.
+DR   SMR; P68250; -.
+DR   STRING; 9913.ENSBTAP00000022411; -.
+DR   iPTMnet; P68250; -.
+DR   PaxDb; P68250; -.
+DR   PeptideAtlas; P68250; -.
+DR   PRIDE; P68250; -.
+DR   GeneID; 286863; -.
+DR   KEGG; bta:286863; -.
+DR   CTD; 7529; -.
+DR   eggNOG; KOG0841; Eukaryota.
+DR   HOGENOM; CLU_058290_1_0_1; -.
+DR   InParanoid; P68250; -.
+DR   OrthoDB; 1176818at2759; -.
+DR   TreeFam; TF102003; -.
+DR   Proteomes; UP000009136; Unplaced.
+DR   GO; GO:0005737; C:cytoplasm; ISS:AgBase.
+DR   GO; GO:0042470; C:melanosome; IEA:UniProtKB-SubCell.
+DR   GO; GO:0048471; C:perinuclear region of cytoplasm; ISS:AgBase.
+DR   GO; GO:0019904; F:protein domain specific binding; ISS:AgBase.
+DR   GO; GO:0004860; F:protein kinase inhibitor activity; ISS:UniProtKB.
+DR   GO; GO:0034613; P:cellular protein localization; IBA:GO_Central.
+DR   GO; GO:0045744; P:negative regulation of G protein-coupled receptor signaling pathway; ISS:UniProtKB.
+DR   GO; GO:0006605; P:protein targeting; ISS:AgBase.
+DR   GO; GO:0007165; P:signal transduction; IBA:GO_Central.
+DR   Gene3D; 1.20.190.20; -; 1.
+DR   InterPro; IPR000308; 14-3-3.
+DR   InterPro; IPR023409; 14-3-3_CS.
+DR   InterPro; IPR036815; 14-3-3_dom_sf.
+DR   InterPro; IPR023410; 14-3-3_domain.
+DR   PANTHER; PTHR18860; PTHR18860; 1.
+DR   Pfam; PF00244; 14-3-3; 1.
+DR   PIRSF; PIRSF000868; 14-3-3; 1.
+DR   PRINTS; PR00305; 1433ZETA.
+DR   SMART; SM00101; 14_3_3; 1.
+DR   SUPFAM; SSF48445; SSF48445; 1.
+DR   PROSITE; PS00796; 1433_1; 1.
+DR   PROSITE; PS00797; 1433_2; 1.
+PE   1: Evidence at protein level;
+KW   Acetylation; Alternative initiation; Cytoplasm; Direct protein sequencing;
+KW   Isopeptide bond; Nitration; Phosphoprotein; Reference proteome;
+KW   Ubl conjugation.
+FT   MOD_RES         P68251-2:1
+FT                   /note="N-acetylmethionine"
+FT                   /evidence="ECO:0000269|PubMed:1317796"
+FT   CHAIN           1..246
+FT                   /note="14-3-3 protein beta/alpha"
+FT                   /id="PRO_0000367899"
+FT   INIT_MET        1
+FT                   /note="Removed; alternate"
+FT                   /evidence="ECO:0000250|UniProtKB:P31946,
+FT                   ECO:0000269|PubMed:1671102"
+FT   CHAIN           2..246
+FT                   /note="14-3-3 protein beta/alpha, N-terminally processed"
+FT                   /id="PRO_0000000001"
+FT   SITE            58
+FT                   /note="Interaction with phosphoserine on interacting
+FT                   protein"
+FT                   /evidence="ECO:0000250"
+FT   SITE            129
+FT                   /note="Interaction with phosphoserine on interacting
+FT                   protein"
+FT                   /evidence="ECO:0000250"
+FT   MOD_RES         1
+FT                   /note="N-acetylmethionine"
+FT                   /evidence="ECO:0000250|UniProtKB:P31946"
+FT   MOD_RES         2
+FT                   /note="N-acetylthreonine; in 14-3-3 protein beta/alpha, N-
+FT                   terminally processed"
+FT                   /evidence="ECO:0000250|UniProtKB:P31946"
+FT   MOD_RES         2
+FT                   /note="Phosphothreonine"
+FT                   /evidence="ECO:0000250|UniProtKB:P31946"
+FT   MOD_RES         5
+FT                   /note="N6-acetyllysine"
+FT                   /evidence="ECO:0000250|UniProtKB:P27348"
+FT   MOD_RES         51
+FT                   /note="N6-acetyllysine; alternate"
+FT                   /evidence="ECO:0000250|UniProtKB:P27348"
+FT   MOD_RES         60
+FT                   /note="Phosphoserine"
+FT                   /evidence="ECO:0000250|UniProtKB:Q9CQV8"
+FT   MOD_RES         70
+FT                   /note="N6-acetyllysine"
+FT                   /evidence="ECO:0000250|UniProtKB:P31946"
+FT   MOD_RES         84
+FT                   /note="3'-nitrotyrosine"
+FT                   /evidence="ECO:0000250|UniProtKB:Q9CQV8"
+FT   MOD_RES         106
+FT                   /note="3'-nitrotyrosine"
+FT                   /evidence="ECO:0000250|UniProtKB:Q9CQV8"
+FT   MOD_RES         117
+FT                   /note="N6-acetyllysine"
+FT                   /evidence="ECO:0000250|UniProtKB:P31946"
+FT   MOD_RES         186
+FT                   /note="Phosphoserine"
+FT                   /evidence="ECO:0000250|UniProtKB:P68251"
+FT   MOD_RES         232
+FT                   /note="Phosphoserine"
+FT                   /evidence="ECO:0000250|UniProtKB:P31946"
+FT   CROSSLNK        51
+FT                   /note="Glycyl lysine isopeptide (Lys-Gly) (interchain with
+FT                   G-Cter in SUMO2); alternate"
+FT                   /evidence="ECO:0000250|UniProtKB:P27348"
+FT   VAR_SEQ         1..2
+FT                   /note="Missing (in isoform Short)"
+FT                   /evidence="ECO:0000303|Ref.3"
+FT                   /id="VSP_018631"
+FT   CONFLICT        101
+FT                   /note="Q -> E (in Ref. 1; AAI20113)"
+FT                   /evidence="ECO:0000305"
+FT   MOD_RES         P68250-2:1
+FT                   /note="N-acetylmethionine"
+FT                   /evidence="ECO:0000250"
+SQ   SEQUENCE   246 AA;  28081 MW;  CABA32314D86800D CRC64;
+     MTMDKSELVQ KAKLAEQAER YDDMAAAMKA VTEQGHELSN EERNLLSVAY KNVVGARRSS
+     WRVISSIEQK TERNEKKQQM GKEYREKIEA ELQDICNDVL QLLDKYLIPN ATQPESKVFY
+     LKMKGDYFRY LSEVASGDNK QTTVSNSQQA YQEAFEISKK EMQPTHPIRL GLALNFSVFY
+     YEILNSPEKA CSLAKTAFDE AIAELDTLNE ESYKDSTLIM QLLRDNLTLW TSENQGDEGD
+     AGEGEN
+//
+ID   1433B_SHEEP             Reviewed;         193 AA.
+AC   P68251; P29358;
+DT   25-OCT-2004, integrated into UniProtKB/Swiss-Prot.
+DT   23-JAN-2007, sequence version 2.
+DT   02-JUN-2021, entry version 97.
+DE   RecName: Full=14-3-3 protein beta/alpha;
+DE   AltName: Full=Protein kinase C inhibitor protein 1;
+DE            Short=KCIP-1;
+DE   Contains:
+DE     RecName: Full=14-3-3 protein beta/alpha, N-terminally processed;
+DE   Flags: Fragments;
+GN   Name=YWHAB;
+OS   Ovis aries (Sheep).
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Laurasiatheria; Artiodactyla; Ruminantia; Pecora; Bovidae;
+OC   Caprinae; Ovis.
+OX   NCBI_TaxID=9940;
+RN   [1]
+RP   PROTEIN SEQUENCE (ISOFORM SHORT), AND ACETYLATION AT MET-1 (ISOFORM SHORT).
+RC   TISSUE=Brain;
+RX   PubMed=1317796; DOI=10.1111/j.1432-1033.1992.tb16946.x;
+RA   Toker A., Sellers L.A., Amess B., Patel Y., Harris A., Aitken A.;
+RT   "Multiple isoforms of a protein kinase C inhibitor (KCIP-1/14-3-3) from
+RT   sheep brain. Amino acid sequence of phosphorylated forms.";
+RL   Eur. J. Biochem. 206:453-461(1992).
+RN   [2]
+RP   PROTEIN SEQUENCE OF 3-24 (ISOFORM LONG).
+RC   TISSUE=Brain;
+RX   PubMed=2143472; DOI=10.1111/j.1432-1033.1990.tb19138.x;
+RA   Toker A., Ellis C.A., Sellers L.A., Aitken A.;
+RT   "Protein kinase C inhibitor proteins. Purification from sheep brain and
+RT   sequence similarity to lipocortins and 14-3-3 protein.";
+RL   Eur. J. Biochem. 191:421-429(1990).
+RN   [3]
+RP   PHOSPHORYLATION AT SER-149, AND IDENTIFICATION BY MASS SPECTROMETRY.
+RX   PubMed=7890696; DOI=10.1074/jbc.270.11.5706;
+RA   Aitken A., Howell S., Jones D., Madrazo J., Patel Y.;
+RT   "14-3-3 alpha and delta are the phosphorylated forms of raf-activating 14-
+RT   3-3 beta and zeta. In vivo stoichiometric phosphorylation in brain at a
+RT   Ser-Pro-Glu-Lys motif.";
+RL   J. Biol. Chem. 270:5706-5709(1995).
+RN   [4]
+RP   ACETYLATION AT THR-2, AND IDENTIFICATION BY MASS SPECTROMETRY.
+RA   Aitken A., Patel Y., Martin H., Jones D., Robinson K., Madrazo J.,
+RA   Howell S.;
+RT   "Electrospray mass spectroscopy analysis with online trapping of
+RT   posttranslationally modified mammalian and avian brain 14-3-3 isoforms.";
+RL   J. Protein Chem. 13:463-465(1994).
+RN   [5]
+RP   INTERACTION WITH AANAT.
+RX   PubMed=11427721; DOI=10.1073/pnas.141118798;
+RA   Ganguly S., Gastel J.A., Weller J.L., Schwartz C., Jaffe H.,
+RA   Namboodiri M.A., Coon S.L., Hickman A.B., Rollag M., Obsil T.,
+RA   Beauverger P., Ferry G., Boutin J.A., Klein D.C.;
+RT   "Role of a pineal cAMP-operated arylalkylamine N-acetyltransferase/14-3-3-
+RT   binding switch in melatonin synthesis.";
+RL   Proc. Natl. Acad. Sci. U.S.A. 98:8083-8088(2001).
+CC   -!- FUNCTION: Adapter protein implicated in the regulation of a large
+CC       spectrum of both general and specialized signaling pathways. Binds to a
+CC       large number of partners, usually by recognition of a phosphoserine or
+CC       phosphothreonine motif. Binding generally results in the modulation of
+CC       the activity of the binding partner. Negative regulator of
+CC       osteogenesis. Blocks the nuclear translocation of the phosphorylated
+CC       form (by AKT1) of SRPK2 and antagonizes its stimulatory effect on
+CC       cyclin D1 expression resulting in blockage of neuronal apoptosis
+CC       elicited by SRPK2. Negative regulator of signaling cascades that
+CC       mediate activation of MAP kinases via AKAP13.
+CC       {ECO:0000250|UniProtKB:P31946}.
+CC   -!- SUBUNIT: Homodimer (By similarity). Interacts with SAMSN1 and PRKCE (By
+CC       similarity). Interacts with AKAP13. Interacts with SSH1 and
+CC       TORC2/CRTC2. Interacts with ABL1; the interaction results in
+CC       cytoplasmic location of ABL1 and inhibition of cABL-mediated apoptosis.
+CC       Interacts with ROR2 (dimer); the interaction results in phosphorylation
+CC       of YWHAB on tyrosine residues. Interacts with GAB2. Interacts with YAP1
+CC       (phosphorylated form). Interacts with the phosphorylated (by AKT1) form
+CC       of SRPK2 (By similarity). Interacts with PKA-phosphorylated AANAT
+CC       (PubMed:11427721). Interacts with MYO1C. Interacts with SIRT2 (By
+CC       similarity). Interacts with the 'Thr-369' phosphorylated form of DAPK2
+CC       (By similarity). Interacts with PI4KB, TBC1D22A and TBC1D22B. Interacts
+CC       with the 'Ser-1134' and 'Ser-1161' phosphorylated form of SOS1 (By
+CC       similarity). Interacts (via phosphorylated form) with YWHAB; this
+CC       interaction occurs in a protein kinase AKT1-dependent manner (By
+CC       similarity). Interacts with SLITRK1. Interacts with SYNPO2
+CC       (phosphorylated form); YWHAB competes with ACTN2 for interaction with
+CC       SYNPO2 (By similarity). Interacts with RIPOR2 (via phosphorylated
+CC       form); this interaction occurs in a chemokine-dependent manner and does
+CC       not compete for binding of RIPOR2 with RHOA nor blocks inhibition of
+CC       RIPOR2-mediated RHOA activity (By similarity). Interacts with MARK2 and
+CC       MARK3 (By similarity). Interacts with TESK1; the interaction is
+CC       dependent on the phosphorylation of TESK1 'Ser-430' and inhibits TESK1
+CC       kinase activity (By similarity). Interacts with MEFV (By similarity).
+CC       {ECO:0000250|UniProtKB:P31946, ECO:0000250|UniProtKB:Q9CQV8,
+CC       ECO:0000269|PubMed:11427721}.
+CC   -!- SUBCELLULAR LOCATION: Cytoplasm {ECO:0000250|UniProtKB:P31946}.
+CC       Melanosome {ECO:0000250|UniProtKB:P31946}.
+CC   -!- ALTERNATIVE PRODUCTS:
+CC       Event=Alternative initiation; Named isoforms=2;
+CC         Comment=It is uncertain whether isoform Short is produced by
+CC         alternative initiation or another biological event.;
+CC       Name=Long;
+CC         IsoId=P68251-1; Sequence=Displayed;
+CC       Name=Short;
+CC         IsoId=P68251-2; Sequence=VSP_018636;
+CC   -!- PTM: Form alpha differs from form beta in being phosphorylated.
+CC       Phosphorylated on Ser-60 by protein kinase C delta type catalytic
+CC       subunit in a sphingosine-dependent fashion (By similarity).
+CC       {ECO:0000250}.
+CC   -!- SIMILARITY: Belongs to the 14-3-3 family. {ECO:0000305}.
+CC   ---------------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see https://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution (CC BY 4.0) License
+CC   ---------------------------------------------------------------------------
+DR   SMR; P68251; -.
+DR   iPTMnet; P68251; -.
+DR   OMA; KGCQLAR; -.
+DR   Proteomes; UP000002356; Unplaced.
+DR   GO; GO:0042470; C:melanosome; IEA:UniProtKB-SubCell.
+DR   GO; GO:0004860; F:protein kinase inhibitor activity; ISS:UniProtKB.
+DR   GO; GO:0045744; P:negative regulation of G protein-coupled receptor signaling pathway; ISS:UniProtKB.
+DR   Gene3D; 1.20.190.20; -; 2.
+DR   InterPro; IPR000308; 14-3-3.
+DR   InterPro; IPR023409; 14-3-3_CS.
+DR   InterPro; IPR036815; 14-3-3_dom_sf.
+DR   InterPro; IPR023410; 14-3-3_domain.
+DR   PANTHER; PTHR18860; PTHR18860; 2.
+DR   Pfam; PF00244; 14-3-3; 2.
+DR   SMART; SM00101; 14_3_3; 1.
+DR   SUPFAM; SSF48445; SSF48445; 1.
+DR   PROSITE; PS00796; 1433_1; 1.
+DR   PROSITE; PS00797; 1433_2; 1.
+PE   1: Evidence at protein level;
+KW   Acetylation; Alternative initiation; Cytoplasm; Direct protein sequencing;
+KW   Isopeptide bond; Nitration; Phosphoprotein; Reference proteome;
+KW   Ubl conjugation.
+FT   CHAIN           1..193
+FT                   /note="14-3-3 protein beta/alpha"
+FT                   /id="PRO_0000367905"
+FT   INIT_MET        1
+FT                   /note="Removed; alternate"
+FT                   /evidence="ECO:0000250|UniProtKB:P68250"
+FT   CHAIN           2..193
+FT                   /note="14-3-3 protein beta/alpha, N-terminally processed"
+FT                   /id="PRO_0000000009"
+FT   SITE            58
+FT                   /note="Interaction with phosphoserine on interacting
+FT                   protein"
+FT                   /evidence="ECO:0000250"
+FT   SITE            92
+FT                   /note="Interaction with phosphoserine on interacting
+FT                   protein"
+FT                   /evidence="ECO:0000250"
+FT   MOD_RES         1
+FT                   /note="N-acetylmethionine"
+FT                   /evidence="ECO:0000250|UniProtKB:P31946"
+FT   MOD_RES         2
+FT                   /note="N-acetylthreonine; in 14-3-3 protein beta/alpha, N-
+FT                   terminally processed"
+FT                   /evidence="ECO:0000269|Ref.4"
+FT   MOD_RES         2
+FT                   /note="Phosphothreonine"
+FT                   /evidence="ECO:0000250|UniProtKB:P31946"
+FT   MOD_RES         5
+FT                   /note="N6-acetyllysine"
+FT                   /evidence="ECO:0000250|UniProtKB:P27348"
+FT   MOD_RES         51
+FT                   /note="N6-acetyllysine; alternate"
+FT                   /evidence="ECO:0000250|UniProtKB:P27348"
+FT   MOD_RES         60
+FT                   /note="Phosphoserine"
+FT                   /evidence="ECO:0000250|UniProtKB:Q9CQV8"
+FT   MOD_RES         70
+FT                   /note="N6-acetyllysine"
+FT                   /evidence="ECO:0000250|UniProtKB:P31946"
+FT   MOD_RES         84
+FT                   /note="3'-nitrotyrosine"
+FT                   /evidence="ECO:0000250|UniProtKB:Q9CQV8"
+FT   MOD_RES         149
+FT                   /note="Phosphoserine"
+FT                   /evidence="ECO:0000269|PubMed:7890696"
+FT   MOD_RES         183
+FT                   /note="Phosphoserine"
+FT                   /evidence="ECO:0000250|UniProtKB:P31946"
+FT   CROSSLNK        51
+FT                   /note="Glycyl lysine isopeptide (Lys-Gly) (interchain with
+FT                   G-Cter in SUMO2); alternate"
+FT                   /evidence="ECO:0000250|UniProtKB:P27348"
+FT   VAR_SEQ         1..2
+FT                   /note="Missing (in isoform Short)"
+FT                   /evidence="ECO:0000305"
+FT                   /id="VSP_018636"
+FT   NON_CONS        84..85
+FT                   /evidence="ECO:0000305"
+FT   NON_CONS        150..151
+FT                   /evidence="ECO:0000305"
+FT   NON_TER         193
+SQ   SEQUENCE   193 AA;  22054 MW;  923914FE5226E608 CRC64;
+     MTMDKSELVQ KAKLAEQAER YDDMAAAMKA VTEQGHELSN EERNLLSVAY KNVVGARRSS
+     WRVISSIEQK TERNEKKQQM GKEYKMKGDY FRYLSEVASG DNKQTTVSNS QQAYQEAFEI
+     SKKEMQPTHP IRLGLALNFS VFYYEILNSP EAIAELDTLN EESYKDSTLI MQLLRDNLTL
+     WTSENQGDEG DAG
+//
