@@ -33,6 +33,7 @@ import java.io.Writer;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -79,6 +80,7 @@ import bzh.plealog.dbmirror.util.descriptor.DatabankFormat;
 import bzh.plealog.dbmirror.util.descriptor.DescriptorEntry;
 import bzh.plealog.dbmirror.util.descriptor.IdxDescriptor;
 import bzh.plealog.dbmirror.util.runner.DBMSUniqueSeqIdDetector;
+import bzh.plealog.dbmirror.util.runner.DBStampProperties;
 import bzh.plealog.dbmirror.util.sequence.TaxonMatcherHelper;
 import bzh.plealog.dbmirror.util.xref.DBXrefInstancesManager;
 
@@ -266,6 +268,7 @@ public class DefaultLoaderMonitorTest {
       fail("Unable to load the db descriptor");
     }
 
+    //First, try to get nb sequences with ".num" file
     String ext = "_fdb.num";
     if (_dbConf.getTypeCode().equals("d")) {
       ext = ".num";
@@ -273,21 +276,48 @@ public class DefaultLoaderMonitorTest {
 
     String fastaVolumePath = FilenameUtils.concat(_dbConf.getLocalTmpFolder(),
         _dbConf.getName() + ext);
-    if (!new File(fastaVolumePath).exists()) {
+    boolean foundNumFile = false;
+    if (new File(fastaVolumePath).exists()) {
+      foundNumFile = true;
+    }
+    else {
       // try in prod
       fastaVolumePath = FilenameUtils.concat(_dbConf.getLocalProdFolder(),
           _dbConf.getName() + ext);
+      if (new File(fastaVolumePath).exists()) {
+        foundNumFile = true;
+      }
     }
-    String line;
-    try {
-      line = Utils.readFirstLine(new File(fastaVolumePath));
-      return new Integer(line).intValue();
-    } catch (Exception e) {
-      fail("Unable to read the file containing the number of sequences : "
-          + e.getMessage());
+    if (foundNumFile) {
+      String line;
+      try {
+        line = Utils.readFirstLine(new File(fastaVolumePath));
+        return new Integer(line).intValue();
+      } catch (Exception e) {
+        fail("Unable to read the file containing the number of sequences : " +
+            fastaVolumePath + ": " + e.getMessage());
+      }
+      return -1;
+    }
+    
+    //Otherwise, try to get nb sequences from time.txt file
+    fastaVolumePath = _dbConf.getLocalTmpFolder();
+    if (!new File(fastaVolumePath).exists()) {
+      // try in prod
+      fastaVolumePath = _dbConf.getLocalProdFolder();
+      if (!new File(fastaVolumePath).exists()) {
+        fail("Unable to read the file containing the number of sequences/entries : "
+            + fastaVolumePath);
+      }
+    }
+    Properties props = DBStampProperties.readDBStamp(fastaVolumePath);
+    
+    int nbseqs = Integer.valueOf(props.getProperty(DBStampProperties.NB_SEQUENCES));
+    if (nbseqs<0) {
+      nbseqs = Integer.valueOf(props.getProperty(DBStampProperties.NB_ENTRIES));
     }
 
-    return -1;
+    return nbseqs;
   }
 
   private int getSequenceSizeInIndex(String repositoryName,
