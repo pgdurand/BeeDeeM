@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# Note: QUEUE and LOG_DIR are replaced at runtime by test script
+#       do not modify!
+
 #PBS -q QUEUE
 #PBS -l mem=1g
 #PBS -l ncpus=2

@@ -76,7 +76,7 @@ function test2(){
   # Expected to succeed
   echo "$1/ Test bad queue"
   MY_SCRIPT=$(getPbsScript)
-  ANSWER=$(submit "sequenti" "1g" "1" "01:00:00" "Hello" "$LOG_DIR" "${MY_SCRIPT}.sh")
+  ANSWER=$(submitEx "sequenti" "1g" "1" "01:00:00" "Hello" "$LOG_DIR" "${MY_SCRIPT}.sh")
   RET_CODE=$?
   if [ ! $RET_CODE -eq 0 ]; then testOK ; else testKO; fi
 }
@@ -86,7 +86,7 @@ function test3(){
   # Expected to succeed
   echo "$1/ Test bad script"
   MY_SCRIPT=$(getPbsScript)
-  ANSWER=$(submit "sequentiel" "1g" "1" "01:00:00" "Hello" "$LOG_DIR" "${MY_SCRIPT}.sh.x")
+  ANSWER=$(submitEx "sequentiel" "1g" "1" "01:00:00" "Hello" "$LOG_DIR" "${MY_SCRIPT}.sh.x")
   RET_CODE=$?
   if [ ! $RET_CODE -eq 0 ]; then testOK ; else testKO; fi
 }

@@ -9,10 +9,10 @@
 # Created: October 2021
 #*****************************************************************************************
 
-# Turn on/off error messages. 
+# Turn on/off error messages.
 SILENT="off"
 
-# Keep in mind that querying PBS to get job status too frequently is 
+# Keep in mind that querying PBS to get job status too frequently is
 # a bad practice! (unit is seconds)
 WAIT_TIME=60
 
@@ -43,8 +43,8 @@ function errorMsg(){
 }
 
 # --------
-# FUNCTION: submit a script to PBS 
-#  arg1: path to script to submit to PBS. This script is 
+# FUNCTION: submit a script to PBS
+#  arg1: path to script to submit to PBS. This script is
 #        required to have PBS directives within its header.
 #  arg2: optional. When set, this argument sets up a Log
 #        directory.
@@ -62,13 +62,13 @@ function submit(){
     echo "$JOB_ID"
     return 0
   else
-    errorMsg "ERROR: Unable to submit $7 to PBS" 
+    errorMsg "ERROR: Unable to submit $7 to PBS"
     return 1
-  fi  
+  fi
 }
 
 # --------
-# FUNCTION: submit a script to PBS 
+# FUNCTION: submit a script to PBS
 #  arg1: queue name
 #  arg2: memory
 #  arg3: nb CPUs
@@ -129,8 +129,8 @@ function getExitCode(){
 # --------
 # FUNCTION: wait for a job to finish, i.e. until status of
 #           job is F
-#   arg1: job ID 
-#   arg2: wait time to schedule PBS (qstat). Optional, 
+#   arg1: job ID
+#   arg2: wait time to schedule PBS (qstat). Optional,
 #         default is 60 seconds. Remember that using
 #         qstat too frequently is a very bad practice.
 #   return:
@@ -167,7 +167,8 @@ function waitForJobToFinish(){
 }
 # --------
 # FUNCTION: dump job log file to stdout
-#  arg1: job ID
+#  arg1: Log directory
+#  arg2: job ID
 #  return: 0 if success
 function dumpJobLog(){
   LOG_FILE=$1/$2.OU
@@ -182,7 +183,7 @@ function dumpJobLog(){
       break
     fi
     echo "Wait for log file to be ready. $GET_LOG_COUNT"
-    sleep 15 
+    sleep 15
     ((GET_LOG_COUNT++))
   done
   if [  $RET_CODE -eq 255 ]; then
@@ -194,7 +195,8 @@ function dumpJobLog(){
 }
 # --------
 # FUNCTION: remove log file
-#  arg1: job ID
+#  arg1: Log directory
+#  arg2: job ID
 #  return: 0 if success
 function removeJobLog(){
   LOG_FILE=$1/$2.OU
@@ -205,4 +207,3 @@ function removeJobLog(){
   fi
   return $RET_CODE
 }
-
