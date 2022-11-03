@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Note: QUEUE and LOG_DIR are replaced at runtime by test script
+#       do not modify!
+
+#SBATCH -J HelloWorld
+#SBATCH -p QUEUE
+#SBATCH --nodes 1
+#SBATCH --ntasks-per-node 4
+#SBATCH --mem 1G
+#SBATCH -t 0-00:10
+#SBATCH -o LOG_DIR/%j.OU
+#SBATCH --mail-type=NONE
+
+echo "Hello world on QUEUE queue"
+
