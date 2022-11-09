@@ -9,10 +9,13 @@
 # Created: October 2021
 #*****************************************************************************************
 
-# Turn on/off error messages.
-SILENT="off"
+# ========================================================================================
+# This script relies on common.sh API, but is not included here by design.
+# Scripts sourcing this one, must source common.sh before.
+# This is done to avoid sourcing a script that source another script, etc.
 
-# Keep in mind that querying PBS to get job status too frequently is
+# ========================================================================================
+# Keep in mind that querying PBS to get job status too frequently is 
 # a bad practice! (unit is seconds)
 WAIT_TIME=60
 
@@ -35,23 +38,15 @@ if [ "$SILENT" == "off" ]; then
 fi
 
 # --------
-# FUNCTION: print out an simple message on stderr (only if SILENT mode is off)
-function errorMsg(){
-  if [ "$SILENT" == "off" ]; then
-    printf "$* \n" >&2
-  fi
-}
-
-# --------
-# FUNCTION: submit a script to PBS
-#  arg1: path to script to submit to PBS. This script is
+# FUNCTION: submit a script to PBS 
+#  arg1: path to script to submit to PBS. This script is 
 #        required to have PBS directives within its header.
 #  arg2: optional. When set, this argument sets up a Log
 #        directory.
 #  return: 0 if success
 function submit(){
   if [ "$#" -eq 2 ]; then
-    CMD="$QSUB_CMD -V -S \"/bin/bash\" -j oe -o $2 -e $2 $1"
+    CMD="$QSUB_CMD -V -S \"/bin/bash\" -j oe -o $2 -e $2 -- $1"
   else
     CMD="$QSUB_CMD -V -S \"/bin/bash\" $1"
   fi
@@ -62,13 +57,13 @@ function submit(){
     echo "$JOB_ID"
     return 0
   else
-    errorMsg "ERROR: Unable to submit $7 to PBS"
+    errorMsg "ERROR: Unable to submit $7 to PBS" 
     return 1
-  fi
+  fi  
 }
 
 # --------
-# FUNCTION: submit a script to PBS
+# FUNCTION: submit a script to PBS 
 #  arg1: queue name
 #  arg2: memory
 #  arg3: nb CPUs
@@ -78,7 +73,15 @@ function submit(){
 #  arg7: path to script to submit to PBS
 #  return: 0 if success
 function submitEx(){
-  CMD="$QSUB_CMD -V -q $1 -l mem=$2 -l ncpus=$3 -l walltime=$4 -N $5 -m n -j oe -S \"/bin/bash\" -o $6 -e $6 $7"
+  CMD="$QSUB_CMD -V -q $1 -l mem=$2 -l ncpus=$3 -l walltime=$4 -N $5 -m n -j oe -S \"/bin/bash\" -o $6 -e $6"
+  local TOKENS=$(echo $7 | wc -w)
+  if [ $TOKENS == 1  ]; then
+    # Script with no argument
+    CMD="$CMD $7"
+  else
+    # With arguments, it is mandatory to prefix with '--'
+    CMD="$CMD -- $7"
+  fi
   ANSWER=$(eval $CMD)
   RET_CODE=$?
   if [ $RET_CODE -eq 0 ];then
@@ -129,8 +132,8 @@ function getExitCode(){
 # --------
 # FUNCTION: wait for a job to finish, i.e. until status of
 #           job is F
-#   arg1: job ID
-#   arg2: wait time to schedule PBS (qstat). Optional,
+#   arg1: job ID 
+#   arg2: wait time to schedule PBS (qstat). Optional, 
 #         default is 60 seconds. Remember that using
 #         qstat too frequently is a very bad practice.
 #   return:
@@ -183,7 +186,7 @@ function dumpJobLog(){
       break
     fi
     echo "Wait for log file to be ready. $GET_LOG_COUNT"
-    sleep 15
+    sleep 15 
     ((GET_LOG_COUNT++))
   done
   if [  $RET_CODE -eq 255 ]; then
@@ -207,3 +210,7 @@ function removeJobLog(){
   fi
   return $RET_CODE
 }
+
+if [ "$SILENT" == "off" ]; then
+  echo "Job execution method: pbs_wrapper loaded"
+fi

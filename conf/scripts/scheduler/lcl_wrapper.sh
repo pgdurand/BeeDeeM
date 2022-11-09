@@ -47,6 +47,10 @@ function submit(){
   fi
   $1 >& $LCL_LOG_FILE 2>&1
   RET_CODE=$?
+  #Put exit code at the end of the log file
+  #It is then retrievable by waitForJobToFinish() method, see below
+  echo "exit:$RET_CODE" >> $LCL_LOG_FILE
+  #Dump log file path as the answer of this method
   echo $LCL_LOG_FILE
   if [ ! $RET_CODE -eq 0 ];then
     errorMsg "ERROR: Unable to execute $1 on local computer"
@@ -67,7 +71,8 @@ function submit(){
 #  return: 0 if success. For local job execution, this method
 #  hangs until job is done. Then, method echoes LOG_FILE name.
 function submitEx(){
-  ANSWER=$(submit $7 $6)
+  #Note: quote $7 since it can be a script name followed by some arguments
+  ANSWER=$(submit "$7" $6)
   RET_CODE=$?
   echo $ANSWER
   return $RET_CODE
@@ -91,17 +96,32 @@ function getExitCode(){
 # --------
 # FUNCTION: wait for a job to finish, i.e. until status of
 #           job is COMPLETED
-#  DEPRECATED for local job runner
-#  return: always 0
+#  arg1: job ID 
+#   return:
+#     0: success, i.e. job finished with exit_status=0
+#     1: failure, i.e. job finished with exit_status!=0
+#     2 or 3: failure, i.e. unable to get job status
+#     4: failure, i.e. unable to get Exit code
 function waitForJobToFinish(){
-  return 0
+  #for local job runner, job ID is actually the log file
+  #which contains exit code of called script at the end of
+  #that file. See submit() method, above.
+  local EXIT_CODE=$(tail -n1 $1)
+  if [[ $EXIT_CODE == exit* ]]; then
+    EXIT_CODE=$(echo $EXIT_CODE | cut -d':' -f2)
+    [[ $EXIT_CODE -eq 0 ]] && return 0 || return 1
+  else
+    return 4
+  fi
 }
 # --------
 # FUNCTION: dump job log file to stdout
-#  arg1: Log file
+#  arg1: Log directory
+#  arg2: job ID
 #  return: 0 if success
 function dumpJobLog(){
-  LCL_LOG_FILE=$1
+  #For local runner, JOB ID is actually the log file
+  LCL_LOG_FILE=$2
   RET_CODE=0
   if [ -e $LCL_LOG_FILE ]; then
     cat $LCL_LOG_FILE
@@ -114,9 +134,12 @@ function dumpJobLog(){
 }
 # --------
 # FUNCTION: remove log file
-#  arg1: Log file
+#  arg1: Log directory
+#  arg2: job ID
 #  return: 0 if success
 function removeJobLog(){
+  #For local runner, JOB ID is actually the log file
+  LCL_LOG_FILE=$2
   local RET_CODE=0
   if [ -e $LCL_LOG_FILE ]; then
     rm -f $LCL_LOG_FILE
@@ -124,3 +147,8 @@ function removeJobLog(){
   fi
   return $RET_CODE
 }
+
+if [ "$SILENT" == "off" ]; then
+  echo "Job execution method: lcl_wrapper loaded"
+fi
+

@@ -10,9 +10,11 @@
 
 # ========================================================================================
 # Section: include API
-script_dir=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
-script_dir=$script_dir/../../../conf/scripts/scheduler
-. $script_dir/pbs_wrapper.sh
+S_NAME=$(realpath "$0")
+script_dir=$(dirname "$S_NAME")
+. $script_dir/../../../conf/scripts/scheduler/common.sh
+. $script_dir/../../../conf/scripts/scheduler/pbs_wrapper.sh
+. $script_dir/../common_test.sh
 
 # ========================================================================================
 # Section: a working directory
@@ -33,28 +35,10 @@ sed -e "s|LOG_DIR|${LOG_DIR}|g" -e "s|QUEUE|${MQUEUE}|g" hello_worldEx.template 
 # Section: how many tests do we have to execute?
 MAX_TEST=6
 
-# ========================================================================================
-# Section: manage test status
-TEST_TOTAL=0
-TEST_SUCCESS=0
-TEST_FAILED=0
-function testOK(){
-  echo "  Test: SUCCESS"
-  ((TEST_TOTAL++))
-  ((TEST_SUCCESS++))
-}
-function testKO(){
-  echo "  Test: ERROR"
-  ((TEST_TOTAL++))
-  ((TEST_FAILED++))
-}
-function dumpTestStats(){
-  echo "Test: ${TEST_TOTAL}. Success: ${TEST_SUCCESS}. Failed: ${TEST_FAILED}. "
-}
 # DO NOT add extension to script!!!
 function getPbsScript(){
   if [  ! "$TEST_SCRIPT_DIR"  ]; then
-    echo "hello_world"
+    echo "$script_dir/hello_world"
   else
     echo "$TEST_SCRIPT_DIR/hello_world"
   fi
@@ -154,18 +138,7 @@ function test6(){
   if [ $RET_CODE -eq 0 ]; then testOK ; else testKO; fi
 }
 
-function dumpTestStats(){
-  echo ""
-  echo "** Test: ${TEST_TOTAL}. Success: ${TEST_SUCCESS}. Failed: ${TEST_FAILED}. "
-}
-
 # ========================================================================================
 # Start tests
-CUR_TEST=1
-while [ "$CUR_TEST" -le "$MAX_TEST" ]; do
-  eval test$CUR_TEST $CUR_TEST
-  ((CUR_TEST++))
-done
-dumpTestStats
-
+runTests
 rm -f hello_worldEx.sh
