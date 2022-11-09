@@ -11,8 +11,9 @@
 # ========================================================================================
 # Section: include API
 script_dir=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
-script_dir=$script_dir/../../../conf/scripts/scheduler
-. $script_dir/slurm_wrapper.sh
+. $script_dir/../../../conf/scripts/scheduler/common.sh
+. $script_dir/../../../conf/scripts/scheduler/slurm_wrapper.sh
+. $script_dir/../common_test.sh
 
 # ========================================================================================
 # Section: a working directory
