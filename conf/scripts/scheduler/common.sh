@@ -146,16 +146,16 @@ function handleBDMArgs(){
 # FUNCTION: get a resource value for a job scheduler.
 #  arg1: a path to a .cfg file
 #  arg2: name of a tool.
-#  arg3: one of: [c]pu, [m]em, [q]ueue or wall[t]ime.
+#  arg3: one of: [c]pu, [m]em, [q]ueue, wall[t]ime or software_[v]ersion.
 #  return: 0 if success. Resource value is echoed.
-declare -A cfg_keys=( ["c"]="cpu" ["m"]="mem" ["q"]="queue" ["t"]="time")
+declare -A cfg_keys=( ["c"]="cpu" ["m"]="mem" ["q"]="queue" ["t"]="time" ["v"]="ver")
 function getResource(){
   local file_cfg=$1
   local tool_cfg=$2
   local key_cfg=${cfg_keys[$3]}
 
   # Does resource key exist?
-  [ -z $key_cfg ]&& errorMsg "Resource key \"$3\" is unknown. Use one of: [c]pu, [m]em, [q]ueue or wall[t]ime." && return 1
+  [ -z $key_cfg ]&& errorMsg "Resource key \"$3\" is unknown. Use one of: [c]pu, [m]em, [q]ueue, wall[t]ime or software_[v]ersion" && return 1
   # Does resource file exist?
   [ ! -f "$file_cfg" ] && errorMsg "File not found: $file_cfg" && return 1
   # Get default value first (maybe not provided)

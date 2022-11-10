@@ -99,7 +99,6 @@ function submitEx(){
 #  arg1: job ID
 #  return: 0 if success
 function getStatus(){
-
   CMD="$QSTAT_CMD -j $1 --format=state,user --noheader"
   ANSWER=$(eval $CMD)
   RET_CODE=$?
@@ -118,7 +117,6 @@ function getStatus(){
 #  arg1: job ID
 #  return: 0 if success
 function getExitCode(){
-
   CMD="$QSTAT_CMD -j $1 --format=DerivedExitCode,user --noheader"
   ANSWER=$(eval $CMD)
   RET_CODE=$?
@@ -144,6 +142,7 @@ function getExitCode(){
 #     2 or 3: failure, i.e. unable to get job status
 #     4: failure, i.e. unable to get Exit code
 function waitForJobToFinish(){
+  sleep 5 #wait a little (scheduler may delay access to job status)
   JID=$1
   if [ "$#" -eq 2 ]; then
     WTIME=$2
@@ -212,3 +211,7 @@ function removeJobLog(){
   fi
   return $RET_CODE
 }
+
+if [ "$SILENT" == "off" ]; then
+  echo "Job execution method: slurm_wrapper loaded"
+fi

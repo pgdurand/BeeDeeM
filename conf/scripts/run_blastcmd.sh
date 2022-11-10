@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # TO TEST:
-# /appli/bioinfo/beedeem/conf/scripts/run_blastcmd.sh -w /home/datawork-bioinfo-ss/beedeem/ -d /home/datawork-bioinfo-ss/beedeem/test-scheduler-scripts/p/PDB_proteins/current/PDB_proteins -n PDB_proteins -t p -p ifremer
+# DATARMOR: ./run_blastcmd.sh -w /home/datawork-bioinfo-ss/beedeem/ -d /home/datawork-bioinfo-ss/beedeem/test-scheduler-scripts/p/PDB_proteins/current/PDB_proteins -n PDB_proteins -t p -p ifremer
 
-
+# ABiMS: export BDM_CONF_SCRIPTS=/home/externe/ifremer/pdurand/beedeem/BeeDeeM/conf/scripts ; ./run_blastcmd.sh -w /shared/projects/metabarcoding2020/pdurand/beedeem-test-wk -d /shared/projects/metabarcoding2020/pdurand/beedeem-test/p/SwissProt_human/current/SwissProt_human -n SwissProt_human -t p -p abims
 
 # This is a BeeDeeM external task script aims at running
 # a Blastdbcmd job. 
@@ -17,7 +17,7 @@ echo "Make a FASTA file out of a BLAST bank (blastdbcmd)"
 # ========================================================================================
 # Section: include API
 S_NAME=$(realpath "$0")
-script_dir=$(dirname "$S_NAME")
+[[ -z "$BDM_CONF_SCRIPTS" ]] && script_dir=$(dirname "$S_NAME") || script_dir=$BDM_CONF_SCRIPTS
 . $script_dir/scheduler/common.sh 
 JOB_SCHEDULER=$(getScheduler)
 if [ $? -eq 0 ]; then

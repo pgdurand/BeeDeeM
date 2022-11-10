@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
 
 # This is a BeeDeeM external task script aims at making 
-# FASTA file out of a BLAST bank.
+# a Diamond index.
 #
-# This script is called by run_blastcmd.sh
+# This script is called by run_diamond.sh
 #
 # Such a BeeDeeM script is called by the task engine and
 # with arguments as defined in: 
 # ./scheduler/common.sh->handleBDMArgs() function
-
-echo "Making FASTA file from BLAST bank"
 
 # ========================================================================================
 # Section: include API
@@ -27,27 +25,29 @@ RET_CODE=$?
 . $script_dir/scheduler/env_${BDMC_PLATFORM}.sh
 
 # ========================================================================================
-# Section: do business
-# Skip if bank already exists (resume job) 
+# Make Diamond index
 cd $BDMC_INST_DIR
-if [ -e "${BDMC_BANK_NAME}00" ]; then
-  echo "FASTA: ${BDMC_BANK_NAME}00: already exists, exit"
-  exit 0
-fi
-# Run tool
+mkdir -p diamond.idx
+chmod 755 diamond.idx
+cd diamond.idx
+SOFT_NAME=diamond
+# Get CPU to use with Diamond
 CFG_SCHEDULER="$script_dir/scheduler/$(getScheduler)_${BDMC_PLATFORM}.cfg"
-SOFT_VER=$(getResource $CFG_SCHEDULER "blastcmd" "v")
+CFG_NCPUS=$(getResource $CFG_SCHEDULER $SOFT_NAME "c")
+[ ! $? -eq 0 ] && errorMsg "Unable to get CPU info to submit $SOFT_NAME job" && exit $RET_CODE
+SOFT_VER=$(getResource $CFG_SCHEDULER $SOFT_NAME "v")
 [ ! $? -eq 0 ] && errorMsg "Unable to get version for $SOFT_NAME" && exit $RET_CODE
-activateEnv "blast" "$SOFT_VER"
+# prepare properties file
+echo "Making $SOFT_NAME $SOFT_VER bank in: $PWD"
+echo "key=$SOFT_NAME" > index.properties
+echo "version=$SOFT_VER" >> index.properties
+# Run Diamond
+activateEnv "$SOFT_NAME" "$SOFT_VER"
 [ ! $? -eq 0 ] && exit 1
-CMD="blastdbcmd -entry all -db ${BDMC_BANK_NAME}M -out ${BDMC_BANK_NAME}00.tmp"
+CMD="cat ../${BDMC_BANK_NAME}[[:digit:]]* | diamond makedb --threads $CFG_NCPUS --db ${BDMC_BANK_NAME}"
 echo $CMD
 eval $CMD
 RET_CODE=$?
-if [ $RET_CODE -eq 0 ]; then
-  mv ${BDMC_BANK_NAME}00.tmp ${BDMC_BANK_NAME}00
-  chmod 644 ${BDMC_BANK_NAME}00
-fi
+chmod 644 *
 deActivateEnv "$SOFT_NAME" "$SOFT_VER"
 exit $RET_CODE
-

@@ -142,6 +142,7 @@ function getExitCode(){
 #     2 or 3: failure, i.e. unable to get job status
 #     4: failure, i.e. unable to get Exit code
 function waitForJobToFinish(){
+  sleep 5 #wait a little (scheduler may delay access to job status)
   JID=$1
   if [ "$#" -eq 2 ]; then
     WTIME=$2
