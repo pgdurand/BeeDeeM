@@ -7,52 +7,28 @@
 #   ../descriptors/Uniprot_Reference_Proteomes.dsc
 #
 # Such a BeeDeeM script is called by the task engine and
-# with these arguments: -w <path> -d <path> -f <path> -n <name> -t <type>
-#
-#  -w <path>: <path> is the working directory path.
-#             provided for both unit and global tasks.
-#  -d <path>: <path> is the bank installation path.
-#             provided for both unit and global tasks.
-#  -f <path>: <path> is the path to file under unit task processing
-#             only provided with unit task.
-#  -n <name>: <name> is the bank name.
-#  -t <type>: <path> is the bank type. One of p, n or d.
-#             p: protein
-#             n: nucleotide
-#             d: dictionary or ontology
+# with arguments as defined in: 
+# ./scheduler/common.sh->handleBDMArgs() function
 
 echo "Getting Uniprot Proteomes"
-echo "Arguments coming from BeeDeeM are:"
-echo $@
-echo "----"
-# Prepare arguments for processing
-WK_DIR=
-INST_DIR=
-PROCESSED_FILE=
-BANK_NAME=
-BANK_TYPE=
-while getopts w:d:f:n:t: opt
-do
-    case "$opt" in
-      w)  WK_DIR="$OPTARG";;
-      d)  INST_DIR="$OPTARG";;
-      f)  PROCESSED_FILE="$OPTARG";;
-      n)  BANK_NAME="$OPTARG";;
-      t)  BANK_TYPE="$OPTARG";;
-    esac
-done
-shift `expr $OPTIND - 1`
-# remaining arguments, if any, are stored here
-MORE_ARGS=$@
 
-echo "Working dir: $WK_DIR"
-echo "Install dir: $INST_DIR"
-echo "Processed file: $PROCESSED_FILE"
-echo "Bank name: $BANK_NAME"
-echo "Bank type: $BANK_TYPE"
-echo "----"
+# ========================================================================================
+# Section: include API
+S_NAME=$(realpath "$0")
+[[ -z "$BDM_CONF_SCRIPTS" ]] && script_dir=$(dirname "$S_NAME") || script_dir=$BDM_CONF_SCRIPTS
+. $script_dir/scheduler/common.sh
 
-WK_DIR=${WK_DIR}/Uniprot_Reference_Proteomes
+# ========================================================================================
+# Section: handle arguemnts
+# Function call setting BDMC_xxx variables from cmdline arguments
+handleBDMArgs $@
+RET_CODE=$?
+[ ! $RET_CODE -eq 0 ] && errorMsg "Wrong or missing arguments" && exit $RET_CODE
+
+# ========================================================================================
+# Section: do business
+
+WK_DIR=${BDMC_WK_DIR}/Uniprot_Reference_Proteomes
 echo "Creating $WK_DIR"
 mkdir -p $WK_DIR
 echo "Changing dir to $WK_DIR"
@@ -61,24 +37,16 @@ cd $WK_DIR
 # Use wildcard to get a single file, actually (bypass timestamp)
 url="ftp://ftp.ebi.ac.uk/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Reference_Proteomes_*.tar.gz"
 filename="reference_proteomes.tar.gz"
+fOK="${filename}_OK"
 
-echo "Getting $filename"
-if [ -x "$(which wget)" ] ; then
-    CMD="wget -c -q $url -O $filename"
-elif [ -x "$(which curl)" ]; then
-    CMD="curl -sL -o $filename -C - $url"
+if [ ! -f $fOK ]; then
+  echo "Getting $filename"
+  ANSWER=$(downloadFile $filename $url)
+  echo $ANSWER
+  RET_CODE=$?
+  [ ! $RET_CODE -eq 0 ] && errorMsg "Unable to get data" && exit 3 || touch $fOK
 else
-    echo "Could not find curl or wget, please install one." >&2
-    exit 1
-fi
-
-echo $CMD
-eval $CMD
-
-OUT=$?
-if [ ! $OUT -eq 0 ];then
-  printf "ERROR: unable to get data." >&2
-  exit 3
+  echo "Skip $filename downloading: already done"
 fi
 
 # Extract protein Fasta files per kingdom
@@ -92,17 +60,17 @@ if [ -f $TOC_FILE ]; then
 else
   echo "creating $TOC_FILE ..."
   tar -ztf $filename > ${TOC_FILE}.tmp
-  mv ${TOC_FILE}.tmp
+  mv ${TOC_FILE}.tmp ${TOC_FILE}
 fi
 
 # Use that file of files to create a unique fasta file per Kingdom
 for kd in ${KINGDOMS[*]}
 do
   # Extract list of file for tham Kingdom (enable resume)
-  if [ -f $kd ]; then
+  if [ -f ${kd}.list ]; then
     echo "use existing ${kd}.list"
   else
-    echo "creating $kd ..."
+    echo "creating ${kd}.list ..."
     cat $TOC_FILE | grep "^${kd}" | grep ".fasta.gz$" | grep -v "_DNA" > ${kd}.list.tmp
     mv ${kd}.list.tmp ${kd}.list
   fi

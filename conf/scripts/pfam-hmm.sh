@@ -1,54 +1,49 @@
 #!/usr/bin/env bash
 
-# As a reminder, a BeeDeeM Post processing script is called
-# with with these arguments: -w <path> -d <path> -f <path> -n <name> -t <type>
+# BeeDeeM post-processing script for PFAM-HMM.
 #
-#  -w <path>: <path> is the working directory path.
-#             provided for both unit and global tasks.
-#  -d <path>: <path> is the bank installation path.
-#             provided for both unit and global tasks.
-#  -f <path>: <path> is the path to file under unit task processing
-#             only provided with unit task.
-#  -n <name>: <name> is the bank name.
-#  -t <type>: <path> is the bank type. One of p, n or d.
-#             p: protein
-#             n: nucleotide
-#             d: dictionary or ontology
+# Such a BeeDeeM script is called by the task engine and
+# with arguments as defined in: 
+# ./scheduler/common.sh->handleBDMArgs() function
 
 echo "Running script: $0"
-echo "     arguments: $@"
 
-DB_PATH=
-DBFILE=
+# ========================================================================================
+# Section: include API
+S_NAME=$(realpath "$0")
+[[ -z "$BDM_CONF_SCRIPTS" ]] && script_dir=$(dirname "$S_NAME") || script_dir=$BDM_CONF_SCRIPTS
+. $script_dir/scheduler/common.sh
+. $script_dir/env_${BDM_PLATFORM}.sh
 
-# So, we handle that here...
-while getopts w:d:f:n:t: opt
-do
-    case "$opt" in
-      w)  WK_DIR="$OPTARG";;
-      d)  INST_DIR="$OPTARG";;
-      f)  PROCESSED_FILE="$OPTARG";;
-      n)  BANK_NAME="$OPTARG";;
-      t)  BANK_TYPE="$OPTARG";;
-    esac
-done
-shift `expr $OPTIND - 1`
+# ========================================================================================
+# Section: handle arguemnts
+# Function call setting BDMC_xxx variables from cmdline arguments
+handleBDMArgs $@
+RET_CODE=$?
+[ ! $RET_CODE -eq 0 ] && errorMsg "Wrong or missing arguments" && exit $RET_CODE
 
-# To handle Pfam hmmer file, we must have DB_PATH not empty
-if [ -z "${DB_PATH}" ]; then
+# ========================================================================================
+# Section: do business
+
+# To handle Pfam hmmer file, we must have INST_DIR not empty
+if [ -z "${BDMC_INST_DIR}" ]; then
   printf "/!\ Missing mandatory argument: -d <path-to-db-install-dir>\n" >&2
   exit 1
 fi
 
-echo "Entering PFAM install directory: ${DB_PATH}"
-cd ${DB_PATH}
-echo "Activating HMMER 3.3 Conda env"
-. /appli/bioinfo/hmmer/3.3/env.sh
+echo "Entering PFAM install directory: ${BDMC_INST_DIR}"
+cd ${BDMC_INST_DIR}
+SOFT_NAME="hmmer"
+SOFT_VER="3.3"
+activateEnv "$SOFT_NAME" "$SOFT_VER"
 echo "Running hmmpress -f Pfam-A.hmm"
-hmmpress -f Pfam-A.hmm
+hmmpress -f Pfam-A.hmm > hmm.log 2>&1
 RET_CODE=$?
-echo "Deactivating Conda env"
-. /appli/bioinfo/hmmer/3.3/delenv.sh
-
+if [ $RET_CODE -eq 0 ]; then
+  grep "and indexed" hmm.log | cut -d' ' -f4 > ${BANK_NAME}.num
+fi
+cat hmm.log
+rm hmm.log
+deActivateEnv "$SOFT_NAME" "$SOFT_VER"
 exit $RET_CODE
 
