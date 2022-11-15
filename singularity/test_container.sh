@@ -73,11 +73,14 @@ function downloadFile(){
 
 # Depending on host platform, load singularity env
 if hasCommand qstat; then
-  echo "running on DATARMOR using PBS Pro scheduler"
-  source /etc/profile.d/modules.sh
-  module purge
-  module load singularity/3.4.1
-  BDM_SCRATCH_DIR=$SCRATCH
+  hname=$(hostname)
+  if [[ $hname == *"datarmor"* ]]; then
+    echo "running on DATARMOR using PBS Pro scheduler"
+    source /etc/profile.d/modules.sh
+    module purge
+    module load singularity/3.4.1
+    BDM_SCRATCH_DIR=$SCRATCH
+  fi
 elif hasCommand sbatch; then
   hname=$(hostname -A)
   if [[ $hname == *"roscoff"* ]]; then
