@@ -76,7 +76,6 @@ if hasCommand qstat; then
   echo "running on DATARMOR using PBS Pro scheduler"
   source /etc/profile.d/modules.sh
   module purge
-  module load java/1.8.0_121
   module load singularity/3.4.1
   BDM_SCRATCH_DIR=$SCRATCH
 elif hasCommand sbatch; then
@@ -88,21 +87,26 @@ else
   echo "  Execute BeeDeeM directly on THIS computer"
 fi
 
+# Configure BeeDeeM banks and working directories
+BDM_SCRATCH_DIR="$BDM_SCRATCH_DIR/test_beedeem"
+BDM_BANKS_DIR="$BDM_SCRATCH_DIR/banks"
+BDM_WORK_DIR="$BDM_SCRATCH_DIR/working"
+
 # Check existence of the BeeDeeM image
 if [ ! -e "$BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME" ]; then
   echo "WARN: $BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME not found."
   echo "      Trying to downlod from: $BDM_SING_PUBLIC_REPO/$BDM_SING_IMG_NAME"
+  cd $BDM_WORK_DIR
   downloadFile "$BDM_SING_IMG_NAME" "$BDM_SING_PUBLIC_REPO/$BDM_SING_IMG_NAME"
-  if [ ! $? -eq 0 ]; then
+  RET_CODE=$?
+  cd -
+  BDM_SING_IMG_HOME=$BDM_WORK_DIR
+  if [ ! $RET_CODE -eq 0 ]; then
      echo "ERROR: unable fo get BeeDeeM image"
      exit 1
   fi 
 fi
 
-# Configure BeeDeeM banks and working directories
-BDM_SCRATCH_DIR="$BDM_SCRATCH_DIR/test_beedeem"
-BDM_BANKS_DIR="$BDM_SCRATCH_DIR/banks"
-BDM_WORK_DIR="$BDM_SCRATCH_DIR/working"
 # Configure Singularity runner
 BDM_BINDS="--bind ${BDM_WORK_DIR} --bind ${BDM_BANKS_DIR}"
 BDM_SINGULITY_IMG="$BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME"
