@@ -80,8 +80,7 @@ if hasCommand qstat; then
   BDM_SCRATCH_DIR=$SCRATCH
 elif hasCommand sbatch; then
   echo "running on ABiMS using SLURM scheduler"
-  #ret_value=$(sbatch --version)
-  #[[ "$ret_value" =~ "slurm" ]] && echo "slurm" && return 0
+  BDM_SCRATCH_DIR=$HOME
 else
   echo "Cannot figure out on which system we are running."
   echo "  Execute BeeDeeM directly on THIS computer"
