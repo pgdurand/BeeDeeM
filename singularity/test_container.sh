@@ -79,10 +79,13 @@ if hasCommand qstat; then
   module load singularity/3.4.1
   BDM_SCRATCH_DIR=$SCRATCH
 elif hasCommand sbatch; then
-  echo "running on ABiMS using SLURM scheduler"
-  BDM_SCRATCH_DIR=$HOME
+  hname=$(hostname -A)
+  if [[ $hname == *"roscoff"* ]]; then
+    echo "running on ABiMS using SLURM scheduler"
+    BDM_SCRATCH_DIR=$HOME
+  fi
 else
-  echo "Cannot figure out on which system we are running."
+  echo "Cannot figure out which job scheduler is available."
   echo "  Execute BeeDeeM directly on THIS computer"
 fi
 
