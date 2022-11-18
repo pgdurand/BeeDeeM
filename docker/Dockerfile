@@ -79,5 +79,5 @@ ENV KL_WORKING_DIR=/beedeem-wk
 # (mirror__path == mirror.path)
 ENV KL_mirror__path=/beedeem-db
 # You can override the following at runtime by using Docker "-e" argument.
-ENV KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=/beedeem-wk"
+ENV KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=\$KL_WORKING_DIR"
 

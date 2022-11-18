@@ -44,7 +44,7 @@ From: ubuntu:18.04
 	# Do a little configuration
 	cp scripts/*.sh .
         sed -i 's/@KL_WORKING_DIR@/\/beedeem-wk/g' *.sh
-        sed -i 's/@JAVA_ARGS@/-Xms128M -Xmx2048M -Djava.io.tmpdir=\/beedeem-wk -DKL_LOG_TYPE=console/g' *.sh
+        sed -i 's/@JAVA_ARGS@/-Xms128M -Xmx2048M -Djava.io.tmpdir=\$KL_WORKING_DIR -DKL_LOG_TYPE=console/g' *.sh
 	cp scripts/dbms.config conf
 	sed -i 's/@BIOBASE_ROOTDIR@/\/beedeem-db/g' conf/dbms.config
 	chmod +x *.sh
