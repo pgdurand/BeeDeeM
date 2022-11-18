@@ -71,9 +71,9 @@ function downloadFile(){
   #Use curl first, since it's more easy to get only error 
   #messages if any
   if hasCommand curl; then
-    CMD="curl -sSL -o $filename -C - $url"
+    CMD="curl -ksSL -o $filename -C - $url"
   elif hasCommand wget; then
-    CMD="wget -c -q $url -O $filename"
+    CMD="wget --no-check-certificate -c -q $url -O $filename"
   else
     errorMsg "Could not find curl nor wget, please install one of them."
     return 1
