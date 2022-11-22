@@ -36,8 +36,8 @@ cd $BDMC_INST_DIR
 url="https://ftp.expasy.org/databases/uniprot/current_release/relnotes.txt"
 filename="uniprot_relnotes.txt"
 ANSWER=$(downloadFile $filename $url)
-echo $ANSWER
 RET_CODE=$?
+echo $ANSWER
 [ ! $RET_CODE -eq 0 ] && errorMsg "Unable to fetch Uniprot release number" && exit $RET_CODE
 
 #Get Uniprot official release number

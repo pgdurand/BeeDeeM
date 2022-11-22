@@ -36,8 +36,8 @@ cd $BDMC_INST_DIR
 url="ftp://ftp.ebi.ac.uk/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/README"
 filename="README.txt"
 ANSWER=$(downloadFile $filename $url)
-echo $ANSWER
 RET_CODE=$?
+echo $ANSWER
 [ ! $RET_CODE -eq 0 ] && errorMsg "Unable to fetch Uniprot Reference Proteomes release number" && exit $RET_CODE
 
 #Get Uniprot Reference Proteomes official release number

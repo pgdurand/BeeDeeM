@@ -32,7 +32,7 @@ cd $BDMC_INST_DIR
 
 url="https://ftp.ncbi.nih.gov/pub/mmdb/cdd/cdd.info"
 filename="cdd_release.txt"
-NSWER=$(downloadFile $filename $url)
+ANSWER=$(downloadFile $filename $url)
 RET_CODE=$?
 [ ! $RET_CODE -eq 0 ] && errorMsg "Unable to fetch CDD release number" && exit $RET_CODE
 
