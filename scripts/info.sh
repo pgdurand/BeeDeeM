@@ -2,7 +2,7 @@
 #
 #
 # DBMS program to list installed banks ; for Unix
-# Copyright (c) - Patrick G. Durand, 2007-2020
+# Copyright (c) - Patrick G. Durand, 2007-2022
 # -------------------------------------------------------------------
 # User manual:
 #   https://pgdurand.gitbooks.io/beedeem/
@@ -27,6 +27,8 @@
 
 # *** Application home
 KL_APP_HOME=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
+# For Conda installation, scripts are in the bin directory, so get correct home
+[[ "$KL_APP_HOME" == *bin ]] && KL_APP_HOME=$(dirname "$KL_APP_HOME")
 
 # *** Working directory
 if [  ! "$KL_WORKING_DIR"  ]; then
