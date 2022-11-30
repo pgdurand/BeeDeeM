@@ -7,7 +7,7 @@ db.files.include=uniprot_sprot_rodents.dat.gz
 db.files.exclude=
 
 tasks.unit.post=gunzip,idxsw(taxinc\=10114)
-tasks.global.post=delgz,deltmpidx,formatdb(lclid\=false;check\=true;nr\=true;taxinc\=10114),script(name=GetUP;path=get_up_release)
+tasks.global.post=formatdb(lclid\=false;check\=true;nr\=true;taxinc\=10114),script(name=GetUP;path=get_up_release),delgz,deltmpidx
 
 ftp.server=ftp.expasy.org
 ftp.port=21
