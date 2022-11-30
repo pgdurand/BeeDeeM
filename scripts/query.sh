@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # DBMS program to query the repository ; for Mac/Linux
 # Copyright (c) - Patrick G. Durand, 2007-2022

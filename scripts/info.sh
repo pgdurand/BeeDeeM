@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 #
 # DBMS program to list installed banks ; for Unix

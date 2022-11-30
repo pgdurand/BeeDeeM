@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # -------------------------------------------------------------------
 # DBMS program to install databanks ; for Mac/Linux

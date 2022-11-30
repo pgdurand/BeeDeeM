@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # -------------------------------------------------------------------
 # DBMS program to check DB descriptors ; for Mac/Linux
