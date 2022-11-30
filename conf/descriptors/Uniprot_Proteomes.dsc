@@ -10,7 +10,7 @@ db.files.exclude=
 #tasks.global.pre=script(name=GetRefProteomes;path=get_up_proteomes)
 
 tasks.unit.post=gunzip,idxfas
-tasks.global.post=delgz,deltmpidx,formatdb(lclid=false;check=true;nr=true),script(name=GetUP;path=get_up_proteomes_release),script(name=DiamondIndex;path=make_diamond_idx)
+tasks.global.post=formatdb(lclid=false;check=true;nr=true),script(name=GetUP;path=get_up_proteomes_release),script(name=DiamondIndex;path=run_diamond),delgz,deltmpidx
 
 local.rdir=${workdir}|Uniprot_Reference_Proteomes
 local.rdir.exclude=
