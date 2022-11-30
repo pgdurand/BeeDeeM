@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail 
+
 # TO TEST:
 # DATARMOR: ./run_blastcmd.sh -w /home/datawork-bioinfo-ss/beedeem/ -d /home/datawork-bioinfo-ss/beedeem/test-scheduler-scripts/p/PDB_proteins/current/PDB_proteins -n PDB_proteins -t p -p ifremer
 

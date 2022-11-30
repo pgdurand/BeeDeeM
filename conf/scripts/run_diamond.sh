@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail 
+
 # TO TEST:
 # DATARMOR: ./run_diamond.sh -w /home/datawork-bioinfo-ss/beedeem/ -d /home/datawork-bioinfo-ss/beedeem/test-scheduler-scripts/p/PDB_proteins/current/PDB_proteins -n PDB_proteins -t p -p ifremer
 # ABiMS: export BDM_CONF_SCRIPTS=/home/externe/ifremer/pdurand/beedeem/BeeDeeM/conf/scripts ; ./run_diamond.sh -w /shared/projects/metabarcoding2020/pdurand/beedeem-test-wk -d /shared/projects/metabarcoding2020/pdurand/beedeem-test/p/SwissProt_human/current/SwissProt_human -n SwissProt_human -t p -p abims
