@@ -117,7 +117,7 @@ function getStatus(){
 #  arg1: job ID
 #  return: 0 if success
 function getExitCode(){
-  CMD="$QSTAT_CMD -j $1 --format=DerivedExitCode,user --noheader"
+  CMD="$QSTAT_CMD -j $1 --format=ExitCode,user --noheader"
   ANSWER=$(eval $CMD)
   RET_CODE=$?
   if [ $RET_CODE -eq 0 ];then
