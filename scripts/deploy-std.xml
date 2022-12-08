@@ -27,14 +27,6 @@
 
 	<!-- ============================================================= -->
 	<target name="install">
-		<echo>*** IMPORTANT NOTICE ***</echo>
-		<echo>
-		</echo>
-		<echo>Execute this script as ROOT/Administrator.</echo>
-		<echo>
-		</echo>
-		<input>Press Return key to continue...</input>
-
 		<echo>*** PLEASE VERIFY ***</echo>
 		<echo>
 		</echo>
