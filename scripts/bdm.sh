@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 #
-#
-# DBMS program to list installed banks ; for Unix
+# -------------------------------------------------------------------
+# BeeDeeM starter command for macOS/Linux
 # Copyright (c) - Patrick G. Durand, 2007-2022
 # -------------------------------------------------------------------
 # User manual:
 #   https://pgdurand.gitbooks.io/beedeem/
 # -------------------------------------------------------------------
-# The program can be used to list installed banks.
+# Command use: 
+#    bdm -h: to get help
+#    bdm <command> [options]: to start a command
 #
 # In addition, some parameters can be passed to the JVM for special 
 # configuration purposes:<br>
@@ -24,6 +26,8 @@
 #  env variables before calling this script. Additional JRE arguments
 #  can also be passed in to this script using env variable KL_JRE_ARGS.
 #
+# Proxy configuration: update configuration file: 
+#      ${beedeemHome}/conf/system/network.config.
 
 # *** Application home
 KL_APP_HOME=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
@@ -58,5 +62,6 @@ KL_JAR_LIST_TMP=`\ls $KL_APP_HOME/bin/*.jar`
 KL_JAR_LIST=`echo $KL_JAR_LIST_TMP | sed 's/ /:/g'`
 
 # *** start application
-KL_APP_MAIN_CLASS=bzh.plealog.dbmirror.main.DumpBankList
+KL_APP_MAIN_CLASS=bzh.plealog.dbmirror.main.BeeDeeMain
 java $KL_JAVA_ARGS -classpath $KL_JAR_LIST $KL_APP_MAIN_CLASS $@
+
