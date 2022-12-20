@@ -17,7 +17,7 @@ mkdir -p $KL_WORKING_DIR
 # path
 DESC_LIST="PDB_proteins,SwissProt_human"
 # Start installation
-install.sh -desc $DESC_LIST
+bdm install -desc $DESC_LIST
 
 # Note: by design of this script, we DO NOT delete
 # $KL_WORKING_DIR... please, do it yourself.
