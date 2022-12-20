@@ -61,6 +61,7 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
  * If not set, use ${user.dir}/conf.
  * -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that name within
  * KL_WORKING_DIR<br>
+ * -DKL_LOG_TYPE=none|console|file(default)<br><br>
  * <br>
  * 
  * @author Patrick G. Durand
