@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- This is the Ant configuration file used to deploy, install and configure
      the DataBank Manager System (BeeDeeM).
-     Copyright (c) 2007-2017, Patrick G. Durand
+     Copyright (c) 2007-2022, Patrick G. Durand
 -->
 
-<project name="DBMS_installer" default="help" basedir=".">
+<project name="BeeDeeM_installer" default="help" basedir=".">
 
 	<property environment="env"/>
 	<property file="config.properties"/>
@@ -19,7 +19,7 @@
 
 	<!-- ============================================================= -->
 	<target name="help">
-		<echo>This is the Ant project file to install DBMS.</echo>
+		<echo>This is the Ant project file to install BeeDeeM.</echo>
 		<echo/>
 		<echo>Available target is: install</echo>
 		<echo/>
@@ -75,14 +75,8 @@
 		<chmod dir="${biobaseRootDir}"            perm="ugo+r" type="file" includes="**/*" />
 		<chmod dir="${installDir}"                perm="ugo+x" type="dir"  includes="**/*" />
 		<chmod dir="${biobaseRootDir}"            perm="ugo+x" type="dir"  includes="**/*" />
-		<chmod dir="${workingDir}"                perm="ugo+rwx" type="dir" />
-		<chmod file="${installDir}/UiInstall.sh"  perm="ugo+x" />
-		<chmod file="${installDir}/install.sh"    perm="ugo+x" />
-		<chmod file="${installDir}/query.sh"      perm="ugo+x" />
-    <chmod file="${installDir}/annotate.sh"   perm="ugo+x" />
-    <chmod file="${installDir}/info.sh"       perm="ugo+x" />
-    <chmod file="${installDir}/delete.sh"     perm="ugo+x" />
-    <chmod file="${installDir}/check.sh"      perm="ugo+x" />
+    <chmod dir="${workingDir}"                perm="755"   type="dir" />
+		<chmod file="${installDir}/bdm"           perm="ugo+x" />
 	</target>
 
   <!-- ============================================================= -->
@@ -109,7 +103,7 @@
 		</antcall>
 		<antcall target="updateUnixPath">
 			<param name="sourceF" value="${installDir}/${kscript}.tmp"/>
-			<param name="targetF" value="${installDir}/${kscript}.${kext}"/>
+			<param name="targetF" value="${installDir}/${kscript}"/>
 		</antcall>
 		<delete file="${installDir}/${kscript}.tmp"/>
 	</target>
@@ -118,33 +112,9 @@
 	<target name="copyScriptsWin" if="winOS">
 		<!-- Copy and configure the KDBMS starter script (Windows) -->
 		<antcall target="prepareScript">
-			<param name="kscript" value="UiInstall"/>
+			<param name="kscript" value="bdm"/>
 			<param name="kext" value="bat"/>
 		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="install"/>
-			<param name="kext" value="bat"/>
-		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="query"/>
-			<param name="kext" value="bat"/>
-		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="annotate"/>
-			<param name="kext" value="bat"/>
-		</antcall>
-    <antcall target="prepareScript">
-      <param name="kscript" value="info"/>
-      <param name="kext" value="bat"/>
-    </antcall>
-    <antcall target="prepareScript">
-      <param name="kscript" value="delete"/>
-      <param name="kext" value="bat"/>
-    </antcall>
-    <antcall target="prepareScript">
-      <param name="kscript" value="check"/>
-      <param name="kext" value="bat"/>
-    </antcall>
 		<!-- Copy and configure the DBMS main config file-->
 		<copy file="${installDir}/scripts/dbms.config" tofile="${installDir}/conf/dbms.tmp">
 			<filterset>
@@ -162,33 +132,9 @@
 	<target name="copyScriptsUnix" if="unixOS">
 		<!-- Copy and configure the KDBMS starter script (Unix) -->
 		<antcall target="prepareScript">
-			<param name="kscript" value="UiInstall"/>
+			<param name="kscript" value="bdm"/>
 			<param name="kext" value="sh"/>
 		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="install"/>
-			<param name="kext" value="sh"/>
-		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="query"/>
-			<param name="kext" value="sh"/>
-		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="annotate"/>
-			<param name="kext" value="sh"/>
-		</antcall>
-    <antcall target="prepareScript">
-      <param name="kscript" value="info"/>
-      <param name="kext" value="sh"/>
-    </antcall>
-    <antcall target="prepareScript">
-      <param name="kscript" value="delete"/>
-      <param name="kext" value="sh"/>
-    </antcall>
-    <antcall target="prepareScript">
-      <param name="kscript" value="check"/>
-      <param name="kext" value="sh"/>
-    </antcall>
 		<!-- Copy and configure the KDBMS main config file-->
 		<copy file="${installDir}/scripts/dbms.config" todir="${installDir}/conf">
 			<filterset>
