@@ -39,6 +39,7 @@ public class BeeDeeMain {
   private static final String[] TOOL_LIST= {
       "Annotate",
       "DeleteBank",
+      "DscList",
       "Dump",
       "Install",
       "Query",
@@ -98,6 +99,9 @@ public class BeeDeeMain {
         break;
       case "delete":
         DeleteBank.main(args);
+        break;
+      case "desc":
+        GetDescriptorList.main(args);
         break;
       case "help":
         dumpHelp();
