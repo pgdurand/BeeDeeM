@@ -46,13 +46,14 @@ import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
  * 
  * @author Patrick G. Durand
  */
-public class Annotate {
+@BdmTool(command="annotate", description="annotate a BLAST XML formatted file")
+public class Annotate implements BdmToolApi {
 
   /**
    * Setup the valid command-line of the application.
    */
   @SuppressWarnings("static-access")
-  private static Options getCmdLineOptions() {
+  private Options getCmdLineOptions() {
     Options opts;
    
     Option type = OptionBuilder
@@ -95,7 +96,8 @@ public class Annotate {
     return opts;
   }
 
-  public static boolean doJob(String[] args){
+  @Override
+  public boolean execute(String[] args){
     PAnnotateBlastResult annotator;
     CommandLine cmdLine;
     String input, output, writer, type;
@@ -120,11 +122,5 @@ public class Annotate {
     annotator = new PAnnotateBlastResult();
     
     return annotator.annotate(input, output, writer, type, includeBC);
-  }
-
-  public static void main(String[] args) {
-    if (!doJob(args)){
-      System.exit(1);// exit code=1 : do this to report error to calling app
-    }
   }
 }

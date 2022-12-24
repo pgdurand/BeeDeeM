@@ -66,6 +66,7 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
  * 
  * @author Patrick G. Durand
  */
+@BdmTool(command="check", description="check whether or not a descriptor is still ok (URL not broken, etc)")
 public class AutoCheckDescriptors {
   private static final Log LOGGER = LogFactory.getLog(
       DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY + ".DSCChecker");

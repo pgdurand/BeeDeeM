@@ -128,7 +128,7 @@ public class CmdLineQueryTest {
       Assert.fail();
     }
 
-    Assert.assertTrue(CmdLineQuery.doJob(args));
+    Assert.assertTrue(new CmdLineQuery().execute(args));
     try {
       Assert.assertTrue(compareTwoFiles(refFile, result));
     } catch (IOException e) {
@@ -164,7 +164,7 @@ public class CmdLineQueryTest {
     }
 
     //AssertFalse because file of IDs contains a fake ID, so we expect an error message
-    Assert.assertFalse(CmdLineQuery.doJob(args));
+    Assert.assertFalse(new CmdLineQuery().execute(args));
     try {
       Assert.assertTrue(compareTwoFiles(refFile, result));
     } catch (IOException e) {
@@ -299,7 +299,7 @@ public class CmdLineQueryTest {
         "-f", "txt",
         "-o", result.getAbsolutePath()};
 
-    Assert.assertTrue(CmdLineQuery.doJob(args));
+    Assert.assertTrue(new CmdLineQuery().execute(args));
     
     try {
       Assert.assertTrue(compareTwoFiles(refFile, result));

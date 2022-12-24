@@ -16,8 +16,17 @@
  */
 package bzh.plealog.dbmirror.main;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 
@@ -35,31 +44,54 @@ import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
  * @author Patrick G. Durand
  */
 public class BeeDeeMain {
-  
-  private static final String[] TOOL_LIST= {
-      "Annotate",
-      "DeleteBank",
-      "Dump",
-      "Install",
-      "Query",
-      "UiInstall"};
-  
+
+  /** Code from: https://www.baeldung.com/java-find-all-classes-in-package*/
+  public static Set<Class<?>> findAllClassesUsingClassLoader(
+      String packageName) {
+    InputStream stream = ClassLoader.getSystemClassLoader()
+        .getResourceAsStream(packageName.replaceAll("[.]", "/"));
+    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    return reader.lines().filter(line -> line.endsWith(".class"))
+        .map(line -> getClass(line, packageName)).collect(Collectors.toSet());
+  }
+  private static Class<?> getClass(String className, String packageName) {
+    try {
+      return Class.forName(packageName + "."
+          + className.substring(0, className.lastIndexOf('.')));
+    } catch (ClassNotFoundException e) {
+      System.err.println(e);
+    }
+    return null;
+  }
+  /** */
+   
   private static void dumpHelp() {
     Properties props = StarterUtils.getVersionProperties();
     System.out.print(props.getProperty("prg.app.name"));
     System.out.print(" ");
     System.out.println(DBMSMessages.getString("Tool.Master.intro"));
-    for (String tName : TOOL_LIST) {
+    Hashtable<String, String> tools = new Hashtable<String, String>();
+    Set<Class<?>> clazz = findAllClassesUsingClassLoader(new BeeDeeMain().getClass().getPackage().getName());
+    for(Class<?> c : clazz) {
+      BdmTool bdmT = c.getAnnotation(BdmTool.class); 
+      if (bdmT != null) {
+        tools.put(bdmT.command(), bdmT.description());
+      }
+    }
+    List<String> sortedTools = Collections.list(tools.keys());
+    Collections.sort(sortedTools);
+    for(String tName : sortedTools) {
       System.out.print("  bmd ");
-      System.out.print(DBMSMessages.getString("Tool."+tName+".cmd"));
-      if (tName.equals("UiInstall")) {
+      System.out.print(tName);
+      if (tName.equals("ui")) {
         System.out.print(": ");
       }
       else {
         System.out.print(" [options]: ");
       }
-      System.out.println(DBMSMessages.getString("Tool."+tName+".desc"));
+      System.out.println(tools.get(tName));
     }
+    
     StringBuffer buf = new StringBuffer();
     System.out.println(DBMSMessages.getString("Tool.Master.more"));
     buf.append("--\n");
@@ -92,33 +124,42 @@ public class BeeDeeMain {
       args = Arrays.copyOfRange(args, 1, args.length);
     }
     
-    switch(cmd) {
-      case "annotate":
-        Annotate.main(args);
-        break;
-      case "delete":
-        DeleteBank.main(args);
-        break;
-      case "help":
-        dumpHelp();
-        break;
-      case "info":
-        DumpBankList.main(args);
-        break;
-      case "install":
-        CmdLineInstaller.main(args);
-        break;
-      case "query":
-        CmdLineQuery.main(args);
-        break;
-      case "ui":
-        UiInstaller.main(args);
-        break;
-      default:
+    if (cmd.equalsIgnoreCase("help") || 
+        cmd.equalsIgnoreCase("-h") || 
+        cmd.equalsIgnoreCase("--help")) {
+      dumpHelp();
+    }
+    else {
+      // Get all classes from current package
+      // to locate ones being annotated as BdmTool classes
+      boolean cmdOk = false;
+      Set<Class<?>> clazz = findAllClassesUsingClassLoader(new BeeDeeMain().getClass().getPackage().getName());
+      for(Class<?> c : clazz) {
+        BdmTool bdmT = c.getAnnotation(BdmTool.class); 
+        String bdmTCmd = bdmT != null ? bdmT.command() : "-" ;
+        if (bdmT != null && cmd.equalsIgnoreCase(bdmTCmd)) {
+          cmdOk = true;
+          try {
+            Method method = c.getDeclaredMethod("execute", String[].class);
+            Object bRet = method.invoke(c.newInstance(), new Object[] {args});
+            if ( ! bRet.toString().equalsIgnoreCase("true") ) {
+              System.exit(1);
+            }
+          } catch (Exception e) {
+            System.err.print(DBMSMessages.getString("Tool.Master.err2.cmd"));
+            System.err.println(cmd);
+            System.err.println(e.getMessage());
+            System.exit(1);
+          }
+        }
+      }
+      // unknown command
+      if (!cmdOk) {
         System.err.print(DBMSMessages.getString("Tool.Master.err.cmd"));
         System.err.print(": ");
         System.err.println(cmd);
         System.exit(1);
+      }
     }
   }
 }
