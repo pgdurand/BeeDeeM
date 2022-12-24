@@ -36,9 +36,11 @@ import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
 import bzh.plealog.dbmirror.util.conf.Configuration;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 
-public class UiInstaller {
+@BdmTool(command="ui", description="start bank manager graphical user interface")
+public class UiInstaller implements BdmToolApi {
 
-  public static void main(String[] args) {
+  @Override
+  public boolean execute(String[] args) {
     // This has to be done at the very beginning, i.e. first method call within
     // main().
     EZGenericApplication.initialize("DB-Manager");
@@ -80,6 +82,11 @@ public class UiInstaller {
 
     // Start the application
     EZGenericApplication.startApplication(args);
+    return true;
+  }
+
+  public static void main(String[] args) {
+    new UiInstaller().execute(args);
   }
 
   private static class MyStarterListener implements EZUIStarterListener {

@@ -40,7 +40,8 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
  * 
  * @author Patrick G. Durand
  */
-public class GetDescriptorList {
+@BdmTool(command="desc", description="get list of descriptors from default conf directory")
+public class GetDescriptorList implements BdmToolApi {
   public static final String LS_ARG = "l";
   public static final String PT_ARG = "p";
 
@@ -48,7 +49,7 @@ public class GetDescriptorList {
    * Setup the valid command-line of the application.
    */
   @SuppressWarnings("static-access")
-  private static Options getCmdLineOptions() {
+  private Options getCmdLineOptions() {
     Options opts;
 
     Option list = OptionBuilder
@@ -69,15 +70,15 @@ public class GetDescriptorList {
     CmdLineUtils.setHelpOption(opts);
     return opts;
   }
-
-  public static void main(String[] args) {
+  @Override
+  public boolean execute(String[] args) {
     // Handle command line arguments
     CommandLine cmdLine = CmdLineUtils.handleArguments(
         args, 
         getCmdLineOptions(), 
         DBMSMessages.getString("Tool.DscList.name"));
     if (cmdLine==null){
-      System.exit(1);
+      return false;
     }
     // Configure app
     StarterUtils.configureApplication(
@@ -98,7 +99,7 @@ public class GetDescriptorList {
         listF.add(EZFileUtils.getFileName(f));
       }
       System.out.println(DBMSMessages.getString("Tool.DscList.msg3") + cPath);
-      System.out.println(String.valueOf(listF.size()) + " " + DBMSMessages.getString("Tool.DscList.msg4"));
+      System.out.println(String.valueOf(listF.size()) + " " + DBMSMessages.getString("Tool.DscList.msg4")+":");
       Collections.sort(listF, String.CASE_INSENSITIVE_ORDER);
       for(String s : listF) {
         System.out.println(s);
@@ -117,10 +118,9 @@ public class GetDescriptorList {
         System.out.println("----");
       } catch (IOException e) {
         System.err.println(e.getMessage());
-        System.exit(1);
+        return false;
       }
     }
-    
+    return true;
   }
-
 }

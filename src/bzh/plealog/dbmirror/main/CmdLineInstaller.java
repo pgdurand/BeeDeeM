@@ -69,17 +69,18 @@ import bzh.plealog.dbmirror.util.mail.PMailer;
  * 
  * @author Patrick G. Durand
  */
-public class CmdLineInstaller {
+@BdmTool(command="install", description="install bank(s)")
+public class CmdLineInstaller implements BdmToolApi {
 
   private File prepareListOfBanks(String bankListFormat){
     File f=null;
     FileOutputStream fos=null;
-    
+    boolean bRet = false;
     try {
       f = File.createTempFile("bdm-list-of-banks", ".txt");
       fos = new FileOutputStream(f);
       DumpBankList dbl = new DumpBankList();
-      dbl.doJob(fos, "all", bankListFormat, "?");
+      bRet=dbl.doJob(fos, "all", bankListFormat, "?");
       fos.flush();
       fos.close();
       if (f.length()==0){
@@ -90,7 +91,7 @@ public class CmdLineInstaller {
       //for now, hide this msg, not really bad
     }
     
-    return f;
+    return bRet ? f : null;
   }
   private void sendTerminationMail(PFTPLoaderDescriptor fDescriptor, String bankListFormat) {
     PMailer mailer;
@@ -241,13 +242,14 @@ public class CmdLineInstaller {
    * Options are defined in CmdLineInstallerOptions utility class. Use -h or -help
    * option to get software command-line description.
    */
-  public static void main(String[] args) {
+  @Override
+  public boolean execute(String[] args) {
     // convert the array of strings into an appropriate object
     CommandLine cmd = CmdLineInstallerOptions.handleArguments(args);
     
     // nothing to do, exit!
     if (cmd==null){
-      return;
+      return false;
     }
     
     // do we have a global descriptor name? (first and second cases described above)
@@ -274,7 +276,10 @@ public class CmdLineInstaller {
     //go, go, go...
     CmdLineInstaller mirror = new CmdLineInstaller();
     if (!mirror.startApplication(globalDesc, fDescCmd, bankListFormat, fof)) {
-      System.exit(1);
+      return false;
+    }
+    else {
+      return true;
     }
   }
 
