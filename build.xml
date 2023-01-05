@@ -217,76 +217,17 @@
   <!-- Compile code and make software dustribution package           -->
 	<target name="makedistrib" depends="makejar">
 		<!-- Copy the DBMS scripts for Mac, Linux and Windows -->
-		<copy file="${scripts}/install.sh" todir="${Dscripts}">
+		<copy file="${scripts}/bdm.sh" todir="${Dscripts}">
 			<filterset>
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorClass}" />
 			</filterset>
 		</copy>
-		<copy file="${scripts}/UiInstall.sh" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLUIMirrorClass}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/query.sh" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLQueryMirrorClass}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/annotate.sh" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLMirrorAnnot}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/info.sh" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
-			</filterset>
-		</copy>
-    <copy file="${scripts}/delete.sh" todir="${Dscripts}">
-      <filterset>
-        <filter token="APP_MAIN_CLASS" value="${KLMirrorDelete}" />
-      </filterset>
-    </copy>
-    <copy file="${scripts}/check.sh" todir="${Dscripts}">
-      <filterset>
-        <filter token="APP_MAIN_CLASS" value="${KLMirrorCheck}" />
-      </filterset>
-    </copy>
-		<copy file="${scripts}/install.bat" todir="${Dscripts}">
+		<copy file="${scripts}/bdm.bat" todir="${Dscripts}">
 			<filterset>
 				<filter token="APP_MAIN_CLASS" value="${KLMirrorClass}" />
 			</filterset>
 		</copy>
-		<copy file="${scripts}/UiInstall.bat" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLUIMirrorClass}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/query.bat" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLQueryMirrorClass}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/annotate.bat" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLMirrorAnnot}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/info.bat" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
-			</filterset>
-		</copy>
-    <copy file="${scripts}/delete.bat" todir="${Dscripts}">
-      <filterset>
-        <filter token="APP_MAIN_CLASS" value="${KLMirrorDelete}" />
-      </filterset>
-    </copy>
-    <copy file="${scripts}/check.bat" todir="${Dscripts}">
-      <filterset>
-        <filter token="APP_MAIN_CLASS" value="${KLMirrorCheck}" />
-      </filterset>
-    </copy>
+    <copy file="${scripts}/test_bdm.sh" todir="${Dscripts}" />
 		<!-- Galaxy wrapper to list available DBs -->
     <copy file="${scripts}/beedeem_info.xml" todir="${Dconf}/system">
       <filterset>
@@ -316,7 +257,6 @@
 		<!-- Copy the DBMS Ant installer files -->
 		<copy file="${scripts}/config-std.properties" tofile="${distrib}/config.properties" />
 		<copy file="${scripts}/envDBMS" todir="${distrib}" />
-		<copy file="${scripts}/install-std.txt" tofile="${distrib}/INSTALL.txt" />
 		<copy file="${scripts}/deploy-std.xml" tofile="${distrib}/deploy.xml">
 			<filterset>
 				<filter token="KDBMS_TBALL" value="${apptar}.gz" />
