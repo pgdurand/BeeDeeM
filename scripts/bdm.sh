@@ -2,7 +2,7 @@
 #
 # -------------------------------------------------------------------
 # BeeDeeM starter command for macOS/Linux
-# Copyright (c) - Patrick G. Durand, 2007-2022
+# Copyright (c) - Patrick G. Durand, 2007-2023
 # -------------------------------------------------------------------
 # User manual:
 #   https://pgdurand.gitbooks.io/beedeem/
@@ -22,12 +22,19 @@
 #  conf directory. If not set, use ${user.dir}/conf.
 # -DKL_LOG_TYPE=none|console|file(default)
 #
-#  KL_WORKING_DIR, KL_CONF_DIR and KL_LOG_FILE can be defined using
-#  env variables before calling this script. Additional JRE arguments
+#  Alternatively, you can set these special variables as environment 
+#  variables BEFORE calling this script. Additional JRE arguments
 #  can also be passed in to this script using env variable KL_JRE_ARGS.
 #
 # Proxy configuration: update configuration file: 
 #      ${beedeemHome}/conf/system/network.config.
+
+# *** Bank installation scripts of BeeDeeM (conf/scripts) requires BASH 5
+BASH_VER=$(bash --version | grep ", version" | cut -d' ' -f4 | cut -d'.' -f1)
+if [ "$BASH_VER" -lt "5" ]; then
+  echo "/!\ ERROR: BeeDeeM requires BASH release 5 (yours is: $BASH_VER)"
+  exit 1
+fi
 
 # *** Application home
 KL_APP_HOME=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
@@ -36,26 +43,21 @@ KL_APP_HOME=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
 
 # *** Working directory
 if [  ! "$KL_WORKING_DIR"  ]; then
-  KL_WORKING_DIR=@KL_WORKING_DIR@
+  export KL_WORKING_DIR=@KL_WORKING_DIR@
 fi
 
 # *** Configuration directory
 if [  ! "$KL_CONF_DIR"  ]; then
-  KL_CONF_DIR=$KL_APP_HOME/conf
+  export KL_CONF_DIR=$KL_APP_HOME/conf
 fi
 
-# *** Optional JRE arguments
+# *** Optional JRE arguments (at least RAM specs)
 if [  ! "$KL_JRE_ARGS"  ]; then
   KL_JRE_ARGS="@JAVA_ARGS@"
 fi
 
 # *** Java VM 
-KL_JAVA_ARGS="$KL_JRE_ARGS -DKL_HOME=$KL_APP_HOME -DKL_WORKING_DIR=$KL_WORKING_DIR -DKL_CONF_DIR=$KL_CONF_DIR"
-
-# *** Optional redefinition of log file
-if [  ! -z "$KL_LOG_FILE"  ]; then
-  KL_JAVA_ARGS+=" -DKL_LOG_FILE=$KL_LOG_FILE"
-fi
+KL_JAVA_ARGS="$KL_JRE_ARGS -DKL_HOME=$KL_APP_HOME"
 
 # *** JARs section
 KL_JAR_LIST_TMP=`\ls $KL_APP_HOME/bin/*.jar`
