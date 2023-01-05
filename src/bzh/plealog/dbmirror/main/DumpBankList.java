@@ -321,7 +321,7 @@ public class DumpBankList implements BdmToolApi {
     CommandLine cmdLine;
     OutputStream os=System.out;
     
-    String toolName = DBMSMessages.getString("Tool.Query.name");
+    String toolName = DBMSMessages.getString("Tool.Dump.name");
     
     // Configure software
     StarterUtils.configureApplication(null, toolName, true, false, true);
