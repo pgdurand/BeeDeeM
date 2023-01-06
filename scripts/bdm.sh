@@ -29,10 +29,14 @@
 # Proxy configuration: update configuration file: 
 #      ${beedeemHome}/conf/system/network.config.
 
-# *** Bank installation scripts of BeeDeeM (conf/scripts) requires BASH 5
-BASH_VER=$(bash --version | grep ", version" | cut -d' ' -f4 | cut -d'.' -f1)
-if [ "$BASH_VER" -lt "5" ]; then
-  echo "/!\ ERROR: BeeDeeM requires BASH release 5 (yours is: $BASH_VER)"
+# *** Bank installation scripts of BeeDeeM (conf/scripts) requires realpath:
+#     available in BASH 5 for macOS
+#     or available from Linux:coreutils
+which realpath
+if [ ! $? -eq 0 ]; then
+  echo "/!\ ERROR: realpath command not found"
+  echo "           macOS: install bash 5"
+  echo "           Linux: install coreutils"
   exit 1
 fi
 
