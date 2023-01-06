@@ -16,19 +16,20 @@
  */
 package bzh.plealog.dbmirror.main;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
+import eu.infomas.annotation.AnnotationDetector;
+import eu.infomas.annotation.AnnotationDetector.TypeReporter;
 
 /**
  * This class starts BeeDeeM for all commands.
@@ -45,23 +46,38 @@ import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
  */
 public class BeeDeeMain {
 
-  /** Code from: https://www.baeldung.com/java-find-all-classes-in-package*/
-  public static Set<Class<?>> findAllClassesUsingClassLoader(
-      String packageName) {
-    InputStream stream = ClassLoader.getSystemClassLoader()
-        .getResourceAsStream(packageName.replaceAll("[.]", "/"));
-    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-    return reader.lines().filter(line -> line.endsWith(".class"))
-        .map(line -> getClass(line, packageName)).collect(Collectors.toSet());
+  
+  /** Code from: https://github.com/rmuller/infomas-asl
+   *  Adapted in package eu.informas.annotation available in BeeDeeM; see README.txt, there.
+   **/
+  public static Set<Class<?>> findAllClassesUsingClassLoader(){
+    HashSet<Class<?>> classes = new HashSet<>();
+    final TypeReporter reporter = new TypeReporter() {
+      @SuppressWarnings("unchecked")
+      @Override
+      public Class<? extends Annotation>[] annotations() {
+          return new Class[]{BdmTool.class};
+      }
+      @Override
+      public void reportTypeAnnotation(Class<? extends Annotation> annotation,
+          String className) {
+        try {
+          classes.add(Class.forName(className));
+        } catch (ClassNotFoundException e) {
+          System.err.println(DBMSMessages.getString("Tool.Master.err4.cmd")+" "+e.getMessage());
+          System.exit(1);//serious error, should not happen!
+        }
+      }
+      
+  };
+  final AnnotationDetector cf = new AnnotationDetector(reporter);
+  try {
+    cf.detect();
+  } catch (IOException e) {
+    System.err.println(DBMSMessages.getString("Tool.Master.err3.cmd")+" "+e.getMessage());
+    System.exit(1);//serious error, should not happen!
   }
-  private static Class<?> getClass(String className, String packageName) {
-    try {
-      return Class.forName(packageName + "."
-          + className.substring(0, className.lastIndexOf('.')));
-    } catch (ClassNotFoundException e) {
-      System.err.println(e);
-    }
-    return null;
+  return classes;
   }
   /** */
    
@@ -71,7 +87,7 @@ public class BeeDeeMain {
     System.out.print(" ");
     System.out.println(DBMSMessages.getString("Tool.Master.intro"));
     Hashtable<String, String> tools = new Hashtable<String, String>();
-    Set<Class<?>> clazz = findAllClassesUsingClassLoader(new BeeDeeMain().getClass().getPackage().getName());
+    Set<Class<?>> clazz = findAllClassesUsingClassLoader();
     for(Class<?> c : clazz) {
       BdmTool bdmT = c.getAnnotation(BdmTool.class); 
       if (bdmT != null) {
@@ -133,7 +149,7 @@ public class BeeDeeMain {
       // Get all classes from current package
       // to locate ones being annotated as BdmTool classes
       boolean cmdOk = false;
-      Set<Class<?>> clazz = findAllClassesUsingClassLoader(new BeeDeeMain().getClass().getPackage().getName());
+      Set<Class<?>> clazz = findAllClassesUsingClassLoader();
       for(Class<?> c : clazz) {
         BdmTool bdmT = c.getAnnotation(BdmTool.class); 
         String bdmTCmd = bdmT != null ? bdmT.command() : "-" ;
