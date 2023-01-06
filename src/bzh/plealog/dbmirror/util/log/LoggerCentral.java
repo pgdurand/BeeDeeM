@@ -336,7 +336,6 @@ public class LoggerCentral {
     userPath = getLogAppPath();
     szLogFileName = userPath + _logAppFile;
     szLogFilePattern = userPath + "%d{MM-dd-yy}-" + _logAppFile;
-    System.out.println("**** LogFile: "+szLogFileName);
     try {
       cleanSystemLogs(userPath, _logAppFile);
     } catch (Exception e) {
