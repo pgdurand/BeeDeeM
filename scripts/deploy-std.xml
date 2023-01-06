@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- This is the Ant configuration file used to deploy, install and configure
      the DataBank Manager System (BeeDeeM).
-     Copyright (c) 2007-2022, Patrick G. Durand
+     
+     Documentation:
+       https://pgdurand.gitbook.io/beedeem/installation/installation#legacy-installation
+     
+     Copyright (c) 2007-2023, Patrick G. Durand
 -->
 
 <project name="BeeDeeM_installer" default="help" basedir=".">
@@ -11,10 +15,6 @@
 
 	<condition property="unixOS">
 		<os family="unix"/>
-	</condition>
-
-	<condition property="winOS">
-		<os family="windows"/>
 	</condition>
 
 	<!-- ============================================================= -->
@@ -81,7 +81,6 @@
 
 	<!-- ============================================================= -->
 	<target name="copyScripts">
-		<antcall target="copyScriptsWin" />
 		<antcall target="copyScriptsUnix" />
 	</target>
 
@@ -97,35 +96,11 @@
 
 			</filterset>
 		</copy>
-		<antcall target="updateWinPath">
-			<param name="sourceF" value="${installDir}/${kscript}.tmp"/>
-			<param name="targetF" value="${installDir}/${kscript}.${kext}"/>
-		</antcall>
 		<antcall target="updateUnixPath">
 			<param name="sourceF" value="${installDir}/${kscript}.tmp"/>
 			<param name="targetF" value="${installDir}/${kscript}"/>
 		</antcall>
 		<delete file="${installDir}/${kscript}.tmp"/>
-	</target>
-
-	<!-- ============================================================= -->
-	<target name="copyScriptsWin" if="winOS">
-		<!-- Copy and configure the KDBMS starter script (Windows) -->
-		<antcall target="prepareScript">
-			<param name="kscript" value="bdm"/>
-			<param name="kext" value="bat"/>
-		</antcall>
-		<!-- Copy and configure the DBMS main config file-->
-		<copy file="${installDir}/scripts/dbms.config" tofile="${installDir}/conf/dbms.tmp">
-			<filterset>
-				<filter token="BIOBASE_ROOTDIR" value="${biobaseRootDir}"/>
-			</filterset>
-		</copy>
-		<antcall target="updateWinPath">
-			<param name="sourceF" value="${installDir}/conf/dbms.tmp"/>
-			<param name="targetF" value="${installDir}/conf/dbms.config"/>
-		</antcall>
-		<delete file="${installDir}/conf/dbms.tmp"/>
 	</target>
 
 	<!-- ============================================================= -->
@@ -146,23 +121,6 @@
 				<filter token="BIOBASE_ROOTDIR" value="${biobaseRootDir}"/>
 			</filterset>
 		</copy>
-	</target>
-
-	<!-- ============================================================= -->
-	<target name="updateWinPath" if="winOS">
-		<path id="distribClass.path">
-			<fileset dir="${installDir}/bin">
-				<include name="**/*.jar"/>
-			</fileset>
-		</path>
-		<java fork="true" 
-          classname="bzh.plealog.dbmirror.main.SetupConfiguration" 
-          classpathref="distribClass.path" >
-			<arg value="${sourceF}"/>
-			<arg value="${targetF}"/>
-			<arg value="\"/>
-			<arg value="\\"/>
-		</java>
 	</target>
 
 	<!-- ============================================================= -->
