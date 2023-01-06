@@ -38,13 +38,8 @@
 
 	<property name="rootpkg" value="bzh.plealog.dbmirror.main" />
 	<property name="KLMirrorClass" value="${rootpkg}.CmdLineInstaller" />
-	<property name="KLUIMirrorClass" value="${rootpkg}.UiInstaller" />
-	<property name="KLQueryMirrorClass" value="${rootpkg}.CmdLineQuery" />
-	<property name="KLMirrorAnnot" value="${rootpkg}.Annotate" />
-  <property name="KLMirrorInfo" value="${rootpkg}.DumpBankList" />
-  <property name="KLMirrorDelete" value="${rootpkg}.DeleteBank" />
-  <property name="KLMirrorCheck" value="${rootpkg}.AutoCheckDescriptors" />
-
+	<property name="KANT_ZIP" value="ant-1.9.4.zip" />
+	
 	<path id="class.path">
 		<pathelement path="${classpath}" />
 		<fileset dir="${jar}">
@@ -217,16 +212,8 @@
   <!-- Compile code and make software dustribution package           -->
 	<target name="makedistrib" depends="makejar">
 		<!-- Copy the DBMS scripts for Mac, Linux and Windows -->
-		<copy file="${scripts}/bdm.sh" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLMirrorClass}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/bdm.bat" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLMirrorClass}" />
-			</filterset>
-		</copy>
+		<copy file="${scripts}/bdm.sh" todir="${Dscripts}" />
+		<copy file="${scripts}/bdm.bat" todir="${Dscripts}" />
     <copy file="${scripts}/test_bdm.sh" todir="${Dscripts}" />
 		<!-- Galaxy wrapper to list available DBs -->
     <copy file="${scripts}/beedeem_info.xml" todir="${Dconf}/system">
@@ -266,7 +253,7 @@
 		<!-- in case Ant will not be available on the target system,
          we provide it. -->
 		<mkdir dir="${distrib}/ant" />
-		<copy file="${scripts}/ant-1.9.4.zip" todir="${distrib}/ant" />
+		<copy file="${scripts}/${KANT_ZIP}" todir="${distrib}/ant" />
 		<!-- Package the whole stuff in a zip (natively readable on 
 		     all OS, including Windows)
 		 -->
