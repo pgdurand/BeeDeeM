@@ -211,9 +211,8 @@
 	<!-- ============================================================= -->
   <!-- Compile code and make software dustribution package           -->
 	<target name="makedistrib" depends="makejar">
-		<!-- Copy the DBMS scripts for Mac, Linux and Windows -->
+		<!-- Copy the DBMS scripts for Mac, Linux -->
 		<copy file="${scripts}/bdm.sh" todir="${Dscripts}" />
-		<copy file="${scripts}/bdm.bat" todir="${Dscripts}" />
     <copy file="${scripts}/test_bdm.sh" todir="${Dscripts}" />
 		<!-- Galaxy wrapper to list available DBs -->
     <copy file="${scripts}/beedeem_info.xml" todir="${Dconf}/system">
