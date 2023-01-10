@@ -1,12 +1,16 @@
 # #############################################################################
 # Recipe to build a Singularity image for BeeDeeM software
 #
-# Build image from official zipball available at:
-#   https://github.com/pgdurand/BeeDeeM/releases/download/v${BDM_VERSION}/beedeem-${BDM_VERSION}-distrib.zip
+# Build image from freshly built BeeDeeM zipball available in
+#   ../distrib : for DEV/DEBUG purpose only to prepare/test 
+#                official release.
 # #############################################################################
 
 Bootstrap : docker
 From: ubuntu:18.04
+
+%files
+        ../distrib/beedeem-*-distrib.zip /opt
 
 %post
 	BDM_VERSION=5.0.0
@@ -34,9 +38,9 @@ From: ubuntu:18.04
         rm -rf bin include lib man *.zip
 
 	# Get BeeDeeM from latest release
-	mkdir -p /opt/beedeem/tmp-install
-	cd /opt/beedeem/tmp-install
-	wget https://github.com/pgdurand/BeeDeeM/releases/download/v${BDM_VERSION}/beedeem-${BDM_VERSION}-distrib.zip
+        mkdir -p /opt/beedeem/tmp-install
+        mv /opt/beedeem-${BDM_VERSION}-distrib.zip /opt/beedeem/tmp-install
+        cd /opt/beedeem/tmp-install
 	
 	# Unpack BeeDeeM to /opt/beedeem
 	unzip beedeem-${BDM_VERSION}-distrib.zip

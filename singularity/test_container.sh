@@ -25,10 +25,10 @@
 #PBS -l ncpus=2
 
 # Version of BeeDeeM to test
-BDM_VERSION=4.7.4
+BDM_VERSION=5.0.0
 # Default working directory to test BeeDeeM Singularity image.
 # Il will be overriden below, given host platform
-BDM_SCRATCH_DIR=/tmp
+BDM_SCRATCH_DIR=$SCRATCH
 # What is the name of the BeeDeeM image
 BDM_SING_IMG_NAME=beedeem-${BDM_VERSION}.sif
 # Where to find the BeeDeeM image
@@ -115,7 +115,7 @@ fi
 # Configure Singularity runner
 BDM_BINDS="--bind ${BDM_WORK_DIR} --bind ${BDM_BANKS_DIR}"
 BDM_SINGULITY_IMG="$BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME"
-# For debugging if neeeded: dump all BDM_XXX variables
+# For debugging if needed: dump all BDM_XXX variables
 ( set -o posix ; set ) | grep "BDM_"
 
 #rm -rf $BDM_BANKS_DIR
@@ -124,28 +124,74 @@ mkdir -p $BDM_BANKS_DIR
 mkdir -p $BDM_WORK_DIR
 
 # Prepare env variables to be used by BeeDeeM inside the container (mandatory)
-export KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=${BDM_WORK_DIR} -DKL_LOG_TYPE=console"
+export KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=${BDM_WORK_DIR}"
 export KL_WORKING_DIR=${BDM_WORK_DIR}
 export KL_mirror__path=${BDM_BANKS_DIR}
 
+# == TEST 1 =========================================== 
+echo "*** TEST 1: Start simple bank installation"
+
+# set BeeDeeM log mode to console (otherwise default is a log file located in KL_WORKING_DIR)
+export KL_LOG_TYPE=console
+
 # Set the banks to install
 # These are '.dsc' files located in BeeDeeM image at path /opt/beedeem/conf/descriptors
-DESCRIPTOR="SwissProt_human,PDB_proteins,MEROPS_PepUnits"
+#DESCRIPTOR="SwissProt_human,PDB_proteins,MEROPS_PepUnits"
+DESCRIPTOR="SwissProt_human,PDB_proteins"
 
-# Now, let's start a simple installation
-echo "Start simple bank installation"
-echo "Look at processing with:"
-echo "tail -f $BDM_WORK_DIR/log"
+export KL_LOG_TYPE=console
 
 singularity run \
   ${BDM_BINDS} \
   ${BDM_SINGULITY_IMG} \
-  bdm install -desc ${DESCRIPTOR} >& ${BDM_WORK_DIR}/log 2>&1
+  bdm install -desc ${DESCRIPTOR} 
 
 if [ $? -eq 0 ]; then
-  echo "SUCCESS"
+  echo "TEST 1: SUCCESS"
 else
-  echo "FAILED.   Review log file: $BDM_WORK_DIR/log"
+  echo "TEST 1: FAILED."
   exit 1
 fi
+
+# == TEST 2 =========================================== 
+echo "*** TEST 2: list installed bank"
+
+# reset BeeDeeM log mode to file (default)
+export KL_LOG_TYPE=file
+
+# start BeeDeeM with 'info' command
+singularity run \
+  ${BDM_BINDS} \
+  ${BDM_SINGULITY_IMG} \
+  bdm info -d all -f txt
+
+if [ $? -eq 0 ]; then
+  echo "TEST 2: SUCCESS"
+else
+  echo "TEST 2: FAILED. Review log file in: $BDM_WORK_DIR"
+  exit 1
+fi
+
+
+# == TEST 3 =========================================== 
+# Change default BeeDeeM log file name to something else
+export KL_LOG_TYPE=file
+export KL_LOG_FILE=query.log
+
+SW_ENTRY="ZZZ3_HUMAN"
+echo "*** TEST 3: query bank for entry: $SW_ENTRY"
+
+# start BeeDeeM with 'query' command
+singularity run \
+  ${BDM_BINDS} \
+  ${BDM_SINGULITY_IMG} \
+  bdm query -d protein -f txt -i $SW_ENTRY
+
+if [ $? -eq 0 ]; then
+  echo "TEST 3: SUCCESS"
+else
+  echo "TEST 3: FAILED. Review log file: $BDM_WORK_DIR"
+  exit 1
+fi
+
 
