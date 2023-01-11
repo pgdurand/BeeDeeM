@@ -34,21 +34,25 @@ Use this command:
 
 ### Sample use cases
  
-1/ install a simple bank:
+1/ simply get BeeDeeM command-line help message:
+
+      docker run .../... beedeem_machine bdm -h
+
+2/ install a simple bank:
  
-      docker run .../... beedeem_machine install.sh -desc PDB_proteins
+      docker run .../... beedeem_machine bdm install -desc PDB_proteins
  
 Will invoke 'install.sh' BeeDeeM script. See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.html\#install-a-bank) for more details. 
 
-2/ install an annotated bank:
+3/ install an annotated bank:
  
-      docker run .../... beedeem_machine install.sh -desc SwissProt_human
+      docker run .../... beedeem_machine bdm install -desc SwissProt_human
 
-3/ get list of installed banks:
+4/ get list of installed banks:
  
       docker run .../... beedeem_machine info.sh -d all -f txt
 
-4/ query a bank to fetch an entry:
+5/ query a bank to fetch an entry:
  
       docker run .../... beedeem_machine query.sh -d protein -i P31946 -f txt
 
@@ -69,17 +73,17 @@ Which means that BeeDeeM log files can be located on your system within '/path/t
 
 If needeed, you can tell BeeDeeM to dump logs directly on the console using this command:
 
-      docker run .../... -e "KL_LOG_TYPE=console" beedeem_machine install.sh -desc PDB_proteins
+      docker run .../... -e "KL_LOG_TYPE=console" beedeem_machine bdm install -desc PDB_proteins
 
 ### Default JRE memory usage
 
 Java is pre-configured to use up to 2 Gb RAM. You can change this by adding such an argument to your docker run command:
 
-      docker run .../... -e "KL_JRE_ARGS=-Xms128M -Xmx1G -Djava.io.tmpdir=/beedeem-wk" beedeem_machine install.sh -desc PDB_proteins
+      docker run .../... -e "KL_JRE_ARGS=-Xms128M -Xmx1G -Djava.io.tmpdir=/beedeem-wk" beedeem_machine bdm install -desc PDB_proteins
 
 Tips: ALWAYS redirect appropriately JRE tmp directory to somewhere outside the container! This is the reason why you see a -Djava.io.tmpdir directive in the previous command.
 
-### Here is a working command on my OSX computer:
+### Here is a working command on my macOS computer:
 
 1. I created these directories:
 
@@ -95,7 +99,7 @@ Tips: ALWAYS redirect appropriately JRE tmp directory to somewhere outside the c
                     -v /Users/pgdurand/biobanks:/beedeem-db \
                     -v /Users/pgdurand/biobanks/log:/beedeem-wk \
                     beedeem_machine \
-                    install.sh -desc PDB_proteins
+                    bdm install -desc PDB_proteins
 
 In that case, BeeDeeM installs bank within directory '/beedeem-db', which actually targets '/Users/pgdurand/biobanks' through the Docker container. In a similar way, BeeDeeM creates a log file within '/beedeem-wk', which is actually '/Users/pgdurand/biobanks/log'.
 

@@ -2,10 +2,11 @@
 #
 # Dockerfile to use BeeDeem through a Docker container.
 #
-# To be used for production purpose, rely on BeeDeeM zipball release
-# available at https://github.com/pgdurand/BeeDeeM/releases
+# To be used for test/debug only, relies on freshly built BeeDeeM zipball
+# (made with 'ant makedistrib' command) that has to be copied from ../distrib
+# to here.
 #
-# Copyright (c) 2017-231, Patrick G. Durand
+# Copyright (c) 2017-23, Patrick G. Durand
 #
 #######################################################################################
 
@@ -45,10 +46,6 @@ RUN add-apt-repository ppa:ts.sch.gr/ppa \
 ENV BDM_VERSION=5.0.0
 COPY beedeem-${BDM_VERSION}-distrib.zip /opt
 
-# ###
-#     BeeDeeM download, installation and cleaning.
-#     We get an official release bundle from Github.
-#
 RUN \
   mkdir -p /opt/beedeem/tmp-install && \
   mv /opt/beedeem-${BDM_VERSION}-distrib.zip /opt/beedeem/tmp-install && \
@@ -89,10 +86,4 @@ RUN \
 #     BeeDeeM runtime environment variables.
 #
 ENV PATH=/opt/beedeem:/opt/beedeem-tools:$PATH
-ENV KL_WORKING_DIR=/beedeem-wk
-# shell variable name does not allowed use of '.'
-# (mirror__path == mirror.path)
-ENV KL_mirror__path=/beedeem-db
-# You can override the following at runtime by using Docker "-e" argument.
-ENV KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=\$KL_WORKING_DIR"
 
