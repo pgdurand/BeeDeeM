@@ -9,7 +9,7 @@
 #         b. qsub test_container.sh (PBS Pro)
 #         c. srun test_container.sh (slurm, direct execution)
 #
-# P. Durand (SeBiMER, Ifremer), last update on Nov 2022
+# P. Durand (SeBiMER, Ifremer), last update on Dec 2022
 
 # Sample config for Slurm; adapt partition to your cluster configuration
 #SBATCH -p fast
@@ -140,7 +140,7 @@ echo "tail -f $BDM_WORK_DIR/log"
 singularity run \
   ${BDM_BINDS} \
   ${BDM_SINGULITY_IMG} \
-  install.sh -desc ${DESCRIPTOR} >& ${BDM_WORK_DIR}/log 2>&1
+  bdm install -desc ${DESCRIPTOR} >& ${BDM_WORK_DIR}/log 2>&1
 
 if [ $? -eq 0 ]; then
   echo "SUCCESS"

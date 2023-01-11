@@ -50,11 +50,13 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
  * If not set, use ${user.dir}/conf.
  * -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that name within
  * KL_WORKING_DIR<br>
+ * -DKL_LOG_TYPE=none|console|file(default)<br><br>
  * <br>
  * 
  * @author Patrick G. Durand
  */
-public class CmdLineQuery {
+@BdmTool(command="query", description="query bank repository to fetch entry(ies) given ID(s)")
+public class CmdLineQuery implements BdmToolApi {
   private static final String DATABASE = "d";
   private static final String SEQID    = "i";
   private static final String FORMAT   = "f";
@@ -64,7 +66,7 @@ public class CmdLineQuery {
    * Setup the valid command-line of the application.
    */
   @SuppressWarnings("static-access")
-  private static Options getCmdLineOptions() {
+  private Options getCmdLineOptions() {
     Options opts;
 
     Option repo = OptionBuilder
@@ -100,7 +102,8 @@ public class CmdLineQuery {
     return opts;
   }
 
-  public static boolean doJob(String[] args) {
+  @Override
+  public boolean execute(String[] args) {
     PQueryMirrorBase qm;
     Hashtable<String, String> values;
     CommandLine cmdLine;
@@ -141,12 +144,6 @@ public class CmdLineQuery {
     }
     else {
       return true;
-    }
-  }
-
-  public static void main(String[] args) {
-    if (!doJob(args)){
-      System.exit(1);
     }
   }
 }

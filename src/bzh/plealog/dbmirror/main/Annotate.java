@@ -41,17 +41,19 @@ import bzh.plealog.dbmirror.ui.resources.DBMSMessages;
  * -DKL_DEBUG=true ; if true, if set, log will be in debug mode<br>
  * -DKL_WORKING_DIR=an_absolute_path ; if not set, log and working directories are set to java.io.tmp<br>
  * -DKL_CONF_DIR=an_absolute_path ; the absolute path to a home-made conf directory. If not set, use ${user.dir}/conf.
- * -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that name within KL_WORKING_DIR<br><br>
+ * -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that name within KL_WORKING_DIR<br>
+ * -DKL_LOG_TYPE=none|console|file(default)<br><br>
  * 
  * @author Patrick G. Durand
  */
-public class Annotate {
+@BdmTool(command="annotate", description="annotate a BLAST XML formatted file")
+public class Annotate implements BdmToolApi {
 
   /**
    * Setup the valid command-line of the application.
    */
   @SuppressWarnings("static-access")
-  private static Options getCmdLineOptions() {
+  private Options getCmdLineOptions() {
     Options opts;
    
     Option type = OptionBuilder
@@ -94,7 +96,8 @@ public class Annotate {
     return opts;
   }
 
-  public static boolean doJob(String[] args){
+  @Override
+  public boolean execute(String[] args){
     PAnnotateBlastResult annotator;
     CommandLine cmdLine;
     String input, output, writer, type;
@@ -119,11 +122,5 @@ public class Annotate {
     annotator = new PAnnotateBlastResult();
     
     return annotator.annotate(input, output, writer, type, includeBC);
-  }
-
-  public static void main(String[] args) {
-    if (!doJob(args)){
-      System.exit(1);// exit code=1 : do this to report error to calling app
-    }
   }
 }

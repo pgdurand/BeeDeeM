@@ -38,13 +38,8 @@
 
 	<property name="rootpkg" value="bzh.plealog.dbmirror.main" />
 	<property name="KLMirrorClass" value="${rootpkg}.CmdLineInstaller" />
-	<property name="KLUIMirrorClass" value="${rootpkg}.UiInstaller" />
-	<property name="KLQueryMirrorClass" value="${rootpkg}.CmdLineQuery" />
-	<property name="KLMirrorAnnot" value="${rootpkg}.Annotate" />
-  <property name="KLMirrorInfo" value="${rootpkg}.DumpBankList" />
-  <property name="KLMirrorDelete" value="${rootpkg}.DeleteBank" />
-  <property name="KLMirrorCheck" value="${rootpkg}.AutoCheckDescriptors" />
-
+	<property name="KANT_ZIP" value="ant-1.9.4.zip" />
+	
 	<path id="class.path">
 		<pathelement path="${classpath}" />
 		<fileset dir="${jar}">
@@ -216,77 +211,9 @@
 	<!-- ============================================================= -->
   <!-- Compile code and make software dustribution package           -->
 	<target name="makedistrib" depends="makejar">
-		<!-- Copy the DBMS scripts for Mac, Linux and Windows -->
-		<copy file="${scripts}/install.sh" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLMirrorClass}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/UiInstall.sh" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLUIMirrorClass}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/query.sh" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLQueryMirrorClass}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/annotate.sh" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLMirrorAnnot}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/info.sh" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
-			</filterset>
-		</copy>
-    <copy file="${scripts}/delete.sh" todir="${Dscripts}">
-      <filterset>
-        <filter token="APP_MAIN_CLASS" value="${KLMirrorDelete}" />
-      </filterset>
-    </copy>
-    <copy file="${scripts}/check.sh" todir="${Dscripts}">
-      <filterset>
-        <filter token="APP_MAIN_CLASS" value="${KLMirrorCheck}" />
-      </filterset>
-    </copy>
-		<copy file="${scripts}/install.bat" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLMirrorClass}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/UiInstall.bat" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLUIMirrorClass}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/query.bat" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLQueryMirrorClass}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/annotate.bat" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLMirrorAnnot}" />
-			</filterset>
-		</copy>
-		<copy file="${scripts}/info.bat" todir="${Dscripts}">
-			<filterset>
-				<filter token="APP_MAIN_CLASS" value="${KLMirrorInfo}" />
-			</filterset>
-		</copy>
-    <copy file="${scripts}/delete.bat" todir="${Dscripts}">
-      <filterset>
-        <filter token="APP_MAIN_CLASS" value="${KLMirrorDelete}" />
-      </filterset>
-    </copy>
-    <copy file="${scripts}/check.bat" todir="${Dscripts}">
-      <filterset>
-        <filter token="APP_MAIN_CLASS" value="${KLMirrorCheck}" />
-      </filterset>
-    </copy>
+		<!-- Copy the DBMS scripts for Mac, Linux -->
+		<copy file="${scripts}/bdm.sh" todir="${Dscripts}" />
+    <copy file="${scripts}/test_bdm.sh" todir="${Dscripts}" />
 		<!-- Galaxy wrapper to list available DBs -->
     <copy file="${scripts}/beedeem_info.xml" todir="${Dconf}/system">
       <filterset>
@@ -316,7 +243,6 @@
 		<!-- Copy the DBMS Ant installer files -->
 		<copy file="${scripts}/config-std.properties" tofile="${distrib}/config.properties" />
 		<copy file="${scripts}/envDBMS" todir="${distrib}" />
-		<copy file="${scripts}/install-std.txt" tofile="${distrib}/INSTALL.txt" />
 		<copy file="${scripts}/deploy-std.xml" tofile="${distrib}/deploy.xml">
 			<filterset>
 				<filter token="KDBMS_TBALL" value="${apptar}.gz" />
@@ -326,7 +252,7 @@
 		<!-- in case Ant will not be available on the target system,
          we provide it. -->
 		<mkdir dir="${distrib}/ant" />
-		<copy file="${scripts}/ant-1.9.4.zip" todir="${distrib}/ant" />
+		<copy file="${scripts}/${KANT_ZIP}" todir="${distrib}/ant" />
 		<!-- Package the whole stuff in a zip (natively readable on 
 		     all OS, including Windows)
 		 -->

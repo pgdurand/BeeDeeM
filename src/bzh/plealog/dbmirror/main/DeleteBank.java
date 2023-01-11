@@ -35,11 +35,13 @@ import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
  * If not set, use ${user.dir}/conf.
  * -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that name within
  * KL_WORKING_DIR<br>
+ * -DKL_LOG_TYPE=none|console|file(default)<br><br>
  * <br>
  * 
  * @author Patrick G. Durand
  * */
-public class DeleteBank {
+@BdmTool(command="delete", description="delete bank(s)")
+public class DeleteBank implements BdmToolApi{
 
   private static final String CODE_ARG = "code";
   private static final String INFO_ARG = "info";
@@ -48,7 +50,7 @@ public class DeleteBank {
    * Setup the valid command-line of the application.
    */
   @SuppressWarnings("static-access")
-  private static Options getCmdLineOptions() {
+  private Options getCmdLineOptions() {
     Options opts;
 
     Option idx = OptionBuilder
@@ -69,7 +71,8 @@ public class DeleteBank {
 
   }
 
-  public static void main(String[] args) {
+  @Override
+  public boolean execute(String[] args) {
     CommandLine cmdLine;
     List<IdxDescriptor> descriptors;
     IdxDescriptor desc=null;
@@ -90,7 +93,7 @@ public class DeleteBank {
         getCmdLineOptions(), 
         DBMSMessages.getString("Tool.DeleteBank.name"));
     if (cmdLine==null){
-      System.exit(1);
+      return false;
     }
     
     // Load the banks list
@@ -110,7 +113,7 @@ public class DeleteBank {
       String msg = new MessageFormat(DBMSMessages.getString("Tool.DeleteBank.err.msg1")).format(
           new Object[]{dbCode});
       System.err.println(msg);
-      System.exit(1);
+      return false;
     }
 
     // Do we have to only display information about bank to be deleted ?
@@ -123,22 +126,23 @@ public class DeleteBank {
       }
       String dbList = DeleteBankUtility.getPotentialyDeletedBanks(descriptors, path, osWin);
       System.out.println(formatter.format(new Object[] { path, dbList }));
-      System.exit(0);
+      return true;
     }
     
     //Otherwise, do the bank deletion!
     if (!DeleteBankUtility.deleteBank(descriptors, desc, new MyDeleteBankHandler())){
       System.err.println(DBMSMessages.getString("InstalledDescriptorList.msg10"));
-      System.exit(1);
+      return false;
     }
     else{
       String msg = new MessageFormat(DBMSMessages.getString("Tool.DeleteBank.info.msg2")).format(
           new Object[]{desc.getName()});
       System.out.println(msg);
+      return true;
     }
   }
 
-  private static class MyDeleteBankHandler implements DeleteBankHandler {
+  private class MyDeleteBankHandler implements DeleteBankHandler {
     @Override
     public boolean confirmPersonalBankDeletion() {
       return true;

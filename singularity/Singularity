@@ -42,12 +42,12 @@ From: ubuntu:18.04
 	rm -rf tmp-install
 	
 	# Do a little configuration
-	cp scripts/*.sh .
-        sed -i 's/@KL_WORKING_DIR@/\/beedeem-wk/g' *.sh
-        sed -i 's/@JAVA_ARGS@/-Xms128M -Xmx2048M -Djava.io.tmpdir=\$KL_WORKING_DIR -DKL_LOG_TYPE=console/g' *.sh
+	cp scripts/bdm.sh ./bdm
+        sed -i 's/@KL_WORKING_DIR@/\/beedeem-wk/g' bdm
+        sed -i 's/@JAVA_ARGS@/-Xms128M -Xmx2048M -Djava.io.tmpdir=\$KL_WORKING_DIR -DKL_LOG_TYPE=console/g' bdm
 	cp scripts/dbms.config conf
 	sed -i 's/@BIOBASE_ROOTDIR@/\/beedeem-db/g' conf/dbms.config
-	chmod +x *.sh
+	chmod +x bdm
 	chmod +x /opt/beedeem/external/bin/linux/*
 	chmod +x /opt/beedeem/conf/scripts/*.sh
 	cd /opt/beedeem/external/bin && rm -rf macos windows

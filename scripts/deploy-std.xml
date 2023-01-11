@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- This is the Ant configuration file used to deploy, install and configure
      the DataBank Manager System (BeeDeeM).
-     Copyright (c) 2007-2017, Patrick G. Durand
+     
+     Documentation:
+       https://pgdurand.gitbook.io/beedeem/installation/installation#legacy-installation
+     
+     Copyright (c) 2007-2023, Patrick G. Durand
 -->
 
-<project name="DBMS_installer" default="help" basedir=".">
+<project name="BeeDeeM_installer" default="help" basedir=".">
 
 	<property environment="env"/>
 	<property file="config.properties"/>
@@ -13,13 +17,9 @@
 		<os family="unix"/>
 	</condition>
 
-	<condition property="winOS">
-		<os family="windows"/>
-	</condition>
-
 	<!-- ============================================================= -->
 	<target name="help">
-		<echo>This is the Ant project file to install DBMS.</echo>
+		<echo>This is the Ant project file to install BeeDeeM.</echo>
 		<echo/>
 		<echo>Available target is: install</echo>
 		<echo/>
@@ -34,7 +34,6 @@
 		<echo>Installation dir: ${installDir}</echo>
 		<echo>Working dir     : ${workingDir}</echo>
 		<echo>BioBase dir     : ${biobaseRootDir}</echo>
-		<echo>JVM dir         : ${javaDir}</echo>
 		<echo>Java args       : ${javaArgs}</echo>
 		<input>If ok, press Return key to start the installation...</input>
 
@@ -46,7 +45,6 @@
 		<!-- Removed old installation if any -->
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="${installDir}">
-				<exclude name="**/*.lic"/>
 				<exclude name="**/*.dsc"/>
 				<exclude name="**/*.gd"/>
 			</fileset>
@@ -68,30 +66,25 @@
 		<antcall target="setperms" />
 	</target>
 
-  <!-- ============================================================= -->
+	<!-- ============================================================= -->
 	<target name="setperms" if="unixOS">
-		<chmod dir="${installDir}"                perm="ugo+r" type="file" includes="**/*" />
-		<chmod dir="${installDir}/external"       perm="ugo+x" type="file" includes="**/*" />
-		<chmod dir="${biobaseRootDir}"            perm="ugo+r" type="file" includes="**/*" />
-		<chmod dir="${installDir}"                perm="ugo+x" type="dir"  includes="**/*" />
-		<chmod dir="${biobaseRootDir}"            perm="ugo+x" type="dir"  includes="**/*" />
-		<chmod dir="${workingDir}"                perm="ugo+rwx" type="dir" />
-		<chmod file="${installDir}/UiInstall.sh"  perm="ugo+x" />
-		<chmod file="${installDir}/install.sh"    perm="ugo+x" />
-		<chmod file="${installDir}/query.sh"      perm="ugo+x" />
-    <chmod file="${installDir}/annotate.sh"   perm="ugo+x" />
-    <chmod file="${installDir}/info.sh"       perm="ugo+x" />
-    <chmod file="${installDir}/delete.sh"     perm="ugo+x" />
-    <chmod file="${installDir}/check.sh"      perm="ugo+x" />
+		<chmod dir="${installDir}"                perm="ugo+r"  type="file" includes="**/*" />
+		<chmod dir="${installDir}/external"       perm="ugo+x"  type="file" includes="**/*" />
+    <chmod dir="${installDir}/conf/scripts"   perm="ugo+rx" type="file" includes="**/*.sh" />
+		<chmod dir="${biobaseRootDir}"            perm="ugo+r"  type="file" includes="**/*" />
+		<chmod dir="${installDir}"                perm="ugo+x"  type="dir"  includes="**/*" />
+		<chmod dir="${biobaseRootDir}"            perm="ugo+x"  type="dir"  includes="**/*" />
+		<chmod dir="${workingDir}"                perm="755"    type="dir" />
+    <chmod file="${installDir}/bdm"           perm="ugo+rx" />
+    <chmod file="${installDir}/test_bdm"      perm="ugo+rx" />
 	</target>
 
-  <!-- ============================================================= -->
+	<!-- ============================================================= -->
 	<target name="copyScripts">
-		<antcall target="copyScriptsWin" />
 		<antcall target="copyScriptsUnix" />
 	</target>
 
-  <!-- ============================================================= -->
+	<!-- ============================================================= -->
 	<target name="prepareScript">
 		<copy file="${installDir}/scripts/${kscript}.${kext}" tofile="${installDir}/${kscript}.tmp">
 			<filterset>
@@ -103,90 +96,23 @@
 
 			</filterset>
 		</copy>
-		<antcall target="updateWinPath">
-			<param name="sourceF" value="${installDir}/${kscript}.tmp"/>
-			<param name="targetF" value="${installDir}/${kscript}.${kext}"/>
-		</antcall>
 		<antcall target="updateUnixPath">
 			<param name="sourceF" value="${installDir}/${kscript}.tmp"/>
-			<param name="targetF" value="${installDir}/${kscript}.${kext}"/>
+			<param name="targetF" value="${installDir}/${kscript}"/>
 		</antcall>
 		<delete file="${installDir}/${kscript}.tmp"/>
 	</target>
 
-  <!-- ============================================================= -->
-	<target name="copyScriptsWin" if="winOS">
-		<!-- Copy and configure the KDBMS starter script (Windows) -->
-		<antcall target="prepareScript">
-			<param name="kscript" value="UiInstall"/>
-			<param name="kext" value="bat"/>
-		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="install"/>
-			<param name="kext" value="bat"/>
-		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="query"/>
-			<param name="kext" value="bat"/>
-		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="annotate"/>
-			<param name="kext" value="bat"/>
-		</antcall>
-    <antcall target="prepareScript">
-      <param name="kscript" value="info"/>
-      <param name="kext" value="bat"/>
-    </antcall>
-    <antcall target="prepareScript">
-      <param name="kscript" value="delete"/>
-      <param name="kext" value="bat"/>
-    </antcall>
-    <antcall target="prepareScript">
-      <param name="kscript" value="check"/>
-      <param name="kext" value="bat"/>
-    </antcall>
-		<!-- Copy and configure the DBMS main config file-->
-		<copy file="${installDir}/scripts/dbms.config" tofile="${installDir}/conf/dbms.tmp">
-			<filterset>
-				<filter token="BIOBASE_ROOTDIR" value="${biobaseRootDir}"/>
-			</filterset>
-		</copy>
-		<antcall target="updateWinPath">
-			<param name="sourceF" value="${installDir}/conf/dbms.tmp"/>
-			<param name="targetF" value="${installDir}/conf/dbms.config"/>
-		</antcall>
-		<delete file="${installDir}/conf/dbms.tmp"/>
-	</target>
-
-  <!-- ============================================================= -->
+	<!-- ============================================================= -->
 	<target name="copyScriptsUnix" if="unixOS">
 		<!-- Copy and configure the KDBMS starter script (Unix) -->
 		<antcall target="prepareScript">
-			<param name="kscript" value="UiInstall"/>
+			<param name="kscript" value="bdm"/>
 			<param name="kext" value="sh"/>
 		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="install"/>
-			<param name="kext" value="sh"/>
-		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="query"/>
-			<param name="kext" value="sh"/>
-		</antcall>
-		<antcall target="prepareScript">
-			<param name="kscript" value="annotate"/>
-			<param name="kext" value="sh"/>
-		</antcall>
+    <!-- Copy and configure the KDBMS test script (Unix) -->
     <antcall target="prepareScript">
-      <param name="kscript" value="info"/>
-      <param name="kext" value="sh"/>
-    </antcall>
-    <antcall target="prepareScript">
-      <param name="kscript" value="delete"/>
-      <param name="kext" value="sh"/>
-    </antcall>
-    <antcall target="prepareScript">
-      <param name="kscript" value="check"/>
+      <param name="kscript" value="test_bdm"/>
       <param name="kext" value="sh"/>
     </antcall>
 		<!-- Copy and configure the KDBMS main config file-->
@@ -197,24 +123,7 @@
 		</copy>
 	</target>
 
-  <!-- ============================================================= -->
-	<target name="updateWinPath" if="winOS">
-		<path id="distribClass.path">
-			<fileset dir="${installDir}/bin">
-				<include name="**/*.jar"/>
-			</fileset>
-		</path>
-		<java fork="true" 
-          classname="bzh.plealog.dbmirror.main.SetupConfiguration" 
-          classpathref="distribClass.path" >
-			<arg value="${sourceF}"/>
-			<arg value="${targetF}"/>
-			<arg value="\"/>
-			<arg value="\\"/>
-		</java>
-	</target>
-
-  <!-- ============================================================= -->
+	<!-- ============================================================= -->
 	<target name="updateUnixPath" if="unixOS">
 		<copy file="${sourceF}" tofile="${targetF}"/>
 	</target>

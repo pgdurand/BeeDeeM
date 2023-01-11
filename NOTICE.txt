@@ -1,4 +1,4 @@
-This product includes software developed by:
+This software includes software developed by:
 
   The Plealog Team (http://www.plealog.com)
     Plealog license 1 is here: http://www.apache.org/licenses/LICENSE-2.0
@@ -34,3 +34,6 @@ This product includes software developed by:
     Biojava license is here: http://www.gnu.org/copyleft/lesser.html
     It targets: biojava, bytecode
 
+  The Informas Annotation framework 
+    License is here: https://github.com/rmuller/infomas-asl
+    It targets: eu.informas.annotation package

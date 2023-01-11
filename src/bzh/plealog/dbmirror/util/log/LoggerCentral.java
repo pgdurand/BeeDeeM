@@ -294,7 +294,7 @@ public class LoggerCentral {
         builder.newAppenderRef(refAppender)).addAttribute("additivity", false));
     
     builder.add(builder.newRootLogger(aLevel).add(builder.newAppenderRef(refAppender)));
-    Configurator.initialize(builder.build()); 
+    Configurator.reconfigure(builder.build());
   }
   
   /**
@@ -336,7 +336,6 @@ public class LoggerCentral {
     userPath = getLogAppPath();
     szLogFileName = userPath + _logAppFile;
     szLogFilePattern = userPath + "%d{MM-dd-yy}-" + _logAppFile;
-    
     try {
       cleanSystemLogs(userPath, _logAppFile);
     } catch (Exception e) {
