@@ -1,4 +1,20 @@
-package bzh.plealog.dbmirror.main;
+/*  Copyright (C) 2007-2023 Patrick G. Durand
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  You may obtain a copy of the License at
+ *
+ *     https://www.gnu.org/licenses/agpl-3.0.txt
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ */
+ package bzh.plealog.dbmirror.main;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -20,8 +36,8 @@ import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
 /**
  * A utility tool to delete bank from he command-line. Command-line arguments are:<br>
  * 
- * -code <bank-code>: index code of the bank to delete. Such a code can be obtained 
- * using the 'info' tool (use 'code' format).<br>
+ * -name <bank-name>: name of the bank to delete. Such a name can be obtained 
+ * using the 'info' tool. Bank name is case sensitive.<br>
  * -info: display bank directory to be deleted WITHOUT deleting it! <br>
  * 
  * In addition, some parameters can be passed to the JVM for special
@@ -43,7 +59,7 @@ import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
 @BdmTool(command="delete", description="delete bank(s)")
 public class DeleteBank implements BdmToolApi{
 
-  private static final String CODE_ARG = "code";
+  private static final String NAME_ARG = "name";
   private static final String INFO_ARG = "info";
 
   /**
@@ -58,7 +74,7 @@ public class DeleteBank implements BdmToolApi{
         .hasArg()
         .isRequired()
         .withDescription(DBMSMessages.getString("Tool.DeleteBank.arg1.desc"))
-        .create( CODE_ARG );
+        .create( NAME_ARG );
 
     opts = new Options();
     opts.addOption(idx);
@@ -102,9 +118,9 @@ public class DeleteBank implements BdmToolApi{
     descriptors = DBDescriptorUtils.prepareIndexDBList(conf);
 
     // Locate the bank to delete
-    dbCode = cmdLine.getOptionValue(CODE_ARG);
+    dbCode = cmdLine.getOptionValue(NAME_ARG);
     for (IdxDescriptor idx : descriptors){
-      if (idx.getKbCode().equals(dbCode)){
+      if (idx.getName().equals(dbCode)){
         desc = idx;
         break;
       }
