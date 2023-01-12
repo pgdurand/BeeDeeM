@@ -54,7 +54,7 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
 /**
  * This is the class to use to report the list of installed banks. Accepted
  * arguments are: <br>
- * -d type of repository. One of: n, p, b, all. Default is: all.<br>
+ * -d type of repository. One of: n, p, d, all. Default is: all.<br>
  * -f format. One of: txt, html, galaxy. Default is: txt. <br>
  * -u user-name. <br>
  * In addition, some parameters can be passed to the JVM for special
@@ -262,7 +262,7 @@ public class DumpBankList implements BdmToolApi {
       dbs2.put("mirror_p", dbList);
       dbs2.put("mirror_n", emptyList);
       dbs2.put("mirror_d", emptyList);
-    } else if ("b".equals(db)) {
+    } else if ("d".equals(db)) {
       // only biological classification
       dbList = getMirrorDBList(DBDescriptor.TYPE.dico, us);
       dbTotalSize = countSize(dbTotalSize, dbList);

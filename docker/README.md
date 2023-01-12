@@ -50,16 +50,11 @@ Will invoke 'install.sh' BeeDeeM script. See [BeeDeeM user manual](https://pgdur
 
 4/ get list of installed banks:
  
-      docker run .../... beedeem_machine info.sh -d all -f txt
+      docker run .../... beedeem_machine bdm info -d all -f txt
 
 5/ query a bank to fetch an entry:
  
-      docker run .../... beedeem_machine query.sh -d protein -i P31946 -f txt
-
-If it fails, just try this form:
-
-      docker run .../... beedeem_machine query.sh protein P31946 txt
-      
+      docker run .../... beedeem_machine bdm query -d p -i ZZZ3_HUMAN -f txt
 
 ### Monitor BeeDeeM
    

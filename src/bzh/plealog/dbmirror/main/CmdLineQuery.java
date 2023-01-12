@@ -34,7 +34,7 @@ import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
 /**
  * This is the class to use to query the databanks managed with BeeDeeM.
  * Command line is as follows:<br>
- * -d   databank, one of: protein, nucleotide or dico<br>
+ * -d   databank, one of: p, n or d<br>
  * -i   comma-separated list of sequence IDs, of path to a file of seqIDs (one per line)<br>
  * -f   format. One of: txt, fas, html, insd, finsd.<br>
  * -o   output. If not set, default to stdout.<br>
@@ -102,6 +102,25 @@ public class CmdLineQuery implements BdmToolApi {
     return opts;
   }
 
+  /**
+   * Get repository for which we have to execute query. Default is nucleotide.
+   */
+  private String getDatabaseType(CommandLine cmdLine) {
+    String val = cmdLine.getOptionValue(DATABASE);
+    if ("n".equals(val)) {
+      return "nucleotide";      
+    }
+    else if ("p".equals(val)) {
+      return "protein";      
+    } 
+    else if ("d".equals(val)) {
+      return "dico";      
+    }
+    else if (val.contains("d:")) {
+      return "dico:"+val.substring(val.indexOf(':')+1);
+    }
+    else return "nucleotide";
+  }
   @Override
   public boolean execute(String[] args) {
     PQueryMirrorBase qm;
@@ -123,7 +142,7 @@ public class CmdLineQuery implements BdmToolApi {
 
     // get the key/value data and process the query
     values = new Hashtable<>();
-    values.put("database", cmdLine.getOptionValue(DATABASE));
+    values.put("database", getDatabaseType(cmdLine));
     values.put("id", cmdLine.getOptionValue(SEQID));
     values.put("format", cmdLine.getOptionValue(FORMAT));
 

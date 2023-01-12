@@ -36,9 +36,9 @@ import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
 /**
  * A utility tool to delete bank from he command-line. Command-line arguments are:<br>
  * 
- * -name <bank-name>: name of the bank to delete. Such a name can be obtained 
+ * -n <bank-name>: name of the bank to delete. Such a name can be obtained 
  * using the 'info' tool. Bank name is case sensitive.<br>
- * -info: display bank directory to be deleted WITHOUT deleting it! <br>
+ * -p: print bank directory to be deleted WITHOUT deleting it! <br>
  * 
  * In addition, some parameters can be passed to the JVM for special
  * configuration purposes:<br>
@@ -59,8 +59,8 @@ import bzh.plealog.dbmirror.util.runner.DBMSExecNativeCommand;
 @BdmTool(command="delete", description="delete bank(s)")
 public class DeleteBank implements BdmToolApi{
 
-  private static final String NAME_ARG = "name";
-  private static final String INFO_ARG = "info";
+  private static final String NAME_ARG = "n";
+  private static final String INFO_ARG = "p";
 
   /**
    * Setup the valid command-line of the application.
@@ -101,7 +101,7 @@ public class DeleteBank implements BdmToolApi{
     StarterUtils.configureApplication(
         null, 
         DBMSMessages.getString("Tool.DeleteBank.name"), 
-        true, false, true);
+        true, false, false);
 
     // Handle command-line
     cmdLine = CmdLineUtils.handleArguments(

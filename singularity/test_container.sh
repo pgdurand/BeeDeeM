@@ -185,7 +185,7 @@ echo "*** TEST 3: query bank for entry: $SW_ENTRY"
 singularity run \
   ${BDM_BINDS} \
   ${BDM_SINGULITY_IMG} \
-  bdm query -d protein -f txt -i $SW_ENTRY
+  bdm query -d p -f txt -i $SW_ENTRY
 
 if [ $? -eq 0 ]; then
   echo "TEST 3: SUCCESS"

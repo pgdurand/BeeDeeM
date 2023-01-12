@@ -66,7 +66,7 @@ SW_ENTRY="ZZZ3_HUMAN"
 echo "*** TEST 3: query bank for entry: $SW_ENTRY"
 
 # start BeeDeeM with 'query' command
-bdm query -d protein -f txt -i $SW_ENTRY
+bdm query -d p -f txt -i $SW_ENTRY
 
 if [ $? -eq 0 ]; then
   echo "TEST 3: SUCCESS"
