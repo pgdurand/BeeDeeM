@@ -465,8 +465,13 @@ public class PTaskInstallInProduction extends PAbstractTask {
         fCur = new File(dbPathCur);
         // rename current Production dir to something else
         if (fCur.exists()) {
+          String curRelDate = DBStampProperties.getDBTimeStampAsDirStr(
+              Utils.terminatePath(dbPathCur) + db.getName());
+          if (curRelDate==null) {
+            curRelDate = DBMSAbstractConfig.getStarterDate(); 
+          }
           str = dbPath + DBMSAbstractConfig.CURRENTON_DIR
-              + DBMSAbstractConfig.getStarterDate();
+              + curRelDate;
           // when reloading a mirror, str may already exists : destroy it
           if (new File(str).exists()) {
             if (!PAntTasks.deleteDirectory(str)) {
