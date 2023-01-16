@@ -299,7 +299,7 @@ public class PFTPLoaderSystem {
                 
                 //date of bank currently installed
                 String dbPathCur = Paths.get(DBMSAbstractConfig.getLocalMirrorPath(),
-                        dbConf.getTypeCode(), dbConf.getName(), 
+                        dbConf.getTypeCode(), dbConf.getName(), /*GT*/
                         DBMSAbstractConfig.CURRENT_DIR, dbConf.getName()).toString();
                 // caution: first time bank installation, dbPathCur does not exist
                 if (new File(dbPathCur).exists()){

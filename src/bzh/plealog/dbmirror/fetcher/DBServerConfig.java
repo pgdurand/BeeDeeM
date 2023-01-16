@@ -521,7 +521,7 @@ public class DBServerConfig {
   public String getLocalTmpFolder() {
     return getLocalFolder() + DBMSAbstractConfig.DOWNLOADING_DIR
         + File.separator
-        + DBMSExecNativeCommand.formatNativePath(getName(), false, false);
+        + DBMSExecNativeCommand.formatNativePath(getName(), false, false);/*GT*/
   }
 
   /**
@@ -531,7 +531,7 @@ public class DBServerConfig {
   public String getLocalProdFolder() {
     return Paths.get(DBMSAbstractConfig.getLocalMirrorPath(),
         this.getTypeCode(), this.getName(), DBMSAbstractConfig.CURRENT_DIR,
-        DBMSExecNativeCommand.formatNativePath(getName(), false, false))
+        DBMSExecNativeCommand.formatNativePath(getName(), false, false))/*GT*/
         .toString();
   }
 

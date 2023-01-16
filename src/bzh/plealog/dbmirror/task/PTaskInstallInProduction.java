@@ -445,7 +445,7 @@ public class PTaskInstallInProduction extends PAbstractTask {
 
         // check if we have some sequences in the db
         dbSizes = getTotalEntries(Utils.terminatePath(dbPathDStamp)
-            + db.getName());
+            + db.getName());/*GT*/
         if ((dbSizes[0] == 0) && (dbSizes[1] == 0)) {
           throw new Exception(
               "unable to install Blast databank in production: no sequences");
