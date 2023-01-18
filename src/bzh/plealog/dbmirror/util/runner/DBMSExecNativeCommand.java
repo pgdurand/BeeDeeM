@@ -189,7 +189,7 @@ public class DBMSExecNativeCommand {
       } else if (token.equalsIgnoreCase(OS_NAME_VAR_NAME)) {
         szBuf.append(getOSName());
         szBuf.append(File.separator);
-      } if (token.startsWith("$")) {//other system env variable
+      } else if (token.startsWith("$")) {//other system env variable
         idxS = token.indexOf('{');
         idxE = token.indexOf('}');
         if (idxS!=-1 && idxE!=-1) {
