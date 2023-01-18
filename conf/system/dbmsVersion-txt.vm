@@ -17,8 +17,15 @@ Installed banks
 #foreach( $db in $pTable )
       * $db.getName()
         Description: $db.getDescription()
+        Home dir: $db.getDbHome()
         BLAST+ use: -db $db.getDbPath().substring(0, $db.getDbPath().lastIndexOf("."))
         Annotated bank: $db.hasAnnotation()
+#if( ! ${db.getAdditionalIndex().isEmpty()} )
+        Additional index: 
+#foreach( $key in  $db.getAdditionalIndex().keySet() )
+           $key : $db.getAdditionalIndex().get($key).toString()
+#end              
+#end              
         Size (sequences): $db.getNbSequence()
         Size on disk: $db.getDiskSize()
         Release date: $db.getReleaseTimeStamp()
@@ -32,8 +39,15 @@ Installed banks
 #foreach( $db in $nTable )
       * $db.getName()
         Description: $db.getDescription()
+        Home dir: $db.getDbHome()
         BLAST+ use: -db $db.getDbPath().substring(0, $db.getDbPath().lastIndexOf("."))
         Annotated bank: $db.hasAnnotation()
+#if( ! ${db.getAdditionalIndex().isEmpty()} )
+        Additional index: 
+#foreach( $key in  $db.getAdditionalIndex().keySet() )
+           $key : $db.getAdditionalIndex().get($key).toString()
+#end              
+#end              
         Size (sequences): $db.getNbSequence()
         Size on disk: $db.getDiskSize()
         Release date: $db.getReleaseTimeStamp()
@@ -46,6 +60,7 @@ Installed banks
 #if( ${dTable.size()} != 0 )
 #foreach( $db in $dTable )
       * $db.getName()
+        Home dir: $db.getDbHome()
         Description: $db.getDescription()
         Size (terms): $db.getNbSequence()
         Size on disk: $db.getDiskSize()

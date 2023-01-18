@@ -1,4 +1,4 @@
-/* Copyright (C) 2021 Patrick G. Durand
+/* Copyright (C) 2021-2022 Patrick G. Durand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -55,6 +55,7 @@ public class BankJsonDescriptor {
   public static final String OTHER_INDEX_PROPS = "index.properties";
   public static final String OTHER_INDEX_PROP_LBL = "label";
   public static final String OTHER_INDEX_PROP_KEY = "key";
+  public static final String OTHER_INDEX_PROP_VER = "version";
   
   public static final String DEFAULT_DESCRIPTOR_FNAME = "databank.json";
   
