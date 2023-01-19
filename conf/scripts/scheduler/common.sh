@@ -193,6 +193,10 @@ function getResources(){
 # FUNCTION: figure out which Job Scheduler is available on host system
 # return: 0 if job scheduler found, 1 otherwise. Job scheduler name is echoed.
 function getScheduler(){
+  if [ ! -z "$BDM_SCHEDULER" ]; then
+    echo $BDM_SCHEDULER
+    return 0
+  fi
   local ret_value=
   if hasCommand qstat; then
     ret_value=$(qstat --version)
