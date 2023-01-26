@@ -1,14 +1,13 @@
 {% set name = "beedeem" %}
-{% set version = "4.7.5" %}
-{% set sha256 = "94299b66f232288e69050cf7e475ea3acaecf07fa0b3eb36f073a3b86509183d" %}
+{% set version = "5.0.0" %}
+{% set sha256 = "395b8e56919e2f20715bb636d3ccaa1a4c98302547836c768b3189f131902b58" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-#   path: ../distrib/beedeem-{{ version }}.tar.gz
-  url: https://github.com/pgdurand/BeeDeeM/releases/download/v{{ version }}/beedeem-{{ version }}-distrib.zip
+  path: ../distrib/beedeem-{{ version }}.tar.gz
   sha256: '{{ sha256 }}'
 
 build:
