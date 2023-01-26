@@ -140,13 +140,13 @@ function handleBDMArgs(){
   # bzh.plealog.dbmirror.task.PTaskExecScript code
   BDMC_MORE_ARGS=$(echo $BDMC_MORE_ARGS | sed -e 's/;/ /g')
 
-  infoMsg "Working dir: $BDMC_WK_DIR"
-  infoMsg "Install dir: $BDMC_INST_DIR"
-  infoMsg "Processed file: $BDMC_PROCESSED_FILE"
+  infoMsg "Working directory of BeeDeeM: $BDMC_WK_DIR"
+  infoMsg "Bank installa path: $BDMC_INST_DIR"
+  infoMsg "Current processed bank file: $BDMC_PROCESSED_FILE"
   infoMsg "Bank name: $BDMC_BANK_NAME"
   infoMsg "Bank type: $BDMC_BANK_TYPE"
   infoMsg "Platform: $BDMC_PLATFORM"
-  infoMsg "Remaining args: $BDMC_MORE_ARGS"
+  infoMsg "Remaining task script arguments: $BDMC_MORE_ARGS"
 }
 
 # --------
