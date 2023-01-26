@@ -224,7 +224,9 @@ public class PFTPLoaderSystem {
           } catch (InterruptedException e1) {
             //not bad
           }
-          
+          //In case pre-processing task(s) failed, stop installing this bank
+          if (LoggerCentral.errorMsgEmitted() || LoggerCentral.processAborted())
+            break;
           // FTP or Local installation?
           if (dbConf.getAddress() != null && !dbConf.getAddress().equals("")) {
             LoggerCentral.info(LOGGER, "FTP descriptor file: " + fName);
@@ -527,7 +529,7 @@ public class PFTPLoaderSystem {
       if (LoggerCentral.errorMsgEmitted()) {
         LoggerCentral.error(
             LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
-                + ".PMirror"), "PROCESSING: FAILED. Check ERROR messages in logs.");
+                + ".PMirror"), "PROCESSING: FAILED. Check ERROR, WARN messages in logs.");
       } else if (LoggerCentral.processAborted()) {
         LoggerCentral.error(
             LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
