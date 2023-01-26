@@ -47,6 +47,7 @@ public class PTaskExecScript extends PAbstractTask {
   private String                _errMsg;
   private String                _bankName;
   private String                _bankType;
+  private String                _calledScriptArguments;
   protected Map<String, String> _args;
   
   //mandatory arguments user has to provide in 'script()' task
@@ -58,6 +59,8 @@ public class PTaskExecScript extends PAbstractTask {
   public static final String INST_FILE_ARG = "-f"; // path to file (unit task only)
   public static final String BANK_NAME_ARG = "-n"; // bank name
   public static final String BANK_TYPE_ARG = "-t"; // bank type (p,n,d)
+  public static final String SCRIPT_ARGS_ARG = "-o"; // additional arguments to transmit to script 
+  public static final String NO_ARG = "NA";
   
   public static final String UNIX_FILE_EXT = ".sh";
   public static final String WIN_FILE_EXT = ".bat";
@@ -79,7 +82,7 @@ public class PTaskExecScript extends PAbstractTask {
     _curFile = currentFile;
     _bankName = bankName;
     _bankType = bankType;
-    
+    _calledScriptArguments = null;
   }
 
   /**
@@ -93,7 +96,7 @@ public class PTaskExecScript extends PAbstractTask {
       _args = Utils.getTaskArguments(params);
       _scriptName = _args.get(SCRIPT_NAME);
       //to ensure using software on all OS, script is passed in without
-      //file extension. Its added here according to OS.
+      //file extension. It is added here according to OS.
       _scriptCmd = _args.get(SCRIPT_CMD_PATH);
       if (DBMSExecNativeCommand.getOSType()==DBMSExecNativeCommand.WINDOWS_OS) {
         _scriptCmd += WIN_FILE_EXT;
@@ -101,15 +104,28 @@ public class PTaskExecScript extends PAbstractTask {
       else {
         _scriptCmd += UNIX_FILE_EXT;
       }
+      _args.remove(SCRIPT_NAME);
+      _args.remove(SCRIPT_CMD_PATH);
+      //Additional arguments are supposed to be ones to transmit to script.
+      //For that purpose, we encode a special string. It'll be decoded by
+      //conf/scripts/scheduler/common.sh script
+      if (!_args.isEmpty()) {
+        StringBuffer buf = new StringBuffer("'");
+        String val;
+        for (String key : _args.keySet()) {
+          buf.append(key);
+          buf.append(";");
+          val = _args.get(key);
+          if (!NO_ARG.equals(val)) {
+            buf.append(val);
+            buf.append(";");
+          }
+        }
+        buf.append("'");
+        _calledScriptArguments=buf.toString();
+      }
     }
-    if (_dbInstallationPath!=null) {
-      _args.put(INST_DIR_ARG, _dbInstallationPath);
-      
-    }
-    if (_curFile!=null) {
-      _args.put(INST_FILE_ARG, _curFile);
-      
-    }
+    
   }
 
   /**
@@ -194,6 +210,9 @@ public class PTaskExecScript extends PAbstractTask {
     }
     params.put(BANK_NAME_ARG, new CommandArgument(_bankName, false));
     params.put(BANK_TYPE_ARG, new CommandArgument(_bankType, false));
+    if(_calledScriptArguments != null) {
+      params.put(SCRIPT_ARGS_ARG,  new CommandArgument(_calledScriptArguments, false));
+    }
     
     Process proc = executor.executeAndReturn(_scriptCmd, params);
     
@@ -219,6 +238,9 @@ public class PTaskExecScript extends PAbstractTask {
     
     if (exitCode==0) {
       PAbstractTask.setTaskOkForFile(resumeFile);
+    }
+    else {
+      _errMsg = String.format("unexpected shell exit code: %d", exitCode);
     }
     return exitCode==0;
   }
