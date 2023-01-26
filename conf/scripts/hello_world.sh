@@ -1,55 +1,43 @@
 #!/usr/bin/env bash
 
-# This is a BeeDeeM external task script template.
+# This is a BeeDeeM external task script example.
 #
 # This script illustrates the use of external tasks.
 # Such a task is called from a bank descriptor; e.g. see
 # for instance ../descriptors/PDB_proteins_task.dsc
 #
-# Such a BeeDeeM script is called by the task engine and
-# with these arguments: -w <path> -d <path> -f <path> -n <name> -t <type>
-#
-#  -w <path>: <path> is the working directory path.
-#             provided for both unit and global tasks.
-#  -d <path>: <path> is the bank installation path.
-#             provided for both unit and global tasks.
-#  -f <path>: <path> is the path to file under unit task processing
-#             only provided with unit task.
-#  -n <name>: <name> is the bank name.
-#  -t <type>: <path> is the bank type. One of p, n or d.
-#             p: protein
-#             n: nucleotide
-#             d: dictionary or ontology
+# Such a BeeDeeM script is called by the task engine with some
+# BeeDeeM specific arguments, see 
+#    conf/scripts/scheduler/common.sh#handleBDMArgs()
+# for more information.
 
-echo "Executing an external script"
-echo "Arguments coming from BeeDeeM are:"
-echo $@
+# If you setup a new script, simply copy this one, keep in it 
+# lines 1 and 20-31 (sections "include API" and "handle arguments"), 
+# then do whatever you have to do!
 
-echo "----"
-# Prepare arguments for processing
-WK_DIR=
-INST_DIR=
-PROCESSED_FILE=
-BANK_NAME=
-BANK_TYPE=
-while getopts w:d:f:n:t: opt
-do
-    case "$opt" in
-      w)  WK_DIR="$OPTARG";;
-      d)  INST_DIR="$OPTARG";;
-      f)  PROCESSED_FILE="$OPTARG";;
-      n)  BANK_NAME="$OPTARG";;
-      t)  BANK_TYPE="$OPTARG";;
-    esac
-done
-shift `expr $OPTIND - 1`
-# remaining arguments, if any, are stored here
-MORE_ARGS=$@
+set -eo pipefail
 
-echo "Working dir: $WK_DIR"
-echo "Install dir: $INST_DIR"
-echo "Processed file: $PROCESSED_FILE"
-echo "Bank name: $BANK_NAME"
-echo "Bank type: $BANK_TYPE"
+# ========================================================================================
+# Section: include API
+S_NAME=$(realpath "$0")
+[[ -z "$BDM_CONF_SCRIPTS" ]] && script_dir=$(dirname "$S_NAME") || script_dir=$BDM_CONF_SCRIPTS
+. $script_dir/scheduler/common.sh
+
+# ========================================================================================
+# Section: handle arguments
+# Function call setting BDMC_xxx variables from cmdline arguments
+handleBDMArgs $@
+RET_CODE=$?
+[ ! $RET_CODE -eq 0 ] && errorMsg "Wrong or missing arguments" && exit $RET_CODE
+
+# ========================================================================================
+# Section: do business
+
+echo "Working directory of BeeDeeM: $BDMC_WK_DIR"
+echo "Bank installation path: $BDMC_INST_DIR"
+echo "Current bank file processed: $BDMC_PROCESSED_FILE"
+echo "Bank name: $BDMC_BANK_NAME"
+echo "Bank type: $BDMC_BANK_TYPE"
+echo "Additional args: $BDMC_MORE_ARGS"
 echo "----"
  
