@@ -244,6 +244,6 @@ public class PAnnotateBlastResultTest {
         "-o", result.getAbsolutePath(),
         "-type", "full",
         "-writer", "zml"};
-    Assert.assertTrue(Annotate.doJob(args));
+    Assert.assertTrue(new Annotate().execute(args));
 	}
 }

@@ -68,11 +68,13 @@ import bzh.plealog.dbmirror.util.log.LoggerCentral;
  * If not set, use ${user.dir}/conf.
  * -DKL_LOG_FILE=a_file_name ; if set, creates a log file with that name within
  * KL_WORKING_DIR<br>
+ * -DKL_LOG_TYPE=none|console|file(default)<br><br>
  * <br>
  * 
  * @author Patrick G. Durand
  */
-public class DumpBankList {
+@BdmTool(command="info", description="print out list of installed banks")
+public class DumpBankList implements BdmToolApi {
   public static final String DB_ARG = "d";
   public static final String FT_ARG = "f";
   public static final String US_ARG = "u";
@@ -85,7 +87,7 @@ public class DumpBankList {
    * Setup the valid command-line of the application.
    */
   @SuppressWarnings("static-access")
-  private static Options getCmdLineOptions() {
+  private Options getCmdLineOptions() {
     Options opts;
 
     Option type = OptionBuilder
@@ -118,7 +120,7 @@ public class DumpBankList {
   /**
    * Get repository for which we have to report bank list. Default is all.
    */
-  private static String getDatabaseType(CommandLine cmdLine) {
+  private String getDatabaseType(CommandLine cmdLine) {
     String val = cmdLine.getOptionValue(DB_ARG);
     return val == null ? "all" : val;
   }
@@ -126,7 +128,7 @@ public class DumpBankList {
   /**
    * Get format to use to report bank list. Default is txt.
    */
-  private static String getFormatType(CommandLine cmdLine) {
+  private String getFormatType(CommandLine cmdLine) {
     String val = cmdLine.getOptionValue(FT_ARG);
     return val == null ? "txt" : val;
   }
@@ -134,7 +136,7 @@ public class DumpBankList {
   /**
    * Get format to use to report bank list. Default is txt.
    */
-  private static String getUserLoginName(CommandLine cmdLine) {
+  private String getUserLoginName(CommandLine cmdLine) {
     String val = cmdLine.getOptionValue(US_ARG);
     return val == null ? "?" : val;
   }
@@ -142,7 +144,7 @@ public class DumpBankList {
   /**
    * Prepare the bank list for a given type.
    */
-  private static List<DatabankDescriptor> getMirrorDBList(DBDescriptor.TYPE type, String overridenUserName) {
+  private List<DatabankDescriptor> getMirrorDBList(DBDescriptor.TYPE type, String overridenUserName) {
     String dbMirrorConfFile = DBMSAbstractConfig.getLocalMirrorConfFile();
     DBMirrorConfig conf = DBDescriptorUtils.getDBMirrorConfig(dbMirrorConfFile);
     List<DatabankDescriptor> dbList = new ArrayList<DatabankDescriptor>();
@@ -166,7 +168,7 @@ public class DumpBankList {
   /**
    * Update annotated status of dbList.
    */
-  private static void setAnnotatedStatus(List<DatabankDescriptor> dbList, Set<String> annotatedBanks){
+  private void setAnnotatedStatus(List<DatabankDescriptor> dbList, Set<String> annotatedBanks){
     for(DatabankDescriptor dd : dbList){
       dd.setHasAnnotation(annotatedBanks.contains(dd.getName()));
     }
@@ -199,29 +201,7 @@ public class DumpBankList {
     return curSize;
   }
   
-  /**
-   * Run job.
-   */
-  private void doJob(String[] args, OutputStream os) {
-    String db, ft, us;
-    CommandLine cmdLine;
-    String toolName = DBMSMessages.getString("Tool.Query.name");
-    
-    // Configure software
-    StarterUtils.configureApplication(null, toolName, true, false, true);
-
-    // Handle command-line
-    cmdLine = CmdLineUtils.handleArguments(args, getCmdLineOptions(), toolName);
-    if (cmdLine==null){
-      System.exit(1);
-    }
-    db = getDatabaseType(cmdLine);
-    ft = getFormatType(cmdLine);
-    us = getUserLoginName(cmdLine);
-    doJob(os, db, ft, us);
-  }
-  
-  protected void doJob(OutputStream os, String db, String ft, String us){
+  protected boolean doJob(OutputStream os, String db, String ft, String us){
     VelocityEngine ve;
     VelocityContext context;
     Template t;
@@ -308,7 +288,7 @@ public class DumpBankList {
     }
     catch(Exception e){
       LoggerCentral.warn(LOGGER, "Cannot initialize Velocity Engine");
-      return;
+      return false;
     }
     try {
       // Velocity template is taken from "conf/system" directory.
@@ -330,10 +310,30 @@ public class DumpBankList {
       outWriter.write(writer.toString());
     } catch (Exception e) {
       LoggerCentral.warn(LOGGER, e.toString());
+      return false;
     }
+    return true;
   }
 
-  public static void main(String[] args) {
-    new DumpBankList().doJob(args, System.out);
+  @Override
+  public boolean execute(String[] args) {
+    String db, ft, us;
+    CommandLine cmdLine;
+    OutputStream os=System.out;
+    
+    String toolName = DBMSMessages.getString("Tool.Dump.name");
+    
+    // Configure software
+    StarterUtils.configureApplication(null, toolName, true, false, true);
+
+    // Handle command-line
+    cmdLine = CmdLineUtils.handleArguments(args, getCmdLineOptions(), toolName);
+    if (cmdLine==null){
+      System.exit(1);
+    }
+    db = getDatabaseType(cmdLine);
+    ft = getFormatType(cmdLine);
+    us = getUserLoginName(cmdLine);
+    return doJob(os, db, ft, us);
   }
 }

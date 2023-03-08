@@ -2,7 +2,7 @@
 
 # Test script for BeeDeeM singularity container
 # How to?
-# Step 1: build image with: singularity build -f beedeem-4.7.4.sif Singularity
+# Step 1: build image with: singularity build -f beedeem-4.7.5.sif Singularity
 #         (update version to match BDM_VERSION variable, below)
 # Step 2: test with either
 #         a. ./test_container.sh
@@ -133,14 +133,6 @@ DESCRIPTOR="SwissProt_human,PDB_proteins"
 
 # Now, let's start a simple installation
 echo "1/2 - Start BeeDeeM test bank installation"
-# BeeDeeM test: bank installtion
-export BDM_CONF_SCRIPTS=/opt/beedeem/conf/scripts
-# Configure PBS wrapper to submit jobs
-export BDM_SCHEDULER="pbs"
-export BDM_PLATFORM="ifremer"
-export BDM_QSTAT_CMD="ssh galaxy@datarmor qstat"
-export BDM_QSUB_CMD="ssh galaxy@datarmor qsub"
-
 singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} install.sh -desc ${DESCRIPTOR} 
 if [ $? -eq 0 ]; then
   echo "SUCCESS"

@@ -8,8 +8,8 @@
         <requirement type="package" version="@PRG_VERSION@">beedeem</requirement>
     </requirements>
     <command><![CDATA[ 
-	info.sh -f galaxy -d n >& $my_blastn_db;
-        info.sh -f galaxy -d p >& $my_blastp_db
+	bdm info -f galaxy -d n >& $my_blastn_db;
+        bdm info -f galaxy -d p >& $my_blastp_db
     ]]></command>
     <outputs>
         <data format="beedeemn" name="my_blastn_db" label="My nucleotide BLAST databases" />

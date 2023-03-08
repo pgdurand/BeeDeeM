@@ -47,10 +47,10 @@ RUN \
 
 RUN \
   cd /opt/beedeem && \
-  cp scripts/*.sh . && \
+  cp scripts/bdm.sh ./bdm && \
   cp scripts/dbms.config conf && \
   sed -i 's/@BIOBASE_ROOTDIR@/\/beedeem-db/g' conf/dbms.config && \
-  chmod +x *.sh && \
+  chmod +x bdm && \
   chmod +x /opt/beedeem/external/bin/linux/* && \
   chmod +x /opt/beedeem/conf/scripts/*.sh && \
   cd /opt/beedeem/external/bin && rm -rf macos windows
