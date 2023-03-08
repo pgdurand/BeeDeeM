@@ -1,36 +1,52 @@
 #######################################################################################
 #
 # Dockerfile to use BeeDeem through a Docker container.
+# Package BeeDeeM and BeeDeeM-Tools by getting releases available on Github.
 #
-# Copyright (c) 2017-21, Patrick G. Durand
+# Copyright (c) 2017-23, Patrick G. Durand
 #
 #######################################################################################
 
 # ###
 #     Base commands.
 #
-#     We use Alpine-Oracle JRE 8 pre-build Docker Image.
-#     See https://github.com/platten/alpine-oracle-jre8-docker
+#     We use standard Ubuntu 18 Linux. 
 #
-FROM platten/alpine-oracle-jre8-docker
+FROM ubuntu:18.04
 
 # Maintainer of BeeDeeM
 MAINTAINER Patrick G. Durand
 
 # ###
+#    Configuring release of tools to package.
+#
+ENV BDM_VERSION=4.7.5
+ENV BDMT_VERSION=2.1.1
+
+# ###
 # Install dependencies.
+# software-properties-common required to install Java Runtime
 # libbz2 libidn are required by blast tools included in BeeDeeM.
 # libxext libxrender libxtst libxi are required by Bioinformatics-Core-API included 
 #    in BeeDeeM and BeeDeeM-Tools.
 # bash is required when running this image by Nextflow pipelines.
 # wget is required to install some banks (e.g. GeneOntology).
-RUN apk update 
-RUN apk add --no-cache libbz2 libidn bash wget libxext libxrender libxtst libxi
+# unzip is required to deploy BeeDeeM archive
+RUN apt-get -y update 
+RUN apt-get -y install software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip
 
 # ###
-#    Configuring BeeDeeM release. Always the latest one.
-#
-ENV BDM_VERSION=4.7.4
+#    Java JRE 1.8
+RUN add-apt-repository ppa:ts.sch.gr/ppa \
+          && echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections \
+          && echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections \
+          && apt-get update \
+          && apt-get -y install oracle-java8-installer \
+          && apt-get -y install oracle-java8-set-default \
+          && apt-get clean all \
+          && rm -rf /var/lib/apt/lists/* \
+          && cd /usr/lib/jvm/java-8-oracle\
+          && rm -rf bin include lib man *.zip
 
 # ###
 #     BeeDeeM download, installation and cleaning.
@@ -59,7 +75,6 @@ RUN \
 # ###
 #    Add BeeDeeM-tools. Always the latest one.
 #
-ENV BDMT_VERSION=2.1.0
 RUN \
   cd /opt && \
   mkdir beedeem-tools && \
@@ -74,10 +89,4 @@ RUN \
 #     BeeDeeM runtime environment variables.
 #
 ENV PATH=/opt/beedeem:/opt/beedeem-tools:$PATH
-ENV KL_WORKING_DIR=/beedeem-wk
-# shell variable name does not allowed use of '.'
-# (mirror__path == mirror.path)
-ENV KL_mirror__path=/beedeem-db
-# You can override the following at runtime by using Docker "-e" argument.
-ENV KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=\$KL_WORKING_DIR"
 
