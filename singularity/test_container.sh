@@ -2,7 +2,7 @@
 
 # Test script for BeeDeeM singularity container
 # How to?
-# Step 1: build image with: singularity build -f beedeem-4.7.5.sif Singularity
+# Step 1: build image with: singularity build -f beedeem-4.7.6.sif Singularity
 #         (update version to match BDM_VERSION variable, below)
 # Step 2: test with either
 #         a. ./test_container.sh
@@ -25,7 +25,7 @@
 #PBS -l ncpus=2
 
 # Version of BeeDeeM to test
-BDM_VERSION=4.7.5
+BDM_VERSION=4.7.6
 # Default working directory to test BeeDeeM Singularity image.
 # Il will be overriden below, given host platform
 BDM_SCRATCH_DIR=/tmp
