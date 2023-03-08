@@ -9,7 +9,7 @@
 #         b. qsub test_container.sh (PBS Pro)
 #         c. srun test_container.sh (slurm, direct execution)
 #
-# P. Durand (SeBiMER, Ifremer), last update on Nov 2022
+# P. Durand (SeBiMER, Ifremer), last updated on March 2023
 
 # Sample config for Slurm; adapt partition to your cluster configuration
 #SBATCH -p fast
@@ -25,7 +25,7 @@
 #PBS -l ncpus=2
 
 # Version of BeeDeeM to test
-BDM_VERSION=4.7.4
+BDM_VERSION=4.7.5
 # Default working directory to test BeeDeeM Singularity image.
 # Il will be overriden below, given host platform
 BDM_SCRATCH_DIR=/tmp
@@ -74,7 +74,7 @@ function downloadFile(){
 # Depending on host platform, load singularity env
 if hasCommand qstat; then
   hname=$(hostname)
-  if [[ $hname == *"datarmor"* ]]; then
+  if [[ $hname == *"data"* ]]; then
     echo "running on DATARMOR using PBS Pro scheduler"
     source /etc/profile.d/modules.sh
     module purge
@@ -85,6 +85,7 @@ elif hasCommand sbatch; then
   hname=$(hostname -A)
   if [[ $hname == *"roscoff"* ]]; then
     echo "running on ABiMS using SLURM scheduler"
+    BDM_PLATFORM="abims"
     BDM_SCRATCH_DIR=$HOME
   fi
 else
@@ -118,9 +119,7 @@ BDM_SINGULITY_IMG="$BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME"
 # For debugging if neeeded: dump all BDM_XXX variables
 ( set -o posix ; set ) | grep "BDM_"
 
-#rm -rf $BDM_BANKS_DIR
 mkdir -p $BDM_BANKS_DIR
-#rm -rf $BDM_WORK_DIR
 mkdir -p $BDM_WORK_DIR
 
 # Prepare env variables to be used by BeeDeeM inside the container (mandatory)
@@ -130,18 +129,30 @@ export KL_mirror__path=${BDM_BANKS_DIR}
 
 # Set the banks to install
 # These are '.dsc' files located in BeeDeeM image at path /opt/beedeem/conf/descriptors
-DESCRIPTOR="SwissProt_human,PDB_proteins,MEROPS_PepUnits"
+DESCRIPTOR="SwissProt_human,PDB_proteins"
 
 # Now, let's start a simple installation
-echo "Start simple bank installation"
-echo "Look at processing with:"
-echo "tail -f $BDM_WORK_DIR/log"
+echo "1/2 - Start BeeDeeM test bank installation"
+# BeeDeeM test: bank installtion
+export BDM_CONF_SCRIPTS=/opt/beedeem/conf/scripts
+# Configure PBS wrapper to submit jobs
+export BDM_SCHEDULER="pbs"
+export BDM_PLATFORM="ifremer"
+export BDM_QSTAT_CMD="ssh galaxy@datarmor qstat"
+export BDM_QSUB_CMD="ssh galaxy@datarmor qsub"
 
-singularity run \
-  ${BDM_BINDS} \
-  ${BDM_SINGULITY_IMG} \
-  install.sh -desc ${DESCRIPTOR} >& ${BDM_WORK_DIR}/log 2>&1
+singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} install.sh -desc ${DESCRIPTOR} 
+if [ $? -eq 0 ]; then
+  echo "SUCCESS"
+else
+  echo "FAILED.   Review log file: $BDM_WORK_DIR/log"
+  exit 1
+fi
 
+# BeeDeeM-Tools full test suite
+echo "2/2 - Start BeeDeeM-Tools test suite"
+mkdir -p $BDM_WORK_DIR/bdm-tools
+singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} /opt/beedeem-tools/test.sh -w $BDM_WORK_DIR/bdm-tools
 if [ $? -eq 0 ]; then
   echo "SUCCESS"
 else
