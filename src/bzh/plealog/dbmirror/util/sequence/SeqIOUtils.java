@@ -112,31 +112,26 @@ public class SeqIOUtils {
                                                                       + ".SeqIOUtils");
 
   // see DBXrefSplitter class for more details of the syntax
-  public static final String     DEFAULT_CONFIG_XREF_RETRIEVE = "\"DR\" , \"GO\"         , \";\" , \";\" , \"GO\"       , \":\"\n"
-                                                                  + "\"DR\" , \"InterPro\"   , \";\" , \";\" , \"InterPro\" , \"$\"\n"
-                                                                  + "\"DR\" , \"Pfam\"       , \";\" , \";\" , \"Pfam\"     , \"$\"\n"
-                                                                  +
-                                                                  /*
-                                                                   * Tests on SW
-                                                                   * : Brenda
-                                                                   * code is not
-                                                                   * always
-                                                                   * there! Get
-                                                                   * EC from
-                                                                   * definition
-                                                                   * line!
-                                                                   */
-                                                                  /*
-                                                                   * "\"DR\" , \"BRENDA\"     , \";\" , \";\" , \"EC\"       , \"$\"\n"
-                                                                   * +
-                                                                   */
-                                                                  "\"DE\" , \"EC\"         , \"=\" , \";\" , \"EC\"       , \"$\"\n"
-                                                                  + "\"OX\" , \"NCBI_TaxID\" , \"=\" , \"};\" , \"taxon\"    , \"$\"\n"
-                                                                  + "\"/db_xref=\",\"taxon\", \":\", \"\"\", \"taxon\", \"$\"\n";
-
+  public static final String     DEFAULT_CONFIG_XREF_RETRIEVE = 
+                                  "\"DR\" , \"GO\"         , \";\" , \";\"  , \"GO\"       , \":\"\n"
+                                + "\"DR\" , \"InterPro\"   , \";\" , \";\"  , \"InterPro\" , \"$\"\n"
+                                + "\"DR\" , \"Pfam\"       , \";\" , \";\"  , \"Pfam\"     , \"$\"\n"
+                                + "\"DE\" , \"EC\"         , \"=\" , \"{;\" , \"EC\"       , \"$\"\n"
+                                + "\"OX\" , \"NCBI_TaxID\" , \"=\" , \"};\" , \"taxon\"    , \"$\"\n"
+                                + "\"FT|/db_xref=\",\"taxon\" , \":\" , \"\"\" , \"taxon\"    , \"$\"\n" /*(1)*/
+                                + "\"/db_xref=\",\"taxon\" , \":\" , \"\"\" , \"taxon\"    , \"$\"\n";
+                                /*(1):
+                                 * Special case for EMBL entry: no OX line, but we have: 
+                                 *   FT                   /db_xref="taxon:64391"
+                                 */
   public static DBXrefTagManager XREF_MANAGER                 = new DBXrefTagManager(
                                                                   DEFAULT_CONFIG_XREF_RETRIEVE);
 
+  //SwissProt specific
+  private static final String SW_DE_RECNAME = "RecName:";
+  //TrEMBL specific
+  private static final String SW_DE_SUBNAME = "SubName:";
+  
   /**
    * Sets a new configuration for DbXrefTagManager.
    */
@@ -196,6 +191,31 @@ public class SeqIOUtils {
     return getId(seq.getName(), ncbiIdType);
   }
 
+  public static String reformatUPDescription(String desc) {
+    // see https://web.expasy.org/docs/userman.html#DE_line
+    //check if we can retrieve only RecName|SubName Full description
+    int idx1 = desc.indexOf(SW_DE_RECNAME);
+    if (idx1==-1) {
+      idx1 = desc.indexOf(SW_DE_SUBNAME);
+    }
+    if (idx1!=-1) {
+      //TrEMBL sample: DE  SubName: Full=Rubrerythrin {ECO:0000313|EMBL:HGW37995.1};
+      int idx2 = desc.indexOf("{", idx1);
+      if (idx2==-1) {
+        //SW sample: DE   RecName: Full=14-3-3 protein beta/alpha;
+        idx2 = desc.indexOf(";", idx1);
+      }
+      //at least "Full=' is always present according to Uniprot manual
+      idx1 = desc.indexOf("=", idx1);
+      if (idx2!=-1) {
+        desc = desc.substring(idx1+1, idx2).trim();
+      }
+      else {//security in case there is no ending ';' or '{'
+        desc = desc.substring(idx1+1).trim();
+      }
+    }
+    return desc;
+  }
   public static String getDescription(Sequence seq, int seqType,
       boolean ncbiIdType) {
     Annotation annot;
@@ -367,12 +387,16 @@ public class SeqIOUtils {
   public static void fillDescription(String line, String id, String idDesc,
       StringBuilder buf) {
     buf.append(line.substring(idDesc.length()).replace(id, "").trim());
+    buf.append(" ");//for multi-line
   }
 
-  public static String cleanDescription(StringBuilder sbDesc) {
+  public static String cleanDescription(StringBuilder sbDesc, String descKey) {
     String desc = sbDesc.toString();
     if (desc.length() != 0) {
-      // NCBI mutli-header may contain multiple >
+      if ("DE".equals(descKey)) {
+        desc = reformatUPDescription(desc);
+      }
+      // NCBI multi-header may contain multiple >
       desc = Formatters.replaceAll(desc, ">", "|");
 
       // NCBI data may contain null char
@@ -719,31 +743,6 @@ public class SeqIOUtils {
               // KDMSMessages.getString("CheckSilvaLicence"));
               displaySilvaLicense = false;
             }
-            // Ludovic Antin 10/02/2015 : silva taxonomy is not the same as ncbi
-            // taxonomy
-            // String termId = null;
-            //
-            // String[] terms = line.split(";");
-            // ArrayUtils.reverse(terms);
-            //
-            // for (String termName : terms) {
-            // termId = dico.getTaxID(termName);
-            // if (termId != null)
-            // break;
-            // }
-            //
-            // if (termId != null) {
-            // line += " ";
-            // line += DBXrefInstancesManager.HIT_DEF_LINE_START;
-            // line += DBXrefInstancesManager.TAX_KEY;
-            // line +=
-            // DBXrefInstancesManager.HIT_DEF_LINE_XREF_NAME_ID_SEPARATOR;
-            // line += termId.substring(1); // del first character ('n')
-            // line += DBXrefInstancesManager.HIT_DEF_LINE_STOP;
-            // } else {
-            // LoggerCentral.info(LOGGER, "No taxonomy id for : " + line);
-            // }
-
           }
           // in case of CDD sequences databank
           else if (headerFormat == DBUtils.CDD_HEADER_FORMAT) {
@@ -832,7 +831,7 @@ public class SeqIOUtils {
               sequenceHeader.append('>');
               sequenceHeader.append(id);
               sequenceHeader.append(' ');
-              sequenceHeader.append(SeqIOUtils.cleanDescription(bufDesc));
+              sequenceHeader.append(SeqIOUtils.cleanDescription(bufDesc, beginDescKey));
               sequenceHeader.append(' ');
               sequenceHeader.append(instManager.toString());
               sequenceHeader.append('\n');
@@ -860,6 +859,7 @@ public class SeqIOUtils {
             }
             if (Character.isLetter(c)) {
               bufSeq.append(c);
+              letterCount++;
             } else if (c == '*' || c == '-') {
               bufSeq.append('X');
             }
@@ -867,7 +867,7 @@ public class SeqIOUtils {
             if (isFastq && ((i + 1) % 80) == 0) {
               bufSeq.append("\n");
             }
-            letterCount++;
+            
             if (!dumpLetters)
               dumpLetters = true;
           }
