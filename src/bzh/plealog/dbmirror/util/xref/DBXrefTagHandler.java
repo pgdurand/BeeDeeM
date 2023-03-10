@@ -18,6 +18,8 @@ package bzh.plealog.dbmirror.util.xref;
 
 import java.util.Hashtable;
 
+import bzh.plealog.dbmirror.util.Utils;
+
 /**
  * This class is used to handle several DBXrefSplitter that could be associated to 
  * a same db tag. As an example, when considering the DR tag of Uniprot data files, we
@@ -26,7 +28,8 @@ import java.util.Hashtable;
  * @author Patrick G. Durand
  */
 public class DBXrefTagHandler {
-	private String                            tag;
+  private String                            tag;
+  private String                            tag_b = null;
 	private String                            begin;
 	private Hashtable<String, DBXrefSplitter> splitters;
 
@@ -38,7 +41,11 @@ public class DBXrefTagHandler {
 	 */
   public DBXrefTagHandler(String tag, String begin) {
     super();
-    this.tag = tag;
+    String[] tags = Utils.tokenize(tag, "|");
+    this.tag = tags[0];
+    if (tags.length>1) {
+      this.tag_b = tags[1];
+    }
     this.begin = begin;
     splitters = new Hashtable<String, DBXrefSplitter>();
   }
@@ -55,19 +62,27 @@ public class DBXrefTagHandler {
   public String getDbXref(String dataLine) {
     DBXrefSplitter splitter;
     String str, key;
-    int idx, idx2, size;
+    int idx, idx2, idx3, size;
 
     // remove ending spaces
     str = dataLine.trim();
+    size = str.length();
     // contains 'tag' ?
     if (str.startsWith(tag) == false)
       return null;
     // skip tag as well as non-letter chars to locate the beginning of key
     idx = tag.length();
-    size = str.length();
     // may happen in wrongly annotated files: nothing after a tag !
     if (idx >= size)
       return null;
+    //Special case for EMBL entry: no OX line, but we have: 
+    // FT                   /db_xref="taxon:64391"
+    if (tag_b!=null) {
+      idx3 = str.indexOf(tag_b, idx);
+      if (idx3==-1)
+        return null;
+      idx = idx3 + tag_b.length();
+    }
     while (!Character.isLetter(str.charAt(idx))) {
       idx++;
       if (idx == size)
