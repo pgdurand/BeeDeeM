@@ -1,0 +1,75 @@
+ID   A0A7C4XVR8_9EURY        Unreviewed;       104 AA.
+AC   A0A7C4XVR8;
+DT   02-DEC-2020, integrated into UniProtKB/TrEMBL.
+DT   02-DEC-2020, sequence version 1.
+DT   22-FEB-2023, entry version 9.
+DE   RecName: Full=Ribonuclease P protein component 2 {ECO:0000256|HAMAP-Rule:MF_00755};
+DE            Short=RNase P component 2 {ECO:0000256|HAMAP-Rule:MF_00755};
+DE            EC=3.1.26.5 {ECO:0000256|HAMAP-Rule:MF_00755};
+DE   AltName: Full=Pop5 {ECO:0000256|HAMAP-Rule:MF_00755};
+GN   Name=rnp2 {ECO:0000256|HAMAP-Rule:MF_00755};
+GN   ORFNames=ENS21_00425 {ECO:0000313|EMBL:HGJ07577.1}, ENV11_05530
+GN   {ECO:0000313|EMBL:HGW38869.1};
+OS   Archaeoglobus sp.
+OC   Archaea; Euryarchaeota; Archaeoglobi; Archaeoglobales; Archaeoglobaceae;
+OC   Archaeoglobus.
+OX   NCBI_TaxID=1872626 {ECO:0000313|EMBL:HGW38869.1};
+RN   [1] {ECO:0000313|EMBL:HGW38869.1}
+RP   NUCLEOTIDE SEQUENCE [LARGE SCALE GENOMIC DNA].
+RC   STRAIN=SpSt-47 {ECO:0000313|EMBL:HGJ07577.1}, and SpSt-73
+RC   {ECO:0000313|EMBL:HGW38869.1};
+RX   PubMed=31911466;
+RA   Zhou Z., Liu Y., Xu W., Pan J., Luo Z.H., Li M.;
+RT   "Genome- and Community-Level Interaction Insights into Carbon Utilization
+RT   and Element Cycling Functions of Hydrothermarchaeota in Hydrothermal
+RT   Sediment.";
+RL   mSystems 5:e00795-e00719(2020).
+CC   -!- FUNCTION: Part of ribonuclease P, a protein complex that generates
+CC       mature tRNA molecules by cleaving their 5'-ends. {ECO:0000256|HAMAP-
+CC       Rule:MF_00755}.
+CC   -!- CATALYTIC ACTIVITY:
+CC       Reaction=Endonucleolytic cleavage of RNA, removing 5'-extranucleotides
+CC         from tRNA precursor.; EC=3.1.26.5; Evidence={ECO:0000256|HAMAP-
+CC         Rule:MF_00755};
+CC   -!- SUBUNIT: Consists of a catalytic RNA component and at least 4-5 protein
+CC       subunits. {ECO:0000256|HAMAP-Rule:MF_00755}.
+CC   -!- SUBCELLULAR LOCATION: Cytoplasm {ECO:0000256|HAMAP-Rule:MF_00755}.
+CC   -!- SIMILARITY: Belongs to the eukaryotic/archaeal RNase P protein
+CC       component 2 family. {ECO:0000256|HAMAP-Rule:MF_00755}.
+CC   -!- CAUTION: The sequence shown here is derived from an EMBL/GenBank/DDBJ
+CC       whole genome shotgun (WGS) entry which is preliminary data.
+CC       {ECO:0000313|EMBL:HGW38869.1}.
+CC   ---------------------------------------------------------------------------
+CC   Copyrighted by the UniProt Consortium, see https://www.uniprot.org/terms
+CC   Distributed under the Creative Commons Attribution (CC BY 4.0) License
+CC   ---------------------------------------------------------------------------
+DR   EMBL; DSTZ01000011; HGJ07577.1; -; Genomic_DNA.
+DR   EMBL; DTFC01000041; HGW38869.1; -; Genomic_DNA.
+DR   AlphaFoldDB; A0A7C4XVR8; -.
+DR   GO; GO:0005737; C:cytoplasm; IEA:UniProtKB-SubCell.
+DR   GO; GO:0030677; C:ribonuclease P complex; IEA:UniProtKB-UniRule.
+DR   GO; GO:0004526; F:ribonuclease P activity; IEA:UniProtKB-UniRule.
+DR   GO; GO:0033204; F:ribonuclease P RNA binding; IEA:InterPro.
+DR   GO; GO:0001682; P:tRNA 5'-leader removal; IEA:UniProtKB-UniRule.
+DR   Gene3D; 3.30.70.3250; Ribonuclease P, Pop5 subunit; 1.
+DR   HAMAP; MF_00755; RNase_P_2; 1.
+DR   InterPro; IPR002759; Pop5/Rpp14/Rnp2-like.
+DR   InterPro; IPR016819; RNase_P/MRP_POP5.
+DR   InterPro; IPR038085; Rnp2-like_sf.
+DR   PANTHER; PTHR15441; RIBONUCLEASE P PROTEIN SUBUNIT P14; 1.
+DR   PANTHER; PTHR15441:SF2; RIBONUCLEASE P/MRP PROTEIN SUBUNIT POP5; 1.
+DR   Pfam; PF01900; RNase_P_Rpp14; 1.
+DR   PIRSF; PIRSF023803; Ribonuclease_P_prd; 1.
+DR   SUPFAM; SSF160350; Rnp2-like; 1.
+PE   3: Inferred from homology;
+KW   Cytoplasm {ECO:0000256|HAMAP-Rule:MF_00755};
+KW   Endonuclease {ECO:0000256|ARBA:ARBA00022759, ECO:0000256|HAMAP-
+KW   Rule:MF_00755};
+KW   Hydrolase {ECO:0000256|ARBA:ARBA00022801, ECO:0000256|HAMAP-Rule:MF_00755};
+KW   Nuclease {ECO:0000256|ARBA:ARBA00022722, ECO:0000256|HAMAP-Rule:MF_00755};
+KW   tRNA processing {ECO:0000256|ARBA:ARBA00022694, ECO:0000256|HAMAP-
+KW   Rule:MF_00755}.
+SQ   SEQUENCE   104 AA;  11415 MW;  39F1CB7E11AC827D CRC64;
+     MRSRKRYIAF RIINKGSVDE KALSEAMMRN LTALFGEVSA VECGLRLEKF DGERGIVRCN
+     LEALDRVMIA LTLIDRIGDE SVALLTLGVS GTLKGCKKKL GVLA
+//
