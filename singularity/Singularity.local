@@ -22,8 +22,9 @@ From: ubuntu:18.04
         # bash is required when running this image by Nextflow pipelines.
         # wget is required to install some banks (e.g. GeneOntology).
 	# unzip is required to deploy BeeDeeM archive
+	# openssh-server is required to submit jobs on cluster through ssh connection
         apt-get -y update
-        apt-get -y install software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip
+        apt-get -y install software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip openssh-server
 
         # Java
         add-apt-repository ppa:ts.sch.gr/ppa \
