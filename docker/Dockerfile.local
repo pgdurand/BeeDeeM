@@ -32,8 +32,10 @@ ENV BDMT_VERSION=2.1.1
 # bash is required when running this image by Nextflow pipelines.
 # wget is required to install some banks (e.g. GeneOntology).
 # unzip is required to deploy BeeDeeM archive
+# openssh-server is required to submit jobs on cluster through ssh connection
 RUN apt-get -y update 
 RUN apt-get -y install software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip
+RUN apt-get -y install openssh-server
 
 # ###
 #    Java JRE 1.8
@@ -60,14 +62,16 @@ RUN \
   tar -zxf beedeem-${BDM_VERSION}.tar.gz -C /opt/beedeem && \
   cd .. && \
   rm -rf tmp-install && \
-  cp scripts/*.sh . && \
+  cp scripts/bdm.sh ./bdm && \
+  sed -i 's/@KL_WORKING_DIR@/\/beedeem-wk/g' bdm && \
+  sed -i 's/@JAVA_ARGS@/-Xms128M -Xmx2048M -Djava.io.tmpdir=\$KL_WORKING_DIR -DKL_LOG_TYPE=console/g' bdm && \
   cp scripts/dbms.config conf && \
   sed -i 's/@BIOBASE_ROOTDIR@/\/beedeem-db/g' conf/dbms.config && \
-  chmod +x *.sh && \
+  chmod +x bdm && \
   chmod +x /opt/beedeem/external/bin/linux/* && \
   chmod +x /opt/beedeem/conf/scripts/*.sh && \
+  chmod +x /opt/beedeem/conf/scripts/scheduler/*.sh && \
   cd /opt/beedeem/external/bin && rm -rf macos windows
-
 
 # ###
 #    Add BeeDeeM-tools. Use pre-built local one. 

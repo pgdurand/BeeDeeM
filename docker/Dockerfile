@@ -32,8 +32,10 @@ ENV BDMT_VERSION=2.1.1
 # bash is required when running this image by Nextflow pipelines.
 # wget is required to install some banks (e.g. GeneOntology).
 # unzip is required to deploy BeeDeeM archive
+# openssh-server is required to submit jobs on cluster through ssh connection
 RUN apt-get -y update 
 RUN apt-get -y install software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip
+RUN apt-get -y install openssh-server
 
 # ###
 #    Java JRE 1.8
