@@ -1,5 +1,12 @@
 # Recipe to build a Singularity image for BeeDeeM software
 
+It is worth noting that this BeeDeeM image actually contains both BeeDeeM and [BeeDeeM-Tools](https://gitlab.ifremer.fr/bioinfo/BeeDeeM-Tools).
+
+Get a pre-built image
+---------------------
+
+Simply go to [https://data-dataref.ifremer.fr/bioinfo/ifremer/sebimer/tools/ORSON/](https://data-dataref.ifremer.fr/bioinfo/ifremer/sebimer/tools/ORSON/) to get the lattest combined image of BeeDeeM and [BeeDeeM-Tools](https://gitlab.ifremer.fr/bioinfo/BeeDeeM-Tools); look at 'beedeem-<ver>.sif' file.
+
 How to build?
 -------------
  

@@ -2,6 +2,8 @@
 
 This document explains how you can setup and use *BeeDeeM* within a Docker container.
 
+It is worth noting that this BeeDeeM image actually contains both BeeDeeM and [BeeDeeM-Tools](https://gitlab.ifremer.fr/bioinfo/BeeDeeM-Tools).
+
 ## Requirements
 
 Of course, you need to have [Docker](https://docs.docker.com/engine/installation/) installed on your system. 
@@ -15,6 +17,8 @@ Note: this BeeDeeM's *Dockerfile* was made and tested using *Docker engine relea
 Simply use:
 
 ```docker pull sebimer/beedeem:5.0.0```
+
+to get the combined image of BeeDeeM and [BeeDeeM-Tools](https://gitlab.ifremer.fr/bioinfo/BeeDeeM-Tools).
 
 ## Build the container
 
