@@ -14,8 +14,8 @@ echo "Getting Interpro release number"
 
 # ========================================================================================
 # Section: include API
-S_NAME=$(realpath "$0")
-[[ -z "$BDM_CONF_SCRIPTS" ]] && script_dir=$(dirname "$S_NAME") || script_dir=$BDM_CONF_SCRIPTS
+S_NAME=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
+[[ -z "$BDM_CONF_SCRIPTS" ]] && script_dir=$S_NAME || script_dir=$BDM_CONF_SCRIPTS
 . $script_dir/scheduler/common.sh
 
 # ========================================================================================
