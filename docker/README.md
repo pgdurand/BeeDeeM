@@ -10,6 +10,12 @@ We also suppose that you are familiar with [docker build](https://docs.docker.co
 
 Note: this BeeDeeM's *Dockerfile* was made and tested using *Docker engine release 20* on *macOS Monterey*. 
 
+## Get a pre-built image
+
+Simply use:
+
+```docker pull sebimer/beedeem:5.0.0```
+
 ## Build the container
 
 Use this command: 
