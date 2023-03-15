@@ -2,13 +2,23 @@
 
 This document explains how you can setup and use *BeeDeeM* within a Docker container.
 
+It is worth noting that this BeeDeeM image actually contains both BeeDeeM and [BeeDeeM-Tools](https://gitlab.ifremer.fr/bioinfo/BeeDeeM-Tools).
+
 ## Requirements
 
 Of course, you need to have [Docker](https://docs.docker.com/engine/installation/) installed on your system. 
 
 We also suppose that you are familiar with [docker build](https://docs.docker.com/engine/reference/commandline/build/) and [docker run](https://docs.docker.com/engine/reference/commandline/run/) commands.
 
-Note: this BeeDeeM's *Dockerfile* was made and tested using *Docker version 20* on *macOS Catalina*. 
+Note: this BeeDeeM's *Dockerfile* was made and tested using *Docker engine release 20* on *macOS Monterey*. 
+
+## Get a pre-built image
+
+Simply use:
+
+```docker pull sebimer/beedeem:5.0.0```
+
+to get the combined image of BeeDeeM and [BeeDeeM-Tools](https://gitlab.ifremer.fr/bioinfo/BeeDeeM-Tools).
 
 ## Build the container
 
@@ -20,41 +30,48 @@ Use this command:
 
 ## Run the container
 
+     KL_mirror__path=/path/to/bank_repository    <-- (1)
+     KL_WORKING_DIR=/path/to/work-directory      <-- (2)
+     KL_JRE_ARGS="-Xms128M -Xmx2048M -Djava.io.tmpdir=${KL_WORKING_DIR} -DKL_LOG_TYPE=console"  <-- (3)
+
      docker run --name beedeem_machine -i -t --rm \
-                -v /path/to/bank/installation:/beedeem-db \  <-- (1)
-                -v /path/to/work/dir:/beedeem-wk \           <-- (2)
-                beedeem_machine <command-line>               <-- (3)
+                -e \"KL_JRE_ARGS=$KL_JRE_ARGS\" \
+                -e \"KL_WORKING_DIR=$KL_WORKING_DIR\" \
+                -e \"KL_mirror__path=$KL_mirror__path\" \ 
+                -v /path/to/bank/installation:/beedeem-db \ 
+                -v /path/to/work/dir:/beedeem-wk \ 
+                beedeem_machine <command-line>       <-- (4) 
       
       (1) where to install banks. Update '/path/to/...' to target your local system. 
-          DO NOT MODIFY '/beedeem-db'.
       (2) where to put BeeDeeM logs. Update '/path/to/...' to target your local system. 
-          DO NOT MODIFY '/beedeem-wk'.
-      (3) what to do. See 'Sample use cases', below.
+      (3) Arguments to run Java Runtime Environment (BeeDeeM is a Java software)
+      (4) what to do. See 'Sample use cases', below.
 
+You can review the 'test_container.sh" script to look at a working exemple.
 
 ### Sample use cases
  
 1/ install a simple bank:
  
-      docker run .../... beedeem_machine install.sh -desc PDB_proteins
+      docker run .../... beedeem_machine bdm install -desc PDB_proteins
  
-Will invoke 'install.sh' BeeDeeM script. See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.html\#install-a-bank) for more details. 
+Will invoke 'bdm' BeeDeeM script with command 'install'. See [BeeDeeM user manual](https://pgdurand.gitbooks.io/beedeem/test_install.html\#install-a-bank) for more details. 
 
 2/ install an annotated bank:
  
-      docker run .../... beedeem_machine install.sh -desc SwissProt_human
+      docker run .../... beedeem_machine bdm install -desc SwissProt_human
 
 3/ get list of installed banks:
  
-      docker run .../... beedeem_machine info.sh -d all -f txt
+      docker run .../... beedeem_machine bdm info -d all -f txt
 
 4/ query a bank to fetch an entry:
  
-      docker run .../... beedeem_machine query.sh -d protein -i P31946 -f txt
+      docker run .../... beedeem_machine bdm query -d protein -i P31946 -f txt
 
 If it fails, just try this form:
 
-      docker run .../... beedeem_machine query.sh protein P31946 txt
+      docker run .../... beedeem_machine bdm query protein P31946 txt
       
 
 ### Monitor BeeDeeM
@@ -63,41 +80,21 @@ In all cases, consult BeeDeeM working directory to check out log files in case c
  
 This working directory is specified by this 'docker run' argument:
 
-           -v /path/to/work/dir:/beedeem-wk
+           -v /path/to/work/dir:/path/to/work/dir
 
 Which means that BeeDeeM log files can be located on your system within '/path/to/work/dir'. 
 
 If needeed, you can tell BeeDeeM to dump logs directly on the console using this command:
 
-      docker run .../... -e "KL_LOG_TYPE=console" beedeem_machine install.sh -desc PDB_proteins
+      docker run .../... -e "KL_LOG_TYPE=console" beedeem_machine bdm install -desc PDB_proteins
 
 ### Default JRE memory usage
 
 Java is pre-configured to use up to 2 Gb RAM. You can change this by adding such an argument to your docker run command:
 
-      docker run .../... -e "KL_JRE_ARGS=-Xms128M -Xmx1G -Djava.io.tmpdir=/beedeem-wk" beedeem_machine install.sh -desc PDB_proteins
+      docker run .../... -e "KL_JRE_ARGS=-Xms128M -Xmx1G -Djava.io.tmpdir=/path/to/work/dir" beedeem_machine bdm install -desc PDB_proteins
 
 Tips: ALWAYS redirect appropriately JRE tmp directory to somewhere outside the container! This is the reason why you see a -Djava.io.tmpdir directive in the previous command.
-
-### Here is a working command on my OSX computer:
-
-1. I created these directories:
-
-         /Users/pgdurand/biobanks  (1)
-         /Users/pgdurand/biobanks/log      (2)
-
-           (1) will host my banks on my computer
-           (2) will host BeeDeeM log files on my computer
-
-2. Then I can install a bank as follows:
-
-         docker run --name beedeem_machine -i -t --rm \
-                    -v /Users/pgdurand/biobanks:/beedeem-db \
-                    -v /Users/pgdurand/biobanks/log:/beedeem-wk \
-                    beedeem_machine \
-                    install.sh -desc PDB_proteins
-
-In that case, BeeDeeM installs bank within directory '/beedeem-db', which actually targets '/Users/pgdurand/biobanks' through the Docker container. In a similar way, BeeDeeM creates a log file within '/beedeem-wk', which is actually '/Users/pgdurand/biobanks/log'.
 
 ## Additional notes
  
@@ -108,3 +105,11 @@ You'll be able to enter into the container, as follows:
      - if running: docker exec -it beedeem_machine bash
 
      - if not yet running: docker run --rm -i -t beedeem_machine bash
+
+### Convert Docker image to Singularity
+
+```
+docker save beedeem-<ver> -o beedem.tar
+singularity build beedeem-<ver>.sif docker-archive://beedeem.tar
+```
+

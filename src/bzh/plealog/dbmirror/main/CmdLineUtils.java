@@ -69,7 +69,7 @@ public class CmdLineUtils {
     buf.append("   -DKL_CONF_DIR=/path/to/new/conf_dir . Such a path must target all expected conf sub-directories (system, scripts, descriptors)\n");
     buf.append("--\n");
     buf.append("To override dbms.config values, use JRE args:\n");
-    buf.append("   -DKL_<key>=<new_value>, where <key> is a dbms.config key and <new_value> is a value. For key, replace '.' by '__' (double underscore). E.g to override default 'mirror.path' value, use JRE argument -DKL_mirror__path=/new/path\n");
+    buf.append("   -DKL_<key>=<new_value>, where <key> is a dbms.config key and <new_value> is a value. For key, replace '.' by '__' (double underscore). E.g to override default 'mirror.path' value, use JRE argument -DKL_mirror.path=/new/path\n");
     buf.append("--\n");
     buf.append(props.getProperty("prg.app.name"));
     buf.append(" ");

@@ -32,7 +32,7 @@
 # *** Bank installation scripts of BeeDeeM (conf/scripts) requires realpath:
 #     available in BASH 5 for macOS
 #     or available from Linux:coreutils
-which realpath
+RES=$(which realpath)
 if [ ! $? -eq 0 ]; then
   echo "/!\ ERROR: realpath command not found"
   echo "           macOS: install bash 5"

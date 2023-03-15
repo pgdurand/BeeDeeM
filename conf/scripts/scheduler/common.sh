@@ -102,7 +102,7 @@ BDMC_PLATFORM=$BDM_PLATFORM
 #
 #           Such a BeeDeeM script is always  called 
 #           with these arguments: 
-#           -w <path> -d <path> -f <path> -n <name> -t <type>
+#           -w <path> -d <path> -f <path> -n <name> -t <type> -o <args>
 #
 #  -w <path>: <path> is the working directory path.
 #             provided for both unit and global tasks.
@@ -116,10 +116,13 @@ BDMC_PLATFORM=$BDM_PLATFORM
 #             n: nucleotide
 #             d: dictionary or ontology
 #  -p <name>: platform name (i.e. a specific cluster configuration)
+#  -o <args>: optional. Only set if script directive passes in some 
+#             additional arguments. 
+#             See conf/descriptors/PDB_proteins_task.dsc for an example.
 function handleBDMArgs(){
   infoMsg "Arguments coming from BeeDeeM are: [$@]"
   local OPTIND
-  while getopts w:d:f:n:t:p: opt
+  while getopts w:d:f:n:t:p:o: opt
   do
     case "$opt" in
       w)  BDMC_WK_DIR="$OPTARG";;
@@ -128,18 +131,22 @@ function handleBDMArgs(){
       n)  BDMC_BANK_NAME="$OPTARG";;
       t)  BDMC_BANK_TYPE="$OPTARG";;
       p)  BDMC_PLATFORM="$OPTARG";;
+      o)  BDMC_MORE_ARGS="$OPTARG";;
     esac
   done
   shift `expr $OPTIND - 1`
-  BDMC_MORE_ARGS=$@
+  
+  # Optional arguments consists in a special encoded string made by
+  # bzh.plealog.dbmirror.task.PTaskExecScript code
+  BDMC_MORE_ARGS=$(echo $BDMC_MORE_ARGS | sed -e 's/;/ /g')
 
-  infoMsg "Working dir: $BDMC_WK_DIR"
-  infoMsg "Install dir: $BDMC_INST_DIR"
-  infoMsg "Processed file: $BDMC_PROCESSED_FILE"
+  infoMsg "Working directory of BeeDeeM: $BDMC_WK_DIR"
+  infoMsg "Bank installa path: $BDMC_INST_DIR"
+  infoMsg "Current processed bank file: $BDMC_PROCESSED_FILE"
   infoMsg "Bank name: $BDMC_BANK_NAME"
   infoMsg "Bank type: $BDMC_BANK_TYPE"
   infoMsg "Platform: $BDMC_PLATFORM"
-  infoMsg "Remaining args: $BDMC_MORE_ARGS"
+  infoMsg "Remaining task script arguments: $BDMC_MORE_ARGS"
 }
 
 # --------
@@ -193,6 +200,10 @@ function getResources(){
 # FUNCTION: figure out which Job Scheduler is available on host system
 # return: 0 if job scheduler found, 1 otherwise. Job scheduler name is echoed.
 function getScheduler(){
+  if [ ! -z "$BDM_SCHEDULER" ]; then
+    echo $BDM_SCHEDULER
+    return 0
+  fi
   local ret_value=
   if hasCommand qstat; then
     ret_value=$(qstat --version)
@@ -206,3 +217,4 @@ function getScheduler(){
   return 1
 }
 
+handleBDMArgs $@

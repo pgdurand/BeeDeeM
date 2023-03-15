@@ -5,7 +5,7 @@
 #
 # How to?
 #
-# Step 1: build image with: singularity build -f beedeem-4.7.6.sif Singularity
+# Step 1: build image with: singularity build -f beedeem-5.0.0.sif Singularity
 #         (update version to match BDM_VERSION variable, below)
 #
 # Step 2: test with either
@@ -35,7 +35,7 @@
 # Section 1: prepare BeeDeeM test suite
 
 # Version of BeeDeeM to test
-BDM_VERSION=4.7.6
+BDM_VERSION=5.0.0
 # Default working directory to test BeeDeeM Singularity image.
 # Il will be overriden below, given host platform
 BDM_SCRATCH_DIR=/tmp
@@ -162,8 +162,7 @@ echo "##########################################################################
 echo "# Start BeeDeeM test bank installation"
 # These are '.dsc' files located in BeeDeeM image at path /opt/beedeem/conf/descriptors
 DESCRIPTOR="SwissProt_human,PDB_proteins" 
-#DESCRIPTOR="SwissProt_human" 
-CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} install.sh -desc ${DESCRIPTOR}"
+CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} bdm install -desc ${DESCRIPTOR}"
 echo $CMD
 eval $CMD
 if [ $? -eq 0 ]; then
@@ -191,7 +190,7 @@ fi
 #  see https://github.com/pgdurand/BlastViewer
 echo "###############################################################################"
 echo "# Annotate results"
-CMD="annotate.sh -i $KL_WORKING_DIR/query_vs_SW.xml -o $KL_WORKING_DIR/query_vs_SW.zml -type full -writer zml"
+CMD="bdm annotate -i $KL_WORKING_DIR/query_vs_SW.xml -o $KL_WORKING_DIR/query_vs_SW.zml -type full -writer zml"
 CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} $CMD"
 echo $CMD
 eval $CMD

@@ -19,6 +19,7 @@ package bzh.plealog.dbmirror.util.runner;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -49,6 +50,7 @@ public class DBStampProperties {
   public static final String           DB_SIZE             = "size";
   // Date formatter
   public static final SimpleDateFormat BANK_DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd, HH:mm");
+  private static final SimpleDateFormat BANK_DATE_FORMATTER_DIR = new SimpleDateFormat("yyyy-MM-dd_HH_mm");
 
   private static final Log             LOGGER              = LogFactory
       .getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
@@ -157,4 +159,19 @@ public class DBStampProperties {
     return props;
   }
 
+  /**
+   * Utility method aims at providing a time stamp formatted as YYY-MM-dd_HH_mm.
+   */
+  public static String getDBTimeStampAsDirStr(String dbPath) {
+    Properties props = readDBStamp(dbPath);
+    String d = props.getProperty(TIME_STAMP);
+    String d2 = null;
+    try {
+      Date dt = BANK_DATE_FORMATTER.parse(d);
+      d2 = BANK_DATE_FORMATTER_DIR.format(dt);
+    } catch (ParseException e) {
+      // not bad, so we hide this exception
+    }
+    return d2;
+  }
 }

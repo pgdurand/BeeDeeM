@@ -36,6 +36,7 @@ import org.apache.commons.logging.LogFactory;
 
 import bzh.plealog.dbmirror.util.Utils;
 import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfig;
+import bzh.plealog.dbmirror.util.conf.DBMSAbstractConfigConstants;
 import bzh.plealog.dbmirror.util.log.LoggerCentral;
 
 /**
@@ -59,6 +60,7 @@ public class DBMSExecNativeCommand {
   public static final String   APPDIR_VAR_NAME         = "${appdir}";
   public static final String   JTMPDIR_VAR_NAME        = "${javaTempDir}";
   public static final String   WORKDIR_VAR_NAME        = "${workdir}";
+  public static final String   OS_NAME_VAR_NAME        = "${os}";
   public static final int      EXEC_INTERRUPTED        = -2;
   public static final long     DEFAULT_TIME_SLICE      = 2000; //milliseconds
   
@@ -160,8 +162,9 @@ public class DBMSExecNativeCommand {
       boolean removeEndingSeparator) {
     StringBuffer szBuf;
     StringTokenizer tokenizer;
-    String token;
-
+    String token, varName, varValue;
+    int idxS, idxE;
+    
     szBuf = new StringBuffer();
     if (path.charAt(0) == '|' || path.charAt(0) == '/'
         || path.charAt(0) == '\\')
@@ -183,9 +186,23 @@ public class DBMSExecNativeCommand {
         szBuf.append(DBMSAbstractConfig.getLocalMirrorPrepaPath());
       } else if (token.equalsIgnoreCase(WORKDIR_VAR_NAME)) {
         szBuf.append(DBMSAbstractConfig.getWorkingPath());
-      } else if (token.equalsIgnoreCase("${os}")) {
+      } else if (token.equalsIgnoreCase(OS_NAME_VAR_NAME)) {
         szBuf.append(getOSName());
         szBuf.append(File.separator);
+      } else if (token.startsWith("$")) {//other system env variable
+        idxS = token.indexOf('{');
+        idxE = token.indexOf('}');
+        if (idxS!=-1 && idxE!=-1) {
+          varName = token.substring(idxS+1, idxE);
+        }
+        else {
+          varName = token.substring(1);//skip $ 
+        }
+        varValue = DBMSAbstractConfigConstants.pruneQuotes(System.getenv(varName));
+        if (varValue==null) {
+          varValue = varName;
+        }
+        szBuf.append(Utils.terminatePath(varValue));
       } else {
         szBuf.append(token);
         szBuf.append(File.separator);

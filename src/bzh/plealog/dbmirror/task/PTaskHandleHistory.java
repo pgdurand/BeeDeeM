@@ -82,7 +82,7 @@ public class PTaskHandleHistory extends PAbstractTask {
       if (f.isFile())
         continue;
       dirName = f.getName();
-      if (dirName.startsWith("currentOn") == false)
+      if (dirName.startsWith(DBMSAbstractConfig.CURRENTON_DIR) == false)
         continue;
       dirNames.add(dirName);
     }

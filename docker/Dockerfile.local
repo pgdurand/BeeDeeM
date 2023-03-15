@@ -1,7 +1,7 @@
 #######################################################################################
 #
 # Dockerfile to use BeeDeem through a Docker container.
-# Package BeeDeeM and BeeDeeM-Tools by getting releases available on Github.
+# Create Docker image from locally built BeeDeeM and BeeDeeM-Tools.
 #
 # Copyright (c) 2017-23, Patrick G. Durand
 #
@@ -51,41 +51,41 @@ RUN add-apt-repository ppa:ts.sch.gr/ppa \
           && rm -rf bin include lib man *.zip
 
 # ###
-#     BeeDeeM download, installation and cleaning.
-#     We get an official release bundle from Github.
+#     BeeDeeM. Get pre-built local one.
 #
+COPY beedeem-${BDM_VERSION}-distrib.zip /opt
 RUN \
   mkdir -p /opt/beedeem/tmp-install && \
+  mv /opt/beedeem-${BDM_VERSION}-distrib.zip /opt/beedeem/tmp-install && \
   cd /opt/beedeem/tmp-install && \
-  wget https://github.com/pgdurand/BeeDeeM/releases/download/v${BDM_VERSION}/beedeem-${BDM_VERSION}-distrib.zip && \
   unzip beedeem-${BDM_VERSION}-distrib.zip && \
   tar -zxf beedeem-${BDM_VERSION}.tar.gz -C /opt/beedeem && \
   cd .. && \
-  rm -rf tmp-install
-
-RUN \
-  cd /opt/beedeem && \
-  cp scripts/*.sh . && \
+  rm -rf tmp-install && \
+  cp scripts/bdm.sh ./bdm && \
+  sed -i 's/@KL_WORKING_DIR@/\/beedeem-wk/g' bdm && \
+  sed -i 's/@JAVA_ARGS@/-Xms128M -Xmx2048M -Djava.io.tmpdir=\$KL_WORKING_DIR -DKL_LOG_TYPE=console/g' bdm && \
   cp scripts/dbms.config conf && \
   sed -i 's/@BIOBASE_ROOTDIR@/\/beedeem-db/g' conf/dbms.config && \
-  chmod +x *.sh && \
+  chmod +x bdm && \
   chmod +x /opt/beedeem/external/bin/linux/* && \
   chmod +x /opt/beedeem/conf/scripts/*.sh && \
+  chmod +x /opt/beedeem/conf/scripts/scheduler/*.sh && \
   cd /opt/beedeem/external/bin && rm -rf macos windows
 
-
 # ###
-#    Add BeeDeeM-tools. Always the latest one.
+#    Add BeeDeeM-tools. Use pre-built local one. 
 #
+COPY beedeem-tools-${BDMT_VERSION}.tar.gz /opt
 RUN \
-  cd /opt && \
-  mkdir beedeem-tools && \
-  cd beedeem-tools && \
-  wget https://github.com/ifremer-bioinformatics/BeeDeeM-Tools/releases/download/v${BDMT_VERSION}/beedeem-tools-${BDMT_VERSION}.tar.gz && \
-  gunzip beedeem-tools-${BDMT_VERSION}.tar.gz && \
-  tar -xf beedeem-tools-${BDMT_VERSION}.tar && \
-  rm beedeem-tools-${BDMT_VERSION}.tar && \
-  chmod +x *.sh
+   cd /opt && \
+   mkdir beedeem-tools && \ 
+   cd beedeem-tools && \
+   mv ../beedeem-tools-${BDMT_VERSION}.tar.gz . && \
+   gunzip beedeem-tools-${BDMT_VERSION}.tar.gz && \
+   tar -xf beedeem-tools-${BDMT_VERSION}.tar && \
+   rm beedeem-tools-${BDMT_VERSION}.tar && \
+   chmod +x *.sh
 
 # ###
 #     BeeDeeM runtime environment variables.

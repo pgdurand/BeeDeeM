@@ -24,6 +24,7 @@ chmod +x $PREFIX/bin/bdm
 chmod +x $PREFIX/external/bin/linux/*
 chmod +x $PREFIX/external/bin/macos/*
 chmod +x $PREFIX/conf/scripts/*.sh
+chmod +x $PREFIX/conf/scripts/scheduler/*.sh
 
 # Discard Windows stuff
 cd $PREFIX/external/bin && rm -rf windows

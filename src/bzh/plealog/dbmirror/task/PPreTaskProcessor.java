@@ -102,6 +102,7 @@ public class PPreTaskProcessor extends Thread {
   
   @Override
   public void run() {
+    boolean initThread=true;
     while (true) {
       //force exit from this loop if no more tasks under processing
       //or user request to cancel bank installation (UI only)
@@ -110,9 +111,12 @@ public class PPreTaskProcessor extends Thread {
         break;
       }
       try {
-        LoggerCentral.info(
+        if (initThread) {//display this message one times
+          initThread = false;
+          LoggerCentral.info(
             LogFactory.getLog(DBMSAbstractConfig.KDMS_ROOTLOG_CATEGORY
                 + ".PPreTaskProcessor"), WAIT_MSG);
+        }
         sleep(_waitTime);
       } catch (InterruptedException e) {
       }

@@ -107,7 +107,7 @@ public class CmdLineQueryTest {
   @Test
   public void testCmdLine() {
     String[] args = {
-        "-d", "protein", 
+        "-d", "p", 
         "-i", "KKCC1_RAT",
         "-f", "txt"};
     
@@ -142,7 +142,7 @@ public class CmdLineQueryTest {
     File foIDsFile = new File(UtilsTest.getTestFilePath("Tools", "foIDs.txt"));
     
     String[] args = {
-        "-d", "protein", 
+        "-d", "p", 
         "-i", foIDsFile.getAbsolutePath(),
         "-f", "txt"};
     
@@ -294,7 +294,7 @@ public class CmdLineQueryTest {
     }
 
     String[] args = {
-        "-d", "dico", 
+        "-d", "d:taxon", 
         "-i", "9606,2157,10116,10090,45351,99999",
         "-f", "txt",
         "-o", result.getAbsolutePath()};
