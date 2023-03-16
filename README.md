@@ -6,7 +6,7 @@
 
 *BeeDeeM* is a general purpose **B**ioinformatics **D**atabank **M**anager. 
 
-It provides a suite of command-line and UI softwares to install and use major sequence databanks and biological classifications. It is the ideal companion of the [NCBI BLAST suite of softwares](https://pgdurand.gitbooks.io/beedeem/test_install.html#run-a-blast-search) and [PLAST](https://plast.inria.fr/), as well as tools such as [ORSON](https://github.com/ifremer-bioinformatics/orson) annotation pipeline, [BLAST Viewer](https://github.com/pgdurand/BlastViewer) platform.
+It provides a suite of command-line and UI softwares to manage and use major sequence databanks and biological classifications. It is the ideal companion of the [NCBI BLAST suite of softwares](https://pgdurand.gitbooks.io/beedeem/test_install.html#run-a-blast-search) and [PLAST](https://plast.inria.fr/), as well as tools such as [ORSON](https://gitlab.ifremer.fr/bioinfo/workflows/orson) annotation pipeline, [BLAST Viewer](https://github.com/pgdurand/BlastViewer) platform.
 
 ## Main features
 
@@ -108,4 +108,4 @@ Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downl
 It depends on several thrid-party libraries as stated in the NOTICE.txt file provided with this project.
 
 ----
-(c) 2007-2022 - Patrick G. Durand and Ludovic Antin
+(c) 2003-2023 - Patrick G. Durand; BeeDeeM development started in early 2003 by the development of [Core API](https://github.com/pgdurand/Bioinformatics-Core-API) for [BLAST Viewer](https://github.com/pgdurand/BlastViewer)... a long, long story by now! ;-) 
