@@ -1,6 +1,6 @@
 # *BeeDeeM*: the Bioinformatics Databank Manager System 
 
-[![License AGPL](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt)   [![](https://tokei.rs/b1/github/pgdurand/BeeDeeM?category=code)](https://github.com/pgdurand/BeeDeeM) [![](https://img.shields.io/badge/platform-Java--1.8+-yellow.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) [![](https://img.shields.io/badge/run_on-Linux--macOS--Windows-yellowgreen.svg)]() [![](https://img.shields.io/badge/bio.tools-BeeDeeM-orange.svg)](https://bio.tools/beedeem) [![Anaconda-Server Badge](https://anaconda.org/sebimer/beedeem/badges/version.svg)](https://anaconda.org/sebimer/beedeem)
+[![License AGPL](https://img.shields.io/badge/license-Affero%20GPL%203.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0.txt) [![](https://img.shields.io/badge/platform-Java--1.8+-yellow.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) [![](https://img.shields.io/badge/run_on-Linux--macOS--Windows-yellowgreen.svg)]() [![](https://img.shields.io/badge/bio.tools-BeeDeeM-orange.svg)](https://bio.tools/beedeem) [![Anaconda-Server Badge](https://anaconda.org/sebimer/beedeem/badges/version.svg)](https://anaconda.org/sebimer/beedeem) [![](https://img.shields.io/badge/hub.docker-BeeDeeM-blue.svg)](https://hub.docker.com/repository/docker/sebimer/beedeem/general)
 
 
 
