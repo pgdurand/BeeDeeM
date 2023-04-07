@@ -4,11 +4,11 @@
 
 [![](https://img.shields.io/badge/bio.tools-BeeDeeM-orange.svg)](https://bio.tools/beedeem) [![Anaconda-Server Badge](https://anaconda.org/sebimer/beedeem/badges/version.svg)](https://anaconda.org/sebimer/beedeem) [![](https://img.shields.io/badge/hub.docker-BeeDeeM-blue.svg)](https://hub.docker.com/repository/docker/sebimer/beedeem/general) [![](https://img.shields.io/badge/singularity-BeeDeeM-blue.svg)](https://data-dataref.ifremer.fr/bioinfo/ifremer/sebimer/tools/ORSON/)
 
-
+## About
 
 *BeeDeeM* is a general purpose **B**ioinformatics **D**atabank **M**anager. 
 
-It provides a suite of command-line and UI softwares to manage and use major sequence databanks and biological classifications. It is the ideal companion of the [NCBI BLAST suite of softwares](https://pgdurand.gitbooks.io/beedeem/test_install.html#run-a-blast-search) and [PLAST](https://plast.inria.fr/), as well as tools such as [ORSON](https://gitlab.ifremer.fr/bioinfo/workflows/orson) annotation pipeline, [BLAST Viewer](https://github.com/pgdurand/BlastViewer) platform.
+It provides a suite of command-line and UI softwares to manage (download, unarchive, index, install) and enable the easy use of major sequence databanks and biological classifications. 
 
 ## Main features
 
@@ -25,7 +25,9 @@ It provides a suite of command-line and UI softwares to manage and use major seq
 * the preparation of taxonomic subsets out of annotated sequence banks,
 * the filtering of sequence banks with user-defined constraints.
 
-[More](https://pgdurand.gitbooks.io/beedeem/).
+[More: user manual](https://pgdurand.gitbooks.io/beedeem/).
+
+It is the ideal companion of the [NCBI BLAST suite of softwares](https://pgdurand.gitbooks.io/beedeem/test_install.html#run-a-blast-search) and [PLAST](https://plast.inria.fr/), as well as tools such as [ORSON](https://gitlab.ifremer.fr/bioinfo/workflows/orson) annotation pipeline, [BLAST Viewer](https://github.com/pgdurand/BlastViewer) platform.
 
 ## Main tools
 
@@ -110,4 +112,6 @@ Use a [Java Virtual Machine](http://www.oracle.com/technetwork/java/javase/downl
 It depends on several thrid-party libraries as stated in the NOTICE.txt file provided with this project.
 
 ----
-(c) 2003-2023 - Patrick G. Durand; BeeDeeM development started in early 2003 by the development of [Core API](https://github.com/pgdurand/Bioinformatics-Core-API) for [BLAST Viewer](https://github.com/pgdurand/BlastViewer)... a long, long story by now! ;-) 
+(c) 2003-2023 - Patrick G. Durand
+
+BeeDeeM development started in early 2003 by the development of [Core API](https://github.com/pgdurand/Bioinformatics-Core-API) for [BLAST Viewer](https://github.com/pgdurand/BlastViewer). Firt release of BeeDeeM was out by mid 2007... a long, long story by now! ;-) 
