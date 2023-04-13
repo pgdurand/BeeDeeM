@@ -37,7 +37,7 @@ _Index creation extension:_
 
 More: read the [user manual](https://pgdurand.gitbooks.io/beedeem/)!
 
-It is the ideal companion of the [NCBI BLAST suite of softwares](https://pgdurand.gitbooks.io/beedeem/test_install.html#run-a-blast-search) and [PLAST](https://plast.inria.fr/), as well as tools such as [ORSON](https://gitlab.ifremer.fr/bioinfo/workflows/orson) annotation pipeline, [BLAST Viewer](https://github.com/pgdurand/BlastViewer) platform.
+It is the ideal companion of sequence comparison tools (e.g. [BLAST](https://pgdurand.gitbooks.io/beedeem/test_install.html#run-a-blast-search), [PLAST](https://plast.inria.fr/), [Diamond](https://github.com/bbuchfink/diamond/wiki)), as well as tools such as [ORSON](https://gitlab.ifremer.fr/bioinfo/workflows/orson) annotation pipeline, [BLAST Viewer](https://github.com/pgdurand/BlastViewer) platform and [Galaxy platform](https://galaxyproject.org/).
 
 ## Main tools
 
@@ -107,6 +107,7 @@ Among others, these databanks can be used to:
 * [BLAST Filter Tool](https://github.com/pgdurand/BLAST-Filter-Tool)
 * [Plealog Bioinformatics Core API](https://github.com/pgdurand/Bioinformatics-Core-API)
 
+It is worth noting that BeeDeeM is capable of [creating Galaxy Data Manager loc files](https://pgdurand.gitbook.io/beedeem/utils/list-banks#get-loc-files-for-galaxy), enabling a Galaxy web portal to use banks installed by BeeBeeM.
 
 [This manual](https://pgdurand.gitbooks.io/beedeem/) explains how to install, configure and use *BeeDeeM*.
 
