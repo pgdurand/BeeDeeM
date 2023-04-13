@@ -131,3 +131,5 @@ It depends on several thrid-party libraries as stated in the NOTICE.txt file pro
 (c) 2003-2023 - Patrick G. Durand
 
 BeeDeeM development started in early 2003 by the development of [Core API](https://github.com/pgdurand/Bioinformatics-Core-API) for [BLAST Viewer](https://github.com/pgdurand/BlastViewer). Firt release of BeeDeeM was out by mid 2007... a long, long story by now! ;-) 
+
+Contributors: Ludovic Antin (2013-15; JUnit test suite, data filtring engine), Pierre Cuzin (2021; configuration).
