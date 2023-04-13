@@ -71,7 +71,7 @@ $BDM_HOME/$BDM_VER/bdm install \
    >& "$HOME/beedeem/logs/${DESCRIPTOR}-pbs.out"
 ```
 
-You can easily automate bank installation using such scripts. Above script relies on a standalone installation of the software, but you can also use either [Conda](conda), [Dokcer](docker) or [Singularity](singularity) installation of the software.
+You can easily automate bank installation using such scripts. Above script relies on a standalone installation of the software, but you can also use either [Conda](conda), [Docker](docker) or [Singularity](singularity) installation of the software.
 
 ### Use BeeDeeM UI
 
