@@ -6,7 +6,7 @@
 
 ## About
 
-*BeeDeeM* is a general purpose **B**ioinformatics **D**atabank **M**anager. 
+*BeeDeeM* is a general-purpose **B**ioinformatics **D**atabank **M**anager. 
 
 It provides a suite of command-line and UI softwares to manage (download, unarchive, index, install) and enable the easy use of major sequence databanks and biological classifications. 
 
@@ -19,7 +19,7 @@ It provides a suite of command-line and UI softwares to manage (download, unarch
 * the un-archiving of the files \(tar files\),
 * the conversion of native sequence banks \(e.g. Genbank\) to FASTA files,
 * the preparation of databases in BLAST format from native sequence bank formats,
-° the preparation of other indexes such as Diamond, Bowtie, Hisat, etc.
+* the preparation of other indexes such as Diamond, Bowtie, Hisat, etc.
 * the indexing of Genbank, Refseq, Embl, Genpept, Swissprot, TrEmbl and Fasta files allowing their efficient querying by way of sequence identifiers,
 * the indexing of sequence features and ontologies data (NCBI Taxonomy, Gene Ontology, Enzyme Commission, Intepro domains and PFAM domains),
 * the preparation of taxonomic subsets out of annotated sequence banks,
