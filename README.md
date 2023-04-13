@@ -25,7 +25,17 @@ It provides a suite of command-line and UI softwares to manage (download, unarch
 * the preparation of taxonomic subsets out of annotated sequence banks,
 * the filtering of sequence banks with user-defined constraints.
 
-[More: user manual](https://pgdurand.gitbooks.io/beedeem/).
+_Task execution extension:_
+
+* Any kind of pre- and post-processing of data can be done using external scripts
+* Such scripts can be executed on the host computer (local mode) or though SGE, PBS or SLURM scheduler (cluster mode)
+* Task executions are controlled by configuration files; _e.g._ to specify software ressources (RAM, CPU, walltime), access to softwares (direct execution or through Conda), _etc._
+
+_Index creation extension:_
+
+* Using the task execution engine, additional index can be quite easily created in a fully automated way (e.g. Diamond, Bowtie, _etc._)&#x20;
+
+More: read the [user manual](https://pgdurand.gitbooks.io/beedeem/)!
 
 It is the ideal companion of the [NCBI BLAST suite of softwares](https://pgdurand.gitbooks.io/beedeem/test_install.html#run-a-blast-search) and [PLAST](https://plast.inria.fr/), as well as tools such as [ORSON](https://gitlab.ifremer.fr/bioinfo/workflows/orson) annotation pipeline, [BLAST Viewer](https://github.com/pgdurand/BlastViewer) platform.
 
