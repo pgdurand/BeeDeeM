@@ -53,20 +53,25 @@ Here is an example of a script to start Genbank_CoreNucleotide installation on I
 
 # Release of BeeDeeM to use
 BDM_HOME="$SOFT/bioinfo/beedeem"
-BDM_VER="4.7.1"
+BDM_VER="5.0.0"
 
 # Load BeeDeeM environment
 module load java/1.8.0_121
 
+# Tell BeeDeeM where is its working directory and where it has to install banks
+# (adapt! This is for a test)
+export KL_WORKING_DIR=$HOME/bdm-test ; mkdir -p $KL_WORKING_DIR
+export KL_mirror__path=$HOME/bdm-banks ; mkdir -p $KL_mirror__path
+
 # prefix of '.dsc' file that must exist in $BDM_HOME/conf/descriptor
-DESCRIPTOR="Genbank_CoreNucleotide"
+DESCRIPTOR="PDB_protein"
 export KL_LOG_FILE=${DESCRIPTOR}.log
-$BDM_HOME/$BDM_VER/install.sh \
+$BDM_HOME/$BDM_VER/bdm install \
    -desc ${DESCRIPTOR} \
    >& "$HOME/beedeem/logs/${DESCRIPTOR}-pbs.out"
 ```
 
-You can easily automate bank installation using such BeeDeeM based scripts with Unix cron scheduler.
+You can easily automate bank installation using such scripts. Above script relies on a standalone installation of the software, but you can also use either [Conda](conda), [Dokcer](docker) or [Singularity](singularity) installation of the software.
 
 ### Use BeeDeeM UI
 
