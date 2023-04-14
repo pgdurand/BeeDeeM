@@ -21,7 +21,7 @@ MAINTAINER Patrick G. Durand
 #    Configuring release of tools to package.
 #
 ENV BDM_VERSION=5.0.0
-ENV BDMT_VERSION=2.1.1
+ENV BDMT_VERSION=2.1.2
 
 # ###
 # Install dependencies.
@@ -81,7 +81,7 @@ RUN \
   cd /opt && \
   mkdir beedeem-tools && \
   cd beedeem-tools && \
-  wget https://github.com/ifremer-bioinformatics/BeeDeeM-Tools/releases/download/v${BDMT_VERSION}/beedeem-tools-${BDMT_VERSION}.tar.gz && \
+  wget https://gitlab.ifremer.fr/api/v4/projects/91/packages/generic/BeeDeeM-Tools/${BDMT_VERSION}/beedeem-tools-${BDMT_VERSION}.tar.gz
   gunzip beedeem-tools-${BDMT_VERSION}.tar.gz && \
   tar -xf beedeem-tools-${BDMT_VERSION}.tar && \
   rm beedeem-tools-${BDMT_VERSION}.tar && \
