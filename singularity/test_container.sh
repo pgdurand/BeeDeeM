@@ -35,7 +35,7 @@
 # Section 1: prepare BeeDeeM test suite
 
 # Version of BeeDeeM to test
-BDM_VERSION=5.0.0
+BDM_VERSION=5.0.1
 # Default working directory to test BeeDeeM Singularity image.
 # Il will be overriden below, given host platform
 BDM_SCRATCH_DIR=/tmp
