@@ -71,20 +71,7 @@ public class GenbankParser extends TaxonMatcherHelper implements DBParsable {
     return buf.toString();
   }
 
-  /**
-   * Analyses a data line and return the GeneInfo number.
-   */
-  private static String getGI(String line) {
-    int idx;
-
-    idx = line.indexOf("GI:");
-    if (idx < 0)
-      return null;
-
-    return line.substring(idx + 3);
-  }
-
-  private static String getGIFromAcc(String line) {
+  private static String getAccession(String line) {
     StringTokenizer tokenizer;
     String acc;
     int idx;
@@ -159,10 +146,8 @@ public class GenbankParser extends TaxonMatcherHelper implements DBParsable {
           locus = getLocus(5, line, locusBuf);
           handleTaxon = true;
           seqOk = true;
-        } else if (line.startsWith("VERSION")) {
-          gi = getGI(line);
         } else if (line.startsWith("ACCESSION")) {
-          gi = getGIFromAcc(line);
+          gi = getAccession(line);
         } else if (line.startsWith("ORIGIN")) {
           handleTaxon = false;
         }
