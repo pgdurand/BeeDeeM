@@ -14,7 +14,7 @@
 # #############################################################################
 
 Bootstrap : docker
-From: debian:12-slim
+From: debian:11-slim
 
 %files
 	../distrib/beedeem-5.0.1-distrib.zip /opt
@@ -30,14 +30,13 @@ From: debian:12-slim
 	# bash is required when running this image by Nextflow pipelines.
 	# wget is required to install some banks (e.g. GeneOntology).
 	apt-get -y update
-	apt-get -y install gawk openssh-client software-properties-common bzip2 libidn12 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip
+	apt-get -y install gawk openssh-client software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip
 	
 	# Java
 	# See https://www.oracle.com/java/technologies/downloads/#java17
         cd /opt
         wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.deb
 	apt install -y /opt/jdk-17_linux-x64_bin.deb
-	update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk-17/bin/java 1
 	rm jdk-17_linux-x64_bin.deb
 	
 	# Get BeeDeeM from latest local release
