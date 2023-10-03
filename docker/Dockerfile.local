@@ -12,7 +12,7 @@
 #
 #     We use standard Ubuntu 18 Linux. 
 #
-FROM ubuntu:18.04
+FROM debian:11-slim
 
 # Maintainer of BeeDeeM
 MAINTAINER Patrick G. Durand
@@ -21,7 +21,7 @@ MAINTAINER Patrick G. Durand
 #    Configuring release of tools to package.
 #
 ENV BDM_VERSION=5.0.0
-ENV BDMT_VERSION=2.1.1
+ENV BDMT_VERSION=2.1.2
 
 # ###
 # Install dependencies.
@@ -34,21 +34,15 @@ ENV BDMT_VERSION=2.1.1
 # unzip is required to deploy BeeDeeM archive
 # openssh-server is required to submit jobs on cluster through ssh connection
 RUN apt-get -y update 
-RUN apt-get -y install software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip
-RUN apt-get -y install openssh-server
+RUN apt-get -y install gawk openssh-client software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip
 
 # ###
-#    Java JRE 1.8
-RUN add-apt-repository ppa:ts.sch.gr/ppa \
-          && echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections \
-          && echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections \
-          && apt-get update \
-          && apt-get -y install oracle-java8-installer \
-          && apt-get -y install oracle-java8-set-default \
-          && apt-get clean all \
-          && rm -rf /var/lib/apt/lists/* \
-          && cd /usr/lib/jvm/java-8-oracle\
-          && rm -rf bin include lib man *.zip
+#    Java
+#    See See https://www.oracle.com/java/technologies/downloads/#java17 
+RUN cd /opt \
+    && wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.deb \
+    && apt install -y /opt/jdk-17_linux-x64_bin.deb \
+    && rm jdk-17_linux-x64_bin.deb
 
 # ###
 #     BeeDeeM. Get pre-built local one.
