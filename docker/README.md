@@ -28,6 +28,14 @@ Use this command:
 
       --> don't forget the final '.' in the cmdline
 
+## Test the container
+
+Use this command: 
+
+     docker run --name beedeem_machine -i -t --rm  beedeem_machine bdm -h
+
+You should see the BeeDeeM command line help.
+
 ## Run the container
 
      KL_mirror__path=/path/to/bank_repository    <-- (1)

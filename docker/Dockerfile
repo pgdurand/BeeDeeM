@@ -12,7 +12,7 @@
 #
 #     We use standard Ubuntu 18 Linux. 
 #
-FROM ubuntu:18.04
+FROM debian:11-slim
 
 # Maintainer of BeeDeeM
 MAINTAINER Patrick G. Durand
@@ -34,21 +34,16 @@ ENV BDMT_VERSION=2.1.2
 # unzip is required to deploy BeeDeeM archive
 # openssh-server is required to submit jobs on cluster through ssh connection
 RUN apt-get -y update 
-RUN apt-get -y install software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip
-RUN apt-get -y install openssh-server
+RUN apt-get -y install gawk openssh-client software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip
 
 # ###
-#    Java JRE 1.8
-RUN add-apt-repository ppa:ts.sch.gr/ppa \
-          && echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections \
-          && echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections \
-          && apt-get update \
-          && apt-get -y install oracle-java8-installer \
-          && apt-get -y install oracle-java8-set-default \
-          && apt-get clean all \
-          && rm -rf /var/lib/apt/lists/* \
-          && cd /usr/lib/jvm/java-8-oracle\
-          && rm -rf bin include lib man *.zip
+#    Java
+#    See See https://www.oracle.com/java/technologies/downloads/#java17 
+RUN cd /opt \
+    && wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.deb \
+    && apt install -y /opt/jdk-17_linux-x64_bin.deb \
+    && rm jdk-17_linux-x64_bin.deb
+
 
 # ###
 #     BeeDeeM download, installation and cleaning.
@@ -63,16 +58,21 @@ RUN \
   cd .. && \
   rm -rf tmp-install
 
+# ###
+#    Do a little configuration
+#
 RUN \
-  cd /opt/beedeem && \
-  cp scripts/*.sh . && \
-  cp scripts/dbms.config conf && \
-  sed -i 's/@BIOBASE_ROOTDIR@/\/beedeem-db/g' conf/dbms.config && \
-  chmod +x *.sh && \
-  chmod +x /opt/beedeem/external/bin/linux/* && \
-  chmod +x /opt/beedeem/conf/scripts/*.sh && \
-  cd /opt/beedeem/external/bin && rm -rf macos windows
-
+  cd /opt/beedeem \
+  && cp scripts/bdm.sh ./bdm \
+  && sed -i 's/@KL_WORKING_DIR@/\/beedeem-wk/g' bdm \
+  && sed -i 's/@JAVA_ARGS@/-Xms128M -Xmx2048M -Djava.io.tmpdir=\$KL_WORKING_DIR -DKL_LOG_TYPE=console/g' bdm \
+  && cp scripts/dbms.config conf \
+  && sed -i 's/@BIOBASE_ROOTDIR@/\/beedeem-db/g' conf/dbms.config \
+  && chmod +x bdm \
+  && chmod +x /opt/beedeem/external/bin/linux/* \
+  && chmod +x /opt/beedeem/conf/scripts/*.sh \
+  && chmod +x /opt/beedeem/conf/scripts/scheduler/*.sh \
+  && cd /opt/beedeem/external/bin && rm -rf macos windows
 
 # ###
 #    Add BeeDeeM-tools. Always the latest one.
@@ -81,7 +81,7 @@ RUN \
   cd /opt && \
   mkdir beedeem-tools && \
   cd beedeem-tools && \
-  wget https://gitlab.ifremer.fr/api/v4/projects/91/packages/generic/BeeDeeM-Tools/${BDMT_VERSION}/beedeem-tools-${BDMT_VERSION}.tar.gz
+  wget https://gitlab.ifremer.fr/api/v4/projects/91/packages/generic/BeeDeeM-Tools/${BDMT_VERSION}/beedeem-tools-${BDMT_VERSION}.tar.gz && \
   gunzip beedeem-tools-${BDMT_VERSION}.tar.gz && \
   tar -xf beedeem-tools-${BDMT_VERSION}.tar && \
   rm beedeem-tools-${BDMT_VERSION}.tar && \
