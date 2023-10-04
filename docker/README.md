@@ -14,11 +14,20 @@ Note: this BeeDeeM's *Dockerfile* was made and tested using *Docker engine relea
 
 ## Get a pre-built image
 
-Simply use:
+Official pre-built images of BeeDeeM are available from [Ifremer-SeBiMER Gitlab container repository](https://gitlab.ifremer.fr/bioinfo/softwares/public-images).
 
-```docker pull sebimer/beedeem:5.0.0```
+For instance, to get the 5.0.0 release, run this command (isit [BeeDeeM container registry](https://gitlab.ifremer.fr/bioinfo/softwares/public-images/beedeem/container_registry) to review latest available version of BeeDeeM):
 
-to get the combined image of BeeDeeM and [BeeDeeM-Tools](https://gitlab.ifremer.fr/bioinfo/BeeDeeM-Tools).
+```
+docker pull gitlab-registry.ifremer.fr/bioinfo/softwares/public-images/beedeem/beedeem:5.0.0
+docker tag gitlab-registry.ifremer.fr/bioinfo/softwares/public-images/beedeem/beedeem:5.0.0 beedeem:5.0.0
+```
+
+to get and rename under beedeem:5.0.0 the combined image of BeeDeeM and [BeeDeeM-Tools](https://gitlab.ifremer.fr/bioinfo/BeeDeeM-Tools). 
+
+Then, to run the image:
+
+```docker run --name beedeem -i -t --rm  beedeem:5.0.0 bdm -h```
 
 ## Build the container
 
