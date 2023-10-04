@@ -5,7 +5,19 @@ It is worth noting that this BeeDeeM image actually contains both BeeDeeM and [B
 Get a pre-built image
 ---------------------
 
-Simply go to [https://data-dataref.ifremer.fr/bioinfo/ifremer/sebimer/tools/ORSON/](https://data-dataref.ifremer.fr/bioinfo/ifremer/sebimer/tools/ORSON/) to get the lattest combined image of BeeDeeM and [BeeDeeM-Tools](https://gitlab.ifremer.fr/bioinfo/BeeDeeM-Tools); look at 'beedeem-<ver>.sif' file.
+Official pre-built images of BeeDeeM are available from [Ifremer-SeBiMER Gitlab container repository](https://gitlab.ifremer.fr/bioinfo/softwares/public-images).
+
+For instance, to get the 5.0.0 release, run this command (isit [BeeDeeM container registry](https://gitlab.ifremer.fr/bioinfo/softwares/public-images/beedeem/container_registry) to review latest available version of BeeDeeM):
+
+```
+singularity pull docker://gitlab-registry.ifremer.fr/bioinfo/softwares/public-images/beedeem/beedeem:5.0.0
+```
+
+to get and rename under beedeem:5.0.0 the combined image of BeeDeeM and [BeeDeeM-Tools](https://gitlab.ifremer.fr/bioinfo/BeeDeeM-Tools). 
+
+Then, to run the image:
+
+```singularity run beedeem_5.0.0.sif bdm -h```
 
 How to build?
 -------------
@@ -16,7 +28,7 @@ How to run?
 -----------
 
 See test_container.sh script for a working example.
-_
+
 How to configure?
 -----------------
 
