@@ -9,7 +9,7 @@ Bootstrap : docker
 From: debian:11-slim
 
 %post
-	BDM_VERSION=5.0.1
+	BDM_VERSION=5.0.2
 	BDMT_VERSION=2.1.2
 	
 	# software-properties-common required to install Java Runtime
