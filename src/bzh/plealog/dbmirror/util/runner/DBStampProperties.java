@@ -169,7 +169,7 @@ public class DBStampProperties {
     try {
       Date dt = BANK_DATE_FORMATTER.parse(d);
       d2 = BANK_DATE_FORMATTER_DIR.format(dt);
-    } catch (ParseException e) {
+    } catch (Exception e) {
       // not bad, so we hide this exception
     }
     return d2;
