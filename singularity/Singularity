@@ -9,7 +9,7 @@ Bootstrap : docker
 From: debian:11-slim
 
 %post
-	BDM_VERSION=5.0.0
+	BDM_VERSION=5.0.1
 	BDMT_VERSION=2.1.2
 	
 	# software-properties-common required to install Java Runtime
@@ -18,8 +18,9 @@ From: debian:11-slim
 	#    in BeeDeeM and BeeDeeM-Tools.
 	# bash is required when running this image by Nextflow pipelines.
 	# wget is required to install some banks (e.g. GeneOntology).
+	# procps (ps command) is required by Nextflow. 
 	apt-get -y update
-	apt-get -y install gawk openssh-client software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip
+	apt-get -y install gawk openssh-client software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip procps
 	
 	# Java
 	# See https://www.oracle.com/java/technologies/downloads/#java17
