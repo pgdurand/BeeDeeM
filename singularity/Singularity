@@ -23,11 +23,11 @@ From: debian:11-slim
 	apt-get -y install gawk openssh-client software-properties-common bzip2 libidn11 bash wget libxext6 libxrender1 libxtst6 libxi6 unzip procps
 	
 	# Java
-	# See https://www.oracle.com/java/technologies/downloads/#java17
+	# See https://www.oracle.com/java/technologies/downloads/#java21
         cd /opt
-        wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.deb
-	apt install -y /opt/jdk-17_linux-x64_bin.deb
-	rm jdk-17_linux-x64_bin.deb
+        wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
+	apt install -y /opt/jdk-21_linux-x64_bin.deb
+	rm jdk-21_linux-x64_bin.deb
 	
 	# Get BeeDeeM from latest local release
         mkdir -p /opt/beedeem/tmp-install
@@ -63,6 +63,6 @@ From: debian:11-slim
 	chmod +x *.sh
 
 %environment
-	export PATH="/opt/beedeem:/opt/beedeem-tools:$PATH"
+	export PATH="/opt/beedeem:/opt/beedeem-tools:/opt/beedeem/external/bin/linux:$PATH"
 	
 
