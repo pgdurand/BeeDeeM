@@ -17,7 +17,7 @@ function activateEnv(){
   if hasCommand $soft_name; then
     infoMsg "Found ${soft_name} in PATH for $BDMC_PLATFORM platform"
   else
-    errorMsg "Unknown software: ${soft_name} on $BDMC_PLATFORM platform"
+    errorMsg "Unknown env: ${soft_name} on $BDMC_PLATFORM platform"
     ret_code=1
   fi
   return $ret_code
