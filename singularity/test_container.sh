@@ -35,14 +35,14 @@
 # Section 1: prepare BeeDeeM test suite
 
 # Version of BeeDeeM to test
-BDM_VERSION=5.0.1
+BDM_VERSION=6.0.0
 # Default working directory to test BeeDeeM Singularity image.
 # Il will be overriden below, given host platform
-BDM_SCRATCH_DIR=/tmp
+BDM_SCRATCH_DIR=$SCRATCH
 # What is the name of the BeeDeeM image
 BDM_SING_IMG_NAME=beedeem-${BDM_VERSION}.sif
 # Where to find the BeeDeeM image
-BDM_SING_IMG_HOME=$HOME/devel/BeeDeeM/singularity
+BDM_SING_IMG_HOME=$HOME/devel/plealog/BeeDeeM/singularity
 # If BeeDeeM image is not located in above path, try to get it from SeBiMER repo
 BDM_SING_PUBLIC_REPO=https://data-dataref.ifremer.fr/bioinfo/ifremer/sebimer/tools/ORSON
 
@@ -101,9 +101,16 @@ elif hasCommand sbatch; then
     echo "running on SBR using SLURM scheduler"
     BDM_PLATFORM="abims"
     BDM_SCRATCH_DIR=$HOME
-  fi
+  elif [[ $hname == "compute-"* ]]; then
+    echo "running on DATARMOR using SLURM scheduler"
+    #BDM_PLATFORM="ifremer"
+    #BDM_SCRATCH_DIR=$SCRATCH
+   else
+     echo "1/ Cannot figure out which job scheduler is available."
+     echo "  Execute BeeDeeM directly on THIS computer"
+   fi
 else
-  echo "Cannot figure out which job scheduler is available."
+  echo "2/ Cannot figure out which job scheduler is available."
   echo "  Execute BeeDeeM directly on THIS computer"
 fi
 
@@ -112,6 +119,10 @@ fi
 BDM_SCRATCH_DIR="$BDM_SCRATCH_DIR/test_beedeem"
 BDM_BANKS_DIR="$BDM_SCRATCH_DIR/banks"
 BDM_WORK_DIR="$BDM_SCRATCH_DIR/working"
+
+echo "SCRATCH dir: $BDM_SCRATCH_DIR"
+echo "Test banks will be installed in: $BDM_BANKS_DIR"
+echo "BeeDeeM work dir: $BDM_WORK_DIR"
 
 # ###
 # Section 3: prepare SIngularity container
