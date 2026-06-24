@@ -9,11 +9,11 @@
 #         (update version to match BDM_VERSION variable, below)
 #
 # Step 2: test with either
-#         a. ./test_container.sh
+#         a. ./test_container.sh > bdm_log.txt
 #         b. qsub test_container.sh (PBS Pro)
 #         c. srun test_container.sh (slurm, direct execution)
 #
-# P. Durand (SeBiMER, Ifremer), last updated on March 2023
+# P. Durand (SeBiMER, Ifremer), last updated on June 2026
 # #############################################################################
 
 # Sample config for Slurm; adapt partition to your cluster configuration
@@ -33,6 +33,13 @@
 
 # ###
 # Section 1: prepare BeeDeeM test suite
+
+echo "************************************************************"
+echo ""
+echo -e "\xF0\x9F\x9A\x80   Running BeeDeeM test suite with Apptainer image "
+echo ""
+echo "************************************************************"
+echo ""
 
 # Version of BeeDeeM to test
 BDM_VERSION=6.0.0
@@ -57,10 +64,13 @@ hasCommand () {
 #   BeeDeeM devel team used to work on two clusters, one from 
 #   Ifremer (Brest, France), one from Station Biologique (Roscoff, France)
 # Depending on host platform, load singularity env
+
+echo "*** Going to run BeeDeeM using this configuration:"
+
 if hasCommand qstat; then
   hname=$(hostname)
   if [[ $hname == *"data"* ]]; then
-    echo "running on Ifremer using PBS Pro scheduler"
+    echo "Running on Ifremer using PBS Pro scheduler"
     source /etc/profile.d/modules.sh
     module purge
     module load singularity/3.4.1
@@ -69,11 +79,11 @@ if hasCommand qstat; then
 elif hasCommand sbatch; then
   hname=$(hostname -A)
   if [[ $hname == *"roscoff"* ]]; then
-    echo "running on SBR using SLURM scheduler"
+    echo "Running on SBR using SLURM scheduler"
     BDM_PLATFORM="abims"
     BDM_SCRATCH_DIR=$HOME
   elif [[ $hname == "compute-"* ]]; then
-    echo "running on DATARMOR using SLURM scheduler"
+    echo "Running on DATARMOR using SLURM scheduler"
     BDM_SCRATCH_DIR=$SCRATCH
   fi
 fi
@@ -88,7 +98,7 @@ BDM_WORK_DIR="$BDM_SCRATCH_DIR/working"
 
 # Check existence of the BeeDeeM image
 if [ ! -e "$BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME" ]; then
-  echo "ERROR: $BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME not found."
+  echo "❌ ERROR: $BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME not found."
   exit 1
 fi
 
@@ -99,14 +109,11 @@ BDM_SINGULITY_IMG="$BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME"
 # ###
 # Section 4: prepare tests
 # For debugging if neeeded: dump all BDM_XXX variables
-echo "*** Going to run BeeDeeM using this configuration:"
 ( set -o posix ; set ) | grep "^BDM_"
 echo "***"
 
 mkdir -p $BDM_BANKS_DIR
 mkdir -p $BDM_WORK_DIR
-
-exit 0
 
 # ###
 # Section 5: prepare env variables to be used by BeeDeeM inside the container
@@ -125,73 +132,106 @@ export KL_mirror__path=${BDM_BANKS_DIR}
 # Now, let's start a simple installation
 echo "###############################################################################"
 echo "# Start BeeDeeM test bank installation"
-# These are '.dsc' files located in BeeDeeM image at path /opt/beedeem/conf/descriptors
-DESCRIPTOR="SwissProt_human,PDB_proteins" 
-CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} bdm install -desc ${DESCRIPTOR}"
-echo $CMD
-eval $CMD
-if [ $? -eq 0 ]; then
-  echo "SUCCESS"
+if [ -e ${BDM_WORK_DIR}/bkinstall.ok ]; then
+  echo "   skip test, already done"
 else
-  echo "FAILED.   Review log file: $BDM_WORK_DIR/log"
-  exit 1
+  # These are '.dsc' files located in BeeDeeM image at path /opt/beedeem/conf/descriptors
+  DESCRIPTOR="SwissProt_human" 
+  CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} bdm install -desc ${DESCRIPTOR}"
+  echo $CMD
+  eval $CMD
+  if [ $? -eq 0 ]; then
+    echo "✅ SUCCESS"
+    touch ${BDM_WORK_DIR}/bkinstall.ok
+  else
+    echo "❌ FAILED.   Review log file: $BDM_WORK_DIR/log"
+    exit 1
+  fi
 fi
 
 # Plast vs SwissProt DB (contains annotations)
+# Plast is available in BeeDeeM image since BeeDeeM-Tools are installed there
 echo "###############################################################################"
 echo "# Run annotated PLAST using SwissProt human previously installed"
-CMD="plast.sh -p plastp -i /opt/beedeem-tools/data/query.fa -d $BDM_BANKS_DIR/p/SwissProt_human/current/SwissProt_human/SwissProt_human00 -o $KL_WORKING_DIR/query_vs_SW.xml -a 4 -maxhits 10 -maxhsps 1 -e 1e-5 -F F"
-CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} $CMD"
-echo $CMD
-eval $CMD
-if [ $? != 0  ]; then
-  echo "FAILED"
-  exit 1
+if [ -e ${BDM_WORK_DIR}/plast.ok ]; then
+  echo "   skip test, already done"
 else
-  echo "SUCCESS"
+  CMD="plast.sh -p plastp -i /opt/beedeem-tools/data/query.fa -d $BDM_BANKS_DIR/p/SwissProt_human/current/SwissProt_human/SwissProt_human00 -o $KL_WORKING_DIR/query_vs_SW.xml -a 4 -maxhits 10 -maxhsps 1 -e 1e-5 -F F"
+  CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} $CMD"
+  echo $CMD
+  eval $CMD
+  if [ $? != 0  ]; then
+    echo "❌ FAILED"
+    exit 1
+  else
+    echo "✅ SUCCESS"
+    touch ${BDM_WORK_DIR}/plast.ok
+  fi
 fi
 
 # Annotate PLAST result and prepare file for BlastViewer (zml format)
 #  see https://github.com/pgdurand/BlastViewer
 echo "###############################################################################"
 echo "# Annotate results"
-CMD="bdm annotate -i $KL_WORKING_DIR/query_vs_SW.xml -o $KL_WORKING_DIR/query_vs_SW.zml -type full -writer zml"
-CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} $CMD"
-echo $CMD
-eval $CMD
-if [ $? != 0  ]; then
-  echo "FAILED"
-  exit 1
+if [ -e ${BDM_WORK_DIR}/annotate.ok ]; then
+  echo "   skip test, already done"
 else
-  echo "SUCCESS"
+  CMD="bdm annotate -i $KL_WORKING_DIR/query_vs_SW.xml -o $KL_WORKING_DIR/query_vs_SW.zml -type full -writer zml"
+  CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} $CMD"
+  echo $CMD
+  eval $CMD
+  if [ $? != 0  ]; then
+    echo "❌ FAILED"
+    exit 1
+  else
+    echo "✅ SUCCESS"
+    touch ${BDM_WORK_DIR}/annotate.ok
+  fi
 fi
 
 # Dump previous annotated results as CSV file
 #  you may use dumpcsh.h to get help on CSV format
 echo "###############################################################################"
 echo "# Dump annotated PLAST results as CSV file"
-CMD="dumpcsv.sh -i $KL_WORKING_DIR/query_vs_SW.zml -f zml -o $KL_WORKING_DIR/query_vs_SW.csv"
-CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} $CMD"
-echo $CMD
-eval $CMD
-if [ $? != 0  ]; then
-  echo "FAILED"
-  exit 1
+if [ -e ${BDM_WORK_DIR}/dumpcsv.ok ]; then
+  echo "   skip test, already done"
 else
-  echo "SUCCESS"
+  CMD="dumpcsv.sh -i $KL_WORKING_DIR/query_vs_SW.zml -f zml -o $KL_WORKING_DIR/query_vs_SW.csv"
+  CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} $CMD"
+  echo $CMD
+  eval $CMD
+  if [ $? != 0  ]; then
+    echo "❌ FAILED"
+    exit 1
+  else
+    echo "✅ SUCCESS"
+    touch ${BDM_WORK_DIR}/dumpcsv.ok
+  fi
 fi
 
 # BeeDeeM-Tools full test suite
 echo "###############################################################################"
 echo "# Start BeeDeeM-Tools test suite"
-mkdir -p $BDM_WORK_DIR/bdm-tools
-CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} /opt/beedeem-tools/test.sh -w $BDM_WORK_DIR/bdm-tools"
-echo $CMD
-eval $CMD
-if [ $? -eq 0 ]; then
-  echo "SUCCESS"
+if [ -e ${BDM_WORK_DIR}/bdmtools.ok ]; then
+  echo "   skip test, already done"
 else
-  echo "FAILED.   Review log file: $BDM_WORK_DIR/log"
-  exit 1
+  mkdir -p $BDM_WORK_DIR/bdm-tools
+  CMD="singularity run ${BDM_BINDS} ${BDM_SINGULITY_IMG} /opt/beedeem-tools/test.sh -w $BDM_WORK_DIR/bdm-tools"
+  echo $CMD
+  eval $CMD
+  if [ $? -eq 0 ]; then
+    echo "✅ SUCCESS"
+    touch ${BDM_WORK_DIR}/bdmtools.ok
+  else
+    echo "❌ FAILED.   Review log file: $BDM_WORK_DIR/log"
+    exit 1
+  fi
 fi
 
+echo ""
+echo "###############################################################################"
+echo ""
+echo -e "\xF0\x9F\x98\x8E Great news: "
+echo "   1/ all tests done with success"
+echo "   2/ BeeDeeM is ready to run on your system"
+echo ""
