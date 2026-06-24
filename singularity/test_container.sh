@@ -38,7 +38,7 @@
 BDM_VERSION=6.0.0
 # Default working directory to test BeeDeeM Singularity image.
 # Il will be overriden below, given host platform
-BDM_SCRATCH_DIR=$SCRATCH
+BDM_SCRATCH_DIR=/tmp
 # What is the name of the BeeDeeM image
 BDM_SING_IMG_NAME=beedeem-${BDM_VERSION}.sif
 # Where to find the BeeDeeM image
@@ -74,29 +74,17 @@ elif hasCommand sbatch; then
     BDM_SCRATCH_DIR=$HOME
   elif [[ $hname == "compute-"* ]]; then
     echo "running on DATARMOR using SLURM scheduler"
-    #BDM_PLATFORM="ifremer"
-    #BDM_SCRATCH_DIR=$SCRATCH
-   else
-     echo "1/ Cannot figure out which job scheduler is available."
-     echo "  Execute BeeDeeM directly on THIS computer"
-   fi
-else
-  echo "2/ Cannot figure out which job scheduler is available."
-  echo "  Execute BeeDeeM directly on THIS computer"
+    BDM_SCRATCH_DIR=$SCRATCH
+  fi
 fi
-
 
 # Configure BeeDeeM banks and working directories
 BDM_SCRATCH_DIR="$BDM_SCRATCH_DIR/test_beedeem"
 BDM_BANKS_DIR="$BDM_SCRATCH_DIR/banks"
 BDM_WORK_DIR="$BDM_SCRATCH_DIR/working"
 
-echo "SCRATCH dir: $BDM_SCRATCH_DIR"
-echo "Test banks will be installed in: $BDM_BANKS_DIR"
-echo "BeeDeeM work dir: $BDM_WORK_DIR"
-
 # ###
-# Section 3: prepare SIngularity container
+# Section 3: prepare Singularity container execution
 
 # Check existence of the BeeDeeM image
 if [ ! -e "$BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME" ]; then
@@ -111,10 +99,14 @@ BDM_SINGULITY_IMG="$BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME"
 # ###
 # Section 4: prepare tests
 # For debugging if neeeded: dump all BDM_XXX variables
-( set -o posix ; set ) | grep "BDM_"
+echo "*** Going to run BeeDeeM using this configuration:"
+( set -o posix ; set ) | grep "^BDM_"
+echo "***"
+
 mkdir -p $BDM_BANKS_DIR
 mkdir -p $BDM_WORK_DIR
 
+exit 0
 
 # ###
 # Section 5: prepare env variables to be used by BeeDeeM inside the container
