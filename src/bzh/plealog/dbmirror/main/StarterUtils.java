@@ -145,29 +145,10 @@ public class StarterUtils {
    * This method checks that the GNU libgcj or OpenJDK JVM are not used when
    * starting the application under Linux. If yes, terminate the application
    * since libgcj/openJDK is not compatible.
+   *
+   * On June 2026, drop down JVM check.
    */
   public static void checkJVM() {
-    String jvmName;
-    String prop = "java.vm.name";
-    String lib1 = "libgcj";
-    String lib2 = "openjdk";
-    String msg1 = "GNU libgcj is not compatible with the application.";
-    String msg2 = "OpenJDK is not compatible with the application.";
-    String msg3 = "Please use an Oracle Java Virtual Machine 1.8+.";
-
-    jvmName = System.getProperty(prop).toLowerCase();
-
-    // Soft does not work with the GNU libgcj JVM
-    if (jvmName.indexOf(lib1) != -1) {
-      //do not use logger here; Log4J not yet inited
-      System.err.println(msg1 + "\n" + msg3);
-      endWithError(null, true);
-    }
-    // Soft does not work with the OpenJDK JVM
-    if (jvmName.indexOf(lib2) != -1) {
-      System.err.println(msg2 + "\n" + msg3);
-      endWithError(null, true);
-    }
 
   }
 
