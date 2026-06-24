@@ -43,8 +43,6 @@ BDM_SCRATCH_DIR=$SCRATCH
 BDM_SING_IMG_NAME=beedeem-${BDM_VERSION}.sif
 # Where to find the BeeDeeM image
 BDM_SING_IMG_HOME=$HOME/devel/plealog/BeeDeeM/singularity
-# If BeeDeeM image is not located in above path, try to get it from SeBiMER repo
-BDM_SING_PUBLIC_REPO=https://data-dataref.ifremer.fr/bioinfo/ifremer/sebimer/tools/ORSON
 
 # --------
 # FUNCTION: figure out whether or not a command exists.
@@ -52,33 +50,6 @@ BDM_SING_PUBLIC_REPO=https://data-dataref.ifremer.fr/bioinfo/ifremer/sebimer/too
 #  return: 0 if success 
 hasCommand () {
     command -v "$1" >/dev/null 2>&1
-}
-
-# --------
-# FUNCTION: download a file from a remote server.
-#           URL is downloaded using curl or wget, saved in
-#           current directory and named using provided local
-#           file name. Function is capable of resuming a
-#           previous aborted job.
-#  arg1: local file name
-#  arg2: URL
-#  return: 0 if success
-function downloadFile(){
-  filename=$1
-  url=$2
-  #Use verbose-less download mode to avoid having huge log.
-  #Use curl first, since it's more easy to get only error 
-  #messages if any
-  if hasCommand curl; then
-    CMD="curl -sSL -o $filename -C - $url"
-  elif hasCommand wget; then
-    CMD="wget -c -q $url -O $filename"
-  else
-    echo "ERROR: Could not find curl nor wget, please install one of them."
-    return 1
-  fi
-  echo $CMD
-  eval $CMD && return 0 || return 1
 }
 
 # ###
@@ -129,17 +100,8 @@ echo "BeeDeeM work dir: $BDM_WORK_DIR"
 
 # Check existence of the BeeDeeM image
 if [ ! -e "$BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME" ]; then
-  echo "WARN: $BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME not found."
-  echo "      Trying to downlod from: $BDM_SING_PUBLIC_REPO/$BDM_SING_IMG_NAME"
-  cd $BDM_WORK_DIR
-  downloadFile "$BDM_SING_IMG_NAME" "$BDM_SING_PUBLIC_REPO/$BDM_SING_IMG_NAME"
-  RET_CODE=$?
-  cd -
-  BDM_SING_IMG_HOME=$BDM_WORK_DIR
-  if [ ! $RET_CODE -eq 0 ]; then
-     echo "ERROR: unable fo get BeeDeeM image"
-     exit 1
-  fi 
+  echo "ERROR: $BDM_SING_IMG_HOME/$BDM_SING_IMG_NAME not found."
+  exit 1
 fi
 
 # Configure Singularity runner
