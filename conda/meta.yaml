@@ -1,6 +1,6 @@
 {% set name = "beedeem" %}
-{% set version = "5.0.0" %}
-{% set sha256 = "395b8e56919e2f20715bb636d3ccaa1a4c98302547836c768b3189f131902b58" %}
+{% set version = "6.0.0" %}
+{% set sha256 = "22e671ad08dd21a79b176cd5753cbe096df90e5458f1c850159268705a8e5b0b" %}
 
 package:
   name: {{ name }}
@@ -11,11 +11,15 @@ source:
   sha256: '{{ sha256 }}'
 
 build:
-  noarch: generic
+  number: 0
 
 requirements:
   run:
-     - java-jdk=8
+    - openjdk =21
+      # BeeDeeM comes with blast 2.17.0 binaries: makeblastdb and blastdbcmd
+      # It seems they work on conda env withou declaring any additional
+      # librairies. In case of troubleshooting, please refer to bioconda
+      # recipe: https://github.com/bioconda/bioconda-recipes/blob/master/recipes/blast/meta.yaml 
 
 about:
   home: https://github.com/pgdurand/BeeDeeM
@@ -25,3 +29,8 @@ about:
     - license/NOTICE.txt
   summary: BeeDeeM is a general purpose Bioinformatics Databank Manager.
 
+extra:
+  identifiers:
+    - biotools:beedeem
+  recipe-maintainers:
+    - pgdurand
