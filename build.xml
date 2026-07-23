@@ -34,6 +34,7 @@
 	<property name="appjar" value="${appname}.jar" />
 	<property name="apptar" value="${appname}.tar" />
 	<property name="kbapisappname" value="${prg.name}-${prg.version}-api" />
+	<property name="test.classname" value="test.unit.AllTests" />
 	<property name="kbapijar" value="${kbapisappname}.jar" />
 
 	<property name="rootpkg" value="bzh.plealog.dbmirror.main" />
@@ -216,7 +217,7 @@
 
 	<!-- ============================================================= -->
 	<!-- Compile code and run Unit Tests                               -->
-	<target name="ut" depends="prepare">
+	<target name="prepare-test" depends="prepare">
 		<!-- Ant/JUnit doc: https://ant.apache.org/manual/Tasks/junit.html -->
 		<mkdir dir="${Dtr}" />
 		<!-- Copy all necessary jar files (third party librairies) -->
@@ -230,8 +231,7 @@
 			<fileset dir="${src}" />
 		</copy>
 		<!-- Compile source code ready for distribution-->
-	  <antcall target="javac8"/>
-	  <antcall target="javac9"/>
+	  <antcall target="javacompile"/>
 		<!-- Copy resource files -->
 		<copy todir="${Dlib}">
 			<fileset dir="${src}">
@@ -242,17 +242,15 @@
 				<include name="**/*.gif" />
 			</fileset>
 		</copy>
-		<!-- Start Test Suite -->
-		<antcall target="ut2" />
 	</target>
 
-	<target name="ut2">
+	<target name="run-test">
 		<junit printsummary="yes" fork="yes" haltonfailure="yes">
 			<classpath>
 				<path refid="distribClass.path"/>
 			</classpath>
 			<formatter type="plain"/>
-			<test name="test.unit.AllTests" todir="${Dtr}"/>
+			<test name="${test.classname}" todir="${Dtr}"/>
 		</junit>
 		<echo>Test results are in: ${Dtr}</echo>
 	</target>
