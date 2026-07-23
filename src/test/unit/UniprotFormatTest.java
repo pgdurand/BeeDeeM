@@ -73,13 +73,13 @@ public class UniprotFormatTest {
     featBiojavaLocRef = new HashSet<String>();
     featBiojavaLocRef.add("chain-1-129-/note=\"toto\" /evidence=\"titi\"");
     featBiojavaLocRef.add("mod_res-1-1-/IsoformId=\"P68250-2\" /note=\"toto\" /evidence=\"titi\"");
-    featBiojavaLocRef.add("chain-2 147 483 647-245-/note=\"toto\" /evidence=\"titi\"");
+    featBiojavaLocRef.add("chain-2,147,483,647-245-/note=\"toto\" /evidence=\"titi\"");
     featBiojavaLocRef.add("chain-31-137-/note=\"toto\" /evidence=\"titi\"");
     featBiojavaLocRef.add("chain-1-55-/note=\"toto\" /evidence=\"titi\"");
-    featBiojavaLocRef.add("transit-1--2 147 483 648-/note=\"toto\" /evidence=\"titi\"");
+    featBiojavaLocRef.add("transit-1--2,147,483,648-/note=\"toto\" /evidence=\"titi\"");
     featBiojavaLocRef.add("chain-69-255-/note=\"toto\" /evidence=\"titi\"");
     featBiojavaLocRef.add("chain-1-24-/note=\"toto\" /evidence=\"titi\"");
-    featBiojavaLocRef.add("signal-1--2 147 483 648-/note=\"toto\" /evidence=\"titi\"");
+    featBiojavaLocRef.add("signal-1--2,147,483,648-/note=\"toto\" /evidence=\"titi\"");
   }
 
   @AfterClass
