@@ -20,6 +20,16 @@ To enable the use of a job sceduler, a basic bash API has been designed around a
 
 Please refer to pbs_wrapper.sh script to review API documentation on the purpose of each of these functions.
 
+Several environment variables can be used to control the behaviour of the API:
+
+- BDM_PLATFORM: platform name on which the scripts are executed. Default is "generic". ABiMS (IFB cluster) and Ifremer (DATARMOR) settings are provided.
+- BDM_SCHEDULER: job scheduler used to execute jobs. Defauklt is "local", i.e. the computer on which the script is started. PBS and SLURM settings are provided.
+- BDM_QSUB_CMD: scheduler command to sublit a job. Default is non defined. Use "qsub" for PBS and "sbatch" for SLURM.
+- BDM_QSTAT_CMD: scheduler command to get information about running job. Default is not defined. Use "qstat" for PBS and "sacct" for SLURM.
+- BDM_CONF_SCRIPTS: path to "beedeem/conf/scripts" directory. Default is computed at runtime relative to running script. On slurm, this is not working, so set that variable using an absolute path to "beedeem/conf/scripts".
+
+On cluster using a scheduler, it is very mush recommended to define ALL these variables.
+
 ## The computing resources
 
 Each cluster has its own set of resources in terms of CPU, memory, walltime and queues. In addition, different set of values may have to be used depending on the job (Blast, BWA, etc.)
