@@ -251,6 +251,7 @@
 			</classpath>
 			<formatter type="plain"/>
 			<test name="${test.classname}" todir="${Dtr}"/>
+			<jvmarg value="-Djava.awt.headless=true"/>
 		</junit>
 		<echo>Test results are in: ${Dtr}</echo>
 	</target>
