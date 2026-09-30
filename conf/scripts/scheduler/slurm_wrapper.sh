@@ -7,6 +7,7 @@
 
 # Author: Patrick Durand, Ifremer
 # Created: November 2022
+# Updated: May 2026
 #*****************************************************************************************
 
 # Turn on/off error messages.
@@ -99,7 +100,7 @@ function submitEx(){
 #  arg1: job ID
 #  return: 0 if success
 function getStatus(){
-  CMD="$QSTAT_CMD -j $1 --format=state,user --noheader"
+  CMD="$QSTAT_CMD -j $1 --format=state,user%20 --noheader"
   ANSWER=$(eval $CMD)
   RET_CODE=$?
   if [ $RET_CODE -eq 0 ];then
@@ -117,7 +118,7 @@ function getStatus(){
 #  arg1: job ID
 #  return: 0 if success
 function getExitCode(){
-  CMD="$QSTAT_CMD -j $1 --format=ExitCode,user --noheader"
+  CMD="$QSTAT_CMD -j $1 --format=ExitCode,user%20 --noheader"
   ANSWER=$(eval $CMD)
   RET_CODE=$?
   if [ $RET_CODE -eq 0 ];then
@@ -215,3 +216,4 @@ function removeJobLog(){
 if [ "$SILENT" == "off" ]; then
   echo "Job execution method: slurm_wrapper loaded"
 fi
+
