@@ -16,47 +16,68 @@
       "console": "integratedTerminal",
       "classPaths": [
         "${workspaceFolder}/lib",
-        "${workspaceFolder}/jar/BrowserLauncher.jar",
-        "${workspaceFolder}/jar/ant-1.9.4.jar",
-        "${workspaceFolder}/jar/ant-launcher-1.9.4.jar",
-        "${workspaceFolder}/jar/biojava-1.9.6b.jar",
-        "${workspaceFolder}/jar/bytecode.jar",
-        "${workspaceFolder}/jar/castor-xml-1.1.2.jar",
-        "${workspaceFolder}/jar/commons-cli-1.2.jar",
-        "${workspaceFolder}/jar/commons-collections-3.2.jar",
-        "${workspaceFolder}/jar/commons-configuration-1.10.jar",
-        "${workspaceFolder}/jar/commons-io-2.4.jar",
-        "${workspaceFolder}/jar/commons-lang-2.6.jar",
-        "${workspaceFolder}/jar/commons-logging-1.2.jar",
-        "${workspaceFolder}/jar/commons-net-3.3.jar",
-        "${workspaceFolder}/jar/hamcrest-core-1.3.jar",
-        "${workspaceFolder}/jar/jackson-annotations-2.10.0.jar",
-        "${workspaceFolder}/jar/jackson-core-2.10.0.jar",
-        "${workspaceFolder}/jar/jackson-databind-2.10.0.jar",
-        "${workspaceFolder}/jar/jakarta-oro.jar",
-        "${workspaceFolder}/jar/javamail-1.4.jar",
-        "${workspaceFolder}/jar/javax.activation-api-1.2.0.jar",
-        "${workspaceFolder}/jar/jcalendar-1.3.2.jar",
-        "${workspaceFolder}/jar/jgaf-2.4.0.jar",
-        "${workspaceFolder}/jar/jgoodies-forms-1.1.jar",
-        "${workspaceFolder}/jar/jgoodies-looks-2.1.1.jar",
-        "${workspaceFolder}/jar/jgrapht-jdk1.5.jar",
-        "${workspaceFolder}/jar/junit-4.12.jar",
-        "${workspaceFolder}/jar/junit-ant-1.9.4.jar",
-        "${workspaceFolder}/jar/log4j-api-2.16.0.jar",
-        "${workspaceFolder}/jar/log4j-core-2.16.0.jar",
-        "${workspaceFolder}/jar/log4j-jcl-2.16.0.jar",
-        "${workspaceFolder}/jar/lucene-2.9.2.jar",
-        "${workspaceFolder}/jar/pb-core-6.4.0.jar",
-        "${workspaceFolder}/jar/pb-ui-5.4.2.jar",
-        "${workspaceFolder}/jar/readseq.jar",
-        "${workspaceFolder}/jar/velocity.jar",
-        "${workspaceFolder}/jar/xercesImpl-2.7.1.jar",
-        "${workspaceFolder}/jar/xmlParserAPIs.jar",
-        "${workspaceFolder}/jar/xstream-1.4.15.jar"
+        "${workspaceFolder}/jar/*"
       ],
       "env": {
         "JAVA_TOOL_OPTIONS": "-Djava.awt.headless=true"
+      }
+    },
+    {
+      "name": "bdm-install-bank",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "bzh.plealog.dbmirror.main.BeeDeeMain",
+      "vmArgs": "-Xms128M -Xmx2048M -Djava.io.tmpdir=${config:beedeem.scratchRoot}/work -DKL_LOG_TYPE=console",
+      "args": [
+        "install",
+        "-desc",
+        "${config:beedeem.descriptor}"
+      ],
+      "preLaunchTask": "BeeDeeM: prepare install directories",
+      "cwd": "${workspaceFolder}",
+      "sourcePaths": [
+        "${workspaceFolder}/src"
+      ],
+      "console": "integratedTerminal",
+      "classPaths": [
+        "${workspaceFolder}/lib",
+        "${workspaceFolder}/jar/*"
+      ],
+      "env": {
+        "KL_WORKING_DIR": "${config:beedeem.scratchRoot}/work",
+        "KL_mirror__path": "${config:beedeem.scratchRoot}/bank"
+      }
+    }
+    ,
+    {
+      "name": "bdm-install-bank-cluster",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "bzh.plealog.dbmirror.main.BeeDeeMain",
+      "vmArgs": "-Xms128M -Xmx2048M -Djava.io.tmpdir=${config:beedeem.scratchRoot}/work -DKL_LOG_TYPE=console",
+      "args": [
+        "install",
+        "-desc",
+        "${config:beedeem.descriptor}"
+      ],
+      "preLaunchTask": "BeeDeeM: prepare install directories",
+      "cwd": "${workspaceFolder}",
+      "sourcePaths": [
+        "${workspaceFolder}/src"
+      ],
+      "console": "integratedTerminal",
+      "classPaths": [
+        "${workspaceFolder}/lib",
+        "${workspaceFolder}/jar/*"
+      ],
+      "env": {
+        "KL_WORKING_DIR": "${config:beedeem.scratchRoot}/work",
+        "KL_mirror__path": "${config:beedeem.scratchRoot}/bank",
+        "BDM_CONF_SCRIPTS": "${workspaceFolder}/conf/scripts",
+        "BDM_SCHEDULER": "slurm",
+        "BDM_PLATFORM": "ifremer",
+        "BDM_QSTAT_CMD": "sacct",
+        "BDM_QSUB_CMD": "sbatch"
       }
     }
   ]
