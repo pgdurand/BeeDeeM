@@ -31,8 +31,9 @@ public interface StorageSystem {
   /**
    * Opens a storage system in either read or write mode.
    * 
-   * @param loadInRAM
-   *          parameter only used in READ_MODE.
+   * @param name name of the index to open
+   * @param mode READ_MODE or WRITE_MODE
+   * @param loadInRAM parameter only used in READ_MODE.
    * 
    * @return should return false if the storage system cannot be opened.
    */
@@ -42,6 +43,8 @@ public interface StorageSystem {
    * Opens a storage system in either read or write mode. Same as open(name,
    * mode, loadInRAM) with loadInRAM set to false.
    * 
+   * @param name name of the index to open
+   * @param mode READ_MODE or WRITE_MODE
    * @return should return false if the storage system cannot be opened.
    */
   public boolean open(String name, int mode);
