@@ -157,7 +157,7 @@ public class BeeDeeMain {
           cmdOk = true;
           try {
             Method method = c.getDeclaredMethod("execute", String[].class);
-            Object bRet = method.invoke(c.newInstance(), new Object[] {args});
+            Object bRet = method.invoke(c.getDeclaredConstructor().newInstance(), new Object[] {args});
             if ( ! bRet.toString().equalsIgnoreCase("true") ) {
               System.exit(1);
             }
