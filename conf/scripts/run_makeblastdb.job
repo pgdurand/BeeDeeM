@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# This is a BeeDeeM external task script aims at making 
+# a BLAST index.
+#
+# This script is called by run_makeblastdb.sh
+#
+# Such a BeeDeeM script is called by the task engine and
+# with arguments as defined in: 
+# ./scheduler/common.sh->handleBDMArgs() function
+
+echo "Making BLAST DB index: $BDM_CONF_SCRIPTS"
+
+# ========================================================================================
+# Section: include API
+S_NAME=$(realpath "$0")
+[[ -z "$BDM_CONF_SCRIPTS" ]] && script_dir=$(dirname "$S_NAME") || script_dir=$BDM_CONF_SCRIPTS
+. $script_dir/scheduler/common.sh
+
+# ========================================================================================
+# Section: handle arguemnts
+# Function call setting BDMC_xxx variables from cmdline arguments
+handleBDMArgs $@
+RET_CODE=$?
+[ ! $RET_CODE -eq 0 ] && errorMsg "Wrong or missing arguments" && exit $RET_CODE
+. $script_dir/scheduler/env_${BDMC_PLATFORM}.sh
+
+# ========================================================================================
+# Section: do business
+
+# Prepare some variables to be use by makeblastdb and alias file creation
+if [ "$BDMC_BANK_TYPE" = "n" ]; then
+  MDB_TYPE="nucl"
+  ALIAS_TYPE="n"
+else
+  MDB_TYPE="prot"
+  ALIAS_TYPE="p"
+fi
+echo "Makeblast dbtype: $MDB_TYPE"
+echo "Alias type: $ALIAS_TYPE"
+
+# Figure out whether we have to use TaxID mapping file
+# Using mapping file requires to use -parse-seqids
+if [[ "$BDMC_BANK_NAME" =~ ^Uniprot.* || "$BDMC_BANK_NAME" =~ ^SwissProt.* ]]; then
+  # Mapping file required by BLAST/makebalstdb tool
+  TAX_ID_MAPPING_FILE="uniprot-2columns.accession2taxid"
+elif [[ "$BDMC_BANK_NAME" =~ ^NCBI_nr.* || "$BDMC_BANK_NAME" =~ ^PDB.* || "$BDMC_BANK_NAME" =~ ^Refseq_p.* ]]; then
+  TAX_ID_MAPPING_FILE="ncbi-prot-2columns.accession2taxid"
+elif [[ "$BDMC_BANK_NAME" =~ ^NCBI_nt.* || "$BDMC_BANK_NAME" =~ ^Genbank.* || "$BDMC_BANK_NAME" =~ ^Refseq_R.* ]]; then
+  TAX_ID_MAPPING_FILE="ncbi-nucl-2columns.accession2taxid"
+else
+  TAX_ID_MAPPING_FILE="none"
+fi
+echo "TaxID mapping file: $TAX_ID_MAPPING_FILE"
+
+# Get path to NCBI_Taxonomy in a generic way
+# Format of INST_DIR is: /home/ref-bioinfo/ifremer/sebimer/generic-reference-banks/$BANK_TYPE/$BANK_NAME/download/$BANK_NAME
+#  and we have to get /home/ref-bioinfo/ifremer/sebimer/generic-reference-banks ...
+BANK_INST_MAIN_DIR="$(dirname "$BDMC_INST_DIR")"
+BANK_INST_MAIN_DIR="$(dirname "$BANK_INST_MAIN_DIR")"
+BANK_INST_MAIN_DIR="$(dirname "$BANK_INST_MAIN_DIR")"
+BANK_INST_MAIN_DIR="$(dirname "$BANK_INST_MAIN_DIR")"
+# ... to build absolute path to NCBI_Taxonomy data
+NCBI_TAX_PATH="$BANK_INST_MAIN_DIR/d/NCBI_Taxonomy/current/NCBI_Taxonomy"
+echo "NCBI_Taxonomy path: $NCBI_TAX_PATH"
+
+# Make BLAST v4 index
+cd $BDMC_INST_DIR
+SOFT_NAME=blast
+SOFT_VER=2.17.0
+echo "Making $SOFT_NAME $SOFT_VER bank in: $PWD"
+
+activateEnv "$SOFT_NAME" "$SOFT_VER"
+if [[ "$BDMC_BANK_NAME" =~ ^PDB_prot.* || "$BDMC_BANK_NAME" =~ ^NCBI_nr.* || "$BDMC_BANK_NAME" =~ ^NCBI_nt.* || "$BDMC_BANK_NAME" =~ ^Uniprot_Uniref.* || "$BDMC_BANK_NAME" =~ ^TCDB.* ]]; then
+  # DO NOT parse seqids for these banks as their ID format is now incompatible with BLAST v4 format
+  # See: see https://ncbiinsights.ncbi.nlm.nih.gov/2019/04/02/blast-2-9-0-now-available-with-enhanced-support-for-new-database-format-and-improved-performance/
+  MDB_ADD_ARGS=""
+else
+  MDB_ADD_ARGS="-parse_seqids"
+fi
+
+CMD_BASE="makeblastdb -dbtype $MDB_TYPE -title ${BDMC_BANK_NAME} $MDB_ADD_ARGS "
+# Using mapping file requires to use -parse-seqids
+if [ ! -z "$MDB_ADD_ARGS" -a -f "${NCBI_TAX_PATH}/${TAX_ID_MAPPING_FILE}" ]; then
+  CMD_BASE="$CMD_BASE -taxid_map ${NCBI_TAX_PATH}/${TAX_ID_MAPPING_FILE}"
+#  echo "tax_mapping=${NCBI_TAX_PATH}/${TAX_ID_MAPPING_FILE}" >> index.properties
+#else
+#  echo "tax_mapping=none" >> index.properties
+fi 
+
+for F_VOL in $(ls *.fasta); do
+  F_NAME="${F_VOL%.*}"
+  CMD="$CMD_BASE -out $BDMC_BANK_NAME -in $F_VOL -logfile makeblastdb-${F_NAME}.log"
+  echo $CMD
+  eval $CMD
+  RET_CODE=$?
+  echo "[$RET_CODE]"
+  if [ ! $RET_CODE -eq 0 ]; then
+    echo "ERROR makeblastdb on: $F_NAME"
+    exit 1
+  fi
+done
+
+# Get number of sequences added
+echo "Getting sequences added from makeblastdb-${F_NAME}.log"
+SEQS_LINE=$(cat "makeblastdb-${F_NAME}.log" | grep -E "added [0-9]+ sequences")
+if [[ -z "${SEQS_LINE}" ]]; then
+    echo "WARN: unable to get number of added sequences from makeblastdb-${F_NAME}.log."
+else
+    number=$(echo "${SEQS_LINE}" | sed -E 's/.*added[[:space:]]+([0-9]+)[[:space:]]+sequences.*/\1/')
+    if [[ ! -z "${number}" ]]; then
+        echo "${number}" 
+        echo "${number}" > "${F_NAME}.num"
+    fi
+fi
+
+# Make alias (use suffix M to bank name to fulfill BeeDeeM Blast alias
+#             file creation specs)
+if [ "$ALIAS_TYPE" = "n" ]; then 
+  DB_LIST=$(ls -1 *.nin | sed -e 's/\.nin$//' | tr '\n' ' ')
+  ALIAS_NAME=${BDMC_BANK_NAME}M.nal
+else
+  DB_LIST=$(ls -1 *.pin | sed -e 's/\.pin$//' | tr '\n' ' ')
+  ALIAS_NAME=${BDMC_BANK_NAME}M.pal
+fi
+echo "TITLE ${BDMC_BANK_NAME}" > $ALIAS_NAME
+echo "DBLIST $DB_LIST" >> $ALIAS_NAME
+#chmod 644 *
+deActivateEnv "$SOFT_NAME" "$SOFT_VER"
+
