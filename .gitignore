@@ -13,3 +13,6 @@ env.sh
 tests/logs.txt
 *.sif
 *.lcl
+*.log
+*.out
+*.err
