@@ -8,16 +8,16 @@
 #
 # Author: Patrick Durand, Ifremer
 # Created: June 2022
+# Updated: Sept 2026 (module load)
 #*****************************************************************************************
 
 function activateEnv(){
   local soft_name=$1
   local soft_ver=$2
   local ret_code=0
-  local file_path=/appli/bioinfo/${soft_name}/${soft_ver}/env.sh
-  if [ -e "$file_path" ]; then
+  module load ${soft_name}/${soft_ver}
+  if [ $? -eq 0 ]; then
     infoMsg "activate ${soft_name} ${soft_ver} environment for $BDMC_PLATFORM platform"
-    source $file_path
   else
     errorMsg "Unknown software: ${soft_name}-${soft_ver}"
     ret_code=1
@@ -29,14 +29,12 @@ function deActivateEnv(){
   local soft_name=$1
   local soft_ver=$2
   local ret_code=0
-  local file_path=/appli/bioinfo/${soft_name}/${soft_ver}/delenv.sh
-  if [ -e "$file_path" ]; then
+  module unload ${soft_name}/${soft_ver}
+  if [ $? -eq 0 ]; then
     infoMsg "deActivate ${soft_name} ${soft_ver} environment for $BDMC_PLATFORM platform"
-    source $file_path
   else
     errorMsg "Unknown software: ${soft_name}-${soft_ver}"
     ret_code=1
   fi
   return $ret_code
 }
-
