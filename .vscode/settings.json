@@ -5,5 +5,9 @@
   "java.project.outputPath": "lib",
   "java.project.referencedLibraries": [
     "jar/**/*.jar"
-  ]
+  ],
+  "beedeem.scratchRoot": "${env:BEEDEEM_SCRATCH_DEV}",
+  "beedeem.descriptor": "Uniprot_sprot_varsplic"
+  /*"beedeem.descriptor": "NCBI_Taxonomy"
+  "beedeem.descriptor": "PDB_proteins"*/
 }

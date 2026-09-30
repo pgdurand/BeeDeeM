@@ -2,6 +2,15 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "BeeDeeM: prepare install directories",
+      "type": "shell",
+      "command": "mkdir -p ${config:beedeem.scratchRoot}/work && mkdir -p ${config:beedeem.scratchRoot}/bank",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "BeeDeeM: build test classes",
       "type": "shell",
       "command": "ant -Dtest.classname=test.unit.UniprotFormatTest run-test",
